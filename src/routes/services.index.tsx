@@ -10,7 +10,7 @@ import {
 } from "@/components/site/Primitives";
 import { ServicesShowcase } from "@/components/site/ServicesShowcase";
 
-export const Route = createFileRoute("/services")({
+export const Route = createFileRoute("/services/")({
   head: () => ({
     meta: [
       { title: "Services — AI, IT Staffing & Product Engineering | Pure Technology" },
