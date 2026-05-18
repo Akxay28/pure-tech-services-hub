@@ -1,6 +1,17 @@
 import { type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Check, Plus, Minus } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  Plus,
+  Minus,
+  ShieldCheck,
+  Award,
+  Users2,
+  Clock4,
+  HeartHandshake,
+  LineChart,
+} from "lucide-react";
 import { useState } from "react";
 import {
   PageHero,
@@ -215,6 +226,9 @@ export function ServicePage(p: ServicePageProps) {
         </div>
       </section>
 
+      {/* Trust */}
+      <TrustSection accent={p.accent} />
+
       {/* FAQ */}
       <FaqList faqs={p.faqs} accent={p.accent} />
 
@@ -299,3 +313,111 @@ function FaqList({ faqs, accent }: { faqs: Faq[]; accent: string }) {
     </section>
   );
 }
+
+function TrustSection({ accent }: { accent: string }) {
+  const pillars = [
+    {
+      Icon: ShieldCheck,
+      title: "Compliance you can audit",
+      body: "SOC 2 Type II aligned process, ISO 27001 controls, DPDP-ready data handling, and signed MSAs that don't read like a trap.",
+    },
+    {
+      Icon: Award,
+      title: "Senior by default",
+      body: "9 years average experience on every squad. The engineers you meet in the pitch are the engineers who ship — no bait-and-switch.",
+    },
+    {
+      Icon: Users2,
+      title: "Top 3% talent bar",
+      body: "Every engineer clears a 4-stage technical bar modelled on FAANG-style hiring. Only ~3% of applicants make our bench.",
+    },
+    {
+      Icon: Clock4,
+      title: "Predictable cadence",
+      body: "Two-week ship cycles, a Friday demo, and a written changelog. You always know what's done, what's next, and what's at risk.",
+    },
+    {
+      Icon: HeartHandshake,
+      title: "Long-term partnership",
+      body: "Average client tenure is 3.4 years. We design for year two of a relationship, not the first invoice — and it shows in the work.",
+    },
+    {
+      Icon: LineChart,
+      title: "Outcomes, measured",
+      body: "Every engagement starts with a defined success metric and a shared dashboard. We report on outcomes, not just hours burned.",
+    },
+  ];
+
+  const badges = [
+    "ISO/IEC 27001",
+    "SOC 2 Type II aligned",
+    "DPDP compliant",
+    "GDPR ready",
+    "MSME registered",
+    "STPI registered",
+  ];
+
+  return (
+    <section className="px-5 lg:px-8 py-20">
+      <div className="mx-auto max-w-7xl">
+        <div className="max-w-3xl">
+          <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+            <span
+              className="h-1 w-6 rounded-full"
+              style={{ background: accent }}
+            />
+            Why trust Pure Technology
+          </div>
+          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight">
+            Six reasons enterprise teams{" "}
+            <span style={{ color: accent }}>renew with us, year after year.</span>
+          </h2>
+          <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
+            Trust isn't a logo wall — it's the operating rigour you feel from
+            the first call. Here's what backs ours.
+          </p>
+        </div>
+
+        <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {pillars.map(({ Icon, title, body }) => (
+            <div
+              key={title}
+              className="glass-card rounded-2xl p-6 transition-transform hover:-translate-y-1 duration-300"
+            >
+              <span
+                className="grid h-11 w-11 place-items-center rounded-xl text-white"
+                style={{
+                  background: `linear-gradient(135deg, ${accent}, color-mix(in oklab, ${accent} 55%, white))`,
+                }}
+              >
+                <Icon className="h-5 w-5" />
+              </span>
+              <h3 className="mt-4 text-lg font-display font-semibold">
+                {title}
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                {body}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-10 glass-panel rounded-2xl px-6 py-5 flex flex-wrap items-center gap-x-6 gap-y-3 justify-center text-xs sm:text-sm font-medium text-foreground/75">
+          <span className="uppercase tracking-[0.18em] text-muted-foreground text-[11px]">
+            Certifications & registrations
+          </span>
+          {badges.map((b) => (
+            <span key={b} className="inline-flex items-center gap-2">
+              <span
+                className="h-1.5 w-1.5 rounded-full"
+                style={{ background: accent }}
+              />
+              {b}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
