@@ -1,6 +1,17 @@
 import { type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Check, Plus, Minus } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  Plus,
+  Minus,
+  ShieldCheck,
+  Award,
+  Users2,
+  Clock4,
+  HeartHandshake,
+  LineChart,
+} from "lucide-react";
 import { useState } from "react";
 import {
   PageHero,
