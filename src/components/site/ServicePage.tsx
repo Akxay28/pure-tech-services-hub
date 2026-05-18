@@ -226,6 +226,9 @@ export function ServicePage(p: ServicePageProps) {
         </div>
       </section>
 
+      {/* Trust */}
+      <TrustSection accent={p.accent} />
+
       {/* FAQ */}
       <FaqList faqs={p.faqs} accent={p.accent} />
 
