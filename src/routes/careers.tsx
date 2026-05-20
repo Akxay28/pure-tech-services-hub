@@ -412,10 +412,61 @@ function CareersPage() {
         </div>
       </section>
 
-      <CTASection
-        title="Don't see your role? Send a note anyway."
-        description="We open new positions every month. If your craft is sharp and your timing is right, we'd rather hear from you early than miss you entirely."
-      />
+      <section className="px-5 lg:px-8 py-20">
+        <div className="relative mx-auto max-w-7xl rounded-[2rem] overflow-hidden isolate">
+          {/* Animated blob background */}
+          <div className="absolute inset-0 bg-gradient-brand opacity-95" />
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div
+              className="absolute w-[28rem] h-[28rem] rounded-full opacity-40 blur-[80px] animate-blob-1"
+              style={{ background: 'var(--brand-blue)' }}
+            />
+            <div
+              className="absolute w-[24rem] h-[24rem] rounded-full opacity-35 blur-[70px] animate-blob-2"
+              style={{ background: 'var(--brand-red)' }}
+            />
+            <div
+              className="absolute w-[26rem] h-[26rem] rounded-full opacity-35 blur-[75px] animate-blob-3"
+              style={{ background: 'var(--brand-green)' }}
+            />
+            <div
+              className="absolute w-[22rem] h-[22rem] rounded-full opacity-30 blur-[65px] animate-blob-4"
+              style={{ background: 'var(--brand-orange)' }}
+            />
+            <div
+              className="absolute w-[20rem] h-[20rem] rounded-full opacity-30 blur-[60px] animate-blob-5"
+              style={{ background: 'var(--brand-yellow)' }}
+            />
+          </div>
+          <div className="absolute inset-0 bg-[radial-gradient(60%_80%_at_80%_20%,white,transparent_60%)] opacity-20" />
+
+          <div className="relative px-8 sm:px-14 py-16 lg:py-20 grid lg:grid-cols-2 gap-10 items-center">
+            <div className="text-white">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold leading-tight">
+                Don't see your role? Send a note anyway.
+              </h2>
+              <p className="mt-4 text-white/85 text-base sm:text-lg leading-relaxed max-w-xl">
+                We open new positions every month. If your craft is sharp and your timing is right, we'd rather hear from you early than miss you entirely.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row lg:justify-end gap-3">
+              <a
+                href="mailto:careers@puretechnology.in"
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-foreground hover:bg-white/90 transition-colors"
+              >
+                Talk to our team
+                <ArrowRight className="h-4 w-4" />
+              </a>
+              <Link
+                to="/services"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 backdrop-blur px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/20 transition-colors"
+              >
+                Explore services
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <div className="-mt-12 mb-20 text-center">
         <Link
