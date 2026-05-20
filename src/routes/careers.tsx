@@ -417,23 +417,23 @@ function CareersPage() {
           <div className="absolute inset-0 bg-gradient-brand opacity-95" />
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div
-              className="absolute w-[28rem] h-[28rem] rounded-full opacity-40 blur-[80px] animate-blob-1"
+              className="absolute -top-20 -left-20 w-[28rem] h-[28rem] rounded-full opacity-40 blur-[80px] animate-blob-1"
               style={{ background: 'var(--brand-blue)' }}
             />
             <div
-              className="absolute w-[24rem] h-[24rem] rounded-full opacity-35 blur-[70px] animate-blob-2"
+              className="absolute -top-10 right-10 w-[24rem] h-[24rem] rounded-full opacity-35 blur-[70px] animate-blob-2"
               style={{ background: 'var(--brand-red)' }}
             />
             <div
-              className="absolute w-[26rem] h-[26rem] rounded-full opacity-35 blur-[75px] animate-blob-3"
+              className="absolute top-1/2 -left-10 w-[26rem] h-[26rem] rounded-full opacity-35 blur-[75px] animate-blob-3"
               style={{ background: 'var(--brand-green)' }}
             />
             <div
-              className="absolute w-[22rem] h-[22rem] rounded-full opacity-30 blur-[65px] animate-blob-4"
+              className="absolute bottom-10 right-0 w-[22rem] h-[22rem] rounded-full opacity-30 blur-[65px] animate-blob-4"
               style={{ background: 'var(--brand-orange)' }}
             />
             <div
-              className="absolute w-[20rem] h-[20rem] rounded-full opacity-30 blur-[60px] animate-blob-5"
+              className="absolute top-10 left-1/3 w-[20rem] h-[20rem] rounded-full opacity-30 blur-[60px] animate-blob-5"
               style={{ background: 'var(--brand-yellow)' }}
             />
           </div>
