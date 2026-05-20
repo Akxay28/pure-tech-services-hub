@@ -17,6 +17,7 @@ import {
   Testimonial,
   CTASection,
   SectionHeader,
+  CaseStudyCard,
 } from "@/components/site/Primitives";
 import { ServicesShowcase } from "@/components/site/ServicesShowcase";
 
