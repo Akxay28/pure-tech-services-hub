@@ -114,11 +114,26 @@ function ServicesIndex() {
               <Link
                 key={to}
                 to={to}
+                onMouseMove={(e) => {
+                  const r = e.currentTarget.getBoundingClientRect();
+                  e.currentTarget.style.setProperty("--mx", `${e.clientX - r.left}px`);
+                  e.currentTarget.style.setProperty("--my", `${e.clientY - r.top}px`);
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.setProperty("--mx", "100%");
+                  e.currentTarget.style.setProperty("--my", "0%");
+                }}
+                style={{ ["--mx" as never]: "100%", ["--my" as never]: "0%" }}
                 className="group relative glass-card rounded-3xl p-7 overflow-hidden transition-transform duration-500 hover:-translate-y-1.5"
               >
                 <div
-                  className="absolute -top-12 -right-12 h-44 w-44 rounded-full opacity-30 blur-3xl transition-opacity group-hover:opacity-50"
-                  style={{ background: accent }}
+                  className="pointer-events-none absolute h-44 w-44 rounded-full opacity-30 blur-3xl transition-[opacity,left,top] duration-500 ease-out group-hover:opacity-60 group-hover:duration-200"
+                  style={{
+                    background: accent,
+                    left: "var(--mx)",
+                    top: "var(--my)",
+                    transform: "translate(-50%, -50%)",
+                  }}
                 />
                 <div className="relative">
                   <span
