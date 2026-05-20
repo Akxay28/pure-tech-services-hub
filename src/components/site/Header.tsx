@@ -31,6 +31,7 @@ const nav = [
   { to: "/" as const, label: "Home" },
   { to: "/about" as const, label: "About" },
   { to: "/services" as const, label: "Services", hasDropdown: true },
+  { to: "/careers" as const, label: "Careers" },
   { to: "/contact" as const, label: "Contact" },
 ];
 
