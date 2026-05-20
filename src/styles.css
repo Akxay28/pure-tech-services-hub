@@ -281,6 +281,11 @@
     background-size: 200% 100%;
     animation: shimmer 6s linear infinite;
   }
+  .animate-blob-1 { animation: blob-1 12s ease-in-out infinite; }
+  .animate-blob-2 { animation: blob-2 14s ease-in-out infinite; }
+  .animate-blob-3 { animation: blob-3 16s ease-in-out infinite; }
+  .animate-blob-4 { animation: blob-4 13s ease-in-out infinite; }
+  .animate-blob-5 { animation: blob-5 15s ease-in-out infinite; }
 }
 
 @keyframes float {
@@ -306,4 +311,31 @@
 @keyframes shimmer {
   0% { background-position: 0% 0%; }
   100% { background-position: 200% 0%; }
+}
+
+@keyframes blob-1 {
+  0%, 100% { transform: translate(-20%, 10%) scale(1); }
+  25% { transform: translate(60%, -30%) scale(1.15); }
+  50% { transform: translate(30%, 40%) scale(0.9); }
+  75% { transform: translate(-10%, -20%) scale(1.05); }
+}
+@keyframes blob-2 {
+  0%, 100% { transform: translate(70%, -10%) scale(1); }
+  33% { transform: translate(20%, 50%) scale(1.2); }
+  66% { transform: translate(-20%, 20%) scale(0.85); }
+}
+@keyframes blob-3 {
+  0%, 100% { transform: translate(10%, 60%) scale(1); }
+  25% { transform: translate(-40%, 10%) scale(0.9); }
+  50% { transform: translate(50%, -20%) scale(1.1); }
+  75% { transform: translate(20%, 30%) scale(1.05); }
+}
+@keyframes blob-4 {
+  0%, 100% { transform: translate(50%, 30%) scale(1); }
+  50% { transform: translate(-30%, -40%) scale(1.15); }
+}
+@keyframes blob-5 {
+  0%, 100% { transform: translate(-30%, -30%) scale(1); }
+  33% { transform: translate(40%, 20%) scale(1.1); }
+  66% { transform: translate(10%, 60%) scale(0.9); }
 }
