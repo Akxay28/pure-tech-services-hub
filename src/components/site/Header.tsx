@@ -1,44 +1,113 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import { Menu, X, ChevronDown, Brain, Users, Boxes, ArrowRight } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  Menu,
+  X,
+  ChevronDown,
+  ArrowRight,
+  Users,
+  Code2,
+  Brain,
+  Globe,
+  Sparkles,
+  Building2,
+  UserCog,
+  Network,
+  Cloud,
+  Boxes,
+  Smartphone,
+  MonitorSmartphone,
+  Database,
+  ShieldCheck,
+  Layers,
+  MessageSquareCode,
+  Wand2,
+  Bot,
+  Plug,
+  type LucideIcon,
+} from "lucide-react";
 import logo from "@/assets/pure-tech-logo.png";
+import megaVisual from "@/assets/mega-menu-visual.jpg";
 
-const services = [
-  {
-    to: "/services/ai-solutions" as const,
-    title: "AI Solutions",
-    blurb: "Production-grade GenAI, ML pipelines, agentic automation.",
-    Icon: Brain,
-    color: "var(--brand-blue)",
-  },
-  {
-    to: "/services/it-staffing" as const,
-    title: "IT Staffing",
-    blurb: "Vetted Indian engineers — contract, contract-to-hire, full-time.",
-    Icon: Users,
-    color: "var(--brand-orange)",
-  },
-  {
-    to: "/services/product-engineering" as const,
-    title: "Product Engineering",
-    blurb: "End-to-end product squads building SaaS that scales globally.",
-    Icon: Boxes,
-    color: "var(--brand-green)",
-  },
+type ServiceItem = {
+  title: string;
+  subtitle: string;
+  icon: LucideIcon;
+  to: string;
+};
+
+type TabKey = "team" | "offering" | "ai";
+
+const tabs: { key: TabKey; label: string; icon: LucideIcon }[] = [
+  { key: "team", label: "By Team Expertise", icon: Users },
+  { key: "offering", label: "Offering", icon: Code2 },
+  { key: "ai", label: "Artificial Intelligence", icon: Brain },
 ];
 
-const nav = [
-  { to: "/" as const, label: "Home" },
-  { to: "/about" as const, label: "About" },
-  { to: "/services" as const, label: "Services", hasDropdown: true },
-  { to: "/careers" as const, label: "Careers" },
-  { to: "/contact" as const, label: "Contact" },
+const serviceItems: Record<TabKey, ServiceItem[]> = {
+  team: [
+    { title: "Global Capability Center", subtitle: "Empowering Global Teams", icon: Globe, to: "/services" },
+    { title: "AI Solutions", subtitle: "AI that Drives Progress", icon: Sparkles, to: "/services/ai-solutions" },
+    { title: "Offshore Development", subtitle: "Cost-Effective Solutions", icon: Building2, to: "/services" },
+    { title: "IT Staff Augmentation", subtitle: "Scale Your Tech Team", icon: UserCog, to: "/services/it-staffing" },
+    { title: "IT Outsourcing", subtitle: "Efficient IT Solutions", icon: Network, to: "/services" },
+    { title: "Product Engineering", subtitle: "Innovating Your Products", icon: Boxes, to: "/services/product-engineering" },
+    { title: "Cloud Computing", subtitle: "Scalable Cloud Services", icon: Cloud, to: "/services" },
+  ],
+  offering: [
+    { title: "Software Development", subtitle: "Get world-class software solutions", icon: Code2, to: "/services/product-engineering" },
+    { title: "Remote Teams", subtitle: "Hire pre-vetted development team", icon: Users, to: "/services/it-staffing" },
+    { title: "Web Application Development", subtitle: "Build modern, intuitive & seamless web apps", icon: Layers, to: "/services/product-engineering" },
+    { title: "Mobile App Development", subtitle: "Get custom and responsive mobile apps", icon: Smartphone, to: "/services/product-engineering" },
+    { title: "Cloud & Infrastructure", subtitle: "Scale securely with cloud and infrastructure", icon: Cloud, to: "/services" },
+    { title: "Front End Development", subtitle: "Get perfect UI/UX for flawless experience", icon: MonitorSmartphone, to: "/services/product-engineering" },
+    { title: "Data Engineering", subtitle: "Modernize data pipelines for real-time insights", icon: Database, to: "/services" },
+    { title: "Cybersecurity", subtitle: "Secure your digital assets with confidence", icon: ShieldCheck, to: "/services" },
+  ],
+  ai: [
+    { title: "AI Strategy & Consulting", subtitle: "Get future-proof operations with advanced AI", icon: Sparkles, to: "/services/ai-solutions" },
+    { title: "Custom AI Development", subtitle: "Building AI solutions tailored to your business", icon: Wand2, to: "/services/ai-solutions" },
+    { title: "AI Chatbot Development", subtitle: "Designing chatbots for smarter customer support", icon: MessageSquareCode, to: "/services/ai-solutions" },
+    { title: "Generative AI Development", subtitle: "Creating AI tools for content and ideas", icon: Brain, to: "/services/ai-solutions" },
+    { title: "AI Agents Development", subtitle: "Enhance operations through advanced AI agents", icon: Bot, to: "/services/ai-solutions" },
+    { title: "AI Integration", subtitle: "Integrating AI seamlessly into your stack", icon: Plug, to: "/services/ai-solutions" },
+  ],
+};
+
+type SimpleLink = { label: string; to: string; desc: string };
+
+const simpleMenus: Record<string, SimpleLink[]> = {
+  "Hire Developers": [
+    { label: "IT Staff Augmentation", to: "/services/it-staffing", desc: "Vetted senior engineers, ready in days." },
+    { label: "Dedicated Squads", to: "/services/product-engineering", desc: "Full product squads built around your roadmap." },
+    { label: "AI Engineering Pods", to: "/services/ai-solutions", desc: "ML/LLM specialists for production AI." },
+  ],
+  Company: [
+    { label: "About", to: "/about", desc: "Who we are and how we work." },
+    { label: "Careers", to: "/careers", desc: "Open roles across engineering and AI." },
+    { label: "Contact", to: "/contact", desc: "Talk to a senior engineer this week." },
+  ],
+  Resources: [
+    { label: "Case Studies", to: "/services/ai-solutions", desc: "Outcome metrics from recent engagements." },
+    { label: "All Services", to: "/services", desc: "Explore the full service catalogue." },
+    { label: "Careers", to: "/careers", desc: "Engineering culture and hiring process." },
+  ],
+};
+
+type NavItem = { label: string; to?: string; type: "mega" | "simple" };
+const nav: NavItem[] = [
+  { label: "Services", to: "/services", type: "mega" },
+  { label: "Hire Developers", type: "simple" },
+  { label: "Company", type: "simple" },
+  { label: "Resources", type: "simple" },
 ];
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<TabKey>("team");
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
 
@@ -51,166 +120,337 @@ export function Header() {
 
   useEffect(() => {
     setOpen(false);
-    setServicesOpen(false);
+    setActiveMenu(null);
   }, [location.pathname]);
 
-  const openServices = () => {
+  const openMenu = (label: string) => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
-    setServicesOpen(true);
+    setActiveMenu(label);
   };
   const scheduleClose = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setServicesOpen(false), 140);
+    closeTimer.current = setTimeout(() => setActiveMenu(null), 160);
   };
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "backdrop-blur-xl bg-[color-mix(in_oklab,white_72%,transparent)] border-b border-border/70 shadow-soft"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 lg:px-8">
-        <Link to="/" className="flex items-center gap-2.5 group">
-          <img
-            src={logo}
-            alt="Pure Technology"
-            className="h-9 w-auto transition-transform duration-500 group-hover:scale-[1.03]"
-          />
-        </Link>
-
-        <nav className="hidden lg:flex items-center gap-1">
-          {nav.map((item) =>
-            item.hasDropdown ? (
-              <div
-                key={item.to}
-                className="relative"
-                onMouseEnter={openServices}
-                onMouseLeave={scheduleClose}
-              >
-                <Link
-                  to={item.to}
-                  className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                  activeProps={{ className: "text-foreground" }}
-                >
-                  {item.label}
-                  <ChevronDown
-                    className={`h-3.5 w-3.5 transition-transform duration-300 ${
-                      servicesOpen ? "rotate-180" : ""
-                    }`}
-                  />
-                </Link>
-                {servicesOpen && (
-                  <div
-                    className="absolute left-1/2 top-full -translate-x-1/2 pt-3"
-                    onMouseEnter={openServices}
-                    onMouseLeave={scheduleClose}
-                  >
-                    <div className="w-[520px] glass-card rounded-2xl p-3 animate-fade-up">
-                      <Link
-                        to="/services"
-                        className="flex items-center justify-between rounded-xl px-4 py-2.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground hover:bg-secondary/60 transition-colors"
-                      >
-                        All services
-                        <ArrowRight className="h-3.5 w-3.5" />
-                      </Link>
-                      <div className="mt-1 grid gap-1">
-                        {services.map(({ to, title, blurb, Icon, color }) => (
-                          <Link
-                            key={to}
-                            to={to}
-                            className="group flex items-start gap-3 rounded-xl p-3 hover:bg-secondary/70 transition-colors"
-                          >
-                            <span
-                              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-white shadow-soft"
-                              style={{
-                                background: `linear-gradient(135deg, ${color}, color-mix(in oklab, ${color} 60%, white))`,
-                              }}
-                            >
-                              <Icon className="h-5 w-5" />
-                            </span>
-                            <span className="min-w-0">
-                              <span className="block font-semibold text-foreground">
-                                {title}
-                              </span>
-                              <span className="block text-xs text-muted-foreground leading-relaxed mt-0.5">
-                                {blurb}
-                              </span>
-                            </span>
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <Link
-                key={item.to}
-                to={item.to}
-                className="px-4 py-2 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
-                activeProps={{ className: "text-foreground" }}
-                activeOptions={{ exact: item.to === "/" }}
-              >
-                {item.label}
-              </Link>
-            )
-          )}
-        </nav>
-
-        <div className="hidden lg:flex items-center gap-3">
-          <Link
-            to="/contact"
-            className="inline-flex items-center gap-1.5 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background hover:opacity-90 transition-opacity shadow-soft"
-          >
-            Book a discovery call
-            <ArrowRight className="h-3.5 w-3.5" />
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "backdrop-blur-xl bg-white/80 border-b border-border/60 shadow-[0_8px_30px_-12px_rgba(46,11,125,0.12)]"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="mx-auto flex h-[78px] max-w-7xl items-center justify-between px-5 lg:px-8">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <img
+              src={logo}
+              alt="Pure Technology"
+              className="h-10 w-auto transition-transform duration-500 group-hover:scale-[1.04]"
+            />
           </Link>
+
+          {/* Center nav */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {nav.map((item) => {
+              const isOpen = activeMenu === item.label;
+              return (
+                <div
+                  key={item.label}
+                  className="relative"
+                  onMouseEnter={() => openMenu(item.label)}
+                  onMouseLeave={scheduleClose}
+                >
+                  {item.to ? (
+                    <Link
+                      to={item.to}
+                      className="relative flex items-center gap-1 px-4 py-2.5 text-[15px] font-semibold tracking-tight text-[color:var(--brand-purple)] hover:text-[color:var(--brand-pink)] transition-colors"
+                    >
+                      {item.label}
+                      <ChevronDown
+                        className={`h-3.5 w-3.5 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                      />
+                      <span
+                        className={`absolute left-4 right-4 -bottom-0.5 h-[2px] rounded-full bg-[image:var(--gradient-cta)] origin-left transition-transform duration-300 ${
+                          isOpen ? "scale-x-100" : "scale-x-0"
+                        }`}
+                      />
+                    </Link>
+                  ) : (
+                    <button
+                      type="button"
+                      className="relative flex items-center gap-1 px-4 py-2.5 text-[15px] font-semibold tracking-tight text-[color:var(--brand-purple)] hover:text-[color:var(--brand-pink)] transition-colors"
+                    >
+                      {item.label}
+                      <ChevronDown
+                        className={`h-3.5 w-3.5 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                      />
+                      <span
+                        className={`absolute left-4 right-4 -bottom-0.5 h-[2px] rounded-full bg-[image:var(--gradient-cta)] origin-left transition-transform duration-300 ${
+                          isOpen ? "scale-x-100" : "scale-x-0"
+                        }`}
+                      />
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </nav>
+
+          {/* CTA */}
+          <div className="hidden lg:flex items-center gap-3">
+            <Link
+              to="/contact"
+              className="group relative inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold tracking-wide text-white shadow-[0_10px_30px_-10px_rgba(255,77,141,0.55)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-10px_rgba(255,122,0,0.55)]"
+              style={{ backgroundImage: "var(--gradient-cta)" }}
+            >
+              <span className="uppercase">Contact</span>
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+              <span className="pointer-events-none absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style={{ background: "linear-gradient(95deg, rgba(255,255,255,0.18), rgba(255,255,255,0))" }}
+              />
+            </Link>
+          </div>
+
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-white/80 backdrop-blur"
+            aria-label="Toggle menu"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
 
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-surface/70 backdrop-blur"
-          aria-label="Toggle menu"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </div>
+        {/* Mega/Simple dropdown */}
+        <AnimatePresence>
+          {activeMenu && (
+            <motion.div
+              key={activeMenu}
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              className="hidden lg:block absolute left-0 right-0 top-full px-5 lg:px-8 pt-3"
+              onMouseEnter={() => openMenu(activeMenu)}
+              onMouseLeave={scheduleClose}
+            >
+              <div className="mx-auto max-w-7xl">
+                {activeMenu === "Services" ? (
+                  <ServicesMega activeTab={activeTab} setActiveTab={setActiveTab} />
+                ) : (
+                  <SimpleMega items={simpleMenus[activeMenu] ?? []} />
+                )}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </header>
 
-      {open && (
-        <div className="lg:hidden border-t border-border bg-surface/90 backdrop-blur-xl animate-fade-up">
-          <div className="mx-auto max-w-7xl px-5 py-5 space-y-1">
-            {nav.map((item) => (
+      {/* Blur backdrop */}
+      <AnimatePresence>
+        {activeMenu && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="hidden lg:block fixed inset-0 top-[78px] z-40 bg-[color:var(--brand-purple)]/10 backdrop-blur-[2px] pointer-events-none"
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden fixed inset-x-0 top-[78px] z-40 border-t border-border bg-white/95 backdrop-blur-xl overflow-hidden"
+          >
+            <div className="mx-auto max-w-7xl px-5 py-5 space-y-2 max-h-[80vh] overflow-y-auto">
+              <MobileAccordion title="Services" items={serviceItems.team.concat(serviceItems.ai)} />
+              <MobileAccordion title="Hire Developers" items={simpleMenus["Hire Developers"].map(s => ({ title: s.label, subtitle: s.desc, icon: Users, to: s.to }))} />
+              <MobileAccordion title="Company" items={simpleMenus["Company"].map(s => ({ title: s.label, subtitle: s.desc, icon: Building2, to: s.to }))} />
+              <MobileAccordion title="Resources" items={simpleMenus["Resources"].map(s => ({ title: s.label, subtitle: s.desc, icon: Layers, to: s.to }))} />
               <Link
-                key={item.to}
-                to={item.to}
-                className="block rounded-lg px-3 py-2.5 text-sm font-medium hover:bg-secondary"
+                to="/contact"
+                className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold uppercase text-white shadow-soft"
+                style={{ backgroundImage: "var(--gradient-cta)" }}
               >
-                {item.label}
+                Contact
+                <ArrowRight className="h-4 w-4" />
               </Link>
-            ))}
-            <div className="pl-3 border-l-2 border-border/70 ml-3 space-y-1">
-              {services.map(({ to, title }) => (
-                <Link
-                  key={to}
-                  to={to}
-                  className="block rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-secondary"
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
+function ServicesMega({
+  activeTab,
+  setActiveTab,
+}: {
+  activeTab: TabKey;
+  setActiveTab: (t: TabKey) => void;
+}) {
+  const items = serviceItems[activeTab];
+  return (
+    <div className="rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(46,11,125,0.25)] overflow-hidden">
+      <div className="grid grid-cols-12 gap-0">
+        {/* Left intro */}
+        <div className="col-span-3 p-7 border-r border-border/60 bg-[color:var(--brand-pink-soft)]/30">
+          <h3 className="text-xl font-bold text-[color:var(--brand-purple)]">Services</h3>
+          <p className="mt-2 text-sm leading-relaxed text-[color:var(--brand-purple)]/70">
+            Discover our range of services designed to drive business transformation.
+          </p>
+          <div className="mt-5 overflow-hidden rounded-2xl shadow-soft">
+            <img
+              src={megaVisual}
+              alt="Pure Technology services"
+              loading="lazy"
+              width={1024}
+              height={1024}
+              className="h-44 w-full object-cover"
+            />
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="col-span-3 p-5 border-r border-border/60 space-y-2">
+          {tabs.map(({ key, label, icon: Icon }) => {
+            const isActive = key === activeTab;
+            return (
+              <button
+                key={key}
+                type="button"
+                onMouseEnter={() => setActiveTab(key)}
+                onFocus={() => setActiveTab(key)}
+                className={`group flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-[15px] font-semibold transition-all duration-300 ${
+                  isActive
+                    ? "bg-[color:var(--brand-pink-soft)] text-[color:var(--brand-purple)] shadow-[0_8px_24px_-12px_rgba(255,77,141,0.4)]"
+                    : "text-[color:var(--brand-purple)]/80 hover:bg-[color:var(--brand-pink-soft)]/50"
+                }`}
+              >
+                <span
+                  className={`grid h-9 w-9 place-items-center rounded-xl transition-colors ${
+                    isActive ? "bg-white text-[color:var(--brand-pink)]" : "bg-white/70 text-[color:var(--brand-purple)]"
+                  }`}
                 >
-                  {title}
+                  <Icon className="h-4.5 w-4.5" />
+                </span>
+                {label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Right content */}
+        <div className="col-span-6 p-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.2 }}
+              className="grid grid-cols-2 gap-3"
+            >
+              {items.map(({ title, subtitle, icon: Icon, to }) => (
+                <Link
+                  key={title}
+                  to={to}
+                  className="group flex items-start gap-3 rounded-2xl p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[color:var(--brand-pink-soft)]/40 hover:shadow-[0_12px_30px_-12px_rgba(46,11,125,0.18)]"
+                >
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[color:var(--brand-pink-soft)] text-[color:var(--brand-pink)] transition-transform duration-300 group-hover:scale-105">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[14.5px] font-semibold leading-tight text-[color:var(--brand-purple)]">
+                      {title}
+                    </span>
+                    <span className="mt-1 block text-xs leading-relaxed text-[color:var(--brand-purple)]/65">
+                      {subtitle}
+                    </span>
+                  </span>
+                </Link>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SimpleMega({ items }: { items: SimpleLink[] }) {
+  return (
+    <div className="ml-auto w-[520px] rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(46,11,125,0.25)] p-3">
+      {items.map((s) => (
+        <Link
+          key={s.label}
+          to={s.to}
+          className="group flex items-start justify-between gap-4 rounded-2xl p-4 transition-all hover:bg-[color:var(--brand-pink-soft)]/50"
+        >
+          <span className="min-w-0">
+            <span className="block text-[15px] font-semibold text-[color:var(--brand-purple)]">{s.label}</span>
+            <span className="mt-0.5 block text-xs text-[color:var(--brand-purple)]/65">{s.desc}</span>
+          </span>
+          <ArrowRight className="h-4 w-4 mt-1 text-[color:var(--brand-pink)] opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+function MobileAccordion({
+  title,
+  items,
+}: {
+  title: string;
+  items: ServiceItem[];
+}) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="rounded-2xl border border-border/60 overflow-hidden">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="flex w-full items-center justify-between px-4 py-3 text-sm font-semibold text-[color:var(--brand-purple)]"
+      >
+        {title}
+        <ChevronDown className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="overflow-hidden bg-[color:var(--brand-pink-soft)]/30"
+          >
+            <div className="p-2 space-y-1">
+              {items.map((it) => (
+                <Link
+                  key={it.title}
+                  to={it.to}
+                  className="flex items-start gap-3 rounded-xl px-3 py-2.5 hover:bg-white"
+                >
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white text-[color:var(--brand-pink)]">
+                    <it.icon className="h-4 w-4" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-sm font-semibold text-[color:var(--brand-purple)]">{it.title}</span>
+                    <span className="block text-xs text-[color:var(--brand-purple)]/65">{it.subtitle}</span>
+                  </span>
                 </Link>
               ))}
             </div>
-            <Link
-              to="/contact"
-              className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 py-3 text-sm font-medium text-background"
-            >
-              Book a discovery call
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-        </div>
-      )}
-    </header>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 }
