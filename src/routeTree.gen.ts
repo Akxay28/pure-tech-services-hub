@@ -19,6 +19,7 @@ import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesProductEngineeringRouteImport } from './routes/services.product-engineering'
 import { Route as ServicesItStaffingRouteImport } from './routes/services.it-staffing'
 import { Route as ServicesAiSolutionsRouteImport } from './routes/services.ai-solutions'
+import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -71,6 +72,11 @@ const ServicesAiSolutionsRoute = ServicesAiSolutionsRouteImport.update({
   path: '/ai-solutions',
   getParentRoute: () => ServicesRoute,
 } as any)
+const ServicesSlugRoute = ServicesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ServicesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/services/ai-solutions': typeof ServicesAiSolutionsRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
@@ -90,6 +97,7 @@ export interface FileRoutesByTo {
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/services/ai-solutions': typeof ServicesAiSolutionsRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
@@ -103,6 +111,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/services/ai-solutions': typeof ServicesAiSolutionsRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/services'
     | '/sitemap.xml'
+    | '/services/$slug'
     | '/services/ai-solutions'
     | '/services/it-staffing'
     | '/services/product-engineering'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/careers'
     | '/contact'
     | '/sitemap.xml'
+    | '/services/$slug'
     | '/services/ai-solutions'
     | '/services/it-staffing'
     | '/services/product-engineering'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/services'
     | '/sitemap.xml'
+    | '/services/$slug'
     | '/services/ai-solutions'
     | '/services/it-staffing'
     | '/services/product-engineering'
@@ -227,10 +239,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesAiSolutionsRouteImport
       parentRoute: typeof ServicesRoute
     }
+    '/services/$slug': {
+      id: '/services/$slug'
+      path: '/$slug'
+      fullPath: '/services/$slug'
+      preLoaderRoute: typeof ServicesSlugRouteImport
+      parentRoute: typeof ServicesRoute
+    }
   }
 }
 
 interface ServicesRouteChildren {
+  ServicesSlugRoute: typeof ServicesSlugRoute
   ServicesAiSolutionsRoute: typeof ServicesAiSolutionsRoute
   ServicesItStaffingRoute: typeof ServicesItStaffingRoute
   ServicesProductEngineeringRoute: typeof ServicesProductEngineeringRoute
@@ -238,6 +258,7 @@ interface ServicesRouteChildren {
 }
 
 const ServicesRouteChildren: ServicesRouteChildren = {
+  ServicesSlugRoute: ServicesSlugRoute,
   ServicesAiSolutionsRoute: ServicesAiSolutionsRoute,
   ServicesItStaffingRoute: ServicesItStaffingRoute,
   ServicesProductEngineeringRoute: ServicesProductEngineeringRoute,
@@ -259,3 +280,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
