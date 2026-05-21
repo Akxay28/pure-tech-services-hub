@@ -140,10 +140,10 @@ function CaseStudies() {
               <div key={s.client} className="space-y-3">
                 <CaseStudyCard
                   client={s.client}
-                  sector={s.sector}
+                  industry={s.sector}
                   accent={s.accent}
-                  headline={s.headline}
-                  body={s.body}
+                  challenge={s.headline}
+                  outcome={s.body}
                   metrics={s.metrics.map((m) => ({ value: m.v, label: m.l }))}
                 />
                 <Link
