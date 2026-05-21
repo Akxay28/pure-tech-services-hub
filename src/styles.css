@@ -48,6 +48,9 @@
   --color-brand-yellow: var(--brand-yellow);
   --color-brand-green: var(--brand-green);
   --color-brand-ink: var(--brand-ink);
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-pink: var(--brand-pink);
+  --color-brand-pink-soft: var(--brand-pink-soft);
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);
 
