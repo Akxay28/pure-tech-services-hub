@@ -164,7 +164,7 @@ export function Header() {
                 >
                   {item.to ? (
                     <Link
-                      to={item.to}
+                      to={item.to as never}
                       className="relative flex items-center gap-1 px-4 py-2.5 text-[15px] font-semibold tracking-tight text-[color:var(--brand-purple)] hover:text-[color:var(--brand-pink)] transition-colors"
                     >
                       {item.label}
@@ -362,7 +362,7 @@ function ServicesMega({
               {items.map(({ title, subtitle, icon: Icon, to }) => (
                 <Link
                   key={title}
-                  to={to}
+                  to={to as never}
                   className="group flex items-start gap-3 rounded-2xl p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[color:var(--brand-pink-soft)]/40 hover:shadow-[0_12px_30px_-12px_rgba(46,11,125,0.18)]"
                 >
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[color:var(--brand-pink-soft)] text-[color:var(--brand-pink)] transition-transform duration-300 group-hover:scale-105">
@@ -392,7 +392,7 @@ function SimpleMega({ items }: { items: SimpleLink[] }) {
       {items.map((s) => (
         <Link
           key={s.label}
-          to={s.to}
+          to={s.to as never}
           className="group flex items-start justify-between gap-4 rounded-2xl p-4 transition-all hover:bg-[color:var(--brand-pink-soft)]/50"
         >
           <span className="min-w-0">
@@ -435,7 +435,7 @@ function MobileAccordion({
               {items.map((it) => (
                 <Link
                   key={it.title}
-                  to={it.to}
+                  to={it.to as never}
                   className="flex items-start gap-3 rounded-xl px-3 py-2.5 hover:bg-white"
                 >
                   <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white text-[color:var(--brand-pink)]">
