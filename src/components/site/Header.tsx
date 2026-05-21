@@ -89,7 +89,7 @@ const simpleMenus: Record<string, SimpleLink[]> = {
     { label: "Contact", to: "/contact", desc: "Talk to a senior engineer this week." },
   ],
   Resources: [
-    { label: "Case Studies", to: "/services/ai-solutions", desc: "Outcome metrics from recent engagements." },
+    { label: "Case Studies", to: "/case-studies", desc: "Outcome metrics from recent engagements." },
     { label: "All Services", to: "/services", desc: "Explore the full service catalogue." },
     { label: "Careers", to: "/careers", desc: "Engineering culture and hiring process." },
   ],
