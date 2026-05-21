@@ -47,31 +47,31 @@ const tabs: { key: TabKey; label: string; icon: LucideIcon }[] = [
 
 const serviceItems: Record<TabKey, ServiceItem[]> = {
   team: [
-    { title: "Global Capability Center", subtitle: "Empowering Global Teams", icon: Globe, to: "/services" },
+    { title: "Global Capability Center", subtitle: "Empowering Global Teams", icon: Globe, to: "/services/global-capability-center" },
     { title: "AI Solutions", subtitle: "AI that Drives Progress", icon: Sparkles, to: "/services/ai-solutions" },
-    { title: "Offshore Development", subtitle: "Cost-Effective Solutions", icon: Building2, to: "/services" },
+    { title: "Offshore Development", subtitle: "Cost-Effective Solutions", icon: Building2, to: "/services/offshore-development" },
     { title: "IT Staff Augmentation", subtitle: "Scale Your Tech Team", icon: UserCog, to: "/services/it-staffing" },
-    { title: "IT Outsourcing", subtitle: "Efficient IT Solutions", icon: Network, to: "/services" },
+    { title: "IT Outsourcing", subtitle: "Efficient IT Solutions", icon: Network, to: "/services/it-outsourcing" },
     { title: "Product Engineering", subtitle: "Innovating Your Products", icon: Boxes, to: "/services/product-engineering" },
-    { title: "Cloud Computing", subtitle: "Scalable Cloud Services", icon: Cloud, to: "/services" },
+    { title: "Cloud Computing", subtitle: "Scalable Cloud Services", icon: Cloud, to: "/services/cloud-computing" },
   ],
   offering: [
-    { title: "Software Development", subtitle: "Get world-class software solutions", icon: Code2, to: "/services/product-engineering" },
-    { title: "Remote Teams", subtitle: "Hire pre-vetted development team", icon: Users, to: "/services/it-staffing" },
-    { title: "Web Application Development", subtitle: "Build modern, intuitive & seamless web apps", icon: Layers, to: "/services/product-engineering" },
-    { title: "Mobile App Development", subtitle: "Get custom and responsive mobile apps", icon: Smartphone, to: "/services/product-engineering" },
-    { title: "Cloud & Infrastructure", subtitle: "Scale securely with cloud and infrastructure", icon: Cloud, to: "/services" },
-    { title: "Front End Development", subtitle: "Get perfect UI/UX for flawless experience", icon: MonitorSmartphone, to: "/services/product-engineering" },
-    { title: "Data Engineering", subtitle: "Modernize data pipelines for real-time insights", icon: Database, to: "/services" },
-    { title: "Cybersecurity", subtitle: "Secure your digital assets with confidence", icon: ShieldCheck, to: "/services" },
+    { title: "Software Development", subtitle: "Get world-class software solutions", icon: Code2, to: "/services/software-development" },
+    { title: "Remote Teams", subtitle: "Hire pre-vetted development team", icon: Users, to: "/services/remote-teams" },
+    { title: "Web Application Development", subtitle: "Build modern, intuitive & seamless web apps", icon: Layers, to: "/services/web-application-development" },
+    { title: "Mobile App Development", subtitle: "Get custom and responsive mobile apps", icon: Smartphone, to: "/services/mobile-app-development" },
+    { title: "Cloud & Infrastructure", subtitle: "Scale securely with cloud and infrastructure", icon: Cloud, to: "/services/cloud-infrastructure" },
+    { title: "Front End Development", subtitle: "Get perfect UI/UX for flawless experience", icon: MonitorSmartphone, to: "/services/front-end-development" },
+    { title: "Data Engineering", subtitle: "Modernize data pipelines for real-time insights", icon: Database, to: "/services/data-engineering" },
+    { title: "Cybersecurity", subtitle: "Secure your digital assets with confidence", icon: ShieldCheck, to: "/services/cybersecurity" },
   ],
   ai: [
-    { title: "AI Strategy & Consulting", subtitle: "Get future-proof operations with advanced AI", icon: Sparkles, to: "/services/ai-solutions" },
-    { title: "Custom AI Development", subtitle: "Building AI solutions tailored to your business", icon: Wand2, to: "/services/ai-solutions" },
-    { title: "AI Chatbot Development", subtitle: "Designing chatbots for smarter customer support", icon: MessageSquareCode, to: "/services/ai-solutions" },
-    { title: "Generative AI Development", subtitle: "Creating AI tools for content and ideas", icon: Brain, to: "/services/ai-solutions" },
-    { title: "AI Agents Development", subtitle: "Enhance operations through advanced AI agents", icon: Bot, to: "/services/ai-solutions" },
-    { title: "AI Integration", subtitle: "Integrating AI seamlessly into your stack", icon: Plug, to: "/services/ai-solutions" },
+    { title: "AI Strategy & Consulting", subtitle: "Get future-proof operations with advanced AI", icon: Sparkles, to: "/services/ai-strategy-consulting" },
+    { title: "Custom AI Development", subtitle: "Building AI solutions tailored to your business", icon: Wand2, to: "/services/custom-ai-development" },
+    { title: "AI Chatbot Development", subtitle: "Designing chatbots for smarter customer support", icon: MessageSquareCode, to: "/services/ai-chatbot-development" },
+    { title: "Generative AI Development", subtitle: "Creating AI tools for content and ideas", icon: Brain, to: "/services/generative-ai-development" },
+    { title: "AI Agents Development", subtitle: "Enhance operations through advanced AI agents", icon: Bot, to: "/services/ai-agents-development" },
+    { title: "AI Integration", subtitle: "Integrating AI seamlessly into your stack", icon: Plug, to: "/services/ai-integration" },
   ],
 };
 
@@ -89,7 +89,7 @@ const simpleMenus: Record<string, SimpleLink[]> = {
     { label: "Contact", to: "/contact", desc: "Talk to a senior engineer this week." },
   ],
   Resources: [
-    { label: "Case Studies", to: "/services/ai-solutions", desc: "Outcome metrics from recent engagements." },
+    { label: "Case Studies", to: "/case-studies", desc: "Outcome metrics from recent engagements." },
     { label: "All Services", to: "/services", desc: "Explore the full service catalogue." },
     { label: "Careers", to: "/careers", desc: "Engineering culture and hiring process." },
   ],
@@ -164,7 +164,7 @@ export function Header() {
                 >
                   {item.to ? (
                     <Link
-                      to={item.to}
+                      to={item.to as never}
                       className="relative flex items-center gap-1 px-4 py-2.5 text-[15px] font-semibold tracking-tight text-[color:var(--brand-purple)] hover:text-[color:var(--brand-pink)] transition-colors"
                     >
                       {item.label}
@@ -362,7 +362,7 @@ function ServicesMega({
               {items.map(({ title, subtitle, icon: Icon, to }) => (
                 <Link
                   key={title}
-                  to={to}
+                  to={to as never}
                   className="group flex items-start gap-3 rounded-2xl p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[color:var(--brand-pink-soft)]/40 hover:shadow-[0_12px_30px_-12px_rgba(46,11,125,0.18)]"
                 >
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[color:var(--brand-pink-soft)] text-[color:var(--brand-pink)] transition-transform duration-300 group-hover:scale-105">
@@ -392,7 +392,7 @@ function SimpleMega({ items }: { items: SimpleLink[] }) {
       {items.map((s) => (
         <Link
           key={s.label}
-          to={s.to}
+          to={s.to as never}
           className="group flex items-start justify-between gap-4 rounded-2xl p-4 transition-all hover:bg-[color:var(--brand-pink-soft)]/50"
         >
           <span className="min-w-0">
@@ -435,7 +435,7 @@ function MobileAccordion({
               {items.map((it) => (
                 <Link
                   key={it.title}
-                  to={it.to}
+                  to={it.to as never}
                   className="flex items-start gap-3 rounded-xl px-3 py-2.5 hover:bg-white"
                 >
                   <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-white text-[color:var(--brand-pink)]">

@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CaseStudiesRouteImport } from './routes/case-studies'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -19,6 +20,7 @@ import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as ServicesProductEngineeringRouteImport } from './routes/services.product-engineering'
 import { Route as ServicesItStaffingRouteImport } from './routes/services.it-staffing'
 import { Route as ServicesAiSolutionsRouteImport } from './routes/services.ai-solutions'
+import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -33,6 +35,11 @@ const ServicesRoute = ServicesRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaseStudiesRoute = CaseStudiesRouteImport.update({
+  id: '/case-studies',
+  path: '/case-studies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CareersRoute = CareersRouteImport.update({
@@ -71,14 +78,21 @@ const ServicesAiSolutionsRoute = ServicesAiSolutionsRouteImport.update({
   path: '/ai-solutions',
   getParentRoute: () => ServicesRoute,
 } as any)
+const ServicesSlugRoute = ServicesSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ServicesRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
+  '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/services/ai-solutions': typeof ServicesAiSolutionsRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
@@ -88,8 +102,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
+  '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/services/ai-solutions': typeof ServicesAiSolutionsRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
@@ -100,9 +116,11 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/careers': typeof CareersRoute
+  '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/services/$slug': typeof ServicesSlugRoute
   '/services/ai-solutions': typeof ServicesAiSolutionsRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
@@ -114,9 +132,11 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/careers'
+    | '/case-studies'
     | '/contact'
     | '/services'
     | '/sitemap.xml'
+    | '/services/$slug'
     | '/services/ai-solutions'
     | '/services/it-staffing'
     | '/services/product-engineering'
@@ -126,8 +146,10 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/careers'
+    | '/case-studies'
     | '/contact'
     | '/sitemap.xml'
+    | '/services/$slug'
     | '/services/ai-solutions'
     | '/services/it-staffing'
     | '/services/product-engineering'
@@ -137,9 +159,11 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/careers'
+    | '/case-studies'
     | '/contact'
     | '/services'
     | '/sitemap.xml'
+    | '/services/$slug'
     | '/services/ai-solutions'
     | '/services/it-staffing'
     | '/services/product-engineering'
@@ -150,6 +174,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   CareersRoute: typeof CareersRoute
+  CaseStudiesRoute: typeof CaseStudiesRoute
   ContactRoute: typeof ContactRoute
   ServicesRoute: typeof ServicesRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -176,6 +201,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/case-studies': {
+      id: '/case-studies'
+      path: '/case-studies'
+      fullPath: '/case-studies'
+      preLoaderRoute: typeof CaseStudiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/careers': {
@@ -227,10 +259,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesAiSolutionsRouteImport
       parentRoute: typeof ServicesRoute
     }
+    '/services/$slug': {
+      id: '/services/$slug'
+      path: '/$slug'
+      fullPath: '/services/$slug'
+      preLoaderRoute: typeof ServicesSlugRouteImport
+      parentRoute: typeof ServicesRoute
+    }
   }
 }
 
 interface ServicesRouteChildren {
+  ServicesSlugRoute: typeof ServicesSlugRoute
   ServicesAiSolutionsRoute: typeof ServicesAiSolutionsRoute
   ServicesItStaffingRoute: typeof ServicesItStaffingRoute
   ServicesProductEngineeringRoute: typeof ServicesProductEngineeringRoute
@@ -238,6 +278,7 @@ interface ServicesRouteChildren {
 }
 
 const ServicesRouteChildren: ServicesRouteChildren = {
+  ServicesSlugRoute: ServicesSlugRoute,
   ServicesAiSolutionsRoute: ServicesAiSolutionsRoute,
   ServicesItStaffingRoute: ServicesItStaffingRoute,
   ServicesProductEngineeringRoute: ServicesProductEngineeringRoute,
@@ -252,6 +293,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CareersRoute: CareersRoute,
+  CaseStudiesRoute: CaseStudiesRoute,
   ContactRoute: ContactRoute,
   ServicesRoute: ServicesRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
