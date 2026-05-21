@@ -48,6 +48,9 @@
   --color-brand-yellow: var(--brand-yellow);
   --color-brand-green: var(--brand-green);
   --color-brand-ink: var(--brand-ink);
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-pink: var(--brand-pink);
+  --color-brand-pink-soft: var(--brand-pink-soft);
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);
 
@@ -111,6 +114,10 @@
   --brand-yellow: oklch(0.87 0.17 95);
   --brand-green: oklch(0.7 0.2 145);
   --brand-ink: oklch(0.15 0.03 260);
+  --brand-purple: #2E0B7D;
+  --brand-pink: #FF4D8D;
+  --brand-pink-soft: #FCE4EC;
+  --gradient-cta: linear-gradient(95deg, #FF4D8D 0%, #FF7A00 100%);
 
   --chart-1: var(--brand-blue);
   --chart-2: var(--brand-green);
