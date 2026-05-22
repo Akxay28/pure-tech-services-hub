@@ -142,7 +142,8 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<TabKey>("team");
+    const [activeTab, setActiveTab] = useState<TabKey>("team");
+  const [activeHireTab, setActiveHireTab] = useState<HireTabKey>("ai");
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
 
