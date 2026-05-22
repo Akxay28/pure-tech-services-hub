@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode } from "react";
+import type { CaseStudy } from "@/lib/case-study";
 
 export function PageHero({
   eyebrow,
@@ -261,14 +262,7 @@ export function CaseStudyCard({
   outcome,
   metrics,
   accent = "var(--brand-blue)",
-}: {
-  client: string;
-  industry: string;
-  challenge: string;
-  outcome: string;
-  metrics: { value: string; label: string }[];
-  accent?: string;
-}) {
+}: CaseStudy) {
   return (
     <article className="relative glass-card rounded-3xl p-7 overflow-hidden">
       <div

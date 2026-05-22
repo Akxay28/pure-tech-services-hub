@@ -18,12 +18,13 @@ import {
   PrimaryButton,
   GhostButton,
   SectionHeader,
-  CaseStudyCard,
   Testimonial,
   CTASection,
   Stat,
 } from "@/components/site/Primitives";
 import { MeetTheTeam } from "./MeetTheTeam";
+import { CaseStudiesSection } from "./CaseStudiesSection";
+import type { CaseStudy } from "@/lib/case-study";
 
 export type Capability = { title: string; body: string };
 export type Step = { step: string; title: string; body: string };
@@ -38,7 +39,8 @@ export type ServicePageProps = {
   capabilities: Capability[];
   process: Step[];
   engagement: { name: string; desc: string; bullets: string[] }[];
-  caseStudies: React.ComponentProps<typeof CaseStudyCard>[];
+  /** Omit to hide; or pass `<CaseStudiesSection />` via extraSection on other page types */
+  caseStudies?: CaseStudy[];
   testimonials: React.ComponentProps<typeof Testimonial>[];
   faqs: Faq[];
   cta: { title: string; description: string };
@@ -200,21 +202,9 @@ export function ServicePage(p: ServicePageProps) {
         </div>
       </section>
 
-      {/* Case studies */}
-      <section className="px-5 lg:px-8 py-20">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            eyebrow="Case studies"
-            title="Recent work, anonymised where it has to be."
-            description="Numbers are real, names are sometimes changed at the client's request."
-          />
-          <div className="mt-12 grid lg:grid-cols-2 gap-6">
-            {p.caseStudies.map((c) => (
-              <CaseStudyCard key={c.client} {...c} accent={c.accent ?? p.accent} />
-            ))}
-          </div>
-        </div>
-      </section>
+      {p.caseStudies && p.caseStudies.length > 0 && (
+        <CaseStudiesSection caseStudies={p.caseStudies} accent={p.accent} />
+      )}
 
       {/* Testimonials */}
       <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">

@@ -1,12 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { GCCModelsSection } from "@/components/site/GCCModelSection";
 import { SubServicePage } from "@/components/site/SubServicePage";
 import { getSubServicePageProps } from "@/lib/get-sub-service-page-props";
-import { GCCIn12WeeksSection } from "@/components/site/GCCIn12WeeksSection";
 
-const props = getSubServicePageProps("global-capability-center");
+const props = getSubServicePageProps("it-outsourcing");
 
-export const Route = createFileRoute("/services/global-capability-center")({
+export const Route = createFileRoute("/services/it-outsourcing")({
   head: () => ({
     meta: [
       { title: `${props.eyebrow} — Pure Technology` },
@@ -15,19 +13,18 @@ export const Route = createFileRoute("/services/global-capability-center")({
       { property: "og:description", content: props.lede },
     ],
   }),
-  component: GlobalCapabilityCenter,
+  component: ItOutsourcing,
 });
 
-function GlobalCapabilityCenter() {
+function ItOutsourcing() {
   return (
     <SubServicePage
       {...props}
-      extraSection={
-        <>
-          <GCCIn12WeeksSection />
-          <GCCModelsSection accent={props.accent} />
-        </>
-      }
+      caseStudiesCopy={{
+        title: "Managed services outcomes from real transitions.",
+        description:
+          "Numbers are from live outsourcing engagements — client names anonymised where required.",
+      }}
     />
   );
 }

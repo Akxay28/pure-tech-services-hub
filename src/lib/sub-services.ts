@@ -19,7 +19,6 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { SubServicePageProps } from "@/components/site/SubServicePage";
-
 type Entry = Omit<SubServicePageProps, "title"> & { title: string };
 
 export const subServices: Record<string, Entry> = {

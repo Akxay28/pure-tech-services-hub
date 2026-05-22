@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/site/ServicePage";
+import { getCaseStudiesForMainService } from "@/lib/case-studies-by-service";
 import { TechnologyExpertiseSection } from "@/components/site/TechnologyExpertiseSectionForAiSolutionsPage";
 
 export const Route = createFileRoute("/services/it-staffing")({
@@ -129,35 +130,7 @@ function ItStaffing() {
           ],
         },
       ]}
-      caseStudies={[
-        {
-          client: "Northwind SaaS (USA)",
-          industry: "B2B SaaS",
-          challenge:
-            "A San Francisco-headquartered SaaS company needed to scale its India engineering centre from 8 to 40 engineers in 9 months, without diluting the bar set by its founding team.",
-          outcome:
-            "Embedded a Pure talent lead inside their hiring funnel, ran calibrated panels, and delivered 34 senior engineers over 9 months. Three are now tech leads; one is the India site head.",
-          metrics: [
-            { value: "34", label: "Senior hires" },
-            { value: "8.4 yrs", label: "Avg. experience" },
-            { value: "97%", label: "1-yr retention" },
-          ],
-        },
-        {
-          client: "Helix Robotics",
-          industry: "DeepTech",
-          challenge:
-            "A Pune-based robotics startup needed a specialist embedded systems team — a notoriously thin talent pool in India — in under 4 months for a hardware launch.",
-          outcome:
-            "Tapped our deeptech network across Pune, Bengaluru, and Coimbatore, ran a custom embedded-C plus RTOS technical bar, and stood up a 6-engineer team in 11 weeks.",
-          metrics: [
-            { value: "11 wks", label: "From brief to standup" },
-            { value: "6", label: "Embedded engineers" },
-            { value: "On-time", label: "Hardware launch" },
-          ],
-          accent: "var(--brand-red)",
-        },
-      ]}
+      caseStudies={getCaseStudiesForMainService("it-staffing")}
       testimonials={[
         {
           quote:

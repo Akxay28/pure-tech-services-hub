@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/site/ServicePage";
+import { getCaseStudiesForMainService } from "@/lib/case-studies-by-service";
 import { TechnologyExpertiseSection } from "@/components/site/TechnologyExpertiseSectionForAiSolutionsPage";
 
 export const Route = createFileRoute("/services/ai-solutions")({
@@ -129,35 +130,7 @@ function AiSolutions() {
           ],
         },
       ]}
-      caseStudies={[
-        {
-          client: "Top-5 Indian private bank",
-          industry: "BFSI",
-          challenge:
-            "Customer-service agents spent 40% of their time searching across 11 internal knowledge bases for product, policy, and regulatory answers.",
-          outcome:
-            "Built a RAG-powered agent assistant with citation-first answers, role-based access, and a compliance review trail. Rolled out to 3,200 agents across 14 cities in 5 months.",
-          metrics: [
-            { value: "37%", label: "AHT reduction" },
-            { value: "92%", label: "Answer acceptance" },
-            { value: "₹14 Cr", label: "Annual ops savings" },
-          ],
-        },
-        {
-          client: "Lumenpath Health",
-          industry: "HealthTech",
-          challenge:
-            "A digital-health platform needed to summarise multi-page patient histories for clinicians, but earlier LLM attempts hallucinated medications and dosages.",
-          outcome:
-            "Designed a constrained generation pipeline with structured extraction, a medication knowledge graph as a hard ground-truth layer, and a clinician feedback loop driving weekly evals.",
-          metrics: [
-            { value: "0", label: "Med hallucinations in eval" },
-            { value: "4.7/5", label: "Clinician NPS" },
-            { value: "11×", label: "Faster chart review" },
-          ],
-          accent: "var(--brand-green)",
-        },
-      ]}
+      caseStudies={getCaseStudiesForMainService("ai-solutions")}
       testimonials={[
         {
           quote:

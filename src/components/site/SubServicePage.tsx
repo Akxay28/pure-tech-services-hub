@@ -10,6 +10,14 @@ import {
   CTASection,
 } from "@/components/site/Primitives";
 import { MeetTheTeam } from "@/components/site/MeetTheTeam";
+import { CaseStudiesSection } from "./CaseStudiesSection";
+import type { CaseStudy } from "@/lib/case-study";
+
+export type CaseStudiesCopy = {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+};
 
 export type SubServicePageProps = {
   eyebrow: string;
@@ -25,6 +33,9 @@ export type SubServicePageProps = {
   tech?: string[];
   faqs: { q: string; a: string }[];
   siblingLinks: { to: string; label: string }[];
+  /** Per-page case study cards — same layout, content from route or getSubServicePageProps() */
+  caseStudies?: CaseStudy[];
+  caseStudiesCopy?: CaseStudiesCopy;
   /** Optional section — pass from the route for this slug only */
   extraSection?: ReactNode;
 };
@@ -148,6 +159,14 @@ export function SubServicePage(p: SubServicePageProps) {
           </div>
         </div>
       </section>
+
+      {p.caseStudies && p.caseStudies.length > 0 && (
+        <CaseStudiesSection
+          caseStudies={p.caseStudies}
+          accent={p.accent}
+          {...p.caseStudiesCopy}
+        />
+      )}
 
       {/* Process */}
       {/* <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">

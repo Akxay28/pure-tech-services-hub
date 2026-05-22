@@ -1,5 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { SubServicePage } from "@/components/site/SubServicePage";
+import { getSubServicePageProps } from "@/lib/get-sub-service-page-props";
 import { subServices } from "@/lib/sub-services";
 
 export const Route = createFileRoute("/services/$slug")({
@@ -33,6 +34,7 @@ export const Route = createFileRoute("/services/$slug")({
 });
 
 function SubServiceRoute() {
-  const { entry, slug } = Route.useLoaderData();
-  return <SubServicePage {...entry} title={entry.title} />;
+  const { slug } = Route.useLoaderData();
+  if (!(slug in subServices)) throw notFound();
+  return <SubServicePage {...getSubServicePageProps(slug as keyof typeof subServices)} />;
 }

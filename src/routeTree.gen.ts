@@ -23,6 +23,7 @@ import { Route as ServicesProductEngineeringRouteImport } from './routes/service
 import { Route as ServicesOffshoreDevelopmentRouteImport } from './routes/services.offshore-development'
 import { Route as ServicesMobileAppDevelopmentRouteImport } from './routes/services.mobile-app-development'
 import { Route as ServicesItStaffingRouteImport } from './routes/services.it-staffing'
+import { Route as ServicesItOutsourcingRouteImport } from './routes/services.it-outsourcing'
 import { Route as ServicesGlobalCapabilityCenterRouteImport } from './routes/services.global-capability-center'
 import { Route as ServicesGenerativeAiDevelopmentRouteImport } from './routes/services.generative-ai-development'
 import { Route as ServicesFrontEndDevelopmentRouteImport } from './routes/services.front-end-development'
@@ -111,6 +112,11 @@ const ServicesMobileAppDevelopmentRoute =
 const ServicesItStaffingRoute = ServicesItStaffingRouteImport.update({
   id: '/it-staffing',
   path: '/it-staffing',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesItOutsourcingRoute = ServicesItOutsourcingRouteImport.update({
+  id: '/it-outsourcing',
+  path: '/it-outsourcing',
   getParentRoute: () => ServicesRoute,
 } as any)
 const ServicesGlobalCapabilityCenterRoute =
@@ -213,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/services/front-end-development': typeof ServicesFrontEndDevelopmentRoute
   '/services/generative-ai-development': typeof ServicesGenerativeAiDevelopmentRoute
   '/services/global-capability-center': typeof ServicesGlobalCapabilityCenterRoute
+  '/services/it-outsourcing': typeof ServicesItOutsourcingRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
   '/services/mobile-app-development': typeof ServicesMobileAppDevelopmentRoute
   '/services/offshore-development': typeof ServicesOffshoreDevelopmentRoute
@@ -242,6 +249,7 @@ export interface FileRoutesByTo {
   '/services/front-end-development': typeof ServicesFrontEndDevelopmentRoute
   '/services/generative-ai-development': typeof ServicesGenerativeAiDevelopmentRoute
   '/services/global-capability-center': typeof ServicesGlobalCapabilityCenterRoute
+  '/services/it-outsourcing': typeof ServicesItOutsourcingRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
   '/services/mobile-app-development': typeof ServicesMobileAppDevelopmentRoute
   '/services/offshore-development': typeof ServicesOffshoreDevelopmentRoute
@@ -273,6 +281,7 @@ export interface FileRoutesById {
   '/services/front-end-development': typeof ServicesFrontEndDevelopmentRoute
   '/services/generative-ai-development': typeof ServicesGenerativeAiDevelopmentRoute
   '/services/global-capability-center': typeof ServicesGlobalCapabilityCenterRoute
+  '/services/it-outsourcing': typeof ServicesItOutsourcingRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
   '/services/mobile-app-development': typeof ServicesMobileAppDevelopmentRoute
   '/services/offshore-development': typeof ServicesOffshoreDevelopmentRoute
@@ -305,6 +314,7 @@ export interface FileRouteTypes {
     | '/services/front-end-development'
     | '/services/generative-ai-development'
     | '/services/global-capability-center'
+    | '/services/it-outsourcing'
     | '/services/it-staffing'
     | '/services/mobile-app-development'
     | '/services/offshore-development'
@@ -334,6 +344,7 @@ export interface FileRouteTypes {
     | '/services/front-end-development'
     | '/services/generative-ai-development'
     | '/services/global-capability-center'
+    | '/services/it-outsourcing'
     | '/services/it-staffing'
     | '/services/mobile-app-development'
     | '/services/offshore-development'
@@ -364,6 +375,7 @@ export interface FileRouteTypes {
     | '/services/front-end-development'
     | '/services/generative-ai-development'
     | '/services/global-capability-center'
+    | '/services/it-outsourcing'
     | '/services/it-staffing'
     | '/services/mobile-app-development'
     | '/services/offshore-development'
@@ -484,6 +496,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesItStaffingRouteImport
       parentRoute: typeof ServicesRoute
     }
+    '/services/it-outsourcing': {
+      id: '/services/it-outsourcing'
+      path: '/it-outsourcing'
+      fullPath: '/services/it-outsourcing'
+      preLoaderRoute: typeof ServicesItOutsourcingRouteImport
+      parentRoute: typeof ServicesRoute
+    }
     '/services/global-capability-center': {
       id: '/services/global-capability-center'
       path: '/global-capability-center'
@@ -599,6 +618,7 @@ interface ServicesRouteChildren {
   ServicesFrontEndDevelopmentRoute: typeof ServicesFrontEndDevelopmentRoute
   ServicesGenerativeAiDevelopmentRoute: typeof ServicesGenerativeAiDevelopmentRoute
   ServicesGlobalCapabilityCenterRoute: typeof ServicesGlobalCapabilityCenterRoute
+  ServicesItOutsourcingRoute: typeof ServicesItOutsourcingRoute
   ServicesItStaffingRoute: typeof ServicesItStaffingRoute
   ServicesMobileAppDevelopmentRoute: typeof ServicesMobileAppDevelopmentRoute
   ServicesOffshoreDevelopmentRoute: typeof ServicesOffshoreDevelopmentRoute
@@ -622,6 +642,7 @@ const ServicesRouteChildren: ServicesRouteChildren = {
   ServicesFrontEndDevelopmentRoute: ServicesFrontEndDevelopmentRoute,
   ServicesGenerativeAiDevelopmentRoute: ServicesGenerativeAiDevelopmentRoute,
   ServicesGlobalCapabilityCenterRoute: ServicesGlobalCapabilityCenterRoute,
+  ServicesItOutsourcingRoute: ServicesItOutsourcingRoute,
   ServicesItStaffingRoute: ServicesItStaffingRoute,
   ServicesMobileAppDevelopmentRoute: ServicesMobileAppDevelopmentRoute,
   ServicesOffshoreDevelopmentRoute: ServicesOffshoreDevelopmentRoute,

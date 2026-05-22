@@ -1,17 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SubServicePage } from "@/components/site/SubServicePage";
 import { TechnologyExpertiseSection } from "@/components/site/TechnologyExpertiseSectionForAiSolutionsPage";
-import { subServices } from "@/lib/sub-services";
+import { getSubServicePageProps } from "@/lib/get-sub-service-page-props";
 
-const entry = subServices["mobile-app-development"];
+const props = getSubServicePageProps("mobile-app-development");
 
 export const Route = createFileRoute("/services/mobile-app-development")({
   head: () => ({
     meta: [
-      { title: `${entry.eyebrow} — Pure Technology` },
-      { name: "description", content: entry.lede },
-      { property: "og:title", content: `${entry.eyebrow} — Pure Technology` },
-      { property: "og:description", content: entry.lede },
+      { title: `${props.eyebrow} — Pure Technology` },
+      { name: "description", content: props.lede },
+      { property: "og:title", content: `${props.eyebrow} — Pure Technology` },
+      { property: "og:description", content: props.lede },
     ],
   }),
   component: MobileAppDevelopment,
@@ -20,8 +20,7 @@ export const Route = createFileRoute("/services/mobile-app-development")({
 function MobileAppDevelopment() {
   return (
     <SubServicePage
-      {...entry}
-      title={entry.title}
+      {...props}
       extraSection={
         <TechnologyExpertiseSection
   accent="var(--brand-green)"

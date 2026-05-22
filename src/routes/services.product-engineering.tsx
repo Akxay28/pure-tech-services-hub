@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/site/ServicePage";
+import { getCaseStudiesForMainService } from "@/lib/case-studies-by-service";
 import { TechnologyExpertiseSection } from "@/components/site/TechnologyExpertiseSectionForAiSolutionsPage";
 
 export const Route = createFileRoute("/services/product-engineering")({
@@ -129,35 +130,7 @@ function ProductEngineering() {
           ],
         },
       ]}
-      caseStudies={[
-        {
-          client: "FinEdge Capital",
-          industry: "WealthTech",
-          challenge:
-            "A regulated Indian wealth platform needed to ship a new advisor workstation and a customer mobile app in 6 months — synchronised launches, single quality bar.",
-          outcome:
-            "Stood up an 11-person squad across design, web, iOS, Android, and backend. Shipped both surfaces in 5.5 months with a SEBI-aligned audit trail and a 99.97% uptime SLA in the first quarter.",
-          metrics: [
-            { value: "5.5 mo", label: "Launch timeline" },
-            { value: "99.97%", label: "First-quarter SLA" },
-            { value: "4.7★", label: "App store rating" },
-          ],
-        },
-        {
-          client: "GreenLane Logistics",
-          industry: "Supply Chain",
-          challenge:
-            "A Singapore-headquartered logistics platform was on legacy Rails monolith infrastructure that couldn't survive the next 10× of growth.",
-          outcome:
-            "Re-architected to event-driven services on GCP, strangled the monolith over 9 months without a single customer-visible outage, and cut average API latency from 740ms to 95ms.",
-          metrics: [
-            { value: "8×", label: "Throughput" },
-            { value: "−87%", label: "API latency" },
-            { value: "0", label: "Downtime in cutover" },
-          ],
-          accent: "var(--brand-orange)",
-        },
-      ]}
+      caseStudies={getCaseStudiesForMainService("product-engineering")}
       testimonials={[
         {
           quote:
