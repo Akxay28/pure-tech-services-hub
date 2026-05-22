@@ -2,6 +2,34 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode } from "react";
 import type { CaseStudy } from "@/lib/case-study";
+import { brandIconGradient } from "@/lib/brand-colors";
+
+/** Rounded icon tile — same gradient treatment as the homepage delivery cards. */
+export function BrandIconBox({
+  color,
+  children,
+  size = "md",
+  className = "",
+}: {
+  color: string;
+  children: ReactNode;
+  size?: "sm" | "md" | "lg";
+  className?: string;
+}) {
+  const sizes = {
+    sm: "h-8 w-8 rounded-lg",
+    md: "h-11 w-11 rounded-xl",
+    lg: "h-12 w-12 rounded-2xl",
+  };
+  return (
+    <span
+      className={`grid place-items-center text-white ${sizes[size]} ${className}`}
+      style={{ background: brandIconGradient(color) }}
+    >
+      {children}
+    </span>
+  );
+}
 
 export function PageHero({
   eyebrow,
@@ -238,9 +266,7 @@ export function Testimonial({
       <figcaption className="mt-6 flex items-center gap-3">
         <span
           className="grid h-11 w-11 place-items-center rounded-full font-display font-semibold text-white"
-          style={{
-            background: `linear-gradient(135deg, ${accent}, color-mix(in oklab, ${accent} 55%, white))`,
-          }}
+          style={{ background: brandIconGradient(accent) }}
         >
           {initials}
         </span>

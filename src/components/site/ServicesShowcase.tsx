@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Brain, Users, Boxes, ArrowRight, Check } from "lucide-react";
+import { BRAND } from "@/lib/brand-colors";
 
 type ServiceKey = "ai" | "staffing" | "product";
 
@@ -19,7 +20,7 @@ const items: {
     tagline: "Take GenAI from prototype to production.",
     to: "/services/ai-solutions",
     Icon: Brain,
-    accent: "var(--brand-blue)",
+    accent: BRAND.blue,
     bullets: [
       "Custom LLM & RAG systems on your data",
       "Agentic workflows and copilots",
@@ -37,7 +38,7 @@ const items: {
     tagline: "Pre-vetted Indian engineers, ready in days.",
     to: "/services/it-staffing",
     Icon: Users,
-    accent: "var(--brand-orange)",
+    accent: BRAND.orange,
     bullets: [
       "Contract, contract-to-hire, full-time",
       "Top 3% talent across India tier-1 hubs",
@@ -55,7 +56,7 @@ const items: {
     tagline: "Full-stack squads that ship like a startup.",
     to: "/services/product-engineering",
     Icon: Boxes,
-    accent: "var(--brand-green)",
+    accent: BRAND.green,
     bullets: [
       "Design, web, mobile, backend, DevOps",
       "Two-week launch cycles, weekly demos",

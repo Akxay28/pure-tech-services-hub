@@ -25,6 +25,13 @@ import {
 import { MeetTheTeam } from "./MeetTheTeam";
 import { CaseStudiesSection } from "./CaseStudiesSection";
 import type { CaseStudy } from "@/lib/case-study";
+import {
+  accentAt,
+  brandIconGradient,
+  BRAND,
+  testimonialAccentAt,
+} from "@/lib/brand-colors";
+import { BrandIconBox } from "@/components/site/Primitives";
 
 export type Capability = { title: string; body: string };
 export type Step = { step: string; title: string; body: string };
@@ -72,12 +79,10 @@ export function ServicePage(p: ServicePageProps) {
       <section className="px-5 lg:px-8 py-20">
         <div className="mx-auto max-w-7xl grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-5">
-            <div
-              className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground"
-            >
+            <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               <span
                 className="h-1 w-6 rounded-full"
-                style={{ background: p.accent }}
+                style={{ background: BRAND.gradientBrand }}
               />
               The practice
             </div>
@@ -104,20 +109,15 @@ export function ServicePage(p: ServicePageProps) {
             description="Everything we offer within this practice, delivered by senior practitioners — not handed to juniors after the contract is signed."
           />
           <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {p.capabilities.map((c) => (
+            {p.capabilities.map((c, i) => (
               <div
                 key={c.title}
                 className="rounded-2xl border border-border bg-surface p-6 hover:shadow-soft transition-shadow"
               >
                 <div className="flex items-center gap-3">
-                  <span
-                    className="grid h-8 w-8 place-items-center rounded-lg text-white"
-                    style={{
-                      background: `linear-gradient(135deg, ${p.accent}, color-mix(in oklab, ${p.accent} 55%, white))`,
-                    }}
-                  >
+                  <BrandIconBox color={accentAt(i)} size="sm">
                     <Check className="h-4 w-4" />
-                  </span>
+                  </BrandIconBox>
                   <h3 className="text-base font-display font-semibold">
                     {c.title}
                   </h3>
@@ -143,10 +143,9 @@ export function ServicePage(p: ServicePageProps) {
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
               {p.process.map((s, i) => (
                 <div key={s.step} className="relative">
-                  <div className="relative z-10 h-8 w-8 rounded-full grid place-items-center text-xs font-semibold text-white"
-                    style={{
-                      background: `linear-gradient(135deg, ${p.accent}, color-mix(in oklab, ${p.accent} 55%, white))`,
-                    }}
+                  <div
+                    className="relative z-10 h-8 w-8 rounded-full grid place-items-center text-xs font-semibold text-white"
+                    style={{ background: brandIconGradient(accentAt(i)) }}
                   >
                     {i + 1}
                   </div>
@@ -171,12 +170,15 @@ export function ServicePage(p: ServicePageProps) {
             title="Commercial shapes that fit how you actually work."
           />
           <div className="mt-12 grid lg:grid-cols-3 gap-5">
-            {p.engagement.map((m) => (
+            {p.engagement.map((m, i) => (
               <div
                 key={m.name}
                 className="glass-card rounded-3xl p-7 flex flex-col"
               >
-                <div className="text-xs font-semibold uppercase tracking-[0.18em]" style={{ color: p.accent }}>
+                <div
+                  className="text-xs font-semibold uppercase tracking-[0.18em]"
+                  style={{ color: accentAt(i) }}
+                >
                   {m.name}
                 </div>
                 <p className="mt-3 text-sm text-foreground/85 leading-relaxed">
@@ -190,7 +192,7 @@ export function ServicePage(p: ServicePageProps) {
                     >
                       <span
                         className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0"
-                        style={{ background: p.accent }}
+                        style={{ background: accentAt(i) }}
                       />
                       {b}
                     </li>
@@ -214,18 +216,22 @@ export function ServicePage(p: ServicePageProps) {
             title="What the people writing the cheques say."
           />
           <div className="mt-12 grid lg:grid-cols-3 gap-5">
-            {p.testimonials.map((t) => (
-              <Testimonial key={t.name} {...t} accent={t.accent ?? p.accent} />
+            {p.testimonials.map((t, i) => (
+              <Testimonial
+                key={t.name}
+                {...t}
+                accent={t.accent ?? testimonialAccentAt(i)}
+              />
             ))}
           </div>
         </div>
       </section>
 
       {/* Trust */}
-      <TrustSection accent={p.accent} />
+      <TrustSection />
 
       {/* FAQ */}
-      <FaqList faqs={p.faqs} accent={p.accent} />
+      <FaqList faqs={p.faqs} />
 
       {/* Sibling services */}
       <section className="px-5 lg:px-8 py-16">
@@ -256,13 +262,13 @@ export function ServicePage(p: ServicePageProps) {
         </div>
       </section>
 
-      <MeetTheTeam accent={p.accent} />
+      <MeetTheTeam />
       <CTASection {...p.cta} />
     </>
   );
 }
 
-function FaqList({ faqs, accent }: { faqs: Faq[]; accent: string }) {
+function FaqList({ faqs }: { faqs: Faq[] }) {
   const [open, setOpen] = useState<number | null>(0);
   return (
     <section className="px-5 lg:px-8 py-20">
@@ -289,9 +295,7 @@ function FaqList({ faqs, accent }: { faqs: Faq[]; accent: string }) {
                   </span>
                   <span
                     className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-white transition-transform"
-                    style={{
-                      background: `linear-gradient(135deg, ${accent}, color-mix(in oklab, ${accent} 55%, white))`,
-                    }}
+                    style={{ background: brandIconGradient(accentAt(i)) }}
                   >
                     {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
                   </span>
@@ -310,37 +314,43 @@ function FaqList({ faqs, accent }: { faqs: Faq[]; accent: string }) {
   );
 }
 
-function TrustSection({ accent }: { accent: string }) {
+function TrustSection() {
   const pillars = [
     {
       Icon: ShieldCheck,
       title: "Compliance you can audit",
       body: "SOC 2 Type II aligned process, ISO 27001 controls, DPDP-ready data handling, and signed MSAs that don't read like a trap.",
+      accent: BRAND.blue,
     },
     {
       Icon: Award,
       title: "Senior by default",
       body: "9 years average experience on every squad. The engineers you meet in the pitch are the engineers who ship — no bait-and-switch.",
+      accent: BRAND.orange,
     },
     {
       Icon: Users2,
       title: "Top 3% talent bar",
       body: "Every engineer clears a 4-stage technical bar modelled on FAANG-style hiring. Only ~3% of applicants make our bench.",
+      accent: BRAND.green,
     },
     {
       Icon: Clock4,
       title: "Predictable cadence",
       body: "Two-week ship cycles, a Friday demo, and a written changelog. You always know what's done, what's next, and what's at risk.",
+      accent: BRAND.red,
     },
     {
       Icon: HeartHandshake,
       title: "Long-term partnership",
       body: "Average client tenure is 3.4 years. We design for year two of a relationship, not the first invoice — and it shows in the work.",
+      accent: BRAND.yellow,
     },
     {
       Icon: LineChart,
       title: "Outcomes, measured",
       body: "Every engagement starts with a defined success metric and a shared dashboard. We report on outcomes, not just hours burned.",
+      accent: BRAND.blue,
     },
   ];
 
@@ -360,13 +370,13 @@ function TrustSection({ accent }: { accent: string }) {
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
             <span
               className="h-1 w-6 rounded-full"
-              style={{ background: accent }}
+              style={{ background: BRAND.gradientBrand }}
             />
             Why trust Pure Technology
           </div>
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight">
             Six reasons enterprise teams{" "}
-            <span style={{ color: accent }}>renew with us, year after year.</span>
+            <span className="text-gradient-brand">renew with us, year after year.</span>
           </h2>
           <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
             Trust isn't a logo wall — it's the operating rigour you feel from
@@ -375,19 +385,14 @@ function TrustSection({ accent }: { accent: string }) {
         </div>
 
         <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {pillars.map(({ Icon, title, body }) => (
+          {pillars.map(({ Icon, title, body, accent }) => (
             <div
               key={title}
               className="glass-card rounded-2xl p-6 transition-transform hover:-translate-y-1 duration-300"
             >
-              <span
-                className="grid h-11 w-11 place-items-center rounded-xl text-white"
-                style={{
-                  background: `linear-gradient(135deg, ${accent}, color-mix(in oklab, ${accent} 55%, white))`,
-                }}
-              >
+              <BrandIconBox color={accent}>
                 <Icon className="h-5 w-5" />
-              </span>
+              </BrandIconBox>
               <h3 className="mt-4 text-lg font-display font-semibold">
                 {title}
               </h3>
@@ -402,11 +407,11 @@ function TrustSection({ accent }: { accent: string }) {
           <span className="uppercase tracking-[0.18em] text-muted-foreground text-[11px]">
             Certifications & registrations
           </span>
-          {badges.map((b) => (
+          {badges.map((b, i) => (
             <span key={b} className="inline-flex items-center gap-2">
               <span
                 className="h-1.5 w-1.5 rounded-full"
-                style={{ background: accent }}
+                style={{ background: accentAt(i) }}
               />
               {b}
             </span>

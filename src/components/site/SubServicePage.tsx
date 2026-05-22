@@ -12,6 +12,8 @@ import {
 import { MeetTheTeam } from "@/components/site/MeetTheTeam";
 import { CaseStudiesSection } from "./CaseStudiesSection";
 import type { CaseStudy } from "@/lib/case-study";
+import { accentAt, brandIconGradient } from "@/lib/brand-colors";
+import { BrandIconBox } from "@/components/site/Primitives";
 
 export type CaseStudiesCopy = {
   eyebrow?: string;
@@ -60,16 +62,12 @@ export function SubServicePage(p: SubServicePageProps) {
       <section className="px-5 lg:px-8 py-16">
         <div className="mx-auto max-w-7xl grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-5">
-            <span
-              className="grid h-12 w-12 place-items-center rounded-2xl text-white shadow-soft"
-              style={{
-                background: `linear-gradient(135deg, ${p.accent}, color-mix(in oklab, ${p.accent} 55%, white))`,
-              }}
-            >
+            <BrandIconBox color={p.accent} size="lg" className="shadow-soft">
               <Icon className="h-6 w-6" />
-            </span>
+            </BrandIconBox>
             <h2 className="mt-5 text-3xl lg:text-4xl font-display font-bold leading-tight">
-              Built for teams that need this to <span style={{ color: p.accent }}>just work.</span>
+              Built for teams that need this to{" "}
+              <span className="text-gradient-brand">just work.</span>
             </h2>
           </div>
           <div className="lg:col-span-7">
@@ -77,14 +75,14 @@ export function SubServicePage(p: SubServicePageProps) {
               Who this is for
             </p>
             <ul className="mt-4 grid sm:grid-cols-2 gap-3">
-              {p.whoFor.map((w) => (
+              {p.whoFor.map((w, i) => (
                 <li
                   key={w}
                   className="flex items-start gap-3 rounded-2xl border border-border bg-surface p-4"
                 >
                   <span
                     className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full text-white"
-                    style={{ background: p.accent }}
+                    style={{ background: brandIconGradient(accentAt(i)) }}
                   >
                     <Check className="h-3.5 w-3.5" />
                   </span>
@@ -107,20 +105,15 @@ export function SubServicePage(p: SubServicePageProps) {
             description="Every engagement is led by senior practitioners. You meet them in the pitch; they ship the work."
           />
           <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {p.capabilities.map((c) => (
+            {p.capabilities.map((c, i) => (
               <div
                 key={c.title}
                 className="rounded-2xl border border-border bg-surface p-6 hover:shadow-soft transition-shadow"
               >
                 <div className="flex items-center gap-3">
-                  <span
-                    className="grid h-8 w-8 place-items-center rounded-lg text-white"
-                    style={{
-                      background: `linear-gradient(135deg, ${p.accent}, color-mix(in oklab, ${p.accent} 55%, white))`,
-                    }}
-                  >
+                  <BrandIconBox color={accentAt(i)} size="sm">
                     <Sparkles className="h-4 w-4" />
-                  </span>
+                  </BrandIconBox>
                   <h3 className="text-base font-display font-semibold">{c.title}</h3>
                 </div>
                 <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{c.body}</p>
@@ -138,17 +131,17 @@ export function SubServicePage(p: SubServicePageProps) {
             title="Numbers from real engagements."
           />
           <div className="mt-12 grid md:grid-cols-3 gap-5">
-            {p.outcomes.map((o) => (
+            {p.outcomes.map((o, i) => (
               <div
                 key={o.label}
                 className="rounded-3xl p-7 border border-border bg-surface"
                 style={{
-                  background: `linear-gradient(180deg, color-mix(in oklab, ${p.accent} 5%, white), white)`,
+                  background: `linear-gradient(180deg, color-mix(in oklab, ${accentAt(i)} 5%, white), white)`,
                 }}
               >
                 <div
                   className="text-4xl sm:text-5xl font-display font-bold tracking-tight"
-                  style={{ color: p.accent }}
+                  style={{ color: accentAt(i) }}
                 >
                   {o.metric}
                 </div>
@@ -218,7 +211,7 @@ export function SubServicePage(p: SubServicePageProps) {
         <div className="mx-auto max-w-4xl">
           <SectionHeader eyebrow="FAQ" title="The questions we hear most." align="center" />
           <div className="mt-10 space-y-3">
-            {p.faqs.map((f) => (
+            {p.faqs.map((f, i) => (
               <details
                 key={f.q}
                 className="group rounded-2xl border border-border bg-surface p-5 open:shadow-soft"
@@ -227,7 +220,7 @@ export function SubServicePage(p: SubServicePageProps) {
                   {f.q}
                   <span
                     className="grid h-7 w-7 shrink-0 place-items-center rounded-full text-white text-sm transition-transform group-open:rotate-45"
-                    style={{ background: p.accent }}
+                    style={{ background: brandIconGradient(accentAt(i)) }}
                   >
                     +
                   </span>
@@ -266,7 +259,7 @@ export function SubServicePage(p: SubServicePageProps) {
         </div>
       </section>
 
-      <MeetTheTeam accent={p.accent} />
+      <MeetTheTeam />
 
       <CTASection
         title="Ready to scope this in detail?"

@@ -1,4 +1,5 @@
 import { Mail, Linkedin } from "lucide-react";
+import { brandIconGradient, BRAND, testimonialAccentAt } from "@/lib/brand-colors";
 
 interface TeamMember {
   name: string;
@@ -32,10 +33,6 @@ const TEAM: TeamMember[] = [
   },
 ];
 
-interface Props {
-  accent?: string;
-}
-
 const EMAIL_SUBJECT = "Inquiry — Pure Technology";
 
 const EMAIL_BODY = "Hello,\n\nI would like to get in touch regarding:\n\n";
@@ -52,7 +49,7 @@ function buildGmailComposeLink(email: string) {
   return `https://mail.google.com/mail/?${params.toString()}`;
 }
 
-export function MeetTheTeam({ accent = "var(--brand-blue)" }: Props) {
+export function MeetTheTeam() {
   return (
     <section className="px-5 lg:px-8 py-20 bg-surface">
       <div className="mx-auto max-w-5xl text-center">
@@ -77,14 +74,14 @@ export function MeetTheTeam({ accent = "var(--brand-blue)" }: Props) {
         {/* Underline accent */}
         <div
           className="mx-auto mt-4 h-1 w-16 rounded-full"
-          style={{
-            background: `linear-gradient(90deg, ${accent}, color-mix(in oklab, ${accent} 50%, orange))`,
-          }}
+          style={{ background: BRAND.gradientBrand }}
         />
 
         {/* Cards */}
         <div className="mt-16 flex flex-wrap justify-center gap-10">
-          {TEAM.map((member) => (
+          {TEAM.map((member, i) => {
+            const accent = testimonialAccentAt(i);
+            return (
             <div key={member.name} className="group flex flex-col items-center w-56">
 
               {/* Photo with layered border */}
@@ -94,7 +91,7 @@ export function MeetTheTeam({ accent = "var(--brand-blue)" }: Props) {
                   className="absolute -bottom-2 -right-2 h-full w-full rounded-2xl transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"
                   style={{ background: accent, opacity: 0.25 }}
                 />
-                {/* Orange bottom-right accent (matches screenshot) */}
+                {/* Bottom-right accent (matches homepage testimonial cards) */}
                 <div
                   className="absolute -bottom-1.5 -right-1.5 h-10 w-10 rounded-br-2xl"
                   style={{ background: accent, opacity: 0.7 }}
@@ -112,7 +109,7 @@ export function MeetTheTeam({ accent = "var(--brand-blue)" }: Props) {
                   {/* Initials fallback */}
                   <div
                     className="absolute inset-0 flex items-center justify-center text-2xl font-bold text-white"
-                    style={{ background: `linear-gradient(135deg, ${accent}, color-mix(in oklab, ${accent} 50%, #1e293b))` }}
+                    style={{ background: brandIconGradient(accent) }}
                   >
                     {member.name.split(" ").slice(1).map(n => n[0]).join("")}
                   </div>
@@ -178,7 +175,8 @@ export function MeetTheTeam({ accent = "var(--brand-blue)" }: Props) {
               </div>
 
             </div>
-          ))}
+          );
+          })}
         </div>
       </div>
     </section>

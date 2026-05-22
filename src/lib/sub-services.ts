@@ -19,6 +19,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { SubServicePageProps } from "@/components/site/SubServicePage";
+import { BRAND } from "@/lib/brand-colors";
+
 type Entry = Omit<SubServicePageProps, "title"> & { title: string };
 
 export const subServices: Record<string, Entry> = {
@@ -27,7 +29,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "Global Capability Center",
     title: "Stand up your GCC in India — without the 2-year build.",
     lede: "We help global enterprises launch and scale captive engineering centers in India — from legal entity and real estate to a 50-engineer org chart that ships in week one.",
-    accent: "var(--brand-blue)",
+    accent: BRAND.orange,
     Icon: Globe,
     heroStats: [
       { value: "12 wks", label: "Avg. GCC setup" },
@@ -77,7 +79,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "Offshore Development",
     title: "Offshore teams that ship like your in-house team.",
     lede: "Senior offshore engineering pods that integrate directly with your stand-ups, codebase, and release train — no agency middle layer, no time-zone games.",
-    accent: "var(--brand-green)",
+    accent: BRAND.orange,
     Icon: Building2,
     heroStats: [
       { value: "60%", label: "Avg. cost reduction" },
@@ -126,7 +128,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "IT Outsourcing",
     title: "Outsource IT — not your standards.",
     lede: "End-to-end IT outsourcing for enterprises that want lower run-cost without surrendering quality, security posture, or institutional knowledge.",
-    accent: "var(--brand-orange)",
+    accent: BRAND.orange,
     Icon: Network,
     heroStats: [
       { value: "35–55%", label: "Run-cost reduction" },
@@ -175,7 +177,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "Cloud Computing",
     title: "Cloud done by engineers, not slide-makers.",
     lede: "Cloud strategy, migration, and FinOps for teams that want to ship faster, spend less, and stop renting consultants who've never run production.",
-    accent: "var(--brand-blue)",
+    accent: BRAND.green,
     Icon: Cloud,
     heroStats: [
       { value: "200+", label: "Cloud migrations" },
@@ -226,7 +228,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "Software Development",
     title: "World-class software, shipped on a senior bar.",
     lede: "Full-stack software development for products that need to feel fast, look elegant, and hold up to enterprise scrutiny.",
-    accent: "var(--brand-blue)",
+    accent: BRAND.green,
     Icon: Code2,
     heroStats: [
       { value: "500+", label: "Products shipped" },
@@ -276,7 +278,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "Remote Teams",
     title: "Pre-vetted remote development teams, on tap.",
     lede: "Hire entire pre-vetted engineering teams — not a stack of freelancers — that integrate cleanly into your processes from day one.",
-    accent: "var(--brand-orange)",
+    accent: BRAND.orange,
     Icon: Users,
     heroStats: [
       { value: "180+", label: "Engineers on bench" },
@@ -325,7 +327,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "Web Application Development",
     title: "Web apps that feel native, scale globally.",
     lede: "Build modern, intuitive, and seamless web applications using React, Next.js, and a senior team that takes performance and accessibility seriously.",
-    accent: "var(--brand-green)",
+    accent: BRAND.green,
     Icon: Layers,
     heroStats: [
       { value: "200+", label: "Web apps shipped" },
@@ -375,7 +377,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "Mobile App Development",
     title: "Mobile apps customers actually keep on their home screen.",
     lede: "Native iOS, Android, and React Native apps designed for retention, not just App Store screenshots.",
-    accent: "var(--brand-orange)",
+    accent: BRAND.green,
     Icon: Smartphone,
     heroStats: [
       { value: "120+", label: "Apps shipped" },
@@ -425,7 +427,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "Cloud & Infrastructure",
     title: "Infrastructure that ships features — not tickets.",
     lede: "Modern cloud and infrastructure engineering: landing zones, Kubernetes, IaC, observability, and an SRE culture that lets product teams move fast safely.",
-    accent: "var(--brand-blue)",
+    accent: BRAND.green,
     Icon: Cloud,
     heroStats: [
       { value: "150+", label: "Infra projects" },
@@ -475,7 +477,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "Front End Development",
     title: "Front-ends that feel inevitable.",
     lede: "Pixel-perfect, accessible, and fast front-ends — built by engineers who treat the browser as a first-class platform.",
-    accent: "var(--brand-red)",
+    accent: BRAND.green,
     Icon: MonitorSmartphone,
     heroStats: [
       { value: "300+", label: "Front-ends shipped" },
@@ -525,7 +527,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "Data Engineering",
     title: "Data pipelines you can bet a quarterly report on.",
     lede: "Modern data engineering — warehouses, lakes, streams, and the governance layer — built so analysts and AI teams stop arguing about which number is real.",
-    accent: "var(--brand-green)",
+    accent: BRAND.green,
     Icon: Database,
     heroStats: [
       { value: "60+", label: "Data platforms shipped" },
@@ -575,7 +577,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "Cybersecurity",
     title: "Security that ships with your product — not after it.",
     lede: "Application security, cloud security, and SOC services for teams that need real defense — not just a clean Vanta dashboard.",
-    accent: "var(--brand-red)",
+    accent: BRAND.green,
     Icon: ShieldCheck,
     heroStats: [
       { value: "24/7", label: "SOC coverage" },
@@ -626,7 +628,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "AI Strategy & Consulting",
     title: "AI strategy that survives contact with reality.",
     lede: "A 2–6 week diagnostic that turns AI ambition into a sequenced, measurable roadmap — with the unit economics, risks, and success metrics already worked out.",
-    accent: "var(--brand-blue)",
+    accent: BRAND.blue,
     Icon: Sparkles,
     heroStats: [
       { value: "60+", label: "Strategy engagements" },
@@ -675,7 +677,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "Custom AI Development",
     title: "Custom AI that fits your data — not the demo.",
     lede: "Bespoke ML and LLM systems trained, fine-tuned, and operated against your data, your constraints, and your customers.",
-    accent: "var(--brand-blue)",
+    accent: BRAND.blue,
     Icon: Wand2,
     heroStats: [
       { value: "40+", label: "Custom AI systems" },
@@ -725,7 +727,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "AI Chatbot Development",
     title: "Chatbots customers don't immediately ask for a human.",
     lede: "Production AI chatbots and voice assistants — grounded in your knowledge, integrated with your systems, and built to actually deflect tickets.",
-    accent: "var(--brand-green)",
+    accent: BRAND.blue,
     Icon: MessageSquareCode,
     heroStats: [
       { value: "30+", label: "Chatbots in prod" },
@@ -775,7 +777,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "Generative AI Development",
     title: "Generative AI products that earn their keep.",
     lede: "Generative AI tools, copilots, and content systems — built for real workflows, with the evals, guardrails, and economics to ship to production.",
-    accent: "var(--brand-orange)",
+    accent: BRAND.blue,
     Icon: Brain,
     heroStats: [
       { value: "20+", label: "GenAI products" },
@@ -825,7 +827,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "AI Agents Development",
     title: "Agentic AI that does the work — not just describes it.",
     lede: "Multi-step AI agents that plan, call tools, and complete real workflows — with the evals, observability, and human-in-the-loop controls to deploy them safely.",
-    accent: "var(--brand-red)",
+    accent: BRAND.blue,
     Icon: Bot,
     heroStats: [
       { value: "15+", label: "Agentic systems shipped" },
@@ -875,7 +877,7 @@ export const subServices: Record<string, Entry> = {
     eyebrow: "AI Integration",
     title: "AI that snaps into the systems you already run.",
     lede: "Integrate AI into Salesforce, SAP, ServiceNow, custom apps, and the messy middleware no one wants to talk about — without rebuilding the rest of your stack.",
-    accent: "var(--brand-orange)",
+    accent: BRAND.blue,
     Icon: Plug,
     heroStats: [
       { value: "80+", label: "AI integrations shipped" },

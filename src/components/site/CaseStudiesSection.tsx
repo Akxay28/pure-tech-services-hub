@@ -1,4 +1,5 @@
 import type { CaseStudy } from "@/lib/case-study";
+import { caseStudyAccentAt } from "@/lib/brand-colors";
 import { SectionHeader, CaseStudyCard } from "./Primitives";
 
 export type { CaseStudy, CaseStudyMetric } from "@/lib/case-study";
@@ -27,8 +28,12 @@ export function CaseStudiesSection({
           description={description}
         />
         <div className="mt-12 grid lg:grid-cols-2 gap-6">
-          {caseStudies.map((c) => (
-            <CaseStudyCard key={c.client} {...c} accent={c.accent ?? accent} />
+          {caseStudies.map((c, i) => (
+            <CaseStudyCard
+              key={c.client}
+              {...c}
+              accent={c.accent ?? caseStudyAccentAt(i)}
+            />
           ))}
         </div>
       </div>
