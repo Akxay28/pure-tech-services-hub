@@ -25,10 +25,20 @@ import {
   Wand2,
   Bot,
   Plug,
+  PenLine,
+  Zap,
+  Rocket,
+  Terminal,
+  Wind,
+  Briefcase,
+  Mail,
+  Info,
   type LucideIcon,
 } from "lucide-react";
 import logo from "@/assets/pure-tech-logo.png";
 import megaVisual from "@/assets/mega-menu-visual.jpg";
+import hireMegaVisual from "@/assets/hire-mega-menu-visual.jpg";
+import companyMegaVisual from "@/assets/company-mega-menu-visual.jpg";
 
 type ServiceItem = {
   title: string;
@@ -75,24 +85,48 @@ const serviceItems: Record<TabKey, ServiceItem[]> = {
   ],
 };
 
-type SimpleLink = { label: string; to: string; desc: string };
+// ── Company mega menu ────────────────────────────────────────
+type CompanyTabKey = "about" | "careers" | "connect";
+type MegaMenuItem = { title: string; subtitle: string; icon: LucideIcon; to: string };
 
-const simpleMenus: Record<string, SimpleLink[]> = {
-  Company: [
-    { label: "About", to: "/about", desc: "Who we are and how we work." },
-    { label: "Careers", to: "/careers", desc: "Open roles across engineering and AI." },
-    { label: "Contact", to: "/contact", desc: "Talk to a senior engineer this week." },
+const companyTabs: { key: CompanyTabKey; label: string; icon: LucideIcon }[] = [
+  { key: "about", label: "About Us", icon: Info },
+  { key: "careers", label: "Careers", icon: Briefcase },
+  { key: "connect", label: "Connect", icon: Mail },
+];
+
+const companyItems: Record<CompanyTabKey, MegaMenuItem[]> = {
+  about: [
+    { title: "About", subtitle: "Who we are and how we work.", icon: Building2, to: "/about" },
+    { title: "Case Studies", subtitle: "Outcomes from recent engagements.", icon: Layers, to: "/case-studies" },
+    { title: "Our Services", subtitle: "Explore the full service catalogue.", icon: Sparkles, to: "/services" },
   ],
-  Resources: [
-    { label: "Case Studies", to: "/case-studies", desc: "Outcome metrics from recent engagements." },
-    { label: "All Services", to: "/services", desc: "Explore the full service catalogue." },
-    { label: "Careers", to: "/careers", desc: "Engineering culture and hiring process." },
+  careers: [
+    { title: "Careers", subtitle: "Open roles across engineering and AI.", icon: Briefcase, to: "/careers" },
+    { title: "Remote Teams", subtitle: "Hire pre-vetted development squads.", icon: Users, to: "/services/remote-teams" },
+    { title: "IT Staff Augmentation", subtitle: "Scale your tech team on demand.", icon: UserCog, to: "/services/it-staffing" },
+  ],
+  connect: [
+    { title: "Contact", subtitle: "Talk to a senior engineer this week.", icon: Mail, to: "/contact" },
+    { title: "About", subtitle: "Meet the team behind Pure Technology.", icon: Building2, to: "/about" },
+    { title: "Careers", subtitle: "Join our engineering culture.", icon: Briefcase, to: "/careers" },
   ],
 };
 
+type SimpleLink = { label: string; to: string; desc: string };
+
+// Resource menubar
+// const simpleMenus: Record<string, SimpleLink[]> = {
+//   Resources: [
+//     { label: "Case Studies", to: "/case-studies", desc: "Outcome metrics from recent engagements." },
+//     { label: "All Services", to: "/services", desc: "Explore the full service catalogue." },
+//     { label: "Careers", to: "/careers", desc: "Engineering culture and hiring process." },
+//   ],
+// };
+
 // ── Hire Developers mega menu ────────────────────────────────
 type HireTabKey = "ai" | "vibe" | "role";
-type HireItem = { title: string; to: string };
+type HireItem = { title: string; subtitle: string; icon: LucideIcon; to: string };
 
 const hireTabs: { key: HireTabKey; label: string; icon: LucideIcon }[] = [
   { key: "ai", label: "Artificial Intelligence", icon: Brain },
@@ -102,40 +136,41 @@ const hireTabs: { key: HireTabKey; label: string; icon: LucideIcon }[] = [
 
 const hireItems: Record<HireTabKey, HireItem[]> = {
   ai: [
-    { title: "Hire Chatbot Developers", to: "/hire/chatbot-developers" },
-    { title: "Hire OpenAI Developers", to: "/hire/openai-developers" },
-    { title: "Hire Generative AI Developers", to: "/hire/generative-ai-developers" },
-    { title: "Hire Gemini Developers", to: "/hire/gemini-developers" },
-    { title: "Hire Prompt Engineer", to: "/hire/prompt-engineer" },
+    { title: "Hire Chatbot Developers", subtitle: "Conversational AI & support bots", icon: MessageSquareCode, to: "/hire/chatbot-developers" },
+    { title: "Hire OpenAI Developers", subtitle: "GPT APIs & custom integrations", icon: Sparkles, to: "/hire/openai-developers" },
+    { title: "Hire Generative AI Developers", subtitle: "LLMs, RAG & content pipelines", icon: Wand2, to: "/hire/generative-ai-developers" },
+    { title: "Hire Gemini Developers", subtitle: "Google Gemini & multimodal AI", icon: Brain, to: "/hire/gemini-developers" },
+    { title: "Hire Prompt Engineer", subtitle: "Prompt design & eval workflows", icon: PenLine, to: "/hire/prompt-engineer" },
   ],
   vibe: [
-    { title: "Hire ChatGPT Developers", to: "/hire/chatgpt-developers" },
-    { title: "Hire Lovable AI Developers", to: "/hire/lovable-ai-developers" },
-    { title: "Hire Replit AI Developers", to: "/hire/replit-ai-developers" },
-    { title: "Hire Bolt.new AI Developers", to: "/hire/bolt-new-ai-developers" },
-    { title: "Hire Google Antigravity Developers", to: "/hire/google-antigravity-developers" },
-    { title: "Hire Cursor AI Developers", to: "/hire/cursor-ai-developers" },
-    { title: "Hire Windsurf AI Developers", to: "/hire/windsurf-ai-developers" },
+    { title: "Hire ChatGPT Developers", subtitle: "Custom GPTs & ChatGPT apps", icon: MessageSquareCode, to: "/hire/chatgpt-developers" },
+    { title: "Hire Lovable AI Developers", subtitle: "Rapid UI with Lovable AI", icon: Sparkles, to: "/hire/lovable-ai-developers" },
+    { title: "Hire Replit AI Developers", subtitle: "Full-stack builds on Replit", icon: Code2, to: "/hire/replit-ai-developers" },
+    { title: "Hire Bolt.new AI Developers", subtitle: "Bolt.new prototypes to prod", icon: Zap, to: "/hire/bolt-new-ai-developers" },
+    { title: "Hire Google Antigravity Developers", subtitle: "Antigravity agent workflows", icon: Rocket, to: "/hire/google-antigravity-developers" },
+    { title: "Hire Cursor AI Developers", subtitle: "Cursor IDE & AI pair coding", icon: Terminal, to: "/hire/cursor-ai-developers" },
+    { title: "Hire Windsurf AI Developers", subtitle: "Windsurf cascade & flow dev", icon: Wind, to: "/hire/windsurf-ai-developers" },
   ],
   role: [
-    { title: "Hire Software Developer", to: "/hire/software-developer" },
-    { title: "Hire Mobile App Developer", to: "/hire/mobile-app-developer" },
-    { title: "Hire Backend Developers", to: "/hire/backend-developers" },
-    { title: "Hire AI Developers", to: "/hire/ai-developers" },
-    { title: "Hire DevOps Developers", to: "/hire/devops-developers" },
-    { title: "Hire Web App Developer", to: "/hire/web-app-developer" },
-    { title: "Hire Frontend Developers", to: "/hire/frontend-developers" },
-    { title: "Hire Fullstack Developers", to: "/hire/fullstack-developers" },
-    { title: "Hire Android Developers", to: "/hire/android-developers" },
+    { title: "Hire Software Developer", subtitle: "End-to-end product engineers", icon: Code2, to: "/hire/software-developer" },
+    { title: "Hire Mobile App Developer", subtitle: "iOS, Android & cross-platform", icon: Smartphone, to: "/hire/mobile-app-developer" },
+    { title: "Hire Backend Developers", subtitle: "APIs, data layers & services", icon: Database, to: "/hire/backend-developers" },
+    { title: "Hire AI Developers", subtitle: "ML features in production apps", icon: Brain, to: "/hire/ai-developers" },
+    { title: "Hire DevOps Developers", subtitle: "CI/CD, cloud & reliability", icon: Cloud, to: "/hire/devops-developers" },
+    { title: "Hire Web App Developer", subtitle: "SPAs, SSR & web platforms", icon: Layers, to: "/hire/web-app-developer" },
+    { title: "Hire Frontend Developers", subtitle: "UI, design systems & UX", icon: MonitorSmartphone, to: "/hire/frontend-developers" },
+    { title: "Hire Fullstack Developers", subtitle: "Database through to UI", icon: Boxes, to: "/hire/fullstack-developers" },
+    { title: "Hire Android Developers", subtitle: "Kotlin, Compose & Play Store", icon: Smartphone, to: "/hire/android-developers" },
   ],
 };
 
-type NavItem = { label: string; to?: string; type: "mega" | "simple" | "hire" };
+type NavItem = { label: string; to?: string; type: "mega" | "simple" | "hire" | "company" };
 const nav: NavItem[] = [
   { label: "Services", to: "/services", type: "mega" },
   { label: "Hire Developers", type: "hire" },
-  { label: "Company", type: "simple" },
-  { label: "Resources", type: "simple" },
+  { label: "Company", type: "company" },
+  // Resource menu
+  // { label: "Resources", type: "simple" },
 ];
 
 export function Header() {
@@ -144,6 +179,7 @@ export function Header() {
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
     const [activeTab, setActiveTab] = useState<TabKey>("team");
   const [activeHireTab, setActiveHireTab] = useState<HireTabKey>("ai");
+  const [activeCompanyTab, setActiveCompanyTab] = useState<CompanyTabKey>("about");
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
 
@@ -276,6 +312,8 @@ export function Header() {
                   <ServicesMega activeTab={activeTab} setActiveTab={setActiveTab} />
                 ) : activeMenu === "Hire Developers" ? (
                   <HireDevelopersMega activeTab={activeHireTab} setActiveTab={setActiveHireTab} />
+                ) : activeMenu === "Company" ? (
+                  <CompanyMega activeTab={activeCompanyTab} setActiveTab={setActiveCompanyTab} />
                 ) : (
                   <SimpleMega items={simpleMenus[activeMenu] ?? []} />
                 )}
@@ -309,9 +347,10 @@ export function Header() {
           >
             <div className="mx-auto max-w-7xl px-5 py-5 space-y-2 max-h-[80vh] overflow-y-auto">
               <MobileAccordion title="Services" items={serviceItems.team.concat(serviceItems.ai)} />
-              <MobileAccordion title="Hire Developers" items={[...hireItems.ai, ...hireItems.vibe, ...hireItems.role].map(h => ({ title: h.title, subtitle: "", icon: Users, to: h.to }))} />
-              <MobileAccordion title="Company" items={simpleMenus["Company"].map(s => ({ title: s.label, subtitle: s.desc, icon: Building2, to: s.to }))} />
-              <MobileAccordion title="Resources" items={simpleMenus["Resources"].map(s => ({ title: s.label, subtitle: s.desc, icon: Layers, to: s.to }))} />
+              <MobileAccordion title="Hire Developers" items={[...hireItems.ai, ...hireItems.vibe, ...hireItems.role]} />
+              <MobileAccordion title="Company" items={[...companyItems.about, ...companyItems.careers, ...companyItems.connect]} />
+             {/* Resource menubar */}
+              {/* <MobileAccordion title="Resources" items={simpleMenus["Resources"].map(s => ({ title: s.label, subtitle: s.desc, icon: Layers, to: s.to }))} /> */}
               <Link
                 to="/contact"
                 className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold uppercase text-white shadow-soft"
@@ -443,11 +482,11 @@ function HireDevelopersMega({
           </p>
           <div className="mt-5 overflow-hidden rounded-2xl shadow-soft">
             <img
-              src={megaVisual}
-              alt="Hire Developers"
+              src={hireMegaVisual}
+              alt="Hire developers with Pure Technology"
               loading="lazy"
               width={1024}
-              height={1024}
+              height={683}
               className="h-44 w-full object-cover"
             />
           </div>
@@ -491,16 +530,118 @@ function HireDevelopersMega({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.2 }}
-              className="grid grid-cols-2 gap-x-6 gap-y-1"
+              className="grid grid-cols-2 gap-3"
             >
-              {items.map(({ title, to }) => (
+              {items.map(({ title, subtitle, icon: Icon, to }) => (
                 <Link
                   key={title}
                   to={to as never}
-                  className="group flex items-center justify-between gap-3 rounded-xl px-3 py-3 text-[15px] font-semibold text-[color:var(--brand-purple)] transition-all hover:bg-[color:var(--brand-pink-soft)]/40 hover:text-[color:var(--brand-pink)]"
+                  className="group flex items-start gap-3 rounded-2xl p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[color:var(--brand-pink-soft)]/40 hover:shadow-[0_12px_30px_-12px_rgba(46,11,125,0.18)]"
                 >
-                  <span>{title}</span>
-                  <ArrowRight className="h-4 w-4 opacity-0 -translate-x-1 text-[color:var(--brand-pink)] transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[color:var(--brand-pink-soft)] text-[color:var(--brand-pink)] transition-transform duration-300 group-hover:scale-105">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[14.5px] font-semibold leading-tight text-[color:var(--brand-purple)]">
+                      {title}
+                    </span>
+                    <span className="mt-1 block text-xs leading-relaxed text-[color:var(--brand-purple)]/65">
+                      {subtitle}
+                    </span>
+                  </span>
+                </Link>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CompanyMega({
+  activeTab,
+  setActiveTab,
+}: {
+  activeTab: CompanyTabKey;
+  setActiveTab: (t: CompanyTabKey) => void;
+}) {
+  const items = companyItems[activeTab];
+  return (
+    <div className="rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(46,11,125,0.25)] overflow-hidden">
+      <div className="grid grid-cols-12 gap-0">
+        <div className="col-span-3 p-7 border-r border-border/60 bg-[color:var(--brand-pink-soft)]/30">
+          <h3 className="text-xl font-bold text-[color:var(--brand-purple)]">Company</h3>
+          <p className="mt-2 text-sm leading-relaxed text-[color:var(--brand-purple)]/70">
+            Learn who we are, explore careers, and connect with our engineering team.
+          </p>
+          <div className="mt-5 overflow-hidden rounded-2xl shadow-soft">
+            <img
+              src={companyMegaVisual}
+              alt="Pure Technology company"
+              loading="lazy"
+              width={1024}
+              height={683}
+              className="h-44 w-full object-cover"
+            />
+          </div>
+        </div>
+
+        <div className="col-span-3 p-5 border-r border-border/60 space-y-2">
+          {companyTabs.map(({ key, label, icon: Icon }) => {
+            const isActive = key === activeTab;
+            return (
+              <button
+                key={key}
+                type="button"
+                onMouseEnter={() => setActiveTab(key)}
+                onFocus={() => setActiveTab(key)}
+                className={`group flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-[15px] font-semibold transition-all duration-300 ${
+                  isActive
+                    ? "bg-[color:var(--brand-pink-soft)] text-[color:var(--brand-purple)] shadow-[0_8px_24px_-12px_rgba(255,77,141,0.4)]"
+                    : "text-[color:var(--brand-purple)]/80 hover:bg-[color:var(--brand-pink-soft)]/50"
+                }`}
+              >
+                <span
+                  className={`grid h-9 w-9 place-items-center rounded-xl transition-colors ${
+                    isActive ? "bg-white text-[color:var(--brand-pink)]" : "bg-white/70 text-[color:var(--brand-purple)]"
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                </span>
+                {label}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="col-span-6 p-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.2 }}
+              className="grid grid-cols-2 gap-3"
+            >
+              {items.map(({ title, subtitle, icon: Icon, to }) => (
+                <Link
+                  key={title}
+                  to={to as never}
+                  className="group flex items-start gap-3 rounded-2xl p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[color:var(--brand-pink-soft)]/40 hover:shadow-[0_12px_30px_-12px_rgba(46,11,125,0.18)]"
+                >
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[color:var(--brand-pink-soft)] text-[color:var(--brand-pink)] transition-transform duration-300 group-hover:scale-105">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[14.5px] font-semibold leading-tight text-[color:var(--brand-purple)]">
+                      {title}
+                    </span>
+                    <span className="mt-1 block text-xs leading-relaxed text-[color:var(--brand-purple)]/65">
+                      {subtitle}
+                    </span>
+                  </span>
                 </Link>
               ))}
             </motion.div>
@@ -559,7 +700,7 @@ function MobileAccordion({
             <div className="p-2 space-y-1">
               {items.map((it) => (
                 <Link
-                  key={it.title}
+                  key={it.to}
                   to={it.to as never}
                   className="flex items-start gap-3 rounded-xl px-3 py-2.5 hover:bg-white"
                 >
