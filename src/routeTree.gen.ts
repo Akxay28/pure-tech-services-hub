@@ -21,6 +21,7 @@ import { Route as ServicesProductEngineeringRouteImport } from './routes/service
 import { Route as ServicesItStaffingRouteImport } from './routes/services.it-staffing'
 import { Route as ServicesAiSolutionsRouteImport } from './routes/services.ai-solutions'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
+import { Route as HireSlugRouteImport } from './routes/hire.$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -83,6 +84,11 @@ const ServicesSlugRoute = ServicesSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => ServicesRoute,
 } as any)
+const HireSlugRoute = HireSlugRouteImport.update({
+  id: '/hire/$slug',
+  path: '/hire/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -92,6 +98,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/hire/$slug': typeof HireSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/services/ai-solutions': typeof ServicesAiSolutionsRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
@@ -105,6 +112,7 @@ export interface FileRoutesByTo {
   '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/hire/$slug': typeof HireSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/services/ai-solutions': typeof ServicesAiSolutionsRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
@@ -120,6 +128,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/hire/$slug': typeof HireSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/services/ai-solutions': typeof ServicesAiSolutionsRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
@@ -136,6 +145,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/services'
     | '/sitemap.xml'
+    | '/hire/$slug'
     | '/services/$slug'
     | '/services/ai-solutions'
     | '/services/it-staffing'
@@ -149,6 +159,7 @@ export interface FileRouteTypes {
     | '/case-studies'
     | '/contact'
     | '/sitemap.xml'
+    | '/hire/$slug'
     | '/services/$slug'
     | '/services/ai-solutions'
     | '/services/it-staffing'
@@ -163,6 +174,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/services'
     | '/sitemap.xml'
+    | '/hire/$slug'
     | '/services/$slug'
     | '/services/ai-solutions'
     | '/services/it-staffing'
@@ -178,6 +190,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   ServicesRoute: typeof ServicesRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  HireSlugRoute: typeof HireSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -266,6 +279,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesSlugRouteImport
       parentRoute: typeof ServicesRoute
     }
+    '/hire/$slug': {
+      id: '/hire/$slug'
+      path: '/hire/$slug'
+      fullPath: '/hire/$slug'
+      preLoaderRoute: typeof HireSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -297,7 +317,18 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   ServicesRoute: ServicesRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  HireSlugRoute: HireSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
