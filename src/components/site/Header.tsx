@@ -78,11 +78,6 @@ const serviceItems: Record<TabKey, ServiceItem[]> = {
 type SimpleLink = { label: string; to: string; desc: string };
 
 const simpleMenus: Record<string, SimpleLink[]> = {
-  "Hire Developers": [
-    { label: "IT Staff Augmentation", to: "/services/it-staffing", desc: "Vetted senior engineers, ready in days." },
-    { label: "Dedicated Squads", to: "/services/product-engineering", desc: "Full product squads built around your roadmap." },
-    { label: "AI Engineering Pods", to: "/services/ai-solutions", desc: "ML/LLM specialists for production AI." },
-  ],
   Company: [
     { label: "About", to: "/about", desc: "Who we are and how we work." },
     { label: "Careers", to: "/careers", desc: "Open roles across engineering and AI." },
@@ -95,10 +90,50 @@ const simpleMenus: Record<string, SimpleLink[]> = {
   ],
 };
 
-type NavItem = { label: string; to?: string; type: "mega" | "simple" };
+// ── Hire Developers mega menu ────────────────────────────────
+type HireTabKey = "ai" | "vibe" | "role";
+type HireItem = { title: string; to: string };
+
+const hireTabs: { key: HireTabKey; label: string; icon: LucideIcon }[] = [
+  { key: "ai", label: "Artificial Intelligence", icon: Brain },
+  { key: "vibe", label: "AI Vibe Coders", icon: Sparkles },
+  { key: "role", label: "Hire By Role", icon: Users },
+];
+
+const hireItems: Record<HireTabKey, HireItem[]> = {
+  ai: [
+    { title: "Hire Chatbot Developers", to: "/hire/chatbot-developers" },
+    { title: "Hire OpenAI Developers", to: "/hire/openai-developers" },
+    { title: "Hire Generative AI Developers", to: "/hire/generative-ai-developers" },
+    { title: "Hire Gemini Developers", to: "/hire/gemini-developers" },
+    { title: "Hire Prompt Engineer", to: "/hire/prompt-engineer" },
+  ],
+  vibe: [
+    { title: "Hire ChatGPT Developers", to: "/hire/chatgpt-developers" },
+    { title: "Hire Lovable AI Developers", to: "/hire/lovable-ai-developers" },
+    { title: "Hire Replit AI Developers", to: "/hire/replit-ai-developers" },
+    { title: "Hire Bolt.new AI Developers", to: "/hire/bolt-new-ai-developers" },
+    { title: "Hire Google Antigravity Developers", to: "/hire/google-antigravity-developers" },
+    { title: "Hire Cursor AI Developers", to: "/hire/cursor-ai-developers" },
+    { title: "Hire Windsurf AI Developers", to: "/hire/windsurf-ai-developers" },
+  ],
+  role: [
+    { title: "Hire Software Developer", to: "/hire/software-developer" },
+    { title: "Hire Mobile App Developer", to: "/hire/mobile-app-developer" },
+    { title: "Hire Backend Developers", to: "/hire/backend-developers" },
+    { title: "Hire AI Developers", to: "/hire/ai-developers" },
+    { title: "Hire DevOps Developers", to: "/hire/devops-developers" },
+    { title: "Hire Web App Developer", to: "/hire/web-app-developer" },
+    { title: "Hire Frontend Developers", to: "/hire/frontend-developers" },
+    { title: "Hire Fullstack Developers", to: "/hire/fullstack-developers" },
+    { title: "Hire Android Developers", to: "/hire/android-developers" },
+  ],
+};
+
+type NavItem = { label: string; to?: string; type: "mega" | "simple" | "hire" };
 const nav: NavItem[] = [
   { label: "Services", to: "/services", type: "mega" },
-  { label: "Hire Developers", type: "simple" },
+  { label: "Hire Developers", type: "hire" },
   { label: "Company", type: "simple" },
   { label: "Resources", type: "simple" },
 ];
@@ -107,7 +142,8 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-  const [activeTab, setActiveTab] = useState<TabKey>("team");
+    const [activeTab, setActiveTab] = useState<TabKey>("team");
+  const [activeHireTab, setActiveHireTab] = useState<HireTabKey>("ai");
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
 
@@ -238,6 +274,8 @@ export function Header() {
               <div className="mx-auto max-w-7xl">
                 {activeMenu === "Services" ? (
                   <ServicesMega activeTab={activeTab} setActiveTab={setActiveTab} />
+                ) : activeMenu === "Hire Developers" ? (
+                  <HireDevelopersMega activeTab={activeHireTab} setActiveTab={setActiveHireTab} />
                 ) : (
                   <SimpleMega items={simpleMenus[activeMenu] ?? []} />
                 )}
@@ -271,7 +309,7 @@ export function Header() {
           >
             <div className="mx-auto max-w-7xl px-5 py-5 space-y-2 max-h-[80vh] overflow-y-auto">
               <MobileAccordion title="Services" items={serviceItems.team.concat(serviceItems.ai)} />
-              <MobileAccordion title="Hire Developers" items={simpleMenus["Hire Developers"].map(s => ({ title: s.label, subtitle: s.desc, icon: Users, to: s.to }))} />
+              <MobileAccordion title="Hire Developers" items={[...hireItems.ai, ...hireItems.vibe, ...hireItems.role].map(h => ({ title: h.title, subtitle: "", icon: Users, to: h.to }))} />
               <MobileAccordion title="Company" items={simpleMenus["Company"].map(s => ({ title: s.label, subtitle: s.desc, icon: Building2, to: s.to }))} />
               <MobileAccordion title="Resources" items={simpleMenus["Resources"].map(s => ({ title: s.label, subtitle: s.desc, icon: Layers, to: s.to }))} />
               <Link
@@ -376,6 +414,93 @@ function ServicesMega({
                       {subtitle}
                     </span>
                   </span>
+                </Link>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HireDevelopersMega({
+  activeTab,
+  setActiveTab,
+}: {
+  activeTab: HireTabKey;
+  setActiveTab: (t: HireTabKey) => void;
+}) {
+  const items = hireItems[activeTab];
+  return (
+    <div className="rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(46,11,125,0.25)] overflow-hidden">
+      <div className="grid grid-cols-12 gap-0">
+        {/* Left intro */}
+        <div className="col-span-3 p-7 border-r border-border/60 bg-[color:var(--brand-pink-soft)]/30">
+          <h3 className="text-xl font-bold text-[color:var(--brand-purple)]">Hire Developers</h3>
+          <p className="mt-2 text-sm leading-relaxed text-[color:var(--brand-purple)]/70">
+            Discover our range of Hire Developers Services to drive business transformation.
+          </p>
+          <div className="mt-5 overflow-hidden rounded-2xl shadow-soft">
+            <img
+              src={megaVisual}
+              alt="Hire Developers"
+              loading="lazy"
+              width={1024}
+              height={1024}
+              className="h-44 w-full object-cover"
+            />
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="col-span-3 p-5 border-r border-border/60 space-y-2">
+          {hireTabs.map(({ key, label, icon: Icon }) => {
+            const isActive = key === activeTab;
+            return (
+              <button
+                key={key}
+                type="button"
+                onMouseEnter={() => setActiveTab(key)}
+                onFocus={() => setActiveTab(key)}
+                className={`group flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-[15px] font-semibold transition-all duration-300 ${
+                  isActive
+                    ? "bg-[color:var(--brand-pink-soft)] text-[color:var(--brand-purple)] shadow-[0_8px_24px_-12px_rgba(255,77,141,0.4)]"
+                    : "text-[color:var(--brand-purple)]/80 hover:bg-[color:var(--brand-pink-soft)]/50"
+                }`}
+              >
+                <span
+                  className={`grid h-9 w-9 place-items-center rounded-xl transition-colors ${
+                    isActive ? "bg-white text-[color:var(--brand-pink)]" : "bg-white/70 text-[color:var(--brand-purple)]"
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                </span>
+                {label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Right content */}
+        <div className="col-span-6 p-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.2 }}
+              className="grid grid-cols-2 gap-x-6 gap-y-1"
+            >
+              {items.map(({ title, to }) => (
+                <Link
+                  key={title}
+                  to={to as never}
+                  className="group flex items-center justify-between gap-3 rounded-xl px-3 py-3 text-[15px] font-semibold text-[color:var(--brand-purple)] transition-all hover:bg-[color:var(--brand-pink-soft)]/40 hover:text-[color:var(--brand-pink)]"
+                >
+                  <span>{title}</span>
+                  <ArrowRight className="h-4 w-4 opacity-0 -translate-x-1 text-[color:var(--brand-pink)] transition-all group-hover:opacity-100 group-hover:translate-x-0" />
                 </Link>
               ))}
             </motion.div>
