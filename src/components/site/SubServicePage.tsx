@@ -12,7 +12,7 @@ import {
 import { MeetTheTeam } from "@/components/site/MeetTheTeam";
 import { CaseStudiesSection } from "./CaseStudiesSection";
 import type { CaseStudy } from "@/lib/case-study";
-import { accentAt, brandIconGradient } from "@/lib/brand-colors";
+import { accentAt, brandIconGradient, outcomeCardThemeAt } from "@/lib/brand-colors";
 import { BrandIconBox } from "@/components/site/Primitives";
 
 export type CaseStudiesCopy = {
@@ -131,24 +131,32 @@ export function SubServicePage(p: SubServicePageProps) {
             title="Numbers from real engagements."
           />
           <div className="mt-12 grid md:grid-cols-3 gap-5">
-            {p.outcomes.map((o, i) => (
-              <div
-                key={o.label}
-                className="rounded-3xl p-7 border border-border bg-surface"
-                style={{
-                  background: `linear-gradient(180deg, color-mix(in oklab, ${accentAt(i)} 5%, white), white)`,
-                }}
-              >
+            {p.outcomes.map((o, i) => {
+              const theme = outcomeCardThemeAt(i);
+              return (
                 <div
-                  className="text-4xl sm:text-5xl font-display font-bold tracking-tight"
-                  style={{ color: accentAt(i) }}
+                  key={o.label}
+                  className="outcome-stat-card group rounded-3xl p-7 border border-border/80"
+                  style={{
+                    backgroundColor: theme.bg,
+                    ["--outcome-accent" as string]: theme.accent,
+                  }}
                 >
-                  {o.metric}
+                  <div
+                    className="text-4xl sm:text-5xl font-display font-bold tracking-tight transition-transform duration-300 group-hover:scale-[1.03]"
+                    style={{ color: theme.accent }}
+                  >
+                    {o.metric}
+                  </div>
+                  <div className="mt-2 text-sm font-semibold text-foreground">
+                    {o.label}
+                  </div>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                    {o.context}
+                  </p>
                 </div>
-                <div className="mt-2 text-sm font-semibold">{o.label}</div>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{o.context}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

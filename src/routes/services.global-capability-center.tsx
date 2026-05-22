@@ -25,7 +25,7 @@ function GlobalCapabilityCenter() {
       extraSection={
         <>
           <GCCIn12WeeksSection />
-          <GCCModelsSection accent={props.accent} />
+          <GCCModelsSection />
         </>
       }
     />

@@ -266,6 +266,20 @@
     box-shadow: var(--shadow-ring);
   }
 
+  .outcome-stat-card {
+    transition:
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 0.35s ease;
+  }
+  .outcome-stat-card:hover {
+    transform: translateY(-6px);
+    border-color: color-mix(in oklab, var(--outcome-accent) 32%, var(--border));
+    box-shadow:
+      0 16px 44px -14px color-mix(in oklab, var(--outcome-accent) 28%, transparent),
+      0 6px 18px -8px color-mix(in oklab, var(--brand-ink) 10%, transparent);
+  }
+
   .animate-float {
     animation: float 7s ease-in-out infinite;
   }

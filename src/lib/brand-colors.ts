@@ -37,6 +37,17 @@ export const TESTIMONIAL_ACCENTS = [BRAND.blue, BRAND.orange, BRAND.green] as co
 /** Homepage case study metric highlights. */
 export const CASE_STUDY_ACCENTS = [BRAND.blue, BRAND.green] as const;
 
+/** Outcome stat cards — pale tinted backgrounds (blue, orange, green). */
+export const OUTCOME_CARD_THEMES = [
+  { bg: "#F4F7FF", accent: BRAND.blue },
+  { bg: "#FFF9F4", accent: BRAND.orange },
+  { bg: "#F4FFF7", accent: BRAND.green },
+] as const;
+
+export function outcomeCardThemeAt(index: number) {
+  return OUTCOME_CARD_THEMES[index % OUTCOME_CARD_THEMES.length]!;
+}
+
 export function brandIconGradient(color: string): string {
   return `linear-gradient(135deg, ${color}, color-mix(in oklab, ${color} 55%, white))`;
 }
