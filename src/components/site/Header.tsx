@@ -424,6 +424,93 @@ function ServicesMega({
   );
 }
 
+function HireDevelopersMega({
+  activeTab,
+  setActiveTab,
+}: {
+  activeTab: HireTabKey;
+  setActiveTab: (t: HireTabKey) => void;
+}) {
+  const items = hireItems[activeTab];
+  return (
+    <div className="rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(46,11,125,0.25)] overflow-hidden">
+      <div className="grid grid-cols-12 gap-0">
+        {/* Left intro */}
+        <div className="col-span-3 p-7 border-r border-border/60 bg-[color:var(--brand-pink-soft)]/30">
+          <h3 className="text-xl font-bold text-[color:var(--brand-purple)]">Hire Developers</h3>
+          <p className="mt-2 text-sm leading-relaxed text-[color:var(--brand-purple)]/70">
+            Discover our range of Hire Developers Services to drive business transformation.
+          </p>
+          <div className="mt-5 overflow-hidden rounded-2xl shadow-soft">
+            <img
+              src={megaVisual}
+              alt="Hire Developers"
+              loading="lazy"
+              width={1024}
+              height={1024}
+              className="h-44 w-full object-cover"
+            />
+          </div>
+        </div>
+
+        {/* Tabs */}
+        <div className="col-span-3 p-5 border-r border-border/60 space-y-2">
+          {hireTabs.map(({ key, label, icon: Icon }) => {
+            const isActive = key === activeTab;
+            return (
+              <button
+                key={key}
+                type="button"
+                onMouseEnter={() => setActiveTab(key)}
+                onFocus={() => setActiveTab(key)}
+                className={`group flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-[15px] font-semibold transition-all duration-300 ${
+                  isActive
+                    ? "bg-[color:var(--brand-pink-soft)] text-[color:var(--brand-purple)] shadow-[0_8px_24px_-12px_rgba(255,77,141,0.4)]"
+                    : "text-[color:var(--brand-purple)]/80 hover:bg-[color:var(--brand-pink-soft)]/50"
+                }`}
+              >
+                <span
+                  className={`grid h-9 w-9 place-items-center rounded-xl transition-colors ${
+                    isActive ? "bg-white text-[color:var(--brand-pink)]" : "bg-white/70 text-[color:var(--brand-purple)]"
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                </span>
+                {label}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Right content */}
+        <div className="col-span-6 p-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.2 }}
+              className="grid grid-cols-2 gap-x-6 gap-y-1"
+            >
+              {items.map(({ title, to }) => (
+                <Link
+                  key={title}
+                  to={to as never}
+                  className="group flex items-center justify-between gap-3 rounded-xl px-3 py-3 text-[15px] font-semibold text-[color:var(--brand-purple)] transition-all hover:bg-[color:var(--brand-pink-soft)]/40 hover:text-[color:var(--brand-pink)]"
+                >
+                  <span>{title}</span>
+                  <ArrowRight className="h-4 w-4 opacity-0 -translate-x-1 text-[color:var(--brand-pink)] transition-all group-hover:opacity-100 group-hover:translate-x-0" />
+                </Link>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function SimpleMega({ items }: { items: SimpleLink[] }) {
   return (
     <div className="ml-auto w-[520px] rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(46,11,125,0.25)] p-3">
