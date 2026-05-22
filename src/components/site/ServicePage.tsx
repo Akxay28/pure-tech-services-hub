@@ -23,6 +23,7 @@ import {
   CTASection,
   Stat,
 } from "@/components/site/Primitives";
+import { MeetTheTeam } from "./MeetTheTeam";
 
 export type Capability = { title: string; body: string };
 export type Step = { step: string; title: string; body: string };
@@ -42,6 +43,8 @@ export type ServicePageProps = {
   faqs: Faq[];
   cta: { title: string; description: string };
   siblingLinks: { to: string; label: string }[];
+  /** Optional one-off section (e.g. timeline) — only pass from routes that need it */
+  extraSection?: ReactNode;
 };
 
 export function ServicePage(p: ServicePageProps) {
@@ -87,6 +90,8 @@ export function ServicePage(p: ServicePageProps) {
           </div>
         </div>
       </section>
+
+      {p.extraSection}
 
       {/* Capabilities */}
       <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
@@ -261,6 +266,7 @@ export function ServicePage(p: ServicePageProps) {
         </div>
       </section>
 
+      <MeetTheTeam accent={p.accent} />
       <CTASection {...p.cta} />
     </>
   );

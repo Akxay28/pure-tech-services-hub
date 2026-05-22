@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/site/ServicePage";
+import { TechnologyExpertiseSection } from "@/components/site/TechnologyExpertiseSectionForAiSolutionsPage";
 
 export const Route = createFileRoute("/services/it-staffing")({
   head: () => ({
@@ -217,6 +218,48 @@ function ItStaffing() {
         { to: "/services/ai-solutions", label: "AI Solutions" },
         { to: "/services/product-engineering", label: "Product Engineering" },
       ]}
+
+      extraSection={
+        <TechnologyExpertiseSection
+          accent="var(--brand-green)"
+          tabs={[
+            {
+              label: "Frontend",
+              cards: [
+                { role: "React Developers",  level: "L5", category: "Frontend Engineering", tech: ["React", "Next.js", "TypeScript"] },
+                { role: "Vue Specialists",   level: "L4", category: "Frontend Engineering", tech: ["Vue", "Nuxt", "Tailwind"] },
+                { role: "Angular Engineers", level: "L6", category: "Enterprise Frontend",  tech: ["Angular", "RxJS", "NgRx"] },
+                { role: "UI Engineers",      level: "L5", category: "Design Systems",       tech: ["Figma", "Storybook", "Motion"] },
+              ],
+            },
+            {
+              label: "Backend",
+              cards: [
+                { role: "Node.js Developers", level: "L5", category: "Backend Engineering", tech: ["Node.js", "Express", "PostgreSQL"] },
+                { role: "Python Engineers",   level: "L5", category: "Backend Engineering", tech: ["Python", "FastAPI", "Django"] },
+                { role: "Java Developers",    level: "L6", category: "Backend Engineering", tech: ["Java", "Spring Boot", "Kafka"] },
+                { role: "Go Engineers",       level: "L5", category: "Backend Engineering", tech: ["Go", "gRPC", "Redis"] },
+              ],
+            },
+            {
+              label: "Cloud & DevOps",
+              cards: [
+                { role: "Cloud Engineers",  level: "L6", category: "Cloud & DevOps", tech: ["AWS", "Docker", "Terraform"] },
+                { role: "DevOps Engineers", level: "L5", category: "CI/CD & Infra",  tech: ["GitHub Actions", "K8s", "Helm"] },
+                { role: "SRE Engineers",    level: "L6", category: "Observability",  tech: ["Prometheus", "Grafana", "PagerDuty"] },
+              ],
+            },
+            {
+              label: "Mobile",
+              cards: [
+                { role: "iOS Developers",    level: "L5", category: "Native Mobile",  tech: ["Swift", "SwiftUI", "Xcode"] },
+                { role: "Android Developers",level: "L5", category: "Native Mobile",  tech: ["Kotlin", "Jetpack", "Compose"] },
+                { role: "Mobile Developers", level: "L4", category: "Cross Platform", tech: ["React Native", "Flutter", "Firebase"] },
+              ],
+            },
+          ]}
+        />
+      }
     />
   );
 }

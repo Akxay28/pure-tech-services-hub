@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/site/ServicePage";
+import { TechnologyExpertiseSection } from "@/components/site/TechnologyExpertiseSectionForAiSolutionsPage";
 
 export const Route = createFileRoute("/services/ai-solutions")({
   head: () => ({
@@ -216,6 +217,39 @@ function AiSolutions() {
         { to: "/services/it-staffing", label: "IT Staffing" },
         { to: "/services/product-engineering", label: "Product Engineering" },
       ]}
+      extraSection={
+        <TechnologyExpertiseSection
+          accent="var(--brand-blue)"
+          tabs={[
+            {
+              label: "GenAI & LLMs",
+              cards: [
+                { role: "LLM Engineers",    level: "L6", category: "GenAI & RAG",    tech: ["LangChain", "OpenAI", "Anthropic"] },
+                { role: "RAG Specialists",  level: "L5", category: "Retrieval",      tech: ["Pinecone", "Weaviate", "pgvector"] },
+                { role: "Prompt Engineers", level: "L4", category: "Prompt Design",  tech: ["DSPy", "Guidance", "LMQL"] },
+                { role: "AI Safety Eng.",   level: "L6", category: "Guardrails",     tech: ["Evals", "Presidio", "Rebuff"] },
+              ],
+            },
+            {
+              label: "ML & Data",
+              cards: [
+                { role: "ML Engineers",   level: "L5", category: "Modelling",      tech: ["PyTorch", "TensorFlow", "Keras"] },
+                { role: "Data Engineers", level: "L5", category: "Pipelines",      tech: ["Spark", "Airflow", "dbt"] },
+                { role: "MLOps Eng.",     level: "L6", category: "Ops & Infra",    tech: ["MLflow", "Ray", "BentoML"] },
+                { role: "Data Scientists",level: "L4", category: "Analytics",      tech: ["Pandas", "Scikit-learn", "SQL"] },
+              ],
+            },
+            {
+              label: "Vision & Docs",
+              cards: [
+                { role: "CV Engineers",      level: "L5", category: "Computer Vision",  tech: ["OpenCV", "YOLO", "Detectron2"] },
+                { role: "Document AI Eng.",  level: "L5", category: "Document AI",      tech: ["Tesseract", "LayoutLM", "AWS Textract"] },
+                { role: "Multimodal Eng.",   level: "L6", category: "Multimodal AI",    tech: ["CLIP", "LLaVA", "Gemini Vision"] },
+              ],
+            },
+          ]}
+        />
+      }
     />
   );
 }

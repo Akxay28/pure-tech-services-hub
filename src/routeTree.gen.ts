@@ -17,9 +17,24 @@ import { Route as CareersRouteImport } from './routes/careers'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
+import { Route as ServicesWebApplicationDevelopmentRouteImport } from './routes/services.web-application-development'
+import { Route as ServicesSoftwareDevelopmentRouteImport } from './routes/services.software-development'
 import { Route as ServicesProductEngineeringRouteImport } from './routes/services.product-engineering'
+import { Route as ServicesOffshoreDevelopmentRouteImport } from './routes/services.offshore-development'
+import { Route as ServicesMobileAppDevelopmentRouteImport } from './routes/services.mobile-app-development'
 import { Route as ServicesItStaffingRouteImport } from './routes/services.it-staffing'
+import { Route as ServicesGlobalCapabilityCenterRouteImport } from './routes/services.global-capability-center'
+import { Route as ServicesGenerativeAiDevelopmentRouteImport } from './routes/services.generative-ai-development'
+import { Route as ServicesFrontEndDevelopmentRouteImport } from './routes/services.front-end-development'
+import { Route as ServicesDataEngineeringRouteImport } from './routes/services.data-engineering'
+import { Route as ServicesCybersecurityRouteImport } from './routes/services.cybersecurity'
+import { Route as ServicesCustomAiDevelopmentRouteImport } from './routes/services.custom-ai-development'
+import { Route as ServicesCloudInfrastructureRouteImport } from './routes/services.cloud-infrastructure'
+import { Route as ServicesCloudComputingRouteImport } from './routes/services.cloud-computing'
 import { Route as ServicesAiSolutionsRouteImport } from './routes/services.ai-solutions'
+import { Route as ServicesAiIntegrationRouteImport } from './routes/services.ai-integration'
+import { Route as ServicesAiChatbotDevelopmentRouteImport } from './routes/services.ai-chatbot-development'
+import { Route as ServicesAiAgentsDevelopmentRouteImport } from './routes/services.ai-agents-development'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as HireSlugRouteImport } from './routes/hire.$slug'
 
@@ -63,10 +78,34 @@ const ServicesIndexRoute = ServicesIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ServicesRoute,
 } as any)
+const ServicesWebApplicationDevelopmentRoute =
+  ServicesWebApplicationDevelopmentRouteImport.update({
+    id: '/web-application-development',
+    path: '/web-application-development',
+    getParentRoute: () => ServicesRoute,
+  } as any)
+const ServicesSoftwareDevelopmentRoute =
+  ServicesSoftwareDevelopmentRouteImport.update({
+    id: '/software-development',
+    path: '/software-development',
+    getParentRoute: () => ServicesRoute,
+  } as any)
 const ServicesProductEngineeringRoute =
   ServicesProductEngineeringRouteImport.update({
     id: '/product-engineering',
     path: '/product-engineering',
+    getParentRoute: () => ServicesRoute,
+  } as any)
+const ServicesOffshoreDevelopmentRoute =
+  ServicesOffshoreDevelopmentRouteImport.update({
+    id: '/offshore-development',
+    path: '/offshore-development',
+    getParentRoute: () => ServicesRoute,
+  } as any)
+const ServicesMobileAppDevelopmentRoute =
+  ServicesMobileAppDevelopmentRouteImport.update({
+    id: '/mobile-app-development',
+    path: '/mobile-app-development',
     getParentRoute: () => ServicesRoute,
   } as any)
 const ServicesItStaffingRoute = ServicesItStaffingRouteImport.update({
@@ -74,11 +113,73 @@ const ServicesItStaffingRoute = ServicesItStaffingRouteImport.update({
   path: '/it-staffing',
   getParentRoute: () => ServicesRoute,
 } as any)
+const ServicesGlobalCapabilityCenterRoute =
+  ServicesGlobalCapabilityCenterRouteImport.update({
+    id: '/global-capability-center',
+    path: '/global-capability-center',
+    getParentRoute: () => ServicesRoute,
+  } as any)
+const ServicesGenerativeAiDevelopmentRoute =
+  ServicesGenerativeAiDevelopmentRouteImport.update({
+    id: '/generative-ai-development',
+    path: '/generative-ai-development',
+    getParentRoute: () => ServicesRoute,
+  } as any)
+const ServicesFrontEndDevelopmentRoute =
+  ServicesFrontEndDevelopmentRouteImport.update({
+    id: '/front-end-development',
+    path: '/front-end-development',
+    getParentRoute: () => ServicesRoute,
+  } as any)
+const ServicesDataEngineeringRoute = ServicesDataEngineeringRouteImport.update({
+  id: '/data-engineering',
+  path: '/data-engineering',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesCybersecurityRoute = ServicesCybersecurityRouteImport.update({
+  id: '/cybersecurity',
+  path: '/cybersecurity',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesCustomAiDevelopmentRoute =
+  ServicesCustomAiDevelopmentRouteImport.update({
+    id: '/custom-ai-development',
+    path: '/custom-ai-development',
+    getParentRoute: () => ServicesRoute,
+  } as any)
+const ServicesCloudInfrastructureRoute =
+  ServicesCloudInfrastructureRouteImport.update({
+    id: '/cloud-infrastructure',
+    path: '/cloud-infrastructure',
+    getParentRoute: () => ServicesRoute,
+  } as any)
+const ServicesCloudComputingRoute = ServicesCloudComputingRouteImport.update({
+  id: '/cloud-computing',
+  path: '/cloud-computing',
+  getParentRoute: () => ServicesRoute,
+} as any)
 const ServicesAiSolutionsRoute = ServicesAiSolutionsRouteImport.update({
   id: '/ai-solutions',
   path: '/ai-solutions',
   getParentRoute: () => ServicesRoute,
 } as any)
+const ServicesAiIntegrationRoute = ServicesAiIntegrationRouteImport.update({
+  id: '/ai-integration',
+  path: '/ai-integration',
+  getParentRoute: () => ServicesRoute,
+} as any)
+const ServicesAiChatbotDevelopmentRoute =
+  ServicesAiChatbotDevelopmentRouteImport.update({
+    id: '/ai-chatbot-development',
+    path: '/ai-chatbot-development',
+    getParentRoute: () => ServicesRoute,
+  } as any)
+const ServicesAiAgentsDevelopmentRoute =
+  ServicesAiAgentsDevelopmentRouteImport.update({
+    id: '/ai-agents-development',
+    path: '/ai-agents-development',
+    getParentRoute: () => ServicesRoute,
+  } as any)
 const ServicesSlugRoute = ServicesSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -100,9 +201,24 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/hire/$slug': typeof HireSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/services/ai-agents-development': typeof ServicesAiAgentsDevelopmentRoute
+  '/services/ai-chatbot-development': typeof ServicesAiChatbotDevelopmentRoute
+  '/services/ai-integration': typeof ServicesAiIntegrationRoute
   '/services/ai-solutions': typeof ServicesAiSolutionsRoute
+  '/services/cloud-computing': typeof ServicesCloudComputingRoute
+  '/services/cloud-infrastructure': typeof ServicesCloudInfrastructureRoute
+  '/services/custom-ai-development': typeof ServicesCustomAiDevelopmentRoute
+  '/services/cybersecurity': typeof ServicesCybersecurityRoute
+  '/services/data-engineering': typeof ServicesDataEngineeringRoute
+  '/services/front-end-development': typeof ServicesFrontEndDevelopmentRoute
+  '/services/generative-ai-development': typeof ServicesGenerativeAiDevelopmentRoute
+  '/services/global-capability-center': typeof ServicesGlobalCapabilityCenterRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
+  '/services/mobile-app-development': typeof ServicesMobileAppDevelopmentRoute
+  '/services/offshore-development': typeof ServicesOffshoreDevelopmentRoute
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
+  '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
+  '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
   '/services/': typeof ServicesIndexRoute
 }
 export interface FileRoutesByTo {
@@ -114,9 +230,24 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/hire/$slug': typeof HireSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/services/ai-agents-development': typeof ServicesAiAgentsDevelopmentRoute
+  '/services/ai-chatbot-development': typeof ServicesAiChatbotDevelopmentRoute
+  '/services/ai-integration': typeof ServicesAiIntegrationRoute
   '/services/ai-solutions': typeof ServicesAiSolutionsRoute
+  '/services/cloud-computing': typeof ServicesCloudComputingRoute
+  '/services/cloud-infrastructure': typeof ServicesCloudInfrastructureRoute
+  '/services/custom-ai-development': typeof ServicesCustomAiDevelopmentRoute
+  '/services/cybersecurity': typeof ServicesCybersecurityRoute
+  '/services/data-engineering': typeof ServicesDataEngineeringRoute
+  '/services/front-end-development': typeof ServicesFrontEndDevelopmentRoute
+  '/services/generative-ai-development': typeof ServicesGenerativeAiDevelopmentRoute
+  '/services/global-capability-center': typeof ServicesGlobalCapabilityCenterRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
+  '/services/mobile-app-development': typeof ServicesMobileAppDevelopmentRoute
+  '/services/offshore-development': typeof ServicesOffshoreDevelopmentRoute
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
+  '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
+  '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
   '/services': typeof ServicesIndexRoute
 }
 export interface FileRoutesById {
@@ -130,9 +261,24 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/hire/$slug': typeof HireSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
+  '/services/ai-agents-development': typeof ServicesAiAgentsDevelopmentRoute
+  '/services/ai-chatbot-development': typeof ServicesAiChatbotDevelopmentRoute
+  '/services/ai-integration': typeof ServicesAiIntegrationRoute
   '/services/ai-solutions': typeof ServicesAiSolutionsRoute
+  '/services/cloud-computing': typeof ServicesCloudComputingRoute
+  '/services/cloud-infrastructure': typeof ServicesCloudInfrastructureRoute
+  '/services/custom-ai-development': typeof ServicesCustomAiDevelopmentRoute
+  '/services/cybersecurity': typeof ServicesCybersecurityRoute
+  '/services/data-engineering': typeof ServicesDataEngineeringRoute
+  '/services/front-end-development': typeof ServicesFrontEndDevelopmentRoute
+  '/services/generative-ai-development': typeof ServicesGenerativeAiDevelopmentRoute
+  '/services/global-capability-center': typeof ServicesGlobalCapabilityCenterRoute
   '/services/it-staffing': typeof ServicesItStaffingRoute
+  '/services/mobile-app-development': typeof ServicesMobileAppDevelopmentRoute
+  '/services/offshore-development': typeof ServicesOffshoreDevelopmentRoute
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
+  '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
+  '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
   '/services/': typeof ServicesIndexRoute
 }
 export interface FileRouteTypes {
@@ -147,9 +293,24 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/hire/$slug'
     | '/services/$slug'
+    | '/services/ai-agents-development'
+    | '/services/ai-chatbot-development'
+    | '/services/ai-integration'
     | '/services/ai-solutions'
+    | '/services/cloud-computing'
+    | '/services/cloud-infrastructure'
+    | '/services/custom-ai-development'
+    | '/services/cybersecurity'
+    | '/services/data-engineering'
+    | '/services/front-end-development'
+    | '/services/generative-ai-development'
+    | '/services/global-capability-center'
     | '/services/it-staffing'
+    | '/services/mobile-app-development'
+    | '/services/offshore-development'
     | '/services/product-engineering'
+    | '/services/software-development'
+    | '/services/web-application-development'
     | '/services/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -161,9 +322,24 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/hire/$slug'
     | '/services/$slug'
+    | '/services/ai-agents-development'
+    | '/services/ai-chatbot-development'
+    | '/services/ai-integration'
     | '/services/ai-solutions'
+    | '/services/cloud-computing'
+    | '/services/cloud-infrastructure'
+    | '/services/custom-ai-development'
+    | '/services/cybersecurity'
+    | '/services/data-engineering'
+    | '/services/front-end-development'
+    | '/services/generative-ai-development'
+    | '/services/global-capability-center'
     | '/services/it-staffing'
+    | '/services/mobile-app-development'
+    | '/services/offshore-development'
     | '/services/product-engineering'
+    | '/services/software-development'
+    | '/services/web-application-development'
     | '/services'
   id:
     | '__root__'
@@ -176,9 +352,24 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/hire/$slug'
     | '/services/$slug'
+    | '/services/ai-agents-development'
+    | '/services/ai-chatbot-development'
+    | '/services/ai-integration'
     | '/services/ai-solutions'
+    | '/services/cloud-computing'
+    | '/services/cloud-infrastructure'
+    | '/services/custom-ai-development'
+    | '/services/cybersecurity'
+    | '/services/data-engineering'
+    | '/services/front-end-development'
+    | '/services/generative-ai-development'
+    | '/services/global-capability-center'
     | '/services/it-staffing'
+    | '/services/mobile-app-development'
+    | '/services/offshore-development'
     | '/services/product-engineering'
+    | '/services/software-development'
+    | '/services/web-application-development'
     | '/services/'
   fileRoutesById: FileRoutesById
 }
@@ -251,11 +442,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesIndexRouteImport
       parentRoute: typeof ServicesRoute
     }
+    '/services/web-application-development': {
+      id: '/services/web-application-development'
+      path: '/web-application-development'
+      fullPath: '/services/web-application-development'
+      preLoaderRoute: typeof ServicesWebApplicationDevelopmentRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/software-development': {
+      id: '/services/software-development'
+      path: '/software-development'
+      fullPath: '/services/software-development'
+      preLoaderRoute: typeof ServicesSoftwareDevelopmentRouteImport
+      parentRoute: typeof ServicesRoute
+    }
     '/services/product-engineering': {
       id: '/services/product-engineering'
       path: '/product-engineering'
       fullPath: '/services/product-engineering'
       preLoaderRoute: typeof ServicesProductEngineeringRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/offshore-development': {
+      id: '/services/offshore-development'
+      path: '/offshore-development'
+      fullPath: '/services/offshore-development'
+      preLoaderRoute: typeof ServicesOffshoreDevelopmentRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/mobile-app-development': {
+      id: '/services/mobile-app-development'
+      path: '/mobile-app-development'
+      fullPath: '/services/mobile-app-development'
+      preLoaderRoute: typeof ServicesMobileAppDevelopmentRouteImport
       parentRoute: typeof ServicesRoute
     }
     '/services/it-staffing': {
@@ -265,11 +484,88 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesItStaffingRouteImport
       parentRoute: typeof ServicesRoute
     }
+    '/services/global-capability-center': {
+      id: '/services/global-capability-center'
+      path: '/global-capability-center'
+      fullPath: '/services/global-capability-center'
+      preLoaderRoute: typeof ServicesGlobalCapabilityCenterRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/generative-ai-development': {
+      id: '/services/generative-ai-development'
+      path: '/generative-ai-development'
+      fullPath: '/services/generative-ai-development'
+      preLoaderRoute: typeof ServicesGenerativeAiDevelopmentRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/front-end-development': {
+      id: '/services/front-end-development'
+      path: '/front-end-development'
+      fullPath: '/services/front-end-development'
+      preLoaderRoute: typeof ServicesFrontEndDevelopmentRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/data-engineering': {
+      id: '/services/data-engineering'
+      path: '/data-engineering'
+      fullPath: '/services/data-engineering'
+      preLoaderRoute: typeof ServicesDataEngineeringRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/cybersecurity': {
+      id: '/services/cybersecurity'
+      path: '/cybersecurity'
+      fullPath: '/services/cybersecurity'
+      preLoaderRoute: typeof ServicesCybersecurityRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/custom-ai-development': {
+      id: '/services/custom-ai-development'
+      path: '/custom-ai-development'
+      fullPath: '/services/custom-ai-development'
+      preLoaderRoute: typeof ServicesCustomAiDevelopmentRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/cloud-infrastructure': {
+      id: '/services/cloud-infrastructure'
+      path: '/cloud-infrastructure'
+      fullPath: '/services/cloud-infrastructure'
+      preLoaderRoute: typeof ServicesCloudInfrastructureRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/cloud-computing': {
+      id: '/services/cloud-computing'
+      path: '/cloud-computing'
+      fullPath: '/services/cloud-computing'
+      preLoaderRoute: typeof ServicesCloudComputingRouteImport
+      parentRoute: typeof ServicesRoute
+    }
     '/services/ai-solutions': {
       id: '/services/ai-solutions'
       path: '/ai-solutions'
       fullPath: '/services/ai-solutions'
       preLoaderRoute: typeof ServicesAiSolutionsRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/ai-integration': {
+      id: '/services/ai-integration'
+      path: '/ai-integration'
+      fullPath: '/services/ai-integration'
+      preLoaderRoute: typeof ServicesAiIntegrationRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/ai-chatbot-development': {
+      id: '/services/ai-chatbot-development'
+      path: '/ai-chatbot-development'
+      fullPath: '/services/ai-chatbot-development'
+      preLoaderRoute: typeof ServicesAiChatbotDevelopmentRouteImport
+      parentRoute: typeof ServicesRoute
+    }
+    '/services/ai-agents-development': {
+      id: '/services/ai-agents-development'
+      path: '/ai-agents-development'
+      fullPath: '/services/ai-agents-development'
+      preLoaderRoute: typeof ServicesAiAgentsDevelopmentRouteImport
       parentRoute: typeof ServicesRoute
     }
     '/services/$slug': {
@@ -291,17 +587,48 @@ declare module '@tanstack/react-router' {
 
 interface ServicesRouteChildren {
   ServicesSlugRoute: typeof ServicesSlugRoute
+  ServicesAiAgentsDevelopmentRoute: typeof ServicesAiAgentsDevelopmentRoute
+  ServicesAiChatbotDevelopmentRoute: typeof ServicesAiChatbotDevelopmentRoute
+  ServicesAiIntegrationRoute: typeof ServicesAiIntegrationRoute
   ServicesAiSolutionsRoute: typeof ServicesAiSolutionsRoute
+  ServicesCloudComputingRoute: typeof ServicesCloudComputingRoute
+  ServicesCloudInfrastructureRoute: typeof ServicesCloudInfrastructureRoute
+  ServicesCustomAiDevelopmentRoute: typeof ServicesCustomAiDevelopmentRoute
+  ServicesCybersecurityRoute: typeof ServicesCybersecurityRoute
+  ServicesDataEngineeringRoute: typeof ServicesDataEngineeringRoute
+  ServicesFrontEndDevelopmentRoute: typeof ServicesFrontEndDevelopmentRoute
+  ServicesGenerativeAiDevelopmentRoute: typeof ServicesGenerativeAiDevelopmentRoute
+  ServicesGlobalCapabilityCenterRoute: typeof ServicesGlobalCapabilityCenterRoute
   ServicesItStaffingRoute: typeof ServicesItStaffingRoute
+  ServicesMobileAppDevelopmentRoute: typeof ServicesMobileAppDevelopmentRoute
+  ServicesOffshoreDevelopmentRoute: typeof ServicesOffshoreDevelopmentRoute
   ServicesProductEngineeringRoute: typeof ServicesProductEngineeringRoute
+  ServicesSoftwareDevelopmentRoute: typeof ServicesSoftwareDevelopmentRoute
+  ServicesWebApplicationDevelopmentRoute: typeof ServicesWebApplicationDevelopmentRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
 }
 
 const ServicesRouteChildren: ServicesRouteChildren = {
   ServicesSlugRoute: ServicesSlugRoute,
+  ServicesAiAgentsDevelopmentRoute: ServicesAiAgentsDevelopmentRoute,
+  ServicesAiChatbotDevelopmentRoute: ServicesAiChatbotDevelopmentRoute,
+  ServicesAiIntegrationRoute: ServicesAiIntegrationRoute,
   ServicesAiSolutionsRoute: ServicesAiSolutionsRoute,
+  ServicesCloudComputingRoute: ServicesCloudComputingRoute,
+  ServicesCloudInfrastructureRoute: ServicesCloudInfrastructureRoute,
+  ServicesCustomAiDevelopmentRoute: ServicesCustomAiDevelopmentRoute,
+  ServicesCybersecurityRoute: ServicesCybersecurityRoute,
+  ServicesDataEngineeringRoute: ServicesDataEngineeringRoute,
+  ServicesFrontEndDevelopmentRoute: ServicesFrontEndDevelopmentRoute,
+  ServicesGenerativeAiDevelopmentRoute: ServicesGenerativeAiDevelopmentRoute,
+  ServicesGlobalCapabilityCenterRoute: ServicesGlobalCapabilityCenterRoute,
   ServicesItStaffingRoute: ServicesItStaffingRoute,
+  ServicesMobileAppDevelopmentRoute: ServicesMobileAppDevelopmentRoute,
+  ServicesOffshoreDevelopmentRoute: ServicesOffshoreDevelopmentRoute,
   ServicesProductEngineeringRoute: ServicesProductEngineeringRoute,
+  ServicesSoftwareDevelopmentRoute: ServicesSoftwareDevelopmentRoute,
+  ServicesWebApplicationDevelopmentRoute:
+    ServicesWebApplicationDevelopmentRoute,
   ServicesIndexRoute: ServicesIndexRoute,
 }
 
@@ -322,3 +649,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

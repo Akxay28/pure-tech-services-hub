@@ -33,6 +33,6 @@ export const Route = createFileRoute("/services/$slug")({
 });
 
 function SubServiceRoute() {
-  const { entry } = Route.useLoaderData();
+  const { entry, slug } = Route.useLoaderData();
   return <SubServicePage {...entry} title={entry.title} />;
 }

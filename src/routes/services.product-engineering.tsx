@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServicePage } from "@/components/site/ServicePage";
+import { TechnologyExpertiseSection } from "@/components/site/TechnologyExpertiseSectionForAiSolutionsPage";
 
 export const Route = createFileRoute("/services/product-engineering")({
   head: () => ({
@@ -217,6 +218,40 @@ function ProductEngineering() {
         { to: "/services/ai-solutions", label: "AI Solutions" },
         { to: "/services/it-staffing", label: "IT Staffing" },
       ]}
+
+      extraSection={
+        <TechnologyExpertiseSection
+        
+          accent="var(--brand-orange)"
+          tabs={[
+            {
+              label: "Product Stack",
+              cards: [
+                { role: "Full-Stack Eng.",   level: "L5", category: "Product Engineering", tech: ["Next.js", "tRPC", "Prisma"] },
+                { role: "API Architects",    level: "L6", category: "API Design",          tech: ["GraphQL", "REST", "OpenAPI"] },
+                { role: "Auth Specialists",  level: "L5", category: "Security",            tech: ["Auth0", "JWT", "OAuth2"] },
+                { role: "Payments Eng.",     level: "L5", category: "Fintech",             tech: ["Stripe", "Razorpay", "Webhooks"] },
+              ],
+            },
+            {
+              label: "Infrastructure",
+              cards: [
+                { role: "Platform Engineers", level: "L6", category: "Platform Eng.",  tech: ["AWS", "Vercel", "Railway"] },
+                { role: "Database Eng.",      level: "L5", category: "Data Layer",     tech: ["PostgreSQL", "Redis", "MongoDB"] },
+                { role: "Search Engineers",   level: "L5", category: "Search & Index", tech: ["Elasticsearch", "Typesense", "Algolia"] },
+              ],
+            },
+            {
+              label: "Quality",
+              cards: [
+                { role: "QA Engineers",      level: "L4", category: "Testing",         tech: ["Playwright", "Cypress", "Jest"] },
+                { role: "Perf. Engineers",   level: "L5", category: "Performance",     tech: ["Lighthouse", "k6", "WebPageTest"] },
+                { role: "Security Analysts", level: "L6", category: "AppSec",          tech: ["OWASP", "Snyk", "Burp Suite"] },
+              ],
+            },
+          ]}
+        />
+      }
     />
   );
 }

@@ -346,3 +346,16 @@
   33% { transform: translate(40%, 20%) scale(1.1); }
   66% { transform: translate(10%, 60%) scale(0.9); }
 }
+
+
+/* GCC model section and in 12 weeks section */
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  
+  100% {
+    background-position: 200% 50%;
+  }
+}
+/* End of GCC model section and in 12 weeks section */

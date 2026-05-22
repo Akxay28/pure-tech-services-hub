@@ -9,6 +9,7 @@ import {
   Stat,
   CTASection,
 } from "@/components/site/Primitives";
+import { MeetTheTeam } from "@/components/site/MeetTheTeam";
 
 export type SubServicePageProps = {
   eyebrow: string;
@@ -24,6 +25,8 @@ export type SubServicePageProps = {
   tech?: string[];
   faqs: { q: string; a: string }[];
   siblingLinks: { to: string; label: string }[];
+  /** Optional section — pass from the route for this slug only */
+  extraSection?: ReactNode;
 };
 
 export function SubServicePage(p: SubServicePageProps) {
@@ -82,81 +85,7 @@ export function SubServicePage(p: SubServicePageProps) {
         </div>
       </section>
 
-      {/* GCC Setup Timeline */}
-<section className="px-5 lg:px-8 py-20">
-  <div className="mx-auto max-w-7xl">
-  <SectionHeader
-            eyebrow="What we deliver"
-            title="How we help you launch a GCC in 12 weeks."
-            description="A structured execution framework designed to take your GCC from planning to operational readiness — fast, scalable, and execution-focused."
-            />
-
-    <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-      {[
-        {
-          step: "01",
-          title: "Strategy & Planning",
-          body: "Location analysis, operating model definition, cost benchmarking, and GCC roadmap alignment.",
-        },
-        {
-          step: "02",
-          title: "Legal & Infrastructure",
-          body: "Entity setup, compliance support, workspace planning, and IT infrastructure preparation.",
-        },
-        {
-          step: "03",
-          title: "Talent Acquisition",
-          body: "Leadership hiring, engineering team buildout, recruitment strategy, and skill mapping.",
-        },
-        {
-          step: "04",
-          title: "Operations Go-Live",
-          body: "Governance setup, onboarding workflows, operational readiness, and delivery kickoff.",
-        },
-      ].map((item, i) => (
-        <div
-          key={item.title}
-          className="relative overflow-hidden rounded-3xl border border-border bg-surface p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-soft"
-        >
-          {/* Top Accent Line */}
-          <div
-            className="absolute left-0 top-0 h-1 w-full"
-            style={{
-              background: `linear-gradient(90deg, ${p.accent}, color-mix(in oklab, ${p.accent} 60%, white))`,
-            }}
-          />
-
-          {/* Step Badge */}
-          <div
-            className="grid h-14 w-14 place-items-center rounded-2xl text-lg font-bold text-white shadow-soft"
-            style={{
-              background: `linear-gradient(135deg, ${p.accent}, color-mix(in oklab, ${p.accent} 55%, white))`,
-            }}
-          >
-            {item.step}
-          </div>
-
-          {/* Content */}
-          <h3 className="mt-6 text-xl font-display font-semibold tracking-tight">
-            {item.title}
-          </h3>
-
-          <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-            {item.body}
-          </p>
-
-          {/* Step Number Background */}
-          <div
-            className="absolute bottom-4 right-5 text-6xl font-display font-bold opacity-[0.04] select-none"
-            style={{ color: p.accent }}
-          >
-            {i + 1}
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
+      {p.extraSection}
 
       {/* Capabilities */}
       <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
@@ -221,7 +150,7 @@ export function SubServicePage(p: SubServicePageProps) {
       </section>
 
       {/* Process */}
-      <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
+      {/* <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="How we work" title="A repeatable path, every time." />
           <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -241,10 +170,10 @@ export function SubServicePage(p: SubServicePageProps) {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Tech */}
-      {p.tech && p.tech.length > 0 && (
+      {/* {p.tech && p.tech.length > 0 && (
         <section className="px-5 lg:px-8 py-16">
           <div className="mx-auto max-w-7xl">
             <SectionHeader eyebrow="Stack" title="Tools we reach for first." />
@@ -261,7 +190,7 @@ export function SubServicePage(p: SubServicePageProps) {
             </div>
           </div>
         </section>
-      )}
+      )} */}
 
 
 
@@ -293,7 +222,8 @@ export function SubServicePage(p: SubServicePageProps) {
 
       {/* Sibling links */}
       <section className="px-5 lg:px-8 py-16">
-        <div className="mx-auto max-w-7xl glass-panel rounded-3xl p-8 sm:p-10 flex flex-col lg:flex-row lg:items-center gap-6 justify-between">
+        <div className="mx-auto max-w-7xl bg-surface-muted/60 border-y border-border shadow-soft rounded-3xl p-8 sm:p-10 flex flex-col lg:flex-row lg:items-center gap-6 justify-between"
+        >
           <div>
             <div className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               Related services
@@ -303,19 +233,21 @@ export function SubServicePage(p: SubServicePageProps) {
             </h3>
           </div>
           <div className="flex flex-wrap gap-3">
-            {p.siblingLinks.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to as never}
-                className="inline-flex items-center gap-2 rounded-full bg-surface border border-border px-5 py-3 text-sm font-medium hover:bg-secondary"
-              >
-                {l.label}
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            ))}
-          </div>
+  {p.siblingLinks.map((l) => (
+    <Link
+      key={l.to}
+      to={l.to as never}
+      className="inline-flex items-center gap-2 rounded-full bg-surface border border-border px-5 py-3 text-sm font-medium transition-all duration-700 hover:text-white hover:border-transparent hover:[background:var(--gradient-brand)]"
+    >
+      {l.label}
+      <ArrowRight className="h-4 w-4" />
+    </Link>
+  ))}
+</div>
         </div>
       </section>
+
+      <MeetTheTeam accent={p.accent} />
 
       <CTASection
         title="Ready to scope this in detail?"
