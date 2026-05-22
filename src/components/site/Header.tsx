@@ -274,6 +274,8 @@ export function Header() {
               <div className="mx-auto max-w-7xl">
                 {activeMenu === "Services" ? (
                   <ServicesMega activeTab={activeTab} setActiveTab={setActiveTab} />
+                ) : activeMenu === "Hire Developers" ? (
+                  <HireDevelopersMega activeTab={activeHireTab} setActiveTab={setActiveHireTab} />
                 ) : (
                   <SimpleMega items={simpleMenus[activeMenu] ?? []} />
                 )}
