@@ -78,11 +78,6 @@ const serviceItems: Record<TabKey, ServiceItem[]> = {
 type SimpleLink = { label: string; to: string; desc: string };
 
 const simpleMenus: Record<string, SimpleLink[]> = {
-  "Hire Developers": [
-    { label: "IT Staff Augmentation", to: "/services/it-staffing", desc: "Vetted senior engineers, ready in days." },
-    { label: "Dedicated Squads", to: "/services/product-engineering", desc: "Full product squads built around your roadmap." },
-    { label: "AI Engineering Pods", to: "/services/ai-solutions", desc: "ML/LLM specialists for production AI." },
-  ],
   Company: [
     { label: "About", to: "/about", desc: "Who we are and how we work." },
     { label: "Careers", to: "/careers", desc: "Open roles across engineering and AI." },
@@ -95,10 +90,50 @@ const simpleMenus: Record<string, SimpleLink[]> = {
   ],
 };
 
-type NavItem = { label: string; to?: string; type: "mega" | "simple" };
+// ── Hire Developers mega menu ────────────────────────────────
+type HireTabKey = "ai" | "vibe" | "role";
+type HireItem = { title: string; to: string };
+
+const hireTabs: { key: HireTabKey; label: string; icon: LucideIcon }[] = [
+  { key: "ai", label: "Artificial Intelligence", icon: Brain },
+  { key: "vibe", label: "AI Vibe Coders", icon: Sparkles },
+  { key: "role", label: "Hire By Role", icon: Users },
+];
+
+const hireItems: Record<HireTabKey, HireItem[]> = {
+  ai: [
+    { title: "Hire Chatbot Developers", to: "/hire/chatbot-developers" },
+    { title: "Hire OpenAI Developers", to: "/hire/openai-developers" },
+    { title: "Hire Generative AI Developers", to: "/hire/generative-ai-developers" },
+    { title: "Hire Gemini Developers", to: "/hire/gemini-developers" },
+    { title: "Hire Prompt Engineer", to: "/hire/prompt-engineer" },
+  ],
+  vibe: [
+    { title: "Hire ChatGPT Developers", to: "/hire/chatgpt-developers" },
+    { title: "Hire Lovable AI Developers", to: "/hire/lovable-ai-developers" },
+    { title: "Hire Replit AI Developers", to: "/hire/replit-ai-developers" },
+    { title: "Hire Bolt.new AI Developers", to: "/hire/bolt-new-ai-developers" },
+    { title: "Hire Google Antigravity Developers", to: "/hire/google-antigravity-developers" },
+    { title: "Hire Cursor AI Developers", to: "/hire/cursor-ai-developers" },
+    { title: "Hire Windsurf AI Developers", to: "/hire/windsurf-ai-developers" },
+  ],
+  role: [
+    { title: "Hire Software Developer", to: "/hire/software-developer" },
+    { title: "Hire Mobile App Developer", to: "/hire/mobile-app-developer" },
+    { title: "Hire Backend Developers", to: "/hire/backend-developers" },
+    { title: "Hire AI Developers", to: "/hire/ai-developers" },
+    { title: "Hire DevOps Developers", to: "/hire/devops-developers" },
+    { title: "Hire Web App Developer", to: "/hire/web-app-developer" },
+    { title: "Hire Frontend Developers", to: "/hire/frontend-developers" },
+    { title: "Hire Fullstack Developers", to: "/hire/fullstack-developers" },
+    { title: "Hire Android Developers", to: "/hire/android-developers" },
+  ],
+};
+
+type NavItem = { label: string; to?: string; type: "mega" | "simple" | "hire" };
 const nav: NavItem[] = [
   { label: "Services", to: "/services", type: "mega" },
-  { label: "Hire Developers", type: "simple" },
+  { label: "Hire Developers", type: "hire" },
   { label: "Company", type: "simple" },
   { label: "Resources", type: "simple" },
 ];
