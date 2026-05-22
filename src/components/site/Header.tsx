@@ -309,7 +309,7 @@ export function Header() {
           >
             <div className="mx-auto max-w-7xl px-5 py-5 space-y-2 max-h-[80vh] overflow-y-auto">
               <MobileAccordion title="Services" items={serviceItems.team.concat(serviceItems.ai)} />
-              <MobileAccordion title="Hire Developers" items={simpleMenus["Hire Developers"].map(s => ({ title: s.label, subtitle: s.desc, icon: Users, to: s.to }))} />
+              <MobileAccordion title="Hire Developers" items={[...hireItems.ai, ...hireItems.vibe, ...hireItems.role].map(h => ({ title: h.title, subtitle: "", icon: Users, to: h.to }))} />
               <MobileAccordion title="Company" items={simpleMenus["Company"].map(s => ({ title: s.label, subtitle: s.desc, icon: Building2, to: s.to }))} />
               <MobileAccordion title="Resources" items={simpleMenus["Resources"].map(s => ({ title: s.label, subtitle: s.desc, icon: Layers, to: s.to }))} />
               <Link
