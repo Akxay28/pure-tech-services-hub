@@ -151,7 +151,7 @@ export const subServices: Record<string, Entry> = {
       { title: "Vendor governance", body: "Single throat to choke — we manage your sub-vendors and consolidate reporting upward." },
     ],
     outcomes: [
-      { metric: "47%", label: "TCO reduction", context: "Mid-market manufacturer consolidated 6 IT vendors into a single Pure Tech contract." },
+      { metric: "47%", label: "TCO reduction", context: "Mid-market manufacturer consolidated 6 IT vendors into a single Pure Technology contract." },
       { metric: "99.97%", label: "Uptime delivered", context: "12-month rolling SLA across critical apps for a Tier-1 BFSI client." },
       { metric: "<8 min", label: "Mean response", context: "P1 ticket acknowledgement, measured at the service desk level." },
     ],

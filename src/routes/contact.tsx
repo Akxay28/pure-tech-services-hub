@@ -1,22 +1,40 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Mail, Phone, MapPin, ArrowRight, Check } from "lucide-react";
 import { PageHero, SectionHeader } from "@/components/site/Primitives";
+
+const CONTACT_EMAIL = "contact@puretechnology.in";
+
+const EXPLORING_OPTIONS = [
+  "IT Staff Augmentation",
+  "AI Solutions & Development",
+  "Software Development",
+  "Web Application Development",
+  "Mobile App Development",
+  "Cloud & Infrastructure",
+  "Product Engineering",
+  "Offshore Development",
+  "Global Capability Center",
+  "IT Outsourcing",
+  "Cybersecurity",
+  "Data Engineering",
+  "Other / Not sure yet",
+] as const;
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Pure Technology | Bengaluru, India" },
+      { title: "Contact — Pure Technology | Pune, India" },
       {
         name: "description",
         content:
-          "Talk to Pure Technology about AI, IT staffing, or product engineering. We respond to every enquiry within 48 hours.",
+          "Talk to Pure Technology about AI, software development, IT staffing, or product engineering. We respond to every enquiry within 24 hours.",
       },
       { property: "og:title", content: "Contact — Pure Technology" },
       {
         property: "og:description",
         content:
-          "Reach the Pure Technology team in Bengaluru. We respond within 48 hours.",
+          "Reach the Pure Technology team in Pune. We respond within 24 hours with a real human, not an automated reply.",
       },
     ],
   }),
@@ -30,14 +48,14 @@ function Contact() {
         eyebrow="Contact"
         title={
           <>
-            Let's start with{" "}
-            <span className="text-gradient-brand">an honest conversation.</span>
+            Let's Build Something{" "}
+            <span className="text-gradient-brand">Great Together.</span>
           </>
         }
-        description="Tell us where you are, where you'd like to be, and what's getting in the way. We'll respond within 48 hours with a real human, not a tracking number."
+        description="Tell us about your project, your team, or the challenge you're trying to solve. We'll get back to you within 24 hours — with a real response, not an automated reply."
       />
 
-      <section className="px-5 lg:px-8 pb-24">
+      <section className="px-5 mt-25 lg:px-8 pb-24">
         <div className="mx-auto max-w-7xl grid lg:grid-cols-12 gap-10">
           <ContactForm />
           <ContactSidebar />
@@ -48,21 +66,20 @@ function Contact() {
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Where we work"
-            title="Bengaluru is home. We collaborate from everywhere."
+            title="Pune is home. We deliver from everywhere."
           />
-          <div className="mt-10 grid md:grid-cols-3 gap-5">
+          <div className="mt-10 grid md:grid-cols-2 gap-5">
             {[
               {
-                city: "Bengaluru (HQ)",
-                addr: "Prestige Atrium, MG Road, Bengaluru 560001",
+                city: "Pune (HQ)",
+                addr: "603, White Square, Hinjewadi-Wakad Road, Near Wakad Bridge, Phase 1, Hinjawadi, Pune, Maharashtra 411057",
               },
-              { city: "Hyderabad", addr: "Cyber Towers, HITEC City, Hyderabad 500081" },
-              { city: "Pune", addr: "World Trade Center, Kharadi, Pune 411014" },
+              {
+                city: "Remote Teams",
+                addr: "Developers and consultants working across India, Middle East, Europe & North America",
+              },
             ].map((o) => (
-              <div
-                key={o.city}
-                className="glass-card rounded-2xl p-6"
-              >
+              <div key={o.city} className="glass-card rounded-2xl p-6">
                 <div className="font-display font-semibold text-lg">{o.city}</div>
                 <div className="mt-2 text-sm text-muted-foreground leading-relaxed">
                   {o.addr}
@@ -90,7 +107,15 @@ function ContactForm() {
         </span>
         <h2 className="text-2xl font-display font-bold">Thanks — we've got it.</h2>
         <p className="text-muted-foreground max-w-md">
-          A senior member of our team will get back to you within 48 hours, usually faster. In the meantime, feel free to write to us at <a className="text-foreground underline" href="mailto:hello@puretechnology.in">hello@puretechnology.in</a>.
+          A senior member of our team will get back to you within 24 hours, usually
+          faster. In the meantime, feel free to write to us at{" "}
+          <a
+            className="text-foreground underline"
+            href={`mailto:${CONTACT_EMAIL}`}
+          >
+            {CONTACT_EMAIL}
+          </a>
+          .
         </p>
       </div>
     );
@@ -121,10 +146,9 @@ function ContactForm() {
           name="interest"
           className="rounded-xl border border-input bg-surface px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/50"
         >
-          <option>AI Solutions</option>
-          <option>IT Staffing</option>
-          <option>Product Engineering</option>
-          <option>Not sure yet — let's talk</option>
+          {EXPLORING_OPTIONS.map((option) => (
+            <option key={option}>{option}</option>
+          ))}
         </select>
       </div>
       <div className="grid gap-2">
@@ -144,11 +168,12 @@ function ContactForm() {
         type="submit"
         className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3.5 text-sm font-medium text-background hover:opacity-90 transition-opacity shadow-soft"
       >
-        Send enquiry
+        Send Message
         <ArrowRight className="h-4 w-4" />
       </button>
       <p className="text-xs text-muted-foreground">
-        We respond to every enquiry within 48 hours. By submitting, you agree to be contacted regarding your message.
+        We respond to every enquiry within 24 hours. By submitting, you agree to
+        be contacted regarding your message.
       </p>
     </form>
   );
@@ -182,46 +207,75 @@ function Field({
   );
 }
 
+function ContactIcon({
+  color,
+  children,
+}: {
+  color: string;
+  children: ReactNode;
+}) {
+  return (
+    <span
+      className="grid h-9 w-9 shrink-0 place-items-center rounded-xl text-white"
+      style={{ background: color }}
+    >
+      {children}
+    </span>
+  );
+}
+
 function ContactSidebar() {
   return (
     <aside className="lg:col-span-5 space-y-4">
       <div className="glass-card rounded-3xl p-6 sm:p-7 space-y-5">
         <h3 className="font-display font-semibold text-lg">Reach us directly</h3>
         <div className="space-y-4 text-sm">
-          <a className="flex items-start gap-3 text-foreground/85 hover:text-foreground" href="mailto:hello@puretechnology.in">
-            <span
-              className="grid h-9 w-9 place-items-center rounded-xl text-white"
-              style={{ background: "var(--brand-blue)" }}
-            >
+          <a
+            className="flex items-start gap-3 text-foreground/85 hover:text-foreground"
+            href={`mailto:${CONTACT_EMAIL}`}
+          >
+            <ContactIcon color="var(--brand-blue)">
               <Mail className="h-4 w-4" />
-            </span>
+            </ContactIcon>
             <span>
               <span className="block text-xs text-muted-foreground">Email</span>
-              hello@puretechnology.in
+              {CONTACT_EMAIL}
             </span>
           </a>
-          <a className="flex items-start gap-3 text-foreground/85 hover:text-foreground" href="tel:+918040000000">
-            <span
-              className="grid h-9 w-9 place-items-center rounded-xl text-white"
-              style={{ background: "var(--brand-orange)" }}
-            >
+          <a
+            className="flex items-start gap-3 text-foreground/85 hover:text-foreground"
+            href="tel:+918329849726"
+          >
+            <ContactIcon color="var(--brand-orange)">
               <Phone className="h-4 w-4" />
-            </span>
+            </ContactIcon>
             <span>
               <span className="block text-xs text-muted-foreground">Phone</span>
-              +91 80 4000 0000
+              +91 83298 49726
+            </span>
+          </a>
+          <a
+            className="flex items-start gap-3 text-foreground/85 hover:text-foreground"
+            href="tel:+919970111283"
+          >
+            <ContactIcon color="var(--brand-red)">
+              <Phone className="h-4 w-4" />
+            </ContactIcon>
+            <span>
+              <span className="block text-xs text-muted-foreground">Phone</span>
+              +91 99701 11283
             </span>
           </a>
           <div className="flex items-start gap-3 text-foreground/85">
-            <span
-              className="grid h-9 w-9 place-items-center rounded-xl text-white"
-              style={{ background: "var(--brand-green)" }}
-            >
+            <ContactIcon color="var(--brand-green)">
               <MapPin className="h-4 w-4" />
-            </span>
-            <span>
-              <span className="block text-xs text-muted-foreground">Headquartered at</span>
-              Prestige Atrium, MG Road, Bengaluru 560001
+            </ContactIcon>
+            <span className="min-w-0 flex-1 leading-relaxed">
+              <span className="block text-xs text-muted-foreground">
+                Headquartered at
+              </span>
+              603, White Square, Hinjewadi-Wakad Road, Near Wakad Bridge, Phase
+              1, Hinjawadi, Pune, Maharashtra 411057
             </span>
           </div>
         </div>
@@ -230,16 +284,24 @@ function ContactSidebar() {
       <div className="rounded-3xl border border-border bg-surface-muted/70 p-6 sm:p-7 space-y-3">
         <h3 className="font-display font-semibold text-lg">For media & press</h3>
         <p className="text-sm text-muted-foreground leading-relaxed">
-          For interviews, quotes, or background on Pure Technology, write to
-          <a href="mailto:press@puretechnology.in" className="text-foreground underline ml-1">press@puretechnology.in</a>.
+          For interviews, partnerships, or media enquiries about Pure Technology,
+          write to us at{" "}
+          <a
+            href={`mailto:${CONTACT_EMAIL}`}
+            className="text-foreground underline"
+          >
+            {CONTACT_EMAIL}
+          </a>
+          .
         </p>
       </div>
 
       <div className="rounded-3xl border border-border bg-surface-muted/70 p-6 sm:p-7 space-y-3">
         <h3 className="font-display font-semibold text-lg">Working hours</h3>
         <p className="text-sm text-muted-foreground leading-relaxed">
-          Mon–Fri · 09:30 to 19:00 IST. We also keep overlap windows with
-          North America (PT/ET) and EMEA (CET) for client teams.
+          Mon–Sat · 09:30 to 18:30 IST. We support client teams across India,
+          the Middle East, Europe, and North America with flexible overlap hours
+          on request.
         </p>
       </div>
     </aside>

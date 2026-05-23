@@ -6,32 +6,27 @@ import {
   Briefcase,
   Sparkles,
   HeartHandshake,
-  GraduationCap,
-  Plane,
-  Stethoscope,
-  Coffee,
+  Target,
+  Users,
 } from "lucide-react";
-import {
-  PageHero,
-  SectionHeader,
-  Stat,
-  Testimonial,
-} from "@/components/site/Primitives";
+import { PageHero, SectionHeader, Stat } from "@/components/site/Primitives";
 
 export const Route = createFileRoute("/careers")({
   head: () => ({
     meta: [
-      { title: "Careers — Build at Pure Technology | Bengaluru, Hyderabad, Pune" },
+      {
+        title: "Careers — Build with Pure Technology | Pune & Remote India",
+      },
       {
         name: "description",
         content:
-          "Join 180+ senior engineers shipping AI, product, and platform work for clients across 14 countries. Open roles in Bengaluru, Hyderabad, Pune, and remote across India.",
+          "Join Pure Technology's growing team of engineers, AI specialists, and technology consultants in Pune and remote across India. Open roles in AI, full stack, business development, and IT staffing.",
       },
       { property: "og:title", content: "Careers at Pure Technology" },
       {
         property: "og:description",
         content:
-          "Senior-by-default engineering, no bait-and-switch, 9-year average tenure. We're hiring across AI, product, platform, and design.",
+          "We hire for skill, invest in growth, and build careers — not just projects. Explore open roles in Pune and remote India.",
       },
     ],
   }),
@@ -43,168 +38,155 @@ type Role = {
   team: string;
   location: string;
   type: string;
-  experience: string;
+  tag: string;
   blurb: string;
   accent: string;
 };
 
 const roles: Role[] = [
   {
-    title: "Senior AI Engineer — RAG & Agents",
-    team: "AI Solutions",
-    location: "Bengaluru / Hybrid",
+    title: "Business Development Specialist",
+    team: "Business Development",
+    location: "Pune",
     type: "Full-time",
-    experience: "5–9 yrs",
+    tag: "IT Sector",
     blurb:
-      "Own the architecture of retrieval and agentic systems for BFSI and healthcare clients. You'll ship to real users, write the evals, and present to CISOs.",
-    accent: "var(--brand-blue)",
-  },
-  {
-    title: "Staff MLOps Engineer",
-    team: "AI Solutions",
-    location: "Hyderabad / Remote India",
-    type: "Full-time",
-    experience: "7–12 yrs",
-    blurb:
-      "Build the observability, eval, and deployment backbone behind every LLM product we ship. Kubernetes, Ray, vector stores, and a healthy bias for paved roads.",
-    accent: "var(--brand-blue)",
-  },
-  {
-    title: "Senior Full-Stack Engineer (TypeScript)",
-    team: "Product Engineering",
-    location: "Bengaluru / Pune",
-    type: "Full-time",
-    experience: "4–8 yrs",
-    blurb:
-      "Lead front-of-house product squads building SaaS for global customers. React, Node, Postgres, and an opinion about why types matter at 2am.",
-    accent: "var(--brand-green)",
-  },
-  {
-    title: "Engineering Manager — Product Pods",
-    team: "Product Engineering",
-    location: "Bengaluru",
-    type: "Full-time",
-    experience: "9+ yrs",
-    blurb:
-      "Run 2–3 product squads end-to-end. Hire seniors, protect cadence, partner with client PMs, and keep the craft bar high. Player-coach, not pure manager.",
-    accent: "var(--brand-green)",
-  },
-  {
-    title: "Senior Talent Partner — IT Staffing",
-    team: "Talent",
-    location: "Bengaluru",
-    type: "Full-time",
-    experience: "5–8 yrs",
-    blurb:
-      "Run end-to-end hiring for our staffing clients. Source senior engineers, defend our 'no bait-and-switch' promise, and own placement quality, not just volume.",
+      "Drive new business across our IT services portfolio — from AI and product engineering to staff augmentation. You'll partner with leadership on pipeline, proposals, and client relationships.",
     accent: "var(--brand-orange)",
   },
   {
-    title: "Senior Product Designer",
-    team: "Product Engineering",
-    location: "Remote India",
+    title: "AI Developer / Engineer",
+    team: "AI Solutions",
+    location: "Pune",
     type: "Full-time",
-    experience: "5–9 yrs",
+    tag: "AI & Automation",
     blurb:
-      "Design enterprise SaaS surfaces that real operators love. Systems thinking, prototyping in Figma, and the patience to ship the right thing — not the first thing.",
-    accent: "var(--brand-yellow)",
-  },
-  {
-    title: "DevOps & Platform Engineer",
-    team: "Platform",
-    location: "Hyderabad / Remote India",
-    type: "Full-time",
-    experience: "4–8 yrs",
-    blurb:
-      "Own the internal platform that every client squad ships on. AWS, Terraform, GitHub Actions, SOC 2 controls, and a fondness for boring, reliable infra.",
-    accent: "var(--brand-red)",
-  },
-  {
-    title: "Engineering Internship — Class of 2027",
-    team: "Apprenticeship",
-    location: "Bengaluru",
-    type: "6-month internship",
-    experience: "Pre-final / Final year",
-    blurb:
-      "Paid, mentored, and structured. Sit inside a senior squad, ship real client code, and graduate with a PPO interview if you clear the bar.",
+      "Build intelligent systems for startups and enterprises — LLM integrations, automation workflows, and production-ready AI features aligned to real client outcomes.",
     accent: "var(--brand-blue)",
+  },
+  {
+    title: "Full Stack Developer",
+    team: "Product Engineering",
+    location: "Pune",
+    type: "Full-time",
+    tag: "Web & SaaS",
+    blurb:
+      "Ship end-to-end product work for global clients — modern frontends, APIs, and cloud-backed services with a team that cares about maintainability and delivery quality.",
+    accent: "var(--brand-green)",
+  },
+  {
+    title: "IT Staff Augmentation Consultant",
+    team: "Talent & Delivery",
+    location: "Pune",
+    type: "Full-time",
+    tag: "Staffing",
+    blurb:
+      "Match senior engineers to client needs, own delivery quality, and uphold our no-bait-and-switch promise — senior talent, transparent placements, long-term relationships.",
+    accent: "var(--brand-red)",
   },
 ];
 
 const principles = [
   {
-    Icon: Sparkles,
-    title: "Senior by default, always",
-    body: "We hire experienced engineers and trust them with ownership from week one. No staffing benches, no surprise juniors on your project.",
+    Icon: Target,
+    title: "Outcome Over Output",
+    body: "We measure success by business impact — not lines of code or hours billed. Every team member is aligned to client KPIs, not just task lists.",
     accent: "var(--brand-blue)",
   },
   {
-    Icon: HeartHandshake,
-    title: "Craft over hustle",
-    body: "We ship in 2-week cycles, not 80-hour weeks. The work is hard because it's interesting — not because the calendar is broken.",
+    Icon: Sparkles,
+    title: "AI-First Mindset",
+    body: "We're building for the future. Our teams actively work with AI, automation, and intelligent systems — learning and applying new technologies every day.",
     accent: "var(--brand-orange)",
   },
   {
-    Icon: GraduationCap,
-    title: "Learn out loud",
-    body: "₹60,000 / year learning budget, internal brown-bags every Friday, and a culture where 'I don't know yet' is a perfectly senior answer.",
+    Icon: Users,
+    title: "People Over Headcount",
+    body: "We hire people, not resources. We grow them, name them in case studies, and never trade their wellbeing for a deadline.",
     accent: "var(--brand-green)",
   },
 ];
 
-const benefits = [
-  { Icon: Stethoscope, label: "Family health cover up to ₹10L" },
-  { Icon: Plane, label: "30 days paid leave + India + global holidays" },
-  { Icon: GraduationCap, label: "₹60K/year learning budget" },
-  { Icon: HeartHandshake, label: "Parental leave: 26w birthing / 12w partner" },
-  { Icon: Coffee, label: "Hybrid by default · 2 days in office" },
-  { Icon: Briefcase, label: "ESOPs from day one for senior roles" },
+// ============================================================
+// CAREERS PAGE — EMPLOYEE TESTIMONIALS DATA
+// Update quotes, names, roles, and year here anytime
+// ============================================================
+
+const employeeTestimonials = [
+  {
+    quote:
+      "Pure Technology gave me the opportunity to work on real AI projects from day one. The culture here is collaborative, fast-paced, and genuinely invested in your growth.",
+    name: "Pranay Borode.",
+    role: "Full Stack Developer",
+    yearJoined: "2022",
+    initials: "PB",
+  },
+  {
+    quote:
+      "What I love most is that leadership actually listens. Ideas from junior team members get implemented. That kind of trust is rare in an IT company.",
+    name: "Aniket M.",
+    role: "AI Engineer",
+    yearJoined: "2023",
+    initials: "AM",
+  },
+  {
+    quote:
+      "I've grown more in 18 months at Pure Technology than in my previous 4 years combined. The exposure to diverse client projects across industries is unmatched.",
+    name: "Megha R.",
+    role: "Product Engineer",
+    yearJoined: "2023",
+    initials: "MR",
+  },
 ];
+
+const HR_EMAIL = "hr@puretechnology.in";
 
 function CareersPage() {
   return (
     <>
       <PageHero
-        eyebrow="Careers · Bengaluru · Hyderabad · Pune · Remote India"
+        eyebrow="Careers · Pune, Maharashtra · Remote India"
         title={
           <>
-            Build the things you'll be proud to talk about{" "}
-            <span className="text-gradient-brand">at your next dinner table.</span>
+            Build Real. Build Smart.{" "}
+            <span className="text-gradient-brand">Build with Pure Technology.</span>
           </>
         }
-        description="We're 180+ engineers, designers, and operators shipping AI, product, and platform work for clients across 14 countries. We hire seniors, pay them properly, and protect the cadence that lets craft happen."
+        description="We're a growing team of engineers, AI specialists, and technology consultants delivering world-class digital solutions for startups, SMEs, and global enterprises. We hire for skill, invest in growth, and build careers — not just projects."
       >
         <div className="flex flex-col sm:flex-row gap-3">
           <a
             href="#open-roles"
             className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background hover:opacity-90 transition-opacity shadow-soft"
           >
-            See open roles
+            See Open Roles
             <ArrowRight className="h-4 w-4" />
           </a>
           <a
-            href="mailto:careers@puretechnology.in"
+            href={`mailto:${HR_EMAIL}`}
             className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 backdrop-blur px-6 py-3 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
           >
-            Don't see your role? Write to us
+            Don't see your role? Write to us → {HR_EMAIL}
           </a>
         </div>
 
-        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-3xl">
-          <Stat value="180+" label="Engineers on staff" />
-          <Stat value="9 yrs" label="Avg. senior tenure" />
-          <Stat value="3.4 yrs" label="Avg. team-mate tenure" />
-          <Stat value="4.7/5" label="Glassdoor (last 12 mo)" />
+        <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl">
+          <Stat value="51–200" label="Team members" />
+          <Stat value="2013" label="Founded in Pune" />
+          <Stat value="20+" label="Services offered" />
+          <Stat
+            value="4"
+            label="Continents clients served — India, Middle East, Europe, North America"
+          />
         </div>
       </PageHero>
 
-      {/* Principles */}
       <section className="px-5 lg:px-8 py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="How we work"
-            title="Three principles we'll defend in performance reviews."
-            description="If these sound like the kind of place you want to spend the next five years, we should talk."
+            title="Three things we genuinely believe in."
+            description="If these sound like the kind of place you want to grow, we should talk."
           />
           <div className="mt-12 grid md:grid-cols-3 gap-5">
             {principles.map(({ Icon, title, body, accent }) => (
@@ -220,19 +202,14 @@ function CareersPage() {
                 >
                   <Icon className="h-5 w-5" />
                 </span>
-                <h3 className="mt-4 text-lg font-display font-semibold">
-                  {title}
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  {body}
-                </p>
+                <h3 className="mt-4 text-lg font-display font-semibold">{title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Open roles */}
       <section
         id="open-roles"
         className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border scroll-mt-24"
@@ -241,7 +218,7 @@ function CareersPage() {
           <SectionHeader
             eyebrow="Open roles"
             title="Currently hiring — and yes, a human reads every application."
-            description="Apply with a quick note about a thing you've shipped and why it mattered. We respond within 7 days, always."
+            description="Apply with a quick note about what you've shipped and why it mattered. We respond within 7 days, always."
           />
 
           <div className="mt-12 grid gap-4">
@@ -280,17 +257,17 @@ function CareersPage() {
                       </span>
                       <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface/70 px-3 py-1">
                         <Clock className="h-3.5 w-3.5" />
-                        {role.experience}
+                        {role.tag}
                       </span>
                     </div>
                   </div>
                   <a
-                    href={`mailto:careers@puretechnology.in?subject=${encodeURIComponent(
+                    href={`mailto:${HR_EMAIL}?subject=${encodeURIComponent(
                       `Application — ${role.title}`,
                     )}`}
                     className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background hover:opacity-90 transition-opacity shadow-soft"
                   >
-                    Apply
+                    Apply →
                     <ArrowRight className="h-4 w-4" />
                   </a>
                 </div>
@@ -300,60 +277,33 @@ function CareersPage() {
         </div>
       </section>
 
-      {/* Benefits */}
-      <section className="px-5 lg:px-8 py-20">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            eyebrow="Benefits"
-            title="The boring-but-important list."
-            description="No ping-pong tables in the deck. Just the things that actually matter when you're 32, have a family, and want to do your best work."
-          />
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {benefits.map(({ Icon, label }) => (
-              <div
-                key={label}
-                className="flex items-center gap-3 rounded-2xl border border-border bg-surface px-5 py-4"
-              >
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-secondary text-foreground">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <span className="text-sm font-medium text-foreground/90">
-                  {label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Hiring process */}
       <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="What to expect"
-            title="A hiring process that respects your calendar."
+            title="A hiring process that respects your time."
           />
           <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {[
               {
                 step: "01",
-                title: "Intro chat",
-                body: "30 minutes with a recruiter. Mostly your questions. We share the role, the team, and the comp range upfront.",
+                title: "Initial Connect",
+                body: "A quick 20-minute call to understand your background, interests, and what you're looking for.",
               },
               {
                 step: "02",
-                title: "Craft conversation",
-                body: "60–90 minutes with a senior on the team. We dig into one thing you've actually built. No whiteboarding gotchas.",
+                title: "Technical Round",
+                body: "A focused discussion on your core skills with our tech leads. We keep it relevant, not tricky.",
               },
               {
                 step: "03",
-                title: "Paid take-home",
-                body: "A small, scoped problem you can do in 4–6 hours. We pay for your time, and you keep the code.",
+                title: "Practical Assignment",
+                body: "A short, real-world problem relevant to the role. We value applied thinking over theory.",
               },
               {
                 step: "04",
-                title: "Decision in 7 days",
-                body: "A final values + practicalities chat, then a written offer within a week. Yes or no — we always tell you why.",
+                title: "Final Decision",
+                body: "A culture and leadership conversation. We always tell you the outcome — yes or no — within 7 days.",
               },
             ].map((s) => (
               <div
@@ -363,19 +313,18 @@ function CareersPage() {
                 <div className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
                   Step {s.step}
                 </div>
-                <div className="mt-3 text-xl font-display font-semibold">
-                  {s.title}
-                </div>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  {s.body}
-                </p>
+                <div className="mt-3 text-xl font-display font-semibold">{s.title}</div>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Voices */}
+      {/* // ============================================================
+// REPLACE the current [PLACEHOLDER] section with this:
+// ============================================================ */}
+
       <section className="px-5 lg:px-8 py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
@@ -383,58 +332,58 @@ function CareersPage() {
             title="What the team says when no one from HR is in the room."
           />
           <div className="mt-12 grid lg:grid-cols-3 gap-5">
-            <Testimonial
-              quote="I joined Pure after eight years at a service shop. The single biggest difference is being trusted to say no to bad ideas — even when the client is paying for them."
-              name="Priya Subramanian"
-              role="Staff Engineer"
-              company="Joined 2022"
-              initials="PS"
-              accent="var(--brand-blue)"
-            />
-            <Testimonial
-              quote="The take-home was the first interview in years where I learned something I actually used at work the next month. They take the craft conversation seriously."
-              name="Aniket Sharma"
-              role="Senior Product Engineer"
-              company="Joined 2024"
-              initials="AS"
-              accent="var(--brand-green)"
-            />
-            <Testimonial
-              quote="I've been on three different client projects in two years and never been the most junior person on the team. That's not an accident — it's a hiring philosophy."
-              name="Megha Iyer"
-              role="Senior AI Engineer"
-              company="Joined 2023"
-              initials="MI"
-              accent="var(--brand-orange)"
-            />
+            {employeeTestimonials.map((t, i) => (
+              <div
+                key={t.name}
+                className="rounded-2xl border border-border bg-surface-muted/50 px-6 py-8 flex flex-col gap-4"
+              >
+                {/* Quote */}
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                  "{t.quote}"
+                </p>
+
+                {/* Author */}
+                <div className="mt-auto flex items-center gap-3">
+                  {/* Avatar */}
+                  <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm shrink-0">
+                    {t.initials}
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground text-sm">{t.name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {t.role} · Joined {t.yearJoined}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       <section className="px-5 lg:px-8 py-20">
         <div className="relative mx-auto max-w-7xl rounded-[2rem] overflow-hidden isolate">
-          {/* Animated blob background */}
           <div className="absolute inset-0 bg-gradient-brand opacity-95" />
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div
               className="absolute -top-20 -left-20 w-[28rem] h-[28rem] rounded-full opacity-40 blur-[80px] animate-blob-1"
-              style={{ background: 'var(--brand-blue)' }}
+              style={{ background: "var(--brand-blue)" }}
             />
             <div
               className="absolute -top-10 right-10 w-[24rem] h-[24rem] rounded-full opacity-35 blur-[70px] animate-blob-2"
-              style={{ background: 'var(--brand-red)' }}
+              style={{ background: "var(--brand-red)" }}
             />
             <div
               className="absolute top-1/2 -left-10 w-[26rem] h-[26rem] rounded-full opacity-35 blur-[75px] animate-blob-3"
-              style={{ background: 'var(--brand-green)' }}
+              style={{ background: "var(--brand-green)" }}
             />
             <div
               className="absolute bottom-10 right-0 w-[22rem] h-[22rem] rounded-full opacity-30 blur-[65px] animate-blob-4"
-              style={{ background: 'var(--brand-orange)' }}
+              style={{ background: "var(--brand-orange)" }}
             />
             <div
               className="absolute top-10 left-1/3 w-[20rem] h-[20rem] rounded-full opacity-30 blur-[60px] animate-blob-5"
-              style={{ background: 'var(--brand-yellow)' }}
+              style={{ background: "var(--brand-yellow)" }}
             />
           </div>
           <div className="absolute inset-0 bg-[radial-gradient(60%_80%_at_80%_20%,white,transparent_60%)] opacity-20" />
@@ -442,25 +391,26 @@ function CareersPage() {
           <div className="relative px-8 sm:px-14 py-16 lg:py-20 grid lg:grid-cols-2 gap-10 items-center">
             <div className="text-white">
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold leading-tight">
-                Don't see your role? Send a note anyway.
+                Don't see your role? Reach out anyway.
               </h2>
               <p className="mt-4 text-white/85 text-base sm:text-lg leading-relaxed max-w-xl">
-                We open new positions every month. If your craft is sharp and your timing is right, we'd rather hear from you early than miss you entirely.
+                We open new positions regularly. If your skills are sharp and the timing is right,
+                we'd love to hear from you.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row lg:justify-end gap-3">
               <a
-                href="mailto:careers@puretechnology.in"
+                href={`mailto:${HR_EMAIL}`}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-foreground hover:bg-white/90 transition-colors"
               >
-                Talk to our team
+                Talk to Our Team
                 <ArrowRight className="h-4 w-4" />
               </a>
               <Link
                 to="/services"
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 backdrop-blur px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/20 transition-colors"
               >
-                Explore services
+                Explore Services
               </Link>
             </div>
           </div>
@@ -468,12 +418,12 @@ function CareersPage() {
       </section>
 
       <div className="-mt-12 mb-20 text-center">
-        <Link
-          to="/contact"
+        <a
+          href={`mailto:${HR_EMAIL}`}
           className="text-sm font-medium text-foreground/70 hover:text-foreground underline underline-offset-4"
         >
-          Or write directly to careers@puretechnology.in
-        </Link>
+          Or write directly to {HR_EMAIL}
+        </a>
       </div>
     </>
   );

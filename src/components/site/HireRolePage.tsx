@@ -205,7 +205,7 @@ export function HireRolePage(p: HireRolePageProps) {
       <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Why Pure"
+            eyebrow="Why Pure Technology"
             title={`Why teams hire ${roleLower} here — not on a generic marketplace.`}
           />
           <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">

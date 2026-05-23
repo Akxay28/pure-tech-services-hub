@@ -39,6 +39,9 @@ import logo from "@/assets/pure-tech-logo.png";
 import megaVisual from "@/assets/mega-menu-visual.jpg";
 import hireMegaVisual from "@/assets/hire-mega-menu-visual.jpg";
 import companyMegaVisual from "@/assets/company-mega-menu-visual.jpg";
+import { CompanyConnectPanel } from "@/components/site/CompanyConnectPanel";
+import { NAV_TEAM_CONTACTS } from "@/lib/team-contacts";
+import { TeamContactCard } from "@/components/site/TeamContactCard";
 
 type ServiceItem = {
   title: string;
@@ -95,7 +98,7 @@ const companyTabs: { key: CompanyTabKey; label: string; icon: LucideIcon }[] = [
   { key: "connect", label: "Connect", icon: Mail },
 ];
 
-const companyItems: Record<CompanyTabKey, MegaMenuItem[]> = {
+const companyItems: Record<"about" | "careers", MegaMenuItem[]> = {
   about: [
     { title: "About", subtitle: "Who we are and how we work.", icon: Building2, to: "/about" },
     { title: "Case Studies", subtitle: "Outcomes from recent engagements.", icon: Layers, to: "/case-studies" },
@@ -106,23 +109,7 @@ const companyItems: Record<CompanyTabKey, MegaMenuItem[]> = {
     { title: "Remote Teams", subtitle: "Hire pre-vetted development squads.", icon: Users, to: "/services/remote-teams" },
     { title: "IT Staff Augmentation", subtitle: "Scale your tech team on demand.", icon: UserCog, to: "/services/it-staffing" },
   ],
-  connect: [
-    { title: "Contact", subtitle: "Talk to a senior engineer this week.", icon: Mail, to: "/contact" },
-    { title: "About", subtitle: "Meet the team behind Pure Technology.", icon: Building2, to: "/about" },
-    { title: "Careers", subtitle: "Join our engineering culture.", icon: Briefcase, to: "/careers" },
-  ],
 };
-
-type SimpleLink = { label: string; to: string; desc: string };
-
-// Resource menubar
-// const simpleMenus: Record<string, SimpleLink[]> = {
-//   Resources: [
-//     { label: "Case Studies", to: "/case-studies", desc: "Outcome metrics from recent engagements." },
-//     { label: "All Services", to: "/services", desc: "Explore the full service catalogue." },
-//     { label: "Careers", to: "/careers", desc: "Engineering culture and hiring process." },
-//   ],
-// };
 
 // ── Hire Developers mega menu ────────────────────────────────
 type HireTabKey = "ai" | "vibe" | "role";
@@ -314,9 +301,7 @@ export function Header() {
                   <HireDevelopersMega activeTab={activeHireTab} setActiveTab={setActiveHireTab} />
                 ) : activeMenu === "Company" ? (
                   <CompanyMega activeTab={activeCompanyTab} setActiveTab={setActiveCompanyTab} />
-                ) : (
-                  <SimpleMega items={simpleMenus[activeMenu] ?? []} />
-                )}
+                ) : null}
               </div>
             </motion.div>
           )}
@@ -348,7 +333,22 @@ export function Header() {
             <div className="mx-auto max-w-7xl px-5 py-5 space-y-2 max-h-[80vh] overflow-y-auto">
               <MobileAccordion title="Services" items={serviceItems.team.concat(serviceItems.ai)} />
               <MobileAccordion title="Hire Developers" items={[...hireItems.ai, ...hireItems.vibe, ...hireItems.role]} />
-              <MobileAccordion title="Company" items={[...companyItems.about, ...companyItems.careers, ...companyItems.connect]} />
+              <MobileAccordion title="Company" items={[...companyItems.about, ...companyItems.careers]} />
+              <div className="rounded-2xl border border-border/60 overflow-hidden">
+                <div className="px-4 py-3 text-sm font-semibold text-[color:var(--brand-purple)]">
+                  Connect with our team
+                </div>
+                <div className="space-y-2 bg-[color:var(--brand-pink-soft)]/30 p-3">
+                  {NAV_TEAM_CONTACTS.map((member, index) => (
+                    <TeamContactCard
+                      key={member.id}
+                      member={member}
+                      accentIndex={index}
+                      variant="mega"
+                    />
+                  ))}
+                </div>
+              </div>
              {/* Resource menubar */}
               {/* <MobileAccordion title="Resources" items={simpleMenus["Resources"].map(s => ({ title: s.label, subtitle: s.desc, icon: Layers, to: s.to }))} /> */}
               <Link
@@ -566,7 +566,7 @@ function CompanyMega({
   activeTab: CompanyTabKey;
   setActiveTab: (t: CompanyTabKey) => void;
 }) {
-  const items = companyItems[activeTab];
+  const items = activeTab === "connect" ? [] : companyItems[activeTab];
   return (
     <div className="rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(46,11,125,0.25)] overflow-hidden">
       <div className="grid grid-cols-12 gap-0">
@@ -617,57 +617,41 @@ function CompanyMega({
 
         <div className="col-span-6 p-6">
           <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.2 }}
-              className="grid grid-cols-2 gap-3"
-            >
-              {items.map(({ title, subtitle, icon: Icon, to }) => (
-                <Link
-                  key={title}
-                  to={to as never}
-                  className="group flex items-start gap-3 rounded-2xl p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[color:var(--brand-pink-soft)]/40 hover:shadow-[0_12px_30px_-12px_rgba(46,11,125,0.18)]"
-                >
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[color:var(--brand-pink-soft)] text-[color:var(--brand-pink)] transition-transform duration-300 group-hover:scale-105">
-                    <Icon className="h-5 w-5" />
-                  </span>
-                  <span className="min-w-0">
-                    <span className="block text-[14.5px] font-semibold leading-tight text-[color:var(--brand-purple)]">
-                      {title}
+            {activeTab === "connect" ? (
+              <CompanyConnectPanel key="connect" />
+            ) : (
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.2 }}
+                className="grid grid-cols-2 gap-3"
+              >
+                {items.map(({ title, subtitle, icon: Icon, to }) => (
+                  <Link
+                    key={title}
+                    to={to as never}
+                    className="group flex items-start gap-3 rounded-2xl p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[color:var(--brand-pink-soft)]/40 hover:shadow-[0_12px_30px_-12px_rgba(46,11,125,0.18)]"
+                  >
+                    <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[color:var(--brand-pink-soft)] text-[color:var(--brand-pink)] transition-transform duration-300 group-hover:scale-105">
+                      <Icon className="h-5 w-5" />
                     </span>
-                    <span className="mt-1 block text-xs leading-relaxed text-[color:var(--brand-purple)]/65">
-                      {subtitle}
+                    <span className="min-w-0">
+                      <span className="block text-[14.5px] font-semibold leading-tight text-[color:var(--brand-purple)]">
+                        {title}
+                      </span>
+                      <span className="mt-1 block text-xs leading-relaxed text-[color:var(--brand-purple)]/65">
+                        {subtitle}
+                      </span>
                     </span>
-                  </span>
-                </Link>
-              ))}
-            </motion.div>
+                  </Link>
+                ))}
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       </div>
-    </div>
-  );
-}
-
-function SimpleMega({ items }: { items: SimpleLink[] }) {
-  return (
-    <div className="ml-auto w-[520px] rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(46,11,125,0.25)] p-3">
-      {items.map((s) => (
-        <Link
-          key={s.label}
-          to={s.to as never}
-          className="group flex items-start justify-between gap-4 rounded-2xl p-4 transition-all hover:bg-[color:var(--brand-pink-soft)]/50"
-        >
-          <span className="min-w-0">
-            <span className="block text-[15px] font-semibold text-[color:var(--brand-purple)]">{s.label}</span>
-            <span className="mt-0.5 block text-xs text-[color:var(--brand-purple)]/65">{s.desc}</span>
-          </span>
-          <ArrowRight className="h-4 w-4 mt-1 text-[color:var(--brand-pink)] opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" />
-        </Link>
-      ))}
     </div>
   );
 }

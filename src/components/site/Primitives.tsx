@@ -273,7 +273,7 @@ export function Testimonial({
         <span className="text-sm">
           <span className="block font-semibold text-foreground">{name}</span>
           <span className="block text-muted-foreground">
-            {role} · {company}
+            {company ? `${role} · ${company}` : role}
           </span>
         </span>
       </figcaption>
@@ -342,9 +342,21 @@ export function CaseStudyCard({
 export function CTASection({
   title,
   description,
+  primaryLabel = "Talk to our team",
+  primaryTo = "/contact",
+  secondaryLabel = "Explore services",
+  secondaryTo = "/services",
+  contactEmail,
+  contactPhone,
 }: {
   title: string;
   description: string;
+  primaryLabel?: string;
+  primaryTo?: string;
+  secondaryLabel?: string;
+  secondaryTo?: string;
+  contactEmail?: string;
+  contactPhone?: string;
 }) {
   return (
     <section className="px-5 lg:px-8 py-20">
@@ -359,20 +371,34 @@ export function CTASection({
             <p className="mt-4 text-white/85 text-base sm:text-lg leading-relaxed max-w-xl">
               {description}
             </p>
+            {(contactEmail || contactPhone) && (
+              <p className="mt-5 text-sm text-white/80 space-y-1">
+                {contactEmail && (
+                  <a href={`mailto:${contactEmail}`} className="block hover:text-white transition-colors">
+                    {contactEmail}
+                  </a>
+                )}
+                {contactPhone && (
+                  <a href={`tel:${contactPhone.replace(/\s/g, "")}`} className="block hover:text-white transition-colors">
+                    {contactPhone}
+                  </a>
+                )}
+              </p>
+            )}
           </div>
           <div className="flex flex-col sm:flex-row lg:justify-end gap-3">
             <Link
-              to="/contact"
+              to={primaryTo as never}
               className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-foreground hover:bg-white/90 transition-colors"
             >
-              Talk to our team
+              {primaryLabel}
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link
-              to="/services"
+              to={secondaryTo as never}
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 backdrop-blur px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/20 transition-colors"
             >
-              Explore services
+              {secondaryLabel}
             </Link>
           </div>
         </div>

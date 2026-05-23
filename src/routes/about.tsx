@@ -8,61 +8,131 @@ import {
   Testimonial,
   CTASection,
 } from "@/components/site/Primitives";
-import { Compass, Heart, Sparkles, Users } from "lucide-react";
+import { Target, Cog, Sparkles } from "lucide-react";
+import { testimonialAccentAt } from "@/lib/brand-colors";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — Pure Technology | India-rooted engineering partner" },
+      {
+        title:
+          "About — Pure Technology | IT Consulting & Software Development, Pune",
+      },
       {
         name: "description",
         content:
-          "Pure Technology is a Bengaluru-headquartered engineering partner — building AI, staffing teams, and shipping products with senior Indian talent.",
+          "Pure Technology is a Pune-based IT consulting and software development company founded in 2013, helping enterprises accelerate digital transformation.",
       },
       { property: "og:title", content: "About — Pure Technology" },
       {
         property: "og:description",
         content:
-          "Our story, our values, and the team behind Pure Technology.",
+          "Our story, leadership, and values — consulting-led IT solutions from Pune since 2013.",
       },
     ],
   }),
   component: About,
 });
 
-const team = [
-  { name: "Karthik Raman", role: "Co-founder & CEO", initials: "KR", accent: "var(--brand-blue)" },
-  { name: "Sneha Iyer", role: "Co-founder & COO", initials: "SI", accent: "var(--brand-orange)" },
-  { name: "Aditya Nair", role: "Head of AI Practice", initials: "AN", accent: "var(--brand-green)" },
-  { name: "Devika Menon", role: "Head of Talent", initials: "DM", accent: "var(--brand-red)" },
-  { name: "Pranav Joshi", role: "Head of Product Engineering", initials: "PJ", accent: "var(--brand-blue)" },
-  { name: "Rhea D'Souza", role: "Head of Delivery", initials: "RD", accent: "var(--brand-orange)" },
-];
-
-const values = [
+const convictions = [
   {
-    Icon: Sparkles,
-    title: "Craft first.",
-    body: "We'd rather ship one thing carefully than ten things sloppily. Engineering is a craft, and it deserves the time it takes to do well.",
+    Icon: Target,
+    title: "Outcome-Engineered Solutions",
+    body: "We don't deliver features - we deliver measurable outcomes. Every solution is engineered around business KPIs such as efficiency, scalability, cost optimization, and user adoption.",
     accent: "var(--brand-blue)",
   },
   {
-    Icon: Heart,
-    title: "Long memory.",
-    body: "Our average client tenure is 3.4 years. We design for the second year of a relationship, not the first invoice.",
-    accent: "var(--brand-red)",
-  },
-  {
-    Icon: Compass,
-    title: "Owner's mindset.",
-    body: "We make decisions the way you would if you were footing the bill. That's the test, and we apply it every day.",
+    Icon: Cog,
+    title: "Built for Real-World Operations",
+    body: "Lab-ready solutions often fail in production. We design technology for real users, real traffic, real constraints - ensuring stability, performance, and maintainability in live environments.",
     accent: "var(--brand-orange)",
   },
   {
-    Icon: Users,
-    title: "Humans over headcount.",
-    body: "We hire people, not resources. We grow them, name them in case studies, and never trade their wellbeing for a deadline.",
+    Icon: Sparkles,
+    title: "Intelligent Automation & AI Readiness",
+    body: "We help organizations move beyond experimentation to real-world AI adoption. Our AI-powered solutions and automation frameworks improve efficiency, enable smarter decisions, and unlock operational intelligence.",
     accent: "var(--brand-green)",
+  },
+];
+
+const leadership = [
+  {
+    name: "Mr. Anuj Bajaj",
+    role: "Founder & Director",
+    initials: "AB",
+    accent: "var(--brand-blue)",
+    image: "/team/anuj-bajaj.jpg",
+  },
+  {
+    name: "Mr. Rajesh Munde",
+    role: "Founder & CEO",
+    initials: "RM",
+    accent: "var(--brand-orange)",
+    image: "/team/rajesh-munde.jpg",
+  },
+  {
+    name: "Mr. Parag Thakur",
+    role: "Sales Director",
+    initials: "PT",
+    accent: "var(--brand-green)",
+    image: "/team/parag-thakur.jpg",
+  },
+  {
+    name: "Mr. Sumit Gupta",
+    role: "VP",
+    initials: "SG",
+    accent: "var(--brand-red)",
+  },
+  {
+    name: "Mr. Sirish Vispute",
+    role: "CTO Advisor",
+    initials: "SV",
+    accent: "var(--brand-blue)",
+  },
+  {
+    name: "Mr. Govind Innani",
+    role: "Advisor",
+    initials: "GI",
+    accent: "var(--brand-orange)",
+  },
+  {
+    name: "Mr. Jalindra Shinde",
+    role: "CTO",
+    initials: "JS",
+    accent: "var(--brand-green)",
+  },
+  {
+    name: "Rajashree Gandhi",
+    role: "CFO",
+    initials: "RG",
+    accent: "var(--brand-yellow)",
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      "I've had a truly wonderful experience working with Pure Technology and his highly capable team across multiple initiatives. Their collaborative approach consistently makes every project successful.",
+    name: "Ganesh Natrajan",
+    role: "Chairman",
+    company: "5F World, Boards",
+    initials: "GN",
+  },
+  {
+    quote:
+      "The team delivered beyond expectations. Communication was seamless and technical quality was outstanding. I would highly recommend them to any enterprise looking for a reliable development partner.",
+    name: "Akash Kale",
+    role: "CEO",
+    company: "5F World, Boards",
+    initials: "AK",
+  },
+  {
+    quote:
+      "We evaluated five vendors before choosing this team. On time, on budget, and the code quality is something our internal engineers genuinely admire. A rare find in the outsourcing space.",
+    name: "Shubham Sharma",
+    role: "Director",
+    company: "",
+    initials: "SS",
   },
 ];
 
@@ -73,15 +143,17 @@ function About() {
         eyebrow="About Pure Technology"
         title={
           <>
-            Indian engineering at its best —{" "}
-            <span className="text-gradient-brand">in the hands of senior humans who care.</span>
+            Leading IT Consulting & Software Development Company{" "}
+            <span className="text-gradient-brand">
+              Driving Digital Transformation
+            </span>
           </>
         }
-        description="Pure Technology was founded in Bengaluru in 2017 by a group of engineers who wanted to build a different kind of services company — one that felt like a small team, even at scale."
+        description="Pure Technology is a consulting-led IT solutions company helping enterprises accelerate digital transformation with scalable, secure, and future-ready technology platforms. Founded in Pune, Maharashtra — 2013."
       >
         <div className="flex flex-col sm:flex-row gap-3">
-          <PrimaryButton to="/services">See what we do</PrimaryButton>
-          <GhostButton to="/contact">Meet the team</GhostButton>
+          <PrimaryButton to="/services">See What We Do</PrimaryButton>
+          <GhostButton to="/team">Meet the Team</GhostButton>
         </div>
       </PageHero>
 
@@ -94,44 +166,43 @@ function About() {
               Our story
             </div>
             <h2 className="mt-3 text-3xl lg:text-4xl font-display font-bold leading-tight">
-              We started Pure to fix the things we kept seeing break.
+              We started Pure Technology to build technology that actually
+              delivers.
             </h2>
           </div>
           <div className="lg:col-span-7 space-y-5 text-base sm:text-lg leading-relaxed text-foreground/85">
             <p>
-              Between the four of us, we'd spent years inside large Indian IT
-              services firms and inside scrappy product startups in
-              Bengaluru. We loved the talent depth of one and the craft and
-              accountability of the other. We hated how rarely the two ever
-              showed up in the same room.
-            </p>
-            <p>
-              Pure was an attempt to put them in the same room. To build an
+              Pure Technology was born out of a simple belief — that technology
+              should enable progress, not complexity. We set out to build an
               engineering services company that hired like a product company,
               shipped like a product company, and stayed with clients for the
-              long haul — without the hand-offs, the bait-and-switch, or the
-              status-report theatre we'd all grown up resenting.
+              long haul.
             </p>
             <p>
-              Eight years on, we're a 200-strong team across Bengaluru,
-              Hyderabad, and Pune — serving customers in 14 countries.
-              We're still a small team in the way that matters: the people who
-              ship your work are the people you meet on day one.
+              Today, we're a growing team based in Pune, serving startups,
+              SMEs, and global enterprises across India, the Middle East,
+              Europe, and North America. Our cross-functional teams combine deep
+              industry expertise with advanced technologies — from AI and cloud
+              to product engineering and IT staffing — to deliver impactful
+              digital solutions at scale.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Values */}
+      {/* Convictions */}
       <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="What we believe"
-            title="Four convictions we run the company by."
+            title="Three pillars that guide how we build and deliver."
           />
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {values.map(({ Icon, title, body, accent }) => (
-              <div key={title} className="rounded-2xl border border-border bg-surface p-6">
+          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {convictions.map(({ Icon, title, body, accent }) => (
+              <div
+                key={title}
+                className="rounded-2xl border border-border bg-surface p-6"
+              >
                 <span
                   className="grid h-11 w-11 place-items-center rounded-xl text-white"
                   style={{
@@ -157,17 +228,18 @@ function About() {
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="By the numbers"
-            title="A snapshot of where Pure is today."
+            title="A snapshot of where Pure Technology is today."
           />
-          <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-5">
-            <Stat value="2017" label="Founded in Bengaluru" />
-            <Stat value="200+" label="Engineers, designers, PMs" />
-            <Stat value="14" label="Countries served" />
-            <Stat value="3.4 yrs" label="Avg. client tenure" />
-            <Stat value="60+" label="Active enterprise clients" />
-            <Stat value="9 yrs" label="Avg. senior experience" />
-            <Stat value="₹0" label="Money spent on telemarketing" />
-            <Stat value="∞" label="Cups of filter coffee" />
+          <div className="mt-12 grid grid-cols-2 lg:grid-cols-3 gap-5">
+            <Stat value="2013" label="Founded in Pune, Maharashtra" />
+            <Stat value="51–200" label="Team size (employees)" />
+            <Stat value="17+" label="Active clients" />
+            <Stat
+              value="4 regions"
+              label="India, Middle East, Europe, North America"
+            />
+            <Stat value="20+" label="Service offerings across AI, Cloud, Software & Staffing" />
+            <Stat value="Pune" label="Headquarters - Hinjawadi" />
           </div>
         </div>
       </section>
@@ -177,25 +249,35 @@ function About() {
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Leadership"
-            title="The humans behind the work."
-            description="Approachable, accountable, and on the floor — not on a slide."
+            title="The team behind Pure Technology."
+            description="Founders, advisors, and functional leaders driving delivery across AI, engineering, and client partnerships."
           />
-          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {team.map((m) => (
+          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {leadership.map((m) => (
               <div
                 key={m.name}
                 className="glass-card rounded-2xl p-6 flex items-center gap-4"
               >
-                <span
-                  className="grid h-14 w-14 place-items-center rounded-2xl text-white font-display font-bold text-lg"
-                  style={{
-                    background: `linear-gradient(135deg, ${m.accent}, color-mix(in oklab, ${m.accent} 55%, white))`,
-                  }}
-                >
-                  {m.initials}
-                </span>
-                <div>
-                  <div className="font-display font-semibold text-lg">{m.name}</div>
+                {"image" in m && m.image ? (
+                  <img
+                    src={m.image}
+                    alt={m.name}
+                    className="h-14 w-14 shrink-0 rounded-2xl object-cover object-top"
+                  />
+                ) : (
+                  <span
+                    className="grid h-14 w-14 shrink-0 place-items-center rounded-2xl text-white font-display font-bold text-lg"
+                    style={{
+                      background: `linear-gradient(135deg, ${m.accent}, color-mix(in oklab, ${m.accent} 55%, white))`,
+                    }}
+                  >
+                    {m.initials}
+                  </span>
+                )}
+                <div className="min-w-0">
+                  <div className="font-display font-semibold text-base leading-tight">
+                    {m.name}
+                  </div>
                   <div className="text-sm text-muted-foreground">{m.role}</div>
                 </div>
               </div>
@@ -204,23 +286,38 @@ function About() {
         </div>
       </section>
 
-      {/* Testimonial */}
+      {/* Testimonials */}
       <section className="px-5 lg:px-8 py-20">
-        <div className="mx-auto max-w-4xl">
-          <Testimonial
-            quote="We've worked with Pure for almost four years. They feel less like a vendor and more like the part of our engineering team that happens to sit in Bengaluru."
-            name="Daniel Lim"
-            role="VP Engineering"
-            company="GreenLane Logistics"
-            initials="DL"
-            accent="var(--brand-orange)"
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader
+            eyebrow="In their words"
+            title="What our clients say about working with us."
           />
+          <div className="mt-12 grid lg:grid-cols-3 gap-5">
+            {testimonials.map((t, i) => (
+              <Testimonial
+                key={t.name}
+                quote={t.quote}
+                name={t.name}
+                role={t.role}
+                company={t.company}
+                initials={t.initials}
+                accent={testimonialAccentAt(i)}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
       <CTASection
-        title="Want to see if Pure is the right partner for what you're building?"
-        description="We'll spend 45 honest minutes understanding where you are. No deck. No sales pitch. If we're not the right fit, we'll tell you who is."
+        title="Let's Build Something Intelligent Together"
+        description="Book a free consultation with our team. We'll understand your goals, assess your needs, and recommend the right technology path — no fluff, no lock-in."
+        primaryLabel="Book Free Consultation"
+        primaryTo="/contact"
+        secondaryLabel="Explore Services"
+        secondaryTo="/services"
+        contactEmail="contact@puretechnology.in"
+        contactPhone="+91 83298 49726"
       />
     </>
   );
