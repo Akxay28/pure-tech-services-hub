@@ -71,19 +71,75 @@ function Home() {
 
       <ClientMarquee />
 
-      {/* Full-bleed cinematic showreel */}
-      <section className="relative w-full bg-black">
-        <div className="relative w-full aspect-video overflow-hidden">
-          <iframe
-            src="https://www.youtube.com/embed/8KqcE6QSe9E?autoplay=1&mute=1&loop=1&playlist=8KqcE6QSe9E&controls=1&modestbranding=1&rel=0&playsinline=1"
-            title="Pure Technology showreel"
-            className="absolute inset-0 h-full w-full"
-            allow="autoplay; encrypted-media; picture-in-picture"
-            allowFullScreen
-            loading="lazy"
-          />
+      {/* How we work — text + video */}
+      <section className="px-5 lg:px-8 py-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="rounded-3xl border border-border bg-gradient-to-br from-[color-mix(in_oklab,var(--brand-orange)_8%,var(--background))] via-background to-[color-mix(in_oklab,var(--brand-green)_8%,var(--background))] p-6 lg:p-10">
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              {/* Left: copy */}
+              <div>
+                <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  <span className="h-px w-8 bg-gradient-to-r from-[var(--brand-orange)] to-[var(--brand-red)]" />
+                  How we work
+                </div>
+                <h2 className="mt-4 text-4xl lg:text-5xl font-display font-bold leading-[1.05]">
+                  Enterprise delivery <br />
+                  with <span className="text-gradient-brand">startup speed.</span>
+                </h2>
+                <p className="mt-5 text-base text-muted-foreground leading-relaxed">
+                  We work as an extension of your internal team — combining AI expertise,
+                  product engineering, and senior talent to move from idea to execution faster.
+                </p>
+                <p className="mt-3 text-base text-muted-foreground leading-relaxed">
+                  From discovery workshops to production deployment, our teams stay embedded,
+                  accountable, and outcome-focused.
+                </p>
+
+                <div className="mt-7 flex flex-col sm:flex-row gap-3">
+                  <PrimaryButton to="/contact">Watch overview</PrimaryButton>
+                  <GhostButton to="/case-studies">See case studies</GhostButton>
+                </div>
+
+                <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-5">
+                  {[
+                    { label: "AI-first mindset", accent: "var(--brand-blue)" },
+                    { label: "Outcome driven", accent: "var(--brand-orange)" },
+                    { label: "Embedded teams", accent: "var(--brand-green)" },
+                    { label: "Transparent communication", accent: "var(--brand-red)" },
+                  ].map((f) => (
+                    <div key={f.label} className="flex flex-col items-start gap-2">
+                      <span
+                        className="grid h-8 w-8 place-items-center rounded-full text-white text-xs"
+                        style={{
+                          background: `linear-gradient(135deg, ${f.accent}, color-mix(in oklab, ${f.accent} 55%, white))`,
+                        }}
+                      >
+                        ✦
+                      </span>
+                      <span className="text-xs text-muted-foreground leading-snug">
+                        {f.label}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right: video */}
+              <div className="relative w-full aspect-video overflow-hidden rounded-2xl shadow-soft bg-black">
+                <iframe
+                  src="https://www.youtube.com/embed/8KqcE6QSe9E?autoplay=1&mute=1&loop=1&playlist=8KqcE6QSe9E&controls=1&modestbranding=1&rel=0&playsinline=1"
+                  title="Pure Technology showreel"
+                  className="absolute inset-0 h-full w-full"
+                  allow="autoplay; encrypted-media; picture-in-picture"
+                  allowFullScreen
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
 
       <ServicesShowcase />
 
