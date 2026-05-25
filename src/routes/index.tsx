@@ -20,6 +20,7 @@ import {
   CaseStudyCard,
 } from "@/components/site/Primitives";
 import { ServicesShowcase } from "@/components/site/ServicesShowcase";
+import { HeroCarousel } from "./heroCarousel";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -33,8 +34,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "Pure Technology — Engineering partner from India" },
       {
         property: "og:description",
-        content:
-          "AI solutions, IT staffing, and product engineering for ambitious enterprises.",
+        content: "AI solutions, IT staffing, and product engineering for ambitious enterprises.",
       },
     ],
   }),
@@ -44,7 +44,7 @@ export const Route = createFileRoute("/")({
 function Home() {
   return (
     <>
-      <PageHero
+      {/* <PageHero
         eyebrow="Headquartered in Pune · Serving 13+ countries"
         title={
           <>
@@ -65,9 +65,9 @@ function Home() {
           <Stat value="80+" label="Happy clients" />
           <Stat value="18+" label="Countries delivered to" />
         </div>
+      </PageHero> */}
 
-        
-      </PageHero>
+      <HeroCarousel />
 
       <ClientMarquee />
 
@@ -87,8 +87,8 @@ function Home() {
                   with <span className="text-gradient-brand">startup speed.</span>
                 </h2>
                 <p className="mt-5 text-base text-muted-foreground leading-relaxed">
-                  We work as an extension of your internal team — combining AI expertise,
-                  product engineering, and senior talent to move from idea to execution faster.
+                  We work as an extension of your internal team combining AI expertise, product
+                  engineering, and senior talent to move from idea to execution faster.
                 </p>
                 <p className="mt-3 text-base text-muted-foreground leading-relaxed">
                   From discovery workshops to production deployment, our teams stay embedded,
@@ -100,7 +100,7 @@ function Home() {
                   <GhostButton to="/case-studies">See case studies</GhostButton>
                 </div>
 
-                <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-5">
+                {/* <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-5">
                   {[
                     { label: "AI-first mindset", accent: "var(--brand-blue)" },
                     { label: "Outcome driven", accent: "var(--brand-orange)" },
@@ -116,18 +116,17 @@ function Home() {
                       >
                         ✦
                       </span>
-                      <span className="text-xs text-muted-foreground leading-snug">
-                        {f.label}
-                      </span>
+                      <span className="text-xs text-muted-foreground leading-snug">{f.label}</span>
                     </div>
                   ))}
-                </div>
+                </div> */}
               </div>
 
               {/* Right: video */}
               <div className="relative w-full aspect-video overflow-hidden rounded-2xl shadow-soft bg-black">
+                {/* <div className="relative w-full h-[320px] md:h-[420px] lg:h-[500px] overflow-hidden rounded-2xl shadow-soft bg-black"> */}
                 <iframe
-                  src="https://www.youtube.com/embed/8KqcE6QSe9E?autoplay=1&mute=1&loop=1&playlist=8KqcE6QSe9E&controls=1&modestbranding=1&rel=0&playsinline=1"
+                  src="https://www.youtube.com/embed/4DpEGb4HG7w?autoplay=1&mute=1&loop=1&playlist=4DpEGb4HG7w&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&disablekb=1&fs=0"
                   title="Pure Technology showreel"
                   className="absolute inset-0 h-full w-full"
                   allow="autoplay; encrypted-media; picture-in-picture"
@@ -140,7 +139,6 @@ function Home() {
         </div>
       </section>
 
-
       <ServicesShowcase />
 
       {/* Selected outcomes */}
@@ -152,7 +150,22 @@ function Home() {
             description="Two recent AI deliveries — measured in rupees saved, hours recovered, and trust earned."
           />
           <div className="mt-12 grid lg:grid-cols-2 gap-5">
-            <CaseStudyCard
+             
+            
+                <CaseStudyCard
+                  client="Top-5 Indian private bank"
+                  industry="BFSI"
+                  challenge="Customer-service agents spent 40% of their time searching across 11 internal knowledge bases for product, policy, and regulatory answers."
+                  outcome="Built a RAG-powered agent assistant with citation-first answers, role-based access, and a compliance review trail. Rolled out to 3,200 agents across 14 cities in 5 months."
+                  metrics={[
+                    { value: "37%", label: "AHT reduction" },
+                    { value: "92%", label: "Answer acceptance" },
+                    { value: "₹14 Cr", label: "Annual ops savings" },
+                  ]}
+                  accent="var(--brand-blue)"
+                />
+              
+            {/* <CaseStudyCard
               client="Top-5 Indian private bank"
               industry="BFSI"
               challenge="Customer-service agents spent 40% of their time searching across 11 internal knowledge bases for product, policy, and regulatory answers."
@@ -163,7 +176,7 @@ function Home() {
                 { value: "₹14 Cr", label: "Annual ops savings" },
               ]}
               accent="var(--brand-blue)"
-            />
+            /> */}
             <CaseStudyCard
               client="Lumenpath Health"
               industry="HealthTech"
@@ -240,12 +253,8 @@ function Home() {
                 >
                   <Icon className="h-5 w-5" />
                 </span>
-                <h3 className="mt-4 text-lg font-display font-semibold">
-                  {title}
-                </h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  {body}
-                </p>
+                <h3 className="mt-4 text-lg font-display font-semibold">{title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{body}</p>
               </div>
             ))}
           </div>

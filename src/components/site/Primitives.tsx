@@ -290,37 +290,86 @@ export function CaseStudyCard({
   accent = "var(--brand-blue)",
 }: CaseStudy) {
   return (
-    <article className="relative glass-card rounded-3xl p-7 overflow-hidden">
+    <article
+      className="group relative overflow-hidden rounded-3xl glass-card p-7 transition-all duration-500 hover:-translate-y-1"
+      onMouseMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+
+        e.currentTarget.style.setProperty(
+          "--x",
+          `${e.clientX - rect.left}px`
+        );
+
+        e.currentTarget.style.setProperty(
+          "--y",
+          `${e.clientY - rect.top}px`
+        );
+      }}
+      style={
+        {
+          "--x": "50%",
+          "--y": "50%",
+        } as React.CSSProperties
+      }
+    >
+      {/* ORIGINAL STATIC GLOW */}
       <div
-        className="absolute -top-12 -right-12 h-44 w-44 rounded-full opacity-25 blur-3xl"
+        className="absolute -top-12 -right-12 h-44 w-44 rounded-full opacity-20 blur-3xl"
         style={{ background: accent }}
       />
-      <div className="relative">
+
+      {/* MOUSE FOLLOW GLOW */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background: `
+            radial-gradient(
+              500px circle at var(--x) var(--y),
+              color-mix(in oklab, ${accent} 22%, transparent),
+              transparent 40%
+            )
+          `,
+        }}
+      />
+
+      {/* CARD CONTENT */}
+      <div className="relative z-10">
         <div className="flex items-center justify-between gap-3">
           <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
             Case study · {industry}
           </span>
+
           <span
             className="h-2 w-2 rounded-full"
             style={{ background: accent }}
           />
         </div>
-        <h3 className="mt-3 text-2xl font-display font-bold">{client}</h3>
+
+        <h3 className="mt-3 text-2xl font-display font-bold">
+          {client}
+        </h3>
+
         <div className="mt-5 space-y-4 text-sm leading-relaxed text-foreground/85">
           <p>
-            <span className="font-semibold text-foreground">Challenge — </span>
+            <span className="font-semibold text-foreground">
+              Challenge —
+            </span>{" "}
             {challenge}
           </p>
+
           <p>
-            <span className="font-semibold text-foreground">What we did — </span>
+            <span className="font-semibold text-foreground">
+              What we did —
+            </span>{" "}
             {outcome}
           </p>
         </div>
+
         <div className="mt-6 grid grid-cols-3 gap-3">
           {metrics.map((m) => (
             <div
               key={m.label}
-              className="rounded-2xl border border-border bg-surface/70 px-3 py-3 text-center"
+              className="rounded-2xl border border-border bg-surface/70 px-3 py-3 text-center backdrop-blur-sm"
             >
               <div
                 className="text-xl font-display font-bold"
@@ -328,6 +377,7 @@ export function CaseStudyCard({
               >
                 {m.value}
               </div>
+
               <div className="text-[11px] mt-0.5 text-muted-foreground leading-tight">
                 {m.label}
               </div>
@@ -338,6 +388,7 @@ export function CaseStudyCard({
     </article>
   );
 }
+
 
 export function CTASection({
   title,
