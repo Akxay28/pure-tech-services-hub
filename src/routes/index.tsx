@@ -71,6 +71,20 @@ function Home() {
 
       <ClientMarquee />
 
+      {/* Full-bleed cinematic showreel */}
+      <section className="relative w-full bg-black">
+        <div className="relative w-full aspect-video overflow-hidden">
+          <iframe
+            src="https://www.youtube.com/embed/8KqcE6QSe9E?autoplay=1&mute=1&loop=1&playlist=8KqcE6QSe9E&controls=1&modestbranding=1&rel=0&playsinline=1"
+            title="Pure Technology showreel"
+            className="absolute inset-0 h-full w-full"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowFullScreen
+            loading="lazy"
+          />
+        </div>
+      </section>
+
       <ServicesShowcase />
 
       {/* Selected outcomes */}
