@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode } from "react";
-import type { CaseStudy } from "@/lib/case-study";
+// import type { CaseStudy } from "@/lib/case-study";
 import { brandIconGradient } from "@/lib/brand-colors";
 
 /** Rounded icon tile — same gradient treatment as the homepage delivery cards. */
@@ -70,13 +70,7 @@ export function PageHero({
   );
 }
 
-export function PrimaryButton({
-  to,
-  children,
-}: {
-  to: string;
-  children: ReactNode;
-}) {
+export function PrimaryButton({ to, children }: { to: string; children: ReactNode }) {
   return (
     <Link
       to={to}
@@ -88,13 +82,7 @@ export function PrimaryButton({
   );
 }
 
-export function GhostButton({
-  to,
-  children,
-}: {
-  to: string;
-  children: ReactNode;
-}) {
+export function GhostButton({ to, children }: { to: string; children: ReactNode }) {
   return (
     <Link
       to={to}
@@ -120,10 +108,7 @@ export function SectionHeader({
     <div className={align === "center" ? "text-center mx-auto max-w-3xl" : "max-w-3xl"}>
       {eyebrow && (
         <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-          <span
-            className="h-1 w-6 rounded-full"
-            style={{ background: "var(--gradient-brand)" }}
-          />
+          <span className="h-1 w-6 rounded-full" style={{ background: "var(--gradient-brand)" }} />
           {eyebrow}
         </div>
       )}
@@ -131,26 +116,16 @@ export function SectionHeader({
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-          {description}
-        </p>
+        <p className="mt-4 text-lg text-muted-foreground leading-relaxed">{description}</p>
       )}
     </div>
   );
 }
 
-export function Stat({
-  value,
-  label,
-}: {
-  value: string;
-  label: string;
-}) {
+export function Stat({ value, label }: { value: string; label: string }) {
   return (
     <div className="glass-card rounded-2xl px-5 py-6">
-      <div className="text-3xl sm:text-4xl font-display font-bold text-gradient-brand">
-        {value}
-      </div>
+      <div className="text-3xl sm:text-4xl font-display font-bold text-gradient-brand">{value}</div>
       <div className="mt-1 text-sm text-muted-foreground">{label}</div>
     </div>
   );
@@ -215,20 +190,17 @@ export function ClientMarquee() {
           Trusted by engineering teams across India & beyond
         </p>
         <div className="mt-8 overflow-hidden relative [mask-image:linear-gradient(90deg,transparent,black_10%,black_90%,transparent)]">
-        <div className="flex gap-14 w-max animate-marquee items-center">
-  {[...logoStrip, ...logoStrip].map((item, i) => (
-    <div
-      key={i}
-      className="flex items-center justify-center min-w-[140px]"
-    >
-      <img
-        src={item.logo}
-        alt={item.name}
-        className="h-20 sm:h-24 lg:h-28 w-auto object-contain opacity-70 hover:opacity-100 transition-all duration-300"
-      />
-    </div>
-  ))}
-</div>
+          <div className="flex gap-14 w-max animate-marquee items-center">
+            {[...logoStrip, ...logoStrip].map((item, i) => (
+              <div key={i} className="flex items-center justify-center min-w-[140px]">
+                <img
+                  src={item.logo}
+                  alt={item.name}
+                  className="h-20 sm:h-24 lg:h-28 w-auto object-contain opacity-70 hover:opacity-100 transition-all duration-300"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -281,6 +253,21 @@ export function Testimonial({
   );
 }
 
+// case study section
+type CaseStudy = {
+  client: string;
+  industry: string;
+  challenge: string;
+  outcome: string;
+  metrics: {
+    value: string;
+    label: string;
+  }[];
+  accent?: string;
+  image?: string;
+};
+
+// ─── UPDATED CARD (tightened for 3-col layout) ────────────────
 export function CaseStudyCard({
   client,
   industry,
@@ -288,33 +275,21 @@ export function CaseStudyCard({
   outcome,
   metrics,
   accent = "var(--brand-blue)",
+  image,
 }: CaseStudy) {
   return (
     <article
-      className="group relative overflow-hidden rounded-3xl glass-card p-7 transition-all duration-500 hover:-translate-y-1"
+      className="group relative overflow-hidden rounded-[28px] glass-card border border-white/10 transition-all duration-500 hover:-translate-y-1"
       onMouseMove={(e) => {
         const rect = e.currentTarget.getBoundingClientRect();
-
-        e.currentTarget.style.setProperty(
-          "--x",
-          `${e.clientX - rect.left}px`
-        );
-
-        e.currentTarget.style.setProperty(
-          "--y",
-          `${e.clientY - rect.top}px`
-        );
+        e.currentTarget.style.setProperty("--x", `${e.clientX - rect.left}px`);
+        e.currentTarget.style.setProperty("--y", `${e.clientY - rect.top}px`);
       }}
-      style={
-        {
-          "--x": "50%",
-          "--y": "50%",
-        } as React.CSSProperties
-      }
+      style={{ "--x": "50%", "--y": "50%" } as React.CSSProperties}
     >
-      {/* ORIGINAL STATIC GLOW */}
+      {/* STATIC GLOW */}
       <div
-        className="absolute -top-12 -right-12 h-44 w-44 rounded-full opacity-20 blur-3xl"
+        className="absolute -top-16 -right-16 h-48 w-48 rounded-full opacity-20 blur-3xl pointer-events-none"
         style={{ background: accent }}
       />
 
@@ -324,71 +299,92 @@ export function CaseStudyCard({
         style={{
           background: `
             radial-gradient(
-              500px circle at var(--x) var(--y),
-              color-mix(in oklab, ${accent} 22%, transparent),
+              600px circle at var(--x) var(--y),
+              color-mix(in oklab, ${accent} 20%, transparent),
               transparent 40%
             )
           `,
         }}
       />
 
-      {/* CARD CONTENT */}
-      <div className="relative z-10">
+      {/* IMAGE — reduced height for 3-col */}
+      {image && (
+        <div className="relative h-[200px] overflow-hidden">
+          <img
+            src={image}
+            alt={client}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+
+          <div className="absolute top-4 left-4">
+            <span
+              className="rounded-full border border-white/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-white backdrop-blur-md"
+              style={{ background: "rgba(255,255,255,0.08)" }}
+            >
+              {industry}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* CONTENT — reduced padding p-7 → p-5 */}
+      <div className="relative z-10 p-5">
         <div className="flex items-center justify-between gap-3">
           <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-            Case study · {industry}
+            Case study
           </span>
 
-          <span
-            className="h-2 w-2 rounded-full"
-            style={{ background: accent }}
-          />
+          <span className="h-2 w-2 rounded-full" style={{ background: accent }} />
         </div>
 
-        <h3 className="mt-3 text-2xl font-display font-bold">
-          {client}
-        </h3>
+        {/* client name: text-2xl → text-xl */}
+        <h3 className="mt-2.5 text-xl font-display font-bold">{client}</h3>
 
-        <div className="mt-5 space-y-4 text-sm leading-relaxed text-foreground/85">
+        <div className="mt-4 space-y-3 text-sm leading-relaxed text-foreground/85">
           <p>
-            <span className="font-semibold text-foreground">
-              Challenge —
-            </span>{" "}
+            <span className="font-semibold text-foreground">Challenge — </span>
             {challenge}
           </p>
 
           <p>
-            <span className="font-semibold text-foreground">
-              What we did —
-            </span>{" "}
+            <span className="font-semibold text-foreground">What we did — </span>
             {outcome}
           </p>
         </div>
 
-        <div className="mt-6 grid grid-cols-3 gap-3">
+        {/* METRICS — reduced top margin & cell padding */}
+        <div className="mt-5 grid grid-cols-3 gap-2">
           {metrics.map((m) => (
             <div
               key={m.label}
-              className="rounded-2xl border border-border bg-surface/70 px-3 py-3 text-center backdrop-blur-sm"
+              className="rounded-xl border border-white/10 bg-white/[0.03] px-2 py-3 text-center backdrop-blur-md"
             >
-              <div
-                className="text-xl font-display font-bold"
-                style={{ color: accent }}
-              >
+              <div className="text-lg font-display font-bold" style={{ color: accent }}>
                 {m.value}
               </div>
 
-              <div className="text-[11px] mt-0.5 text-muted-foreground leading-tight">
+              <div className="mt-0.5 text-[10px] leading-tight text-muted-foreground">
                 {m.label}
               </div>
             </div>
           ))}
         </div>
+
+        <div className="mt-10 flex justify-center">
+          <Link
+            href="/case-studies"
+            className="group flex items-center gap-2 rounded-full border border-border bg-surface/60 px-6 py-2.5 text-sm font-medium text-foreground/80 backdrop-blur-sm transition-all duration-300 hover:border-white/20   hover:bg-surface hover:text-foreground"
+          >
+            Explore all case studies
+            <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
+        </div>
       </div>
     </article>
   );
 }
-
 
 export function CTASection({
   title,
@@ -425,12 +421,18 @@ export function CTASection({
             {(contactEmail || contactPhone) && (
               <p className="mt-5 text-sm text-white/80 space-y-1">
                 {contactEmail && (
-                  <a href={`mailto:${contactEmail}`} className="block hover:text-white transition-colors">
+                  <a
+                    href={`mailto:${contactEmail}`}
+                    className="block hover:text-white transition-colors"
+                  >
                     {contactEmail}
                   </a>
                 )}
                 {contactPhone && (
-                  <a href={`tel:${contactPhone.replace(/\s/g, "")}`} className="block hover:text-white transition-colors">
+                  <a
+                    href={`tel:${contactPhone.replace(/\s/g, "")}`}
+                    className="block hover:text-white transition-colors"
+                  >
                     {contactPhone}
                   </a>
                 )}

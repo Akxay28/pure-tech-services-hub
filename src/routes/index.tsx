@@ -143,55 +143,61 @@ function Home() {
 
       {/* Selected outcomes */}
       <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
-        <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            eyebrow="Client outcomes"
-            title="Real numbers from recent engagements."
-            description="Two recent AI deliveries — measured in rupees saved, hours recovered, and trust earned."
-          />
-          <div className="mt-12 grid lg:grid-cols-2 gap-5">
-             
-            
-                <CaseStudyCard
-                  client="Top-5 Indian private bank"
-                  industry="BFSI"
-                  challenge="Customer-service agents spent 40% of their time searching across 11 internal knowledge bases for product, policy, and regulatory answers."
-                  outcome="Built a RAG-powered agent assistant with citation-first answers, role-based access, and a compliance review trail. Rolled out to 3,200 agents across 14 cities in 5 months."
-                  metrics={[
-                    { value: "37%", label: "AHT reduction" },
-                    { value: "92%", label: "Answer acceptance" },
-                    { value: "₹14 Cr", label: "Annual ops savings" },
-                  ]}
-                  accent="var(--brand-blue)"
-                />
-              
-            {/* <CaseStudyCard
-              client="Top-5 Indian private bank"
-              industry="BFSI"
-              challenge="Customer-service agents spent 40% of their time searching across 11 internal knowledge bases for product, policy, and regulatory answers."
-              outcome="Built a RAG-powered agent assistant with citation-first answers, role-based access, and a compliance review trail. Rolled out to 3,200 agents across 14 cities in 5 months."
-              metrics={[
-                { value: "37%", label: "AHT reduction" },
-                { value: "92%", label: "Answer acceptance" },
-                { value: "₹14 Cr", label: "Annual ops savings" },
-              ]}
-              accent="var(--brand-blue)"
-            /> */}
-            <CaseStudyCard
-              client="Lumenpath Health"
-              industry="HealthTech"
-              challenge="A digital-health platform needed to summarise multi-page patient histories for clinicians, but earlier LLM attempts hallucinated medications and dosages."
-              outcome="Designed a constrained generation pipeline with structured extraction, a medication knowledge graph as a hard ground-truth layer, and a clinician feedback loop driving weekly evals."
-              metrics={[
-                { value: "0", label: "Med hallucinations in eval" },
-                { value: "4.7/5", label: "Clinician NPS" },
-                { value: "11×", label: "Faster chart review" },
-              ]}
-              accent="var(--brand-green)"
-            />
-          </div>
-        </div>
-      </section>
+  <div className="mx-auto max-w-7xl">
+    <SectionHeader
+      eyebrow="Client outcomes"
+      title="Real numbers from recent engagements."
+      description="Recent AI deliveries — measured in rupees saved, hours recovered, and trust earned."
+    />
+    <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <CaseStudyCard
+        client="Smarter business decisions with data & AI intelligence"
+        industry="BFSI"
+        image="homeCaseStudy/1 case study.webp"
+        challenge="Customer-service agents spent 40% of their time searching across 11 internal knowledge bases for product, policy, and regulatory answers."
+        outcome="Built a RAG-powered agent assistant with citation-first answers, role-based access, and a compliance review trail. Rolled out to 3,200 agents across 14 cities in 5 months."
+        metrics={[
+          { value: "37%", label: "AHT reduction" },
+          { value: "92%", label: "Answer acceptance" },
+          { value: "₹14 Cr", label: "Annual ops savings" },
+        ]}
+        accent="var(--brand-blue)"
+      />
+
+      <CaseStudyCard
+        client="Lumenpath Health"
+        industry="AI Calling"
+        image="homeCaseStudy/2 case study.webp"
+        challenge="A digital-health platform needed to summarise multi-page patient histories for clinicians, but earlier LLM attempts hallucinated medications and dosages."
+        outcome="Designed a constrained generation pipeline with structured extraction, a medication knowledge graph as a hard ground-truth layer, and a clinician feedback loop driving weekly evals."
+        metrics={[
+          { value: "0", label: "Med hallucinations in eval" },
+          { value: "4.7/5", label: "Clinician NPS" },
+          { value: "11×", label: "Faster chart review" },
+        ]}
+        accent="var(--brand-orange)"
+      />
+
+      <CaseStudyCard
+        client="Lumenpath Health"
+        industry="HealthTech"
+        image="homeCaseStudy/3 case study.webp"
+        challenge="A digital-health platform needed to summarise multi-page patient histories for clinicians, but earlier LLM attempts hallucinated medications and dosages."
+        outcome="Designed a constrained generation pipeline with structured extraction, a medication knowledge graph as a hard ground-truth layer, and a clinician feedback loop driving weekly evals."
+        metrics={[
+          { value: "0", label: "Med hallucinations in eval" },
+          { value: "4.7/5", label: "Clinician NPS" },
+          { value: "11×", label: "Faster chart review" },
+        ]}
+        accent="var(--brand-green)"
+      />
+
+      
+
+    </div>
+  </div>
+</section>
 
       {/* Why Pure */}
       <section className="px-5 lg:px-8 py-20">
