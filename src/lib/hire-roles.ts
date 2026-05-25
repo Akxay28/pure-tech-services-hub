@@ -134,7 +134,7 @@ function defineRole(c: RoleConfig): Entry {
     heroStats: DEFAULT_STATS,
     whoFor: c.whoFor,
     capabilities: c.capabilities,
-    skills: c.skills,
+    skills: c.skills ?? [],
     outcomes: c.outcomes,
     process: DEFAULT_PROCESS,
     engagement: DEFAULT_ENGAGEMENT,
