@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { accentAt, brandIconGradient, BRAND } from "@/lib/brand-colors";
 
 export interface TechCard {
@@ -16,15 +16,20 @@ export interface TechTab {
 
 interface Props {
   accent?: string;
-  heading?: string;
+  heading?: ReactNode;
   subheading?: string;
   tabs: TechTab[];
 }
 
 export function TechnologyExpertiseSection({
   accent = BRAND.blue,
-  heading = "Technologies your teams already trust.",
-  subheading = "We build teams around modern engineering ecosystems — ensuring every developer is aligned with your stack, workflows, and delivery standards.",
+  heading = (
+    <>
+      Technologies Your Teams{" "}
+      <span className="text-gradient-brand">Already Trust.</span>
+    </>
+  ),
+  subheading = "We build teams around modern engineering ecosystems ensuring every developer is aligned with your stack, workflows, and delivery standards.",
   tabs,
 }: Props) {
   const [activeTab, setActiveTab] = useState(tabs[0]?.label ?? "");
@@ -45,12 +50,11 @@ export function TechnologyExpertiseSection({
               Technology Expertise
             </span>
           </div>
-          <h2 className="mt-5 text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-[1.05] tracking-tight">
-            {heading.split(".")[0]}
-            <span className="text-gradient-brand">
-              {heading.split(".")[1]}.
-            </span>
-          </h2>
+          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight">
+  {heading}
+</h2>
+
+
           <p className="mt-6 max-w-2xl text-base text-muted-foreground leading-relaxed">
             {subheading}
           </p>

@@ -400,11 +400,11 @@ export function ServicesShowcase() {
             What we do
           </div>
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight">
-            Four practices.{" "}
-            <span className="text-gradient-brand">One delivery muscle.</span>
+            Four Practices.{" "}
+            <span className="text-gradient-brand">One Delivery Muscle.</span>
           </h2>
           <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-            AI, talent, product engineering, and enterprise applications — fused
+            AI, talent, product engineering, and enterprise applications fused
             into a single, accountable team that turns enterprise ambition into
             shipped software.
           </p>

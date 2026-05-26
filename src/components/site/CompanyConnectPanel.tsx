@@ -21,13 +21,13 @@ export function CompanyConnectPanel() {
           variant="mega"
         />
       ))}
-      <Link
+      {/* <Link
         to="/team"
         className="group mt-1 inline-flex items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-xs font-semibold text-[color:var(--brand-purple)]/80 transition-colors hover:bg-[color:var(--brand-pink-soft)]/50 hover:text-[color:var(--brand-pink)]"
       >
         View full team page
         <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" />
-      </Link>
+      </Link> */}
     </motion.div>
   );
 }

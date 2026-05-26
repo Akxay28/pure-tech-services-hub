@@ -65,7 +65,7 @@ export function SubServicePage(p: SubServicePageProps) {
             <BrandIconBox color={p.accent} size="lg" className="shadow-soft">
               <Icon className="h-6 w-6" />
             </BrandIconBox>
-            <h2 className="mt-5 text-3xl lg:text-4xl font-display font-bold leading-tight">
+            <h2 className="mt-5 text-3xl capitalize lg:text-4xl font-display font-bold leading-tight">
               Built for teams that need this to{" "}
               <span className="text-gradient-brand">just work.</span>
             </h2>
@@ -101,7 +101,7 @@ export function SubServicePage(p: SubServicePageProps) {
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="What we deliver"
-            title="A full-stack capability — not a job title."
+            title="A full-stack capability - not a job title."
             description="Every engagement is led by senior practitioners. You meet them in the pitch; they ship the work."
           />
           <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">

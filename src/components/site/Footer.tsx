@@ -22,7 +22,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-5 lg:px-8 py-16">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-5 space-y-5">
-            <img src={logo} alt="Pure Technology" className="h-10 w-auto" />
+            <img src={logo} alt="Pure Technology" className="h-20 w-auto" />
             <p className="text-sm text-muted-foreground leading-relaxed max-w-md">
               Pure Technology is a global AI and digital engineering company
               helping startups, enterprises, and fast-growing businesses build
@@ -35,15 +35,15 @@ export function Footer() {
             <div className="flex items-center gap-3">
               {SOCIAL_LINKS.map(({ label, href, Icon }) => (
                 <a
-                  key={href}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="grid h-9 w-9 place-items-center rounded-full border border-border bg-surface hover:bg-secondary transition-colors"
-                  aria-label={label}
-                >
-                  <Icon className="h-4 w-4" />
-                </a>
+                key={href}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="grid h-9 w-9 place-items-center rounded-full bg-black text-white hover:bg-zinc-800 transition-colors"
+                aria-label={label}
+              >
+                <Icon className="h-4 w-4" />
+              </a>
               ))}
             </div>
           </div>
@@ -79,6 +79,8 @@ export function Footer() {
                 { label: "Careers", to: "/careers" },
                 { label: "Contact", to: "/contact" },
                 { label: "Case Studies", to: "/case-studies" },
+                { label: "Gallery", to: "/gallery" },
+                { label: "Mission & Vision", to: "/mission-vision" },
               ]}
             />
             <div className="space-y-3 text-sm">

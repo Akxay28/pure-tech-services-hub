@@ -19,7 +19,7 @@ export const NAV_TEAM_CONTACTS: TeamContact[] = [
   {
     id: "anuj-bajaj",
     name: "Mr. Anuj Bajaj",
-    role: "AI Consultant",
+    role: "Founder & Director",
     bio: "Leading AI initiatives and helping businesses transform through intelligent solutions.",
     image: "/team/anuj-bajaj.jpg",
     email: "anuj@puretechnology.in",
@@ -28,7 +28,7 @@ export const NAV_TEAM_CONTACTS: TeamContact[] = [
   {
     id: "rajesh-munde",
     name: "Mr. Rajesh Munde",
-    role: "Staff Augmentation",
+    role: "Founder & CEO",
     bio: "Experts in building and scaling high-performing engineering teams for global success.",
     image: "/team/rajesh-munde.jpg",
     email: "rajesh@puretechnology.in",

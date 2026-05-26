@@ -7,6 +7,7 @@ import {
   Stat,
   Testimonial,
   CTASection,
+  BrandTitle,
 } from "@/components/site/Primitives";
 import { Target, Cog, Sparkles } from "lucide-react";
 import { testimonialAccentAt } from "@/lib/brand-colors";
@@ -166,8 +167,9 @@ function About() {
               Our story
             </div>
             <h2 className="mt-3 text-3xl lg:text-4xl font-display font-bold leading-tight">
-              We started Pure Technology to build technology that actually
-              delivers.
+              <BrandTitle>
+                We started Pure Technology to build technology that actually delivers.
+              </BrandTitle>
             </h2>
           </div>
           <div className="lg:col-span-7 space-y-5 text-base sm:text-lg leading-relaxed text-foreground/85">

@@ -10,4 +10,5 @@ export interface CaseStudy {
   outcome: string;
   metrics: CaseStudyMetric[];
   accent?: string;
+  image?: string;
 }

@@ -9,6 +9,21 @@ export const caseStudiesByService: Record<SubServiceSlug, CaseStudy[]> = {
     {
       client: "Fortune 500 Retail Co.",
       industry: "Retail",
+      image: "/homeCaseStudy/1 case study.webp",
+      challenge:
+        "Three outsourcing vendors, rising run-cost, and no captive engineering muscle in India — leadership wanted a GCC without a two-year setup programme.",
+      outcome:
+        "90-person GCC in Hyderabad live in 12 weeks. Replaced vendor spend with a captive org that shipped their first production feature in week 11.",
+      metrics: [
+        { value: "$3.2M", label: "Annual savings" },
+        { value: "12 wks", label: "GCC operational" },
+        { value: "94%", label: "12-mo retention" },
+      ],
+    },
+    {
+      client: "Fortune 500 Retail Co.",
+      industry: "Retail",
+      image: "/homeCaseStudy/1 case study.webp",
       challenge:
         "Three outsourcing vendors, rising run-cost, and no captive engineering muscle in India — leadership wanted a GCC without a two-year setup programme.",
       outcome:

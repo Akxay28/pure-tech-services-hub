@@ -83,8 +83,8 @@ function Home() {
                   How we work
                 </div>
                 <h2 className="mt-4 text-4xl lg:text-5xl font-display font-bold leading-[1.05]">
-                  Enterprise delivery <br />
-                  with <span className="text-gradient-brand">startup speed.</span>
+                  Enterprise Delivery <br />
+                  With <span className="text-gradient-brand">Startup Speed.</span>
                 </h2>
                 <p className="mt-5 text-base text-muted-foreground leading-relaxed">
                   We work as an extension of your internal team combining AI expertise, product
@@ -144,11 +144,16 @@ function Home() {
       {/* Selected outcomes */}
       <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
   <div className="mx-auto max-w-7xl">
-    <SectionHeader
-      eyebrow="Client outcomes"
-      title="Real numbers from recent engagements."
-      description="Recent AI deliveries — measured in rupees saved, hours recovered, and trust earned."
-    />
+  <SectionHeader
+  eyebrow="Client outcomes"
+  title={
+    <>
+      Real Numbers From Recent{" "}
+      <span className="text-gradient-brand">Engagements.</span>
+    </>
+  }
+  description="Recent AI deliveries measured in rupees saved, hours recovered, and trust earned."
+/>
     <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
 
       <CaseStudyCard
@@ -204,7 +209,13 @@ function Home() {
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Why teams pick Pure"
-            title="A delivery model built for enterprise trust, startup velocity."
+            title={
+              <>
+            A Delivery Model Built For Enterprise Trust,{" "}
+                <span className="text-gradient-brand">
+                Startup Velocity.</span>
+              </>
+            } 
             description="We sit in the middle of the diagram — close enough to your business to think like an owner, big enough to staff and deliver at enterprise scale."
           />
 
@@ -249,7 +260,7 @@ function Home() {
             ].map(({ Icon, title, body, accent }) => (
               <div
                 key={title}
-                className="glass-card rounded-2xl p-6 transition-transform hover:-translate-y-1 duration-300"
+                className="  glass-card rounded-2xl p-6 transition-transform hover:-translate-y-1 duration-300"
               >
                 <span
                   className="grid h-11 w-11 place-items-center rounded-xl text-white"
@@ -259,7 +270,7 @@ function Home() {
                 >
                   <Icon className="h-5 w-5" />
                 </span>
-                <h3 className="mt-4 text-lg font-display font-semibold">{title}</h3>
+                <h3 className="mt-4 text-lg font-display font-semibold capitalize">{title}</h3>
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{body}</p>
               </div>
             ))}
@@ -321,7 +332,13 @@ function Home() {
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="In their words"
-            title="The kind of feedback that gets us out of bed."
+             title={
+              <>
+           The Kind of Feedback That Gets,{" "}
+                <span className="text-gradient-brand">
+                Out of Bed.</span>
+              </>
+            } 
           />
           <div className="mt-12 grid lg:grid-cols-3 gap-5">
             <Testimonial
@@ -353,7 +370,7 @@ function Home() {
       </section>
 
       <CTASection
-        title="Let's build something your customers brag about."
+        title="Let's Build Something Your Customers Brag About."
         description="Tell us where you are, where you'd like to be, and the constraints in between. We'll come back in 48 hours with a concrete plan."
       />
     </>

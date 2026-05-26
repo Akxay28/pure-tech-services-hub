@@ -23,7 +23,7 @@ function ItOutsourcing() {
       caseStudiesCopy={{
         title: "Managed services outcomes from real transitions.",
         description:
-          "Numbers are from live outsourcing engagements — client names anonymised where required.",
+          "Numbers are from live outsourcing engagements client names anonymised where required.",
       }}
     />
   );

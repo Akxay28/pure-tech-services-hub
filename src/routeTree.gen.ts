@@ -12,12 +12,16 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TeamRouteImport } from './routes/team'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as MissionVisionRouteImport } from './routes/mission-vision'
+import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CaseStudiesRouteImport } from './routes/case-studies'
 import { Route as CareersRouteImport } from './routes/careers'
+import { Route as AwardsAchievementsRouteImport } from './routes/awards-achievements'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
+import { Route as CareersIndexRouteImport } from './routes/careers.index'
 import { Route as ServicesWebApplicationDevelopmentRouteImport } from './routes/services.web-application-development'
 import { Route as ServicesSoftwareDevelopmentRouteImport } from './routes/services.software-development'
 import { Route as ServicesProductEngineeringRouteImport } from './routes/services.product-engineering'
@@ -60,6 +64,8 @@ import { Route as HireBackendDevelopersRouteImport } from './routes/hire.backend
 import { Route as HireAndroidDevelopersRouteImport } from './routes/hire.android-developers'
 import { Route as HireAiDevelopersRouteImport } from './routes/hire.ai-developers'
 import { Route as HireSlugRouteImport } from './routes/hire.$slug'
+import { Route as CareersLifeAtPureTechnologyRouteImport } from './routes/careers.life-at-pure-technology'
+import { Route as CareersBenefitsPerksRouteImport } from './routes/careers.benefits-perks'
 
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
@@ -74,6 +80,16 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MissionVisionRoute = MissionVisionRouteImport.update({
+  id: '/mission-vision',
+  path: '/mission-vision',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GalleryRoute = GalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -91,6 +107,11 @@ const CareersRoute = CareersRouteImport.update({
   path: '/careers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AwardsAchievementsRoute = AwardsAchievementsRouteImport.update({
+  id: '/awards-achievements',
+  path: '/awards-achievements',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -105,6 +126,11 @@ const ServicesIndexRoute = ServicesIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ServicesRoute,
+} as any)
+const CareersIndexRoute = CareersIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CareersRoute,
 } as any)
 const ServicesWebApplicationDevelopmentRoute =
   ServicesWebApplicationDevelopmentRouteImport.update({
@@ -331,16 +357,32 @@ const HireSlugRoute = HireSlugRouteImport.update({
   path: '/hire/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CareersLifeAtPureTechnologyRoute =
+  CareersLifeAtPureTechnologyRouteImport.update({
+    id: '/life-at-pure-technology',
+    path: '/life-at-pure-technology',
+    getParentRoute: () => CareersRoute,
+  } as any)
+const CareersBenefitsPerksRoute = CareersBenefitsPerksRouteImport.update({
+  id: '/benefits-perks',
+  path: '/benefits-perks',
+  getParentRoute: () => CareersRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/careers': typeof CareersRoute
+  '/awards-achievements': typeof AwardsAchievementsRoute
+  '/careers': typeof CareersRouteWithChildren
   '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
+  '/mission-vision': typeof MissionVisionRoute
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/careers/benefits-perks': typeof CareersBenefitsPerksRoute
+  '/careers/life-at-pure-technology': typeof CareersLifeAtPureTechnologyRoute
   '/hire/$slug': typeof HireSlugRoute
   '/hire/ai-developers': typeof HireAiDevelopersRoute
   '/hire/android-developers': typeof HireAndroidDevelopersRoute
@@ -383,16 +425,21 @@ export interface FileRoutesByFullPath {
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
+  '/careers/': typeof CareersIndexRoute
   '/services/': typeof ServicesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/careers': typeof CareersRoute
+  '/awards-achievements': typeof AwardsAchievementsRoute
   '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
+  '/mission-vision': typeof MissionVisionRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/careers/benefits-perks': typeof CareersBenefitsPerksRoute
+  '/careers/life-at-pure-technology': typeof CareersLifeAtPureTechnologyRoute
   '/hire/$slug': typeof HireSlugRoute
   '/hire/ai-developers': typeof HireAiDevelopersRoute
   '/hire/android-developers': typeof HireAndroidDevelopersRoute
@@ -435,18 +482,24 @@ export interface FileRoutesByTo {
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
+  '/careers': typeof CareersIndexRoute
   '/services': typeof ServicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/careers': typeof CareersRoute
+  '/awards-achievements': typeof AwardsAchievementsRoute
+  '/careers': typeof CareersRouteWithChildren
   '/case-studies': typeof CaseStudiesRoute
   '/contact': typeof ContactRoute
+  '/gallery': typeof GalleryRoute
+  '/mission-vision': typeof MissionVisionRoute
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/careers/benefits-perks': typeof CareersBenefitsPerksRoute
+  '/careers/life-at-pure-technology': typeof CareersLifeAtPureTechnologyRoute
   '/hire/$slug': typeof HireSlugRoute
   '/hire/ai-developers': typeof HireAiDevelopersRoute
   '/hire/android-developers': typeof HireAndroidDevelopersRoute
@@ -489,6 +542,7 @@ export interface FileRoutesById {
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
+  '/careers/': typeof CareersIndexRoute
   '/services/': typeof ServicesIndexRoute
 }
 export interface FileRouteTypes {
@@ -496,12 +550,17 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/awards-achievements'
     | '/careers'
     | '/case-studies'
     | '/contact'
+    | '/gallery'
+    | '/mission-vision'
     | '/services'
     | '/sitemap.xml'
     | '/team'
+    | '/careers/benefits-perks'
+    | '/careers/life-at-pure-technology'
     | '/hire/$slug'
     | '/hire/ai-developers'
     | '/hire/android-developers'
@@ -544,16 +603,21 @@ export interface FileRouteTypes {
     | '/services/product-engineering'
     | '/services/software-development'
     | '/services/web-application-development'
+    | '/careers/'
     | '/services/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
-    | '/careers'
+    | '/awards-achievements'
     | '/case-studies'
     | '/contact'
+    | '/gallery'
+    | '/mission-vision'
     | '/sitemap.xml'
     | '/team'
+    | '/careers/benefits-perks'
+    | '/careers/life-at-pure-technology'
     | '/hire/$slug'
     | '/hire/ai-developers'
     | '/hire/android-developers'
@@ -596,17 +660,23 @@ export interface FileRouteTypes {
     | '/services/product-engineering'
     | '/services/software-development'
     | '/services/web-application-development'
+    | '/careers'
     | '/services'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/awards-achievements'
     | '/careers'
     | '/case-studies'
     | '/contact'
+    | '/gallery'
+    | '/mission-vision'
     | '/services'
     | '/sitemap.xml'
     | '/team'
+    | '/careers/benefits-perks'
+    | '/careers/life-at-pure-technology'
     | '/hire/$slug'
     | '/hire/ai-developers'
     | '/hire/android-developers'
@@ -649,15 +719,19 @@ export interface FileRouteTypes {
     | '/services/product-engineering'
     | '/services/software-development'
     | '/services/web-application-development'
+    | '/careers/'
     | '/services/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  CareersRoute: typeof CareersRoute
+  AwardsAchievementsRoute: typeof AwardsAchievementsRoute
+  CareersRoute: typeof CareersRouteWithChildren
   CaseStudiesRoute: typeof CaseStudiesRoute
   ContactRoute: typeof ContactRoute
+  GalleryRoute: typeof GalleryRoute
+  MissionVisionRoute: typeof MissionVisionRoute
   ServicesRoute: typeof ServicesRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TeamRoute: typeof TeamRoute
@@ -708,6 +782,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mission-vision': {
+      id: '/mission-vision'
+      path: '/mission-vision'
+      fullPath: '/mission-vision'
+      preLoaderRoute: typeof MissionVisionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gallery': {
+      id: '/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof GalleryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -727,6 +815,13 @@ declare module '@tanstack/react-router' {
       path: '/careers'
       fullPath: '/careers'
       preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/awards-achievements': {
+      id: '/awards-achievements'
+      path: '/awards-achievements'
+      fullPath: '/awards-achievements'
+      preLoaderRoute: typeof AwardsAchievementsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -749,6 +844,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/services/'
       preLoaderRoute: typeof ServicesIndexRouteImport
       parentRoute: typeof ServicesRoute
+    }
+    '/careers/': {
+      id: '/careers/'
+      path: '/'
+      fullPath: '/careers/'
+      preLoaderRoute: typeof CareersIndexRouteImport
+      parentRoute: typeof CareersRoute
     }
     '/services/web-application-development': {
       id: '/services/web-application-development'
@@ -1044,8 +1146,37 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HireSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/careers/life-at-pure-technology': {
+      id: '/careers/life-at-pure-technology'
+      path: '/life-at-pure-technology'
+      fullPath: '/careers/life-at-pure-technology'
+      preLoaderRoute: typeof CareersLifeAtPureTechnologyRouteImport
+      parentRoute: typeof CareersRoute
+    }
+    '/careers/benefits-perks': {
+      id: '/careers/benefits-perks'
+      path: '/benefits-perks'
+      fullPath: '/careers/benefits-perks'
+      preLoaderRoute: typeof CareersBenefitsPerksRouteImport
+      parentRoute: typeof CareersRoute
+    }
   }
 }
+
+interface CareersRouteChildren {
+  CareersBenefitsPerksRoute: typeof CareersBenefitsPerksRoute
+  CareersLifeAtPureTechnologyRoute: typeof CareersLifeAtPureTechnologyRoute
+  CareersIndexRoute: typeof CareersIndexRoute
+}
+
+const CareersRouteChildren: CareersRouteChildren = {
+  CareersBenefitsPerksRoute: CareersBenefitsPerksRoute,
+  CareersLifeAtPureTechnologyRoute: CareersLifeAtPureTechnologyRoute,
+  CareersIndexRoute: CareersIndexRoute,
+}
+
+const CareersRouteWithChildren =
+  CareersRoute._addFileChildren(CareersRouteChildren)
 
 interface ServicesRouteChildren {
   ServicesSlugRoute: typeof ServicesSlugRoute
@@ -1103,9 +1234,12 @@ const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  CareersRoute: CareersRoute,
+  AwardsAchievementsRoute: AwardsAchievementsRoute,
+  CareersRoute: CareersRouteWithChildren,
   CaseStudiesRoute: CaseStudiesRoute,
   ContactRoute: ContactRoute,
+  GalleryRoute: GalleryRoute,
+  MissionVisionRoute: MissionVisionRoute,
   ServicesRoute: ServicesRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TeamRoute: TeamRoute,

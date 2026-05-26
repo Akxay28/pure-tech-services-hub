@@ -33,6 +33,10 @@ import {
   Briefcase,
   Mail,
   Info,
+  Images,
+  Compass,
+  Heart,
+  Gift,
   type LucideIcon,
 } from "lucide-react";
 import logo from "@/assets/pure-tech-logo.png";
@@ -60,31 +64,136 @@ const tabs: { key: TabKey; label: string; icon: LucideIcon }[] = [
 
 const serviceItems: Record<TabKey, ServiceItem[]> = {
   team: [
-    { title: "Global Capability Center", subtitle: "Empowering Global Teams", icon: Globe, to: "/services/global-capability-center" },
-    { title: "AI Solutions", subtitle: "AI that Drives Progress", icon: Sparkles, to: "/services/ai-solutions" },
-    { title: "Offshore Development", subtitle: "Cost-Effective Solutions", icon: Building2, to: "/services/offshore-development" },
-    { title: "IT Staff Augmentation", subtitle: "Scale Your Tech Team", icon: UserCog, to: "/services/it-staffing" },
-    { title: "IT Outsourcing", subtitle: "Efficient IT Solutions", icon: Network, to: "/services/it-outsourcing" },
-    { title: "Product Engineering", subtitle: "Innovating Your Products", icon: Boxes, to: "/services/product-engineering" },
-    { title: "Cloud Computing", subtitle: "Scalable Cloud Services", icon: Cloud, to: "/services/cloud-computing" },
+    {
+      title: "Global Capability Center",
+      subtitle: "Empowering Global Teams",
+      icon: Globe,
+      to: "/services/global-capability-center",
+    },
+    {
+      title: "AI Solutions",
+      subtitle: "AI that Drives Progress",
+      icon: Sparkles,
+      to: "/services/ai-solutions",
+    },
+    {
+      title: "Offshore Development",
+      subtitle: "Cost-Effective Solutions",
+      icon: Building2,
+      to: "/services/offshore-development",
+    },
+    {
+      title: "IT Staff Augmentation",
+      subtitle: "Scale Your Tech Team",
+      icon: UserCog,
+      to: "/services/it-staffing",
+    },
+    {
+      title: "IT Outsourcing",
+      subtitle: "Efficient IT Solutions",
+      icon: Network,
+      to: "/services/it-outsourcing",
+    },
+    {
+      title: "Product Engineering",
+      subtitle: "Innovating Your Products",
+      icon: Boxes,
+      to: "/services/product-engineering",
+    },
+    {
+      title: "Cloud Computing",
+      subtitle: "Scalable Cloud Services",
+      icon: Cloud,
+      to: "/services/cloud-computing",
+    },
   ],
   offering: [
-    { title: "Software Development", subtitle: "Get world-class software solutions", icon: Code2, to: "/services/software-development" },
-    { title: "Remote Teams", subtitle: "Hire pre-vetted development team", icon: Users, to: "/services/remote-teams" },
-    { title: "Web Application Development", subtitle: "Build modern, intuitive & seamless web apps", icon: Layers, to: "/services/web-application-development" },
-    { title: "Mobile App Development", subtitle: "Get custom and responsive mobile apps", icon: Smartphone, to: "/services/mobile-app-development" },
-    { title: "Cloud & Infrastructure", subtitle: "Scale securely with cloud and infrastructure", icon: Cloud, to: "/services/cloud-infrastructure" },
-    { title: "Front End Development", subtitle: "Get perfect UI/UX for flawless experience", icon: MonitorSmartphone, to: "/services/front-end-development" },
-    { title: "Data Engineering", subtitle: "Modernize data pipelines for real-time insights", icon: Database, to: "/services/data-engineering" },
-    { title: "Cybersecurity", subtitle: "Secure your digital assets with confidence", icon: ShieldCheck, to: "/services/cybersecurity" },
+    {
+      title: "Software Development",
+      subtitle: "Get world-class software solutions",
+      icon: Code2,
+      to: "/services/software-development",
+    },
+    {
+      title: "Remote Teams",
+      subtitle: "Hire pre-vetted development team",
+      icon: Users,
+      to: "/services/remote-teams",
+    },
+    {
+      title: "Web Application Development",
+      subtitle: "Build modern, intuitive & seamless web apps",
+      icon: Layers,
+      to: "/services/web-application-development",
+    },
+    {
+      title: "Mobile App Development",
+      subtitle: "Get custom and responsive mobile apps",
+      icon: Smartphone,
+      to: "/services/mobile-app-development",
+    },
+    {
+      title: "Cloud & Infrastructure",
+      subtitle: "Scale securely with cloud and infrastructure",
+      icon: Cloud,
+      to: "/services/cloud-infrastructure",
+    },
+    {
+      title: "Front End Development",
+      subtitle: "Get perfect UI/UX for flawless experience",
+      icon: MonitorSmartphone,
+      to: "/services/front-end-development",
+    },
+    {
+      title: "Data Engineering",
+      subtitle: "Modernize data pipelines for real-time insights",
+      icon: Database,
+      to: "/services/data-engineering",
+    },
+    {
+      title: "Cybersecurity",
+      subtitle: "Secure your digital assets with confidence",
+      icon: ShieldCheck,
+      to: "/services/cybersecurity",
+    },
   ],
   ai: [
-    { title: "AI Strategy & Consulting", subtitle: "Get future-proof operations with advanced AI", icon: Sparkles, to: "/services/ai-strategy-consulting" },
-    { title: "Custom AI Development", subtitle: "Building AI solutions tailored to your business", icon: Wand2, to: "/services/custom-ai-development" },
-    { title: "AI Chatbot Development", subtitle: "Designing chatbots for smarter customer support", icon: MessageSquareCode, to: "/services/ai-chatbot-development" },
-    { title: "Generative AI Development", subtitle: "Creating AI tools for content and ideas", icon: Brain, to: "/services/generative-ai-development" },
-    { title: "AI Agents Development", subtitle: "Enhance operations through advanced AI agents", icon: Bot, to: "/services/ai-agents-development" },
-    { title: "AI Integration", subtitle: "Integrating AI seamlessly into your stack", icon: Plug, to: "/services/ai-integration" },
+    {
+      title: "AI Strategy & Consulting",
+      subtitle: "Get future-proof operations with advanced AI",
+      icon: Sparkles,
+      to: "/services/ai-strategy-consulting",
+    },
+    {
+      title: "Custom AI Development",
+      subtitle: "Building AI solutions tailored to your business",
+      icon: Wand2,
+      to: "/services/custom-ai-development",
+    },
+    {
+      title: "AI Chatbot Development",
+      subtitle: "Designing chatbots for smarter customer support",
+      icon: MessageSquareCode,
+      to: "/services/ai-chatbot-development",
+    },
+    {
+      title: "Generative AI Development",
+      subtitle: "Creating AI tools for content and ideas",
+      icon: Brain,
+      to: "/services/generative-ai-development",
+    },
+    {
+      title: "AI Agents Development",
+      subtitle: "Enhance operations through advanced AI agents",
+      icon: Bot,
+      to: "/services/ai-agents-development",
+    },
+    {
+      title: "AI Integration",
+      subtitle: "Integrating AI seamlessly into your stack",
+      icon: Plug,
+      to: "/services/ai-integration",
+    },
   ],
 };
 
@@ -101,13 +210,63 @@ const companyTabs: { key: CompanyTabKey; label: string; icon: LucideIcon }[] = [
 const companyItems: Record<"about" | "careers", MegaMenuItem[]> = {
   about: [
     { title: "About", subtitle: "Who we are and how we work.", icon: Building2, to: "/about" },
-    { title: "Case Studies", subtitle: "Outcomes from recent engagements.", icon: Layers, to: "/case-studies" },
-    { title: "Our Services", subtitle: "Explore the full service catalogue.", icon: Sparkles, to: "/services" },
+    {
+      title: "Case Studies",
+      subtitle: "Outcomes from recent engagements.",
+      icon: Layers,
+      to: "/case-studies",
+    },
+    // { title: "Our Services", subtitle: "Explore the full service catalogue.", icon: Sparkles, to: "/services" },
+    {
+      title: "Awards & Achievements",
+      subtitle: "Recognitions, milestones, and industry accomplishments.",
+      icon: Sparkles,
+      to: "/awards-achievements",
+    },
+    {
+      title: "Gallery",
+      subtitle: "People, culture, and company moments.",
+      icon: Images,
+      to: "/gallery",
+    },
+    {
+      title: "Mission & Vision",
+      subtitle: "Our purpose and direction.",
+      icon: Compass,
+      to: "/mission-vision",
+    },
   ],
   careers: [
-    { title: "Careers", subtitle: "Open roles across engineering and AI.", icon: Briefcase, to: "/careers" },
-    { title: "Remote Teams", subtitle: "Hire pre-vetted development squads.", icon: Users, to: "/services/remote-teams" },
-    { title: "IT Staff Augmentation", subtitle: "Scale your tech team on demand.", icon: UserCog, to: "/services/it-staffing" },
+    {
+      title: "Careers",
+      subtitle: "Open roles across engineering and AI.",
+      icon: Briefcase,
+      to: "/careers",
+    },
+    {
+      title: "Life at Pure Technology",
+      subtitle: "Culture, perks, and work environment.",
+      icon: Heart,
+      to: "/careers/life-at-pure-technology",
+    },
+    {
+      title: "Benefits & Perks",
+      subtitle: "Health, flexibility, learning budgets.",
+      icon: Gift,
+      to: "/careers/benefits-perks",
+    },
+    {
+      title: "Remote Teams",
+      subtitle: "Hire pre-vetted development squads.",
+      icon: Users,
+      to: "/services/remote-teams",
+    },
+    {
+      title: "IT Staff Augmentation",
+      subtitle: "Scale your tech team on demand.",
+      icon: UserCog,
+      to: "/services/it-staffing",
+    },
   ],
 };
 
@@ -123,31 +282,136 @@ const hireTabs: { key: HireTabKey; label: string; icon: LucideIcon }[] = [
 
 const hireItems: Record<HireTabKey, HireItem[]> = {
   ai: [
-    { title: "Hire Chatbot Developers", subtitle: "Conversational AI & support bots", icon: MessageSquareCode, to: "/hire/chatbot-developers" },
-    { title: "Hire OpenAI Developers", subtitle: "GPT APIs & custom integrations", icon: Sparkles, to: "/hire/openai-developers" },
-    { title: "Hire Generative AI Developers", subtitle: "LLMs, RAG & content pipelines", icon: Wand2, to: "/hire/generative-ai-developers" },
-    { title: "Hire Gemini Developers", subtitle: "Google Gemini & multimodal AI", icon: Brain, to: "/hire/gemini-developers" },
-    { title: "Hire Prompt Engineer", subtitle: "Prompt design & eval workflows", icon: PenLine, to: "/hire/prompt-engineer" },
+    {
+      title: "Hire Chatbot Developers",
+      subtitle: "Conversational AI & support bots",
+      icon: MessageSquareCode,
+      to: "/hire/chatbot-developers",
+    },
+    {
+      title: "Hire OpenAI Developers",
+      subtitle: "GPT APIs & custom integrations",
+      icon: Sparkles,
+      to: "/hire/openai-developers",
+    },
+    {
+      title: "Hire Generative AI Developers",
+      subtitle: "LLMs, RAG & content pipelines",
+      icon: Wand2,
+      to: "/hire/generative-ai-developers",
+    },
+    {
+      title: "Hire Gemini Developers",
+      subtitle: "Google Gemini & multimodal AI",
+      icon: Brain,
+      to: "/hire/gemini-developers",
+    },
+    {
+      title: "Hire Prompt Engineer",
+      subtitle: "Prompt design & eval workflows",
+      icon: PenLine,
+      to: "/hire/prompt-engineer",
+    },
   ],
   vibe: [
-    { title: "Hire ChatGPT Developers", subtitle: "Custom GPTs & ChatGPT apps", icon: MessageSquareCode, to: "/hire/chatgpt-developers" },
-    { title: "Hire Lovable AI Developers", subtitle: "Rapid UI with Lovable AI", icon: Sparkles, to: "/hire/lovable-ai-developers" },
-    { title: "Hire Replit AI Developers", subtitle: "Full-stack builds on Replit", icon: Code2, to: "/hire/replit-ai-developers" },
-    { title: "Hire Bolt.new AI Developers", subtitle: "Bolt.new prototypes to prod", icon: Zap, to: "/hire/bolt-new-ai-developers" },
-    { title: "Hire Google Antigravity Developers", subtitle: "Antigravity agent workflows", icon: Rocket, to: "/hire/google-antigravity-developers" },
-    { title: "Hire Cursor AI Developers", subtitle: "Cursor IDE & AI pair coding", icon: Terminal, to: "/hire/cursor-ai-developers" },
-    { title: "Hire Windsurf AI Developers", subtitle: "Windsurf cascade & flow dev", icon: Wind, to: "/hire/windsurf-ai-developers" },
+    {
+      title: "Hire ChatGPT Developers",
+      subtitle: "Custom GPTs & ChatGPT apps",
+      icon: MessageSquareCode,
+      to: "/hire/chatgpt-developers",
+    },
+    {
+      title: "Hire Lovable AI Developers",
+      subtitle: "Rapid UI with Lovable AI",
+      icon: Sparkles,
+      to: "/hire/lovable-ai-developers",
+    },
+    {
+      title: "Hire Replit AI Developers",
+      subtitle: "Full-stack builds on Replit",
+      icon: Code2,
+      to: "/hire/replit-ai-developers",
+    },
+    {
+      title: "Hire Bolt.new AI Developers",
+      subtitle: "Bolt.new prototypes to prod",
+      icon: Zap,
+      to: "/hire/bolt-new-ai-developers",
+    },
+    {
+      title: "Hire Google Antigravity Developers",
+      subtitle: "Antigravity agent workflows",
+      icon: Rocket,
+      to: "/hire/google-antigravity-developers",
+    },
+    {
+      title: "Hire Cursor AI Developers",
+      subtitle: "Cursor IDE & AI pair coding",
+      icon: Terminal,
+      to: "/hire/cursor-ai-developers",
+    },
+    {
+      title: "Hire Windsurf AI Developers",
+      subtitle: "Windsurf cascade & flow dev",
+      icon: Wind,
+      to: "/hire/windsurf-ai-developers",
+    },
   ],
   role: [
-    { title: "Hire Software Developer", subtitle: "End-to-end product engineers", icon: Code2, to: "/hire/software-developer" },
-    { title: "Hire Mobile App Developer", subtitle: "iOS, Android & cross-platform", icon: Smartphone, to: "/hire/mobile-app-developer" },
-    { title: "Hire Backend Developers", subtitle: "APIs, data layers & services", icon: Database, to: "/hire/backend-developers" },
-    { title: "Hire AI Developers", subtitle: "ML features in production apps", icon: Brain, to: "/hire/ai-developers" },
-    { title: "Hire DevOps Developers", subtitle: "CI/CD, cloud & reliability", icon: Cloud, to: "/hire/devops-developers" },
-    { title: "Hire Web App Developer", subtitle: "SPAs, SSR & web platforms", icon: Layers, to: "/hire/web-app-developer" },
-    { title: "Hire Frontend Developers", subtitle: "UI, design systems & UX", icon: MonitorSmartphone, to: "/hire/frontend-developers" },
-    { title: "Hire Fullstack Developers", subtitle: "Database through to UI", icon: Boxes, to: "/hire/fullstack-developers" },
-    { title: "Hire Android Developers", subtitle: "Kotlin, Compose & Play Store", icon: Smartphone, to: "/hire/android-developers" },
+    {
+      title: "Hire Software Developer",
+      subtitle: "End-to-end product engineers",
+      icon: Code2,
+      to: "/hire/software-developer",
+    },
+    {
+      title: "Hire Mobile App Developer",
+      subtitle: "iOS, Android & cross-platform",
+      icon: Smartphone,
+      to: "/hire/mobile-app-developer",
+    },
+    {
+      title: "Hire Backend Developers",
+      subtitle: "APIs, data layers & services",
+      icon: Database,
+      to: "/hire/backend-developers",
+    },
+    {
+      title: "Hire AI Developers",
+      subtitle: "ML features in production apps",
+      icon: Brain,
+      to: "/hire/ai-developers",
+    },
+    {
+      title: "Hire DevOps Developers",
+      subtitle: "CI/CD, cloud & reliability",
+      icon: Cloud,
+      to: "/hire/devops-developers",
+    },
+    {
+      title: "Hire Web App Developer",
+      subtitle: "SPAs, SSR & web platforms",
+      icon: Layers,
+      to: "/hire/web-app-developer",
+    },
+    {
+      title: "Hire Frontend Developers",
+      subtitle: "UI, design systems & UX",
+      icon: MonitorSmartphone,
+      to: "/hire/frontend-developers",
+    },
+    {
+      title: "Hire Fullstack Developers",
+      subtitle: "Database through to UI",
+      icon: Boxes,
+      to: "/hire/fullstack-developers",
+    },
+    {
+      title: "Hire Android Developers",
+      subtitle: "Kotlin, Compose & Play Store",
+      icon: Smartphone,
+      to: "/hire/android-developers",
+    },
   ],
 };
 
@@ -164,7 +428,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
-    const [activeTab, setActiveTab] = useState<TabKey>("team");
+  const [activeTab, setActiveTab] = useState<TabKey>("team");
   const [activeHireTab, setActiveHireTab] = useState<HireTabKey>("ai");
   const [activeCompanyTab, setActiveCompanyTab] = useState<CompanyTabKey>("about");
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -206,7 +470,7 @@ export function Header() {
             <img
               src={logo}
               alt="Pure Technology"
-              className="h-10 w-auto transition-transform duration-500 group-hover:scale-[1.04]"
+              className="h-20 w-auto transition-transform duration-500 group-hover:scale-[1.04]"
             />
           </Link>
 
@@ -266,8 +530,11 @@ export function Header() {
             >
               <span className="uppercase">Contact</span>
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-              <span className="pointer-events-none absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                style={{ background: "linear-gradient(95deg, rgba(255,255,255,0.18), rgba(255,255,255,0))" }}
+              <span
+                className="pointer-events-none absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style={{
+                  background: "linear-gradient(95deg, rgba(255,255,255,0.18), rgba(255,255,255,0))",
+                }}
               />
             </Link>
           </div>
@@ -332,8 +599,14 @@ export function Header() {
           >
             <div className="mx-auto max-w-7xl px-5 py-5 space-y-2 max-h-[80vh] overflow-y-auto">
               <MobileAccordion title="Services" items={serviceItems.team.concat(serviceItems.ai)} />
-              <MobileAccordion title="Hire Developers" items={[...hireItems.ai, ...hireItems.vibe, ...hireItems.role]} />
-              <MobileAccordion title="Company" items={[...companyItems.about, ...companyItems.careers]} />
+              <MobileAccordion
+                title="Hire Developers"
+                items={[...hireItems.ai, ...hireItems.vibe, ...hireItems.role]}
+              />
+              <MobileAccordion
+                title="Company"
+                items={[...companyItems.about, ...companyItems.careers]}
+              />
               <div className="rounded-2xl border border-border/60 overflow-hidden">
                 <div className="px-4 py-3 text-sm font-semibold text-[color:var(--brand-purple)]">
                   Connect with our team
@@ -349,7 +622,7 @@ export function Header() {
                   ))}
                 </div>
               </div>
-             {/* Resource menubar */}
+              {/* Resource menubar */}
               {/* <MobileAccordion title="Resources" items={simpleMenus["Resources"].map(s => ({ title: s.label, subtitle: s.desc, icon: Layers, to: s.to }))} /> */}
               <Link
                 to="/contact"
@@ -414,7 +687,9 @@ function ServicesMega({
               >
                 <span
                   className={`grid h-9 w-9 place-items-center rounded-xl transition-colors ${
-                    isActive ? "bg-white text-[color:var(--brand-pink)]" : "bg-white/70 text-[color:var(--brand-purple)]"
+                    isActive
+                      ? "bg-white text-[color:var(--brand-pink)]"
+                      : "bg-white/70 text-[color:var(--brand-purple)]"
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -510,7 +785,9 @@ function HireDevelopersMega({
               >
                 <span
                   className={`grid h-9 w-9 place-items-center rounded-xl transition-colors ${
-                    isActive ? "bg-white text-[color:var(--brand-pink)]" : "bg-white/70 text-[color:var(--brand-purple)]"
+                    isActive
+                      ? "bg-white text-[color:var(--brand-pink)]"
+                      : "bg-white/70 text-[color:var(--brand-purple)]"
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -604,7 +881,9 @@ function CompanyMega({
               >
                 <span
                   className={`grid h-9 w-9 place-items-center rounded-xl transition-colors ${
-                    isActive ? "bg-white text-[color:var(--brand-pink)]" : "bg-white/70 text-[color:var(--brand-purple)]"
+                    isActive
+                      ? "bg-white text-[color:var(--brand-pink)]"
+                      : "bg-white/70 text-[color:var(--brand-purple)]"
                   }`}
                 >
                   <Icon className="h-4 w-4" />
@@ -656,13 +935,7 @@ function CompanyMega({
   );
 }
 
-function MobileAccordion({
-  title,
-  items,
-}: {
-  title: string;
-  items: ServiceItem[];
-}) {
+function MobileAccordion({ title, items }: { title: string; items: ServiceItem[] }) {
   const [open, setOpen] = useState(false);
   return (
     <div className="rounded-2xl border border-border/60 overflow-hidden">
@@ -692,8 +965,12 @@ function MobileAccordion({
                     <it.icon className="h-4 w-4" />
                   </span>
                   <span className="min-w-0">
-                    <span className="block text-sm font-semibold text-[color:var(--brand-purple)]">{it.title}</span>
-                    <span className="block text-xs text-[color:var(--brand-purple)]/65">{it.subtitle}</span>
+                    <span className="block text-sm font-semibold text-[color:var(--brand-purple)]">
+                      {it.title}
+                    </span>
+                    <span className="block text-xs text-[color:var(--brand-purple)]/65">
+                      {it.subtitle}
+                    </span>
                   </span>
                 </Link>
               ))}

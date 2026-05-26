@@ -21,6 +21,7 @@ import {
   Testimonial,
   CTASection,
   Stat,
+  BrandTitle,
 } from "@/components/site/Primitives";
 import { MeetTheTeam } from "./MeetTheTeam";
 import { CaseStudiesSection } from "./CaseStudiesSection";
@@ -87,7 +88,7 @@ export function ServicePage(p: ServicePageProps) {
               The practice
             </div>
             <h2 className="mt-3 text-3xl lg:text-4xl font-display font-bold leading-tight">
-              {p.intro.heading}
+              <BrandTitle>{p.intro.heading}</BrandTitle>
             </h2>
           </div>
           <div className="lg:col-span-7 space-y-5 text-base sm:text-lg leading-relaxed text-foreground/85">
@@ -421,4 +422,3 @@ function TrustSection() {
     </section>
   );
 }
-

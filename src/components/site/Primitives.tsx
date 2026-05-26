@@ -31,6 +31,27 @@ export function BrandIconBox({
   );
 }
 
+export function BrandTitle({ children }: { children: ReactNode }) {
+  if (typeof children !== "string") {
+    return <>{children}</>;
+  }
+
+  const words = children.trim().split(/\s+/);
+  if (words.length < 2) {
+    return <span className="text-gradient-brand capitalize">{children}</span>;
+  }
+
+  const accentLength = words.length >= 7 ? 3 : 2;
+  const opening = words.slice(0, -accentLength).join(" ");
+  const accent = words.slice(-accentLength).join(" ");
+
+  return (
+    <span className="capitalize">
+      {opening} <span className="text-gradient-brand">{accent}</span>
+    </span>
+  );
+}
+
 export function PageHero({
   eyebrow,
   title,
@@ -57,7 +78,7 @@ export function PageHero({
           </div>
         )}
         <h1 className="mt-5 max-w-4xl text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-[1.05] tracking-tight animate-fade-up">
-          {title}
+          <BrandTitle>{title}</BrandTitle>
         </h1>
         {description && (
           <p className="mt-6 max-w-2xl text-lg text-muted-foreground leading-relaxed animate-fade-up">
@@ -113,7 +134,7 @@ export function SectionHeader({
         </div>
       )}
       <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight">
-        {title}
+        <BrandTitle>{title}</BrandTitle>
       </h2>
       {description && (
         <p className="mt-4 text-lg text-muted-foreground leading-relaxed">{description}</p>
@@ -340,7 +361,7 @@ export function CaseStudyCard({
         </div>
 
         {/* client name: text-2xl → text-xl */}
-        <h3 className="mt-2.5 text-xl font-display font-bold">{client}</h3>
+        <h3 className="mt-2.5 text-xl font-display capitalize font-bold">{client}</h3>
 
         <div className="mt-4 space-y-3 text-sm leading-relaxed text-foreground/85">
           <p>
@@ -389,9 +410,9 @@ export function CaseStudyCard({
 export function CTASection({
   title,
   description,
-  primaryLabel = "Talk to our team",
+  primaryLabel = "Talk To Our Team",
   primaryTo = "/contact",
-  secondaryLabel = "Explore services",
+  secondaryLabel = "Explore Services",
   secondaryTo = "/services",
   contactEmail,
   contactPhone,
@@ -440,6 +461,16 @@ export function CTASection({
             )}
           </div>
           <div className="flex flex-col sm:flex-row lg:justify-end gap-3">
+          <Link
+              to={secondaryTo as never}
+              className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background hover:opacity-90 transition-opacity shadow-soft"
+            >
+            {/* <Link
+              to={secondaryTo as never}
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 backdrop-blur px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/20 transition-colors"
+            > */}
+              {secondaryLabel}
+            </Link>
             <Link
               to={primaryTo as never}
               className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-foreground hover:bg-white/90 transition-colors"
@@ -447,12 +478,7 @@ export function CTASection({
               {primaryLabel}
               <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link
-              to={secondaryTo as never}
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/40 bg-white/10 backdrop-blur px-6 py-3.5 text-sm font-semibold text-white hover:bg-white/20 transition-colors"
-            >
-              {secondaryLabel}
-            </Link>
+           
           </div>
         </div>
       </div>

@@ -27,7 +27,7 @@ export const subServices: Record<string, Entry> = {
   // ── By Team Expertise ────────────────────────────────────────
   "global-capability-center": {
     eyebrow: "Global Capability Center",
-    title: "Stand up your GCC in India — without the 2-year build.",
+    title: "Stand Up Your GCC In India - Without The 2-Year Build.",
     lede: "We help global enterprises launch and scale captive engineering centers in India — from legal entity and real estate to a 50-engineer org chart that ships in week one.",
     accent: BRAND.orange,
     Icon: Globe,

@@ -11,6 +11,7 @@ import {
 import appCss from "../styles.css?url";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { FirstVisitEnquiryModal } from "@/components/site/FirstVisitEnquiryModal";
 
 function NotFoundComponent() {
   return (
@@ -81,7 +82,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Pure Technology is an India-based engineering partner delivering AI solutions, IT staffing, and product engineering for enterprises across the world.",
       },
       { name: "author", content: "Pure Technology" },
-      { property: "og:title", content: "Pure Technology — AI, Engineering & Tech Talent from India" },
+      {
+        property: "og:title",
+        content: "Pure Technology — AI, Engineering & Tech Talent from India",
+      },
       {
         property: "og:description",
         content:
@@ -132,6 +136,7 @@ function RootComponent() {
           <Outlet />
         </main>
         <Footer />
+        <FirstVisitEnquiryModal />
       </div>
     </QueryClientProvider>
   );

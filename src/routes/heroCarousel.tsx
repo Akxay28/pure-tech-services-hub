@@ -34,14 +34,14 @@ const slides: Slide[] = [
     eyebrowStyle: "bg-blue-50 border-blue-200 text-blue-700",
     title: (
       <>
-    Engineering the next chapter of your business {" "}
-        <span className="text-gradient-brand">with India's finest minds.</span>
+    Engineering The Next Chapter of Your Business {" "}
+        <span className="text-gradient-brand">With India's Finest Minds.</span>
       </>
     ),
     description:
       "Pure Technology partners with enterprise and growth-stage teams to deliver production-grade AI, vetted engineering talent, and full-stack product squads — under one roof, with one accountable team.",
-    primaryCta: { label: "Start a project", to: "/contact" },
-    secondaryCta: { label: "See what we build", to: "/services" },
+    primaryCta: { label: "Start Project", to: "/contact" },
+    secondaryCta: { label: "See What We Build", to: "/services" },
     stats: [
       { value: "13+", label: "Years of experience", color: "text-blue-600" },
       { value: "80+", label: "Happy clients", color: "text-orange-500" },
@@ -63,16 +63,16 @@ const slides: Slide[] = [
     eyebrowStyle: "bg-orange-50 border-orange-200 text-orange-700",
     title: (
       <>
-        Transform operations with AI systems built for business.{" "}
+        Transform Operations With AI Systems Built For Business.{" "}
         <span className="text-gradient-brand">
-        Powered by India's finest minds.
+        Powered By India's Finest Minds.
         </span>
       </>
     ),
     description:
       "Pure Technology designs and deploys intelligent AI solutions that automate workflows, streamline decision-making, and help modern businesses scale faster with confidence.",
-    primaryCta: { label: "Hire engineers", to: "/services/it-staffing" },
-    secondaryCta: { label: "View profiles", to: "/contact" },
+    primaryCta: { label: "Hire Engineers", to: "/services/it-staffing" },
+    secondaryCta: { label: "View Profiles", to: "/contact" },
     stats: [
       { value: "40+", label: "AI workflows automated",       color: "text-orange-500" },
       { value: "15+",  label: "Dedicated AI engineers",  color: "text-amber-500"  },
@@ -101,16 +101,16 @@ const slides: Slide[] = [
     eyebrowStyle: "bg-green-50 border-green-200 text-green-700",
     title: (
       <>
-      Your extended technology team for {" "}
+      Your Extended Technology Team For {" "}
         <span className="text-gradient-brand">
-        building faster and scaling smarter.
+        Building Faster & Scaling Smarter.
         </span>
       </>
     ),
     description:
       "From product strategy to engineering execution, Pure Technology provides dedicated developers, designers, and AI specialists who work as a seamless extension of your in-house team.",
-    primaryCta: { label: "Start building", to: "/services/product-engineering" },
-    secondaryCta: { label: "See case studies", to: "/case-studies" },
+    primaryCta: { label: "Start Building", to: "/services/product-engineering" },
+    secondaryCta: { label: "See Case Studies", to: "/case-studies" },
     stats: [
       { value: "25+",    label: "Worldwide Partners",  color: "text-green-600" },
       { value: "100K+",  label: "Hours of development delivered",  color: "text-teal-600"  },

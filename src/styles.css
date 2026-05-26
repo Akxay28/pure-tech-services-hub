@@ -114,10 +114,10 @@
   --brand-yellow: oklch(0.87 0.17 95);
   --brand-green: oklch(0.7 0.2 145);
   --brand-ink: oklch(0.15 0.03 260);
-  --brand-purple: #2E0B7D;
-  --brand-pink: #FF4D8D;
-  --brand-pink-soft: #FCE4EC;
-  --gradient-cta: linear-gradient(95deg, #FF4D8D 0%, #FF7A00 100%);
+  --brand-purple: #2e0b7d;
+  --brand-pink: #ff4d8d;
+  --brand-pink-soft: #fce4ec;
+  --gradient-cta: linear-gradient(95deg, #ff4d8d 0%, #ff7a00 100%);
 
   --chart-1: var(--brand-blue);
   --chart-2: var(--brand-green);
@@ -149,7 +149,8 @@
     color-mix(in oklab, var(--brand-orange) 6%, white) 50%,
     color-mix(in oklab, var(--brand-green) 8%, white) 100%
   );
-  --gradient-mesh: radial-gradient(
+  --gradient-mesh:
+    radial-gradient(
       55% 45% at 12% 18%,
       color-mix(in oklab, var(--brand-blue) 26%, transparent) 0%,
       transparent 70%
@@ -171,7 +172,8 @@
     );
 
   /* Shadows for premium glass cards */
-  --shadow-glass: 0 1px 0 0 oklch(1 0 0 / 0.6) inset,
+  --shadow-glass:
+    0 1px 0 0 oklch(1 0 0 / 0.6) inset,
     0 18px 50px -20px color-mix(in oklab, var(--brand-blue) 28%, transparent),
     0 6px 20px -8px color-mix(in oklab, var(--brand-blue) 14%, transparent);
   --shadow-soft: 0 10px 30px -12px color-mix(in oklab, var(--brand-ink) 18%, transparent);
@@ -219,7 +221,11 @@
     text-rendering: optimizeLegibility;
   }
 
-  h1, h2, h3, h4, h5 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
     font-family: var(--font-display);
     letter-spacing: -0.02em;
   }
@@ -238,6 +244,22 @@
   }
   .bg-gradient-mesh {
     background-image: var(--gradient-mesh);
+  }
+  .modal-brand-flow {
+    background-image: linear-gradient(
+      90deg,
+      var(--brand-blue) 0%,
+      var(--brand-red) 12.5%,
+      var(--brand-orange) 25%,
+      var(--brand-yellow) 37.5%,
+      var(--brand-green) 50%,
+      var(--brand-yellow) 62.5%,
+      var(--brand-orange) 75%,
+      var(--brand-red) 87.5%,
+      var(--brand-blue) 100%
+    );
+    background-size: 200% 100%;
+    animation: modal-brand-flow 4s linear infinite;
   }
   .text-gradient-brand {
     background-image: var(--gradient-brand);
@@ -259,8 +281,12 @@
     -webkit-backdrop-filter: blur(24px) saturate(150%);
     border: 1px solid color-mix(in oklab, var(--brand-blue) 10%, white);
   }
-  .shadow-soft { box-shadow: var(--shadow-soft); }
-  .shadow-glass { box-shadow: var(--shadow-glass); }
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  .shadow-glass {
+    box-shadow: var(--shadow-glass);
+  }
 
   .ring-brand {
     box-shadow: var(--shadow-ring);
@@ -302,72 +328,162 @@
     background-size: 200% 100%;
     animation: shimmer 6s linear infinite;
   }
-  .animate-blob-1 { animation: blob-1 12s ease-in-out infinite; }
-  .animate-blob-2 { animation: blob-2 14s ease-in-out infinite; }
-  .animate-blob-3 { animation: blob-3 16s ease-in-out infinite; }
-  .animate-blob-4 { animation: blob-4 13s ease-in-out infinite; }
-  .animate-blob-5 { animation: blob-5 15s ease-in-out infinite; }
+  .animate-blob-1 {
+    animation: blob-1 12s ease-in-out infinite;
+  }
+  .animate-blob-2 {
+    animation: blob-2 14s ease-in-out infinite;
+  }
+  .animate-blob-3 {
+    animation: blob-3 16s ease-in-out infinite;
+  }
+  .animate-blob-4 {
+    animation: blob-4 13s ease-in-out infinite;
+  }
+  .animate-blob-5 {
+    animation: blob-5 15s ease-in-out infinite;
+  }
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
 }
 @keyframes orbit {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 @keyframes pulse-soft {
-  0%, 100% { opacity: 0.65; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.04); }
+  0%,
+  100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
 }
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes shimmer {
-  0% { background-position: 0% 0%; }
-  100% { background-position: 200% 0%; }
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 200% 0%;
+  }
+}
+@keyframes modal-brand-flow {
+  from {
+    background-position: 100% 50%;
+  }
+  to {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-brand-flow {
+    animation: none;
+  }
 }
 
 @keyframes blob-1 {
-  0%, 100% { transform: translate(-20%, 10%) scale(1); }
-  25% { transform: translate(60%, -30%) scale(1.15); }
-  50% { transform: translate(30%, 40%) scale(0.9); }
-  75% { transform: translate(-10%, -20%) scale(1.05); }
+  0%,
+  100% {
+    transform: translate(-20%, 10%) scale(1);
+  }
+  25% {
+    transform: translate(60%, -30%) scale(1.15);
+  }
+  50% {
+    transform: translate(30%, 40%) scale(0.9);
+  }
+  75% {
+    transform: translate(-10%, -20%) scale(1.05);
+  }
 }
 @keyframes blob-2 {
-  0%, 100% { transform: translate(70%, -10%) scale(1); }
-  33% { transform: translate(20%, 50%) scale(1.2); }
-  66% { transform: translate(-20%, 20%) scale(0.85); }
+  0%,
+  100% {
+    transform: translate(70%, -10%) scale(1);
+  }
+  33% {
+    transform: translate(20%, 50%) scale(1.2);
+  }
+  66% {
+    transform: translate(-20%, 20%) scale(0.85);
+  }
 }
 @keyframes blob-3 {
-  0%, 100% { transform: translate(10%, 60%) scale(1); }
-  25% { transform: translate(-40%, 10%) scale(0.9); }
-  50% { transform: translate(50%, -20%) scale(1.1); }
-  75% { transform: translate(20%, 30%) scale(1.05); }
+  0%,
+  100% {
+    transform: translate(10%, 60%) scale(1);
+  }
+  25% {
+    transform: translate(-40%, 10%) scale(0.9);
+  }
+  50% {
+    transform: translate(50%, -20%) scale(1.1);
+  }
+  75% {
+    transform: translate(20%, 30%) scale(1.05);
+  }
 }
 @keyframes blob-4 {
-  0%, 100% { transform: translate(50%, 30%) scale(1); }
-  50% { transform: translate(-30%, -40%) scale(1.15); }
+  0%,
+  100% {
+    transform: translate(50%, 30%) scale(1);
+  }
+  50% {
+    transform: translate(-30%, -40%) scale(1.15);
+  }
 }
 @keyframes blob-5 {
-  0%, 100% { transform: translate(-30%, -30%) scale(1); }
-  33% { transform: translate(40%, 20%) scale(1.1); }
-  66% { transform: translate(10%, 60%) scale(0.9); }
+  0%,
+  100% {
+    transform: translate(-30%, -30%) scale(1);
+  }
+  33% {
+    transform: translate(40%, 20%) scale(1.1);
+  }
+  66% {
+    transform: translate(10%, 60%) scale(0.9);
+  }
 }
-
 
 /* GCC model section and in 12 weeks section */
 @keyframes gradientFlow {
   0% {
     background-position: 0% 50%;
   }
-  
+
   100% {
     background-position: 200% 50%;
   }
