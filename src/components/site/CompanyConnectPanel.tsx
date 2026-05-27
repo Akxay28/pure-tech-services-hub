@@ -12,6 +12,7 @@ export function CompanyConnectPanel() {
       exit={{ opacity: 0, y: -6 }}
       transition={{ duration: 0.2 }}
       className="flex flex-col gap-3"
+      onMouseDown={(e) => e.stopPropagation()}
     >
       {NAV_TEAM_CONTACTS.map((member, index) => (
         <TeamContactCard

@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Mail, Linkedin } from "lucide-react";
 import { testimonialAccentAt } from "@/lib/brand-colors";
 import type { TeamContact } from "@/lib/team-contacts";
-import { buildMailtoLink } from "@/lib/team-contact-links";
+import { buildGmailComposeLink } from "@/lib/team-contact-links";
 
 type TeamContactCardProps = {
   member: TeamContact;
@@ -18,6 +18,11 @@ export function TeamContactCard({
 }: TeamContactCardProps) {
   const accent = testimonialAccentAt(accentIndex);
   const isPage = variant === "page";
+  const emailHref = buildGmailComposeLink(member.email);
+
+  const openEmail = () => {
+    window.open(emailHref, "_blank", "noopener,noreferrer");
+  };
 
   return (
     <motion.article
@@ -72,16 +77,25 @@ export function TeamContactCard({
       </div>
 
       <div
-        className={`flex shrink-0 flex-col justify-center gap-2 ${
+        className={`relative z-10 flex shrink-0 flex-col justify-center gap-2 ${
           isPage ? "pr-2" : "pr-1"
         }`}
       >
         <a
-          href={buildMailtoLink(member.email)}
+          href={emailHref}
+          target="_blank"
+          rel="noopener noreferrer"
           title={`Email ${member.name}`}
           aria-label={`Email ${member.name}`}
           className="grid place-items-center rounded-full border border-border/80 bg-white text-[color:var(--brand-purple)] transition-all duration-200 hover:scale-110 hover:border-transparent hover:text-white"
           style={{ width: isPage ? 40 : 32, height: isPage ? 40 : 32 }}
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+            e.preventDefault();
+            openEmail();
+          }}
           onMouseEnter={(e) => {
             e.currentTarget.style.background = accent;
           }}
@@ -99,6 +113,8 @@ export function TeamContactCard({
           aria-label={`${member.name} on LinkedIn`}
           className="grid place-items-center rounded-full border border-border/80 bg-white text-[color:var(--brand-purple)] transition-all duration-200 hover:scale-110 hover:border-transparent hover:text-white"
           style={{ width: isPage ? 40 : 32, height: isPage ? 40 : 32 }}
+          onMouseDown={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
           onMouseEnter={(e) => {
             e.currentTarget.style.background = accent;
           }}
