@@ -166,8 +166,8 @@ function CareersPage() {
             href={`mailto:${HR_EMAIL}`}
             className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 backdrop-blur px-6 py-3 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
           >
-            Don't see your role? Write to us ΓåÆ {HR_EMAIL}
-          </a>
+Don't see your role? Write to us → {HR_EMAIL}
+</a>
         </div>
 
         <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl">
@@ -262,12 +262,12 @@ function CareersPage() {
                     </div>
                   </div>
                   <a
-                    href={`mailto:${HR_EMAIL}?subject=${encodeURIComponent(
-                      `Application — ${role.title}`,
-                    )}`}
+                   href={`https://mail.google.com/mail/?view=cm&to=${HR_EMAIL}&su=${encodeURIComponent(`Application — ${role.title}`)}`}
+                   target="_blank"
+                   rel="noopener noreferrer" 
                     className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background hover:opacity-90 transition-opacity shadow-soft"
                   >
-                    Apply ΓåÆ
+                    Apply now
                     <ArrowRight className="h-4 w-4" />
                   </a>
                 </div>

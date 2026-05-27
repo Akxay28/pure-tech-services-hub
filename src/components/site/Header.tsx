@@ -470,7 +470,7 @@ export function Header() {
             <img
               src={logo}
               alt="Pure Technology"
-              className="h-20 w-auto transition-transform duration-500 group-hover:scale-[1.04]"
+              className="h-15 w-auto transition-transform duration-500 group-hover:scale-[1.04]"
             />
           </Link>
 
