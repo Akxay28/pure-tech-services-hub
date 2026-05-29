@@ -20,6 +20,7 @@ import {
   CaseStudyCard,
 } from "@/components/site/Primitives";
 import { ServicesShowcase } from "@/components/site/ServicesShowcase";
+import { YouTubeEmbed } from "@/components/site/YouTubeEmbed";
 import { HeroCarousel } from "./heroCarousel";
 
 export const Route = createFileRoute("/")({
@@ -124,14 +125,9 @@ function Home() {
 
               {/* Right: video */}
               <div className="relative w-full aspect-video overflow-hidden rounded-2xl shadow-soft bg-black">
-                {/* <div className="relative w-full h-[320px] md:h-[420px] lg:h-[500px] overflow-hidden rounded-2xl shadow-soft bg-black"> */}
-                <iframe
-                  src="https://www.youtube.com/embed/4DpEGb4HG7w?autoplay=1&mute=1&loop=1&playlist=4DpEGb4HG7w&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3&disablekb=1&fs=0"
+                <YouTubeEmbed
+                  videoId="4DpEGb4HG7w"
                   title="Pure Technology showreel"
-                  className="absolute inset-0 h-full w-full"
-                  allow="autoplay; encrypted-media; picture-in-picture"
-                  allowFullScreen
-                  loading="lazy"
                 />
               </div>
             </div>
