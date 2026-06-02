@@ -1,0 +1,492 @@
+import { createFileRoute } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
+import {
+  ArrowRight,
+  ArrowLeft,
+  ShieldCheck,
+  Sparkles,
+  Globe2,
+  Clock4,
+  HeartHandshake,
+  TrendingUp,
+} from "lucide-react";
+import {
+  PrimaryButton,
+  GhostButton,
+  ClientMarquee,
+  Testimonial,
+  CTASection,
+  SectionHeader,
+  CaseStudyCard,
+} from "@/components/site/Primitives";
+import { ServicesShowcase } from "@/components/site/ServicesShowcase";
+import { YouTubeEmbed } from "@/components/site/YouTubeEmbed";
+import { HeroCarousel } from "./heroCarousel";
+
+export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Pure Technology — AI, IT Staffing & Product Engineering in India" },
+      {
+        name: "description",
+        content:
+          "Pure Technology helps enterprises ship AI products, hire vetted Indian engineers, and build SaaS that scales. Bengaluru-headquartered. Globally trusted.",
+      },
+      { property: "og:title", content: "Pure Technology — Engineering partner from India" },
+      {
+        property: "og:description",
+        content: "AI solutions, IT staffing, and product engineering for ambitious enterprises.",
+      },
+    ],
+  }),
+  component: Home,
+});
+
+// ─── TESTIMONIALS DATA ────────────────────────────────────────────────────────
+
+const testimonials = [
+  {
+    quote: "The tire inspection and uniformity platform exceeded our expectations. The team understood our manufacturing requirements deeply and delivered a solution that integrated seamlessly into our production line.",
+    name: "Rajendra Patel",
+    role: "Engineering Lead",
+    company: "Bridgestone",
+    initials: "RP",
+    accent: "var(--brand-red)",
+    project: "PROJECT: Tire Inspection & Uniformity",
+    // avatar: "/testimonials/rajendra-patel.jpg",
+  },
+  {
+    quote: "The weapon management system built by Pure Technology brought much-needed precision and accountability to our depot operations. Reliable, secure, and built to defence-grade standards.",
+    name: "Capt Praveen Sab",
+    role: "Captain",
+    company: "29 Forward Ammunition Depot",
+    initials: "PS",
+    accent: "var(--brand-blue)",
+    project: "PROJECT: Weapon Management System",
+  },
+  {
+    quote: "Pure Technology delivered the GED software and pulley concentricity solution with exceptional technical depth. Their team grasped our engineering requirements quickly and delivered a robust, production-ready system.",
+    name: "Ritesh Bhole",
+    role: "Deputy General Manager",
+    company: "Schindler",
+    initials: "RB",
+    accent: "var(--brand-orange)",
+    avatar: "/testimonial/riteshbhole.jpg",
+    project: "PROJECT: GED Software & Pulley Concentricity",
+  },
+  {
+    quote: "The tire inspection and uniformity platform exceeded our expectations. The team understood our manufacturing requirements deeply and delivered a solution that integrated seamlessly into our production line.",
+    name: "Rajendra Patel",
+    role: "Engineering Lead",
+    company: "Bridgestone",
+    initials: "RP",
+    project: "PROJECT: Tire Inspection & Uniformity",
+  },
+  {
+    quote: "The weapon management system built by Pure Technology brought much-needed precision and accountability to our depot operations. Reliable, secure, and built to defence-grade standards.",
+    name: "Capt Praveen Sab",
+    role: "Captain",
+    company: "29 Forward Ammunition Depot",
+    initials: "PS",
+    project: "PROJECT: Weapon Management System",
+  },
+  {
+    quote: "Pure Technology delivered the GED software and pulley concentricity solution with exceptional technical depth. Their team grasped our engineering requirements quickly and delivered a robust, production-ready system.",
+    name: "Ritesh Bhole",
+    role: "Deputy General Manager",
+    company: "Schindler",
+    initials: "RB",
+    project: "PROJECT: GED Software & Pulley Concentricity",
+  },
+  {
+    quote: "The web portal and cybersecurity solution delivered by Pure Technology gave us the reliability and security compliance we needed for government-grade operations. Highly professional team.",
+    name: "J N Tulekar",
+    role: "Officer",
+    company: "PCDA (O)",
+    initials: "JT",
+    project: "PROJECT: Web Portal & Cyber Security",
+  },
+  {
+    quote: "Pure Technology built a robust vehicle management system that streamlined our fleet operations significantly. Their technical expertise and timely delivery made the entire engagement smooth.",
+    name: "Madhusudan Sadani",
+    role: "Manager",
+    company: "Sandvik",
+    initials: "MS",
+    project: "PROJECT: Vehicle Management System",
+  },
+  {
+    quote: "The AI calling solution integrated with Zoho transformed how we handle client outreach. Pure Technology understood our business needs precisely and delivered a seamless, intelligent workflow.",
+    name: "Prabin",
+    role: "Director",
+    company: "AA Consultancy",
+    initials: "PR",
+    project: "PROJECT: AI Calling with Zoho Integration",
+  },
+  {
+    quote: "The AI-based quotation paper generation and interview system has revolutionized our academic processes. Pure Technology brought innovation that we didn't think was possible in the education space.",
+    name: "Dr Sushant Patil",
+    role: "Director",
+    company: "DY Patil Educational Federation",
+    initials: "SP",
+    project: "PROJECT: AI Quotation Paper & Interview",
+  },
+  {
+    quote: "The student portal and AI interview system built by Pure Technology has dramatically improved our student engagement and administrative efficiency. A truly future-ready solution.",
+    name: "Dr Sajid Alvi",
+    role: "Director",
+    company: "DIMR",
+    initials: "SA",
+    project: "PROJECT: Student Portal & AI Interview",
+  },
+  {
+    quote: "Pure Technology delivered our emailer platform with great attention to detail and design quality. The solution was clean, scalable, and exactly what our media operations needed.",
+    name: "Mrunal Pawar",
+    role: "Manager",
+    company: "Sakal Media",
+    initials: "MP",
+    project: "PROJECT: Emailer Platform",
+  },
+  {
+    quote: "The internal AI agent built by Pure Technology has streamlined our processes beyond expectations. It handles complex workflows intelligently and has saved our team countless hours.",
+    name: "Sagar Babar",
+    role: "Manager",
+    company: "Comsense Technologies",
+    initials: "SB",
+    project: "PROJECT: AI Agent for Internal Process",
+  },
+  {
+    quote: "Pure Technology delivered a payroll and expense management system that perfectly fits our organizational scale. Reliable, accurate, and easy for our HR team to operate.",
+    name: "Mr Khan Ahmed",
+    role: "Manager",
+    company: "Mahabeej",
+    initials: "KA",
+    project: "PROJECT: Payroll & Expense Management",
+  },
+  {
+    quote: "The AI-based newsletter solution built for Reliance has elevated our internal communications. Pure Technology delivered a smart, automated system that saves significant editorial effort.",
+    name: "Mrs Kaval Bajwa",
+    role: "Manager",
+    company: "Reliance Industries",
+    initials: "KB",
+    project: "PROJECT: AI Newsletter",
+  },
+  {
+    quote: "The lead portal built by Pure Technology is intuitive, fast, and exactly what our sales team needed. It has improved our lead tracking and conversion workflows considerably.",
+    name: "Rajashree Gandhi",
+    role: "Director",
+    company: "Botonym",
+    initials: "RG",
+    project: "PROJECT: Lead Portal",
+  },
+];
+
+// ─── TESTIMONIAL CAROUSEL ─────────────────────────────────────────────────────
+
+function TestimonialCarousel() {
+  const [active, setActive] = useState(0);
+  const total = testimonials.length;
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActive((prev) => (prev + 1) % total);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, [total]);
+
+  const prev = () => setActive((a) => (a - 1 + total) % total);
+  const next = () => setActive((a) => (a + 1) % total);
+
+  const visible = [0, 1, 2].map((offset) => testimonials[(active + offset) % total]);
+
+  return (
+    <div className="mt-12">
+      <div className="grid lg:grid-cols-3 gap-5">
+        {visible.map((t, i) => (
+          <Testimonial
+            key={`${active}-${i}`}
+            quote={t.quote}
+            name={t.name}
+            role={t.role}
+            company={t.company}
+            initials={t.initials}
+            accent={t.accent}
+            project={t.project}
+            avatar={t.avatar}
+          />
+        ))}
+      </div>
+
+      {/* Controls */}
+      <div className="mt-8 flex items-center justify-center gap-4">
+        <button
+          onClick={prev}
+          className="h-10 w-10 rounded-full border border-border bg-surface/60 flex items-center justify-center hover:bg-secondary transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4" />
+        </button>
+
+        <div className="flex gap-2">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setActive(i)}
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === active ? "w-6 bg-foreground" : "w-2 bg-foreground/20"
+              }`}
+            />
+          ))}
+        </div>
+
+        <button
+          onClick={next}
+          className="h-10 w-10 rounded-full border border-border bg-surface/60 flex items-center justify-center hover:bg-secondary transition-colors"
+        >
+          <ArrowRight className="h-4 w-4" />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── HOME PAGE ────────────────────────────────────────────────────────────────
+
+function Home() {
+  return (
+    <>
+      <HeroCarousel />
+
+      <ClientMarquee />
+
+      {/* How we work */}
+      <section className="px-5 lg:px-8 py-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="rounded-3xl border border-border bg-gradient-to-br from-[color-mix(in_oklab,var(--brand-orange)_8%,var(--background))] via-background to-[color-mix(in_oklab,var(--brand-green)_8%,var(--background))]">
+            <div className="grid lg:grid-cols-2 items-stretch">
+              <div className="p-6 lg:p-10">
+                <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                  <span className="h-px w-8 bg-gradient-to-r from-[var(--brand-orange)] to-[var(--brand-red)]" />
+                  How we work
+                </div>
+                <h2 className="mt-4 text-4xl lg:text-5xl font-display font-bold leading-[1.05]">
+                  Enterprise Delivery <br />
+                  With <span className="text-gradient-brand">Startup Speed.</span>
+                </h2>
+                <p className="mt-5 text-base text-muted-foreground leading-relaxed">
+                  We work as your internal team combining AI expertise, product engineering, and
+                  senior talent to move from idea to execution faster.
+                </p>
+                <p className="mt-3 text-base text-muted-foreground leading-relaxed">
+                  From discovery workshops to production deployment, our teams stay embedded,
+                  accountable, and outcome-focused.
+                </p>
+                <div className="mt-5 mb-5 flex flex-col sm:flex-row gap-3">
+                  <PrimaryButton to="/contact">Watch overview</PrimaryButton>
+                  <GhostButton to="/case-studies">See case studies</GhostButton>
+                </div>
+              </div>
+
+              <div className="relative w-full min-h-[280px] overflow-hidden rounded-2xl shadow-soft">
+                <YouTubeEmbed
+                  videoId="4DpEGb4HG7w"
+                  title="Pure Technology showreel"
+                  autoplay={true}
+                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%+2px)] h-[calc(100%+40px)]"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <ServicesShowcase />
+
+      {/* Selected outcomes */}
+      <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader
+            eyebrow="Client outcomes"
+            title={
+              <>
+                Real Numbers From Recent{" "}
+                <span className="text-gradient-brand">Engagements.</span>
+              </>
+            }
+            description="Recent AI deliveries measured in rupees saved, hours recovered, and trust earned."
+          />
+
+          <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <CaseStudyCard
+              client="Local GPT for Secure Financial Operations"
+              industry="Financial Services & Banking"
+              image="/homeCaseStudy/cloudwise-local-gpt.webp"
+              challenge="Strict regulatory requirements prevented external data sharing, while disconnected legacy systems and sensitive financial records limited AI adoption."
+              outcome="Implemented a fully on-premises AI platform with offline LLMs, secure document intelligence, SQL-based analytics, and workflow automation."
+              metrics={[
+                { value: "85%", label: "Faster document processing" },
+                { value: "95%", label: "Data retrieval accuracy" },
+                { value: "300%+", label: "First-year ROI" },
+              ]}
+              accent="var(--brand-blue)"
+              projectName="Local GPT – On-Premises AI Platform"
+              objective="On-premises AI platform delivering enterprise capabilities without internet dependency. Enables document processing, workflow automation, and analytics while maintaining data sovereignty and encryption."
+              solutions={[
+                "Offline AI Infrastructure: Autonomous AI with LLMs in air-gapped environments.",
+                "Zero-Trust Document Processing: Encrypted system with secure queries and multi-format processing.",
+                "Intelligent SQL Agent: Natural language database querying for instant analytics.",
+                "AI Workflow Automation: AI agents for compliance and regulatory reporting.",
+              ]}
+              challenges={[
+                "Regulatory compliance prohibiting external data transmission.",
+                "Zero internet access requiring offline capabilities.",
+                "Sensitive financial records needing data sovereignty.",
+                "Legacy system integration with fragmented databases.",
+              ]}
+              keyBenefits={[
+                { value: "85%", label: "Reduction in document processing time" },
+                { value: "70%", label: "Increase in operational efficiency" },
+                { value: "95%", label: "Improvement in data retrieval accuracy" },
+                { value: "60%", label: "Cost savings eliminating cloud subscriptions" },
+              ]}
+              results={[
+                "10x processing capacity increase",
+                "300%+ ROI first year",
+                "Zero-breach security",
+                "Scaled 50 to 5,000+ users",
+              ]}
+              techStack={[
+                { category: "Languages", items: "JavaScript", icon: "ti-code" },
+                { category: "Database", items: "Postgres", icon: "ti-database" },
+                { category: "Cloud", items: "On-Premises", icon: "ti-server" },
+                { category: "Frameworks", items: "React.js & Node.js", icon: "ti-layout" },
+                { category: "AI/ML", items: "Langchain, LangGraph, LLMs, Vector Databases", icon: "ti-brain" },
+              ]}
+              conclusion="Cloudwise AI established secure on-premises infrastructure eliminating internet dependencies while enabling unprecedented operational efficiencies and maintaining highest security standards."
+            />
+
+            <CaseStudyCard
+              client="Global Recruitment & Talent Development Organization"
+              industry="Human Resources & Career Development"
+              image="/homeCaseStudy/2 case study.webp"
+              challenge="Candidates were underperforming due to inadequate practice opportunities, delayed and subjective feedback, expensive coaching programs, and increasing risks associated with remote hiring and fraudulent interview practices."
+              outcome="Developed the Questa AI Interviewer platform featuring AI-powered interview simulations, real-time speech analytics, smart proctoring, and performance dashboards."
+              metrics={[
+                { value: "78%", label: "Higher interview success rates" },
+                { value: "85%", label: "Improvement in speech confidence" },
+                { value: "60%", label: "Reduction in preparation time" },
+              ]}
+              accent="var(--brand-orange)"
+            />
+
+            <CaseStudyCard
+              client="AI Voice Agent for Recruitment Process Automation"
+              industry="Recruitment Technology"
+              image="/homeCaseStudy/3 case study.webp"
+              challenge="Manual screening processes, subjective candidate evaluations, and constant interview coordination created hiring delays, inconsistent assessments, and operational inefficiencies."
+              outcome="Implemented an AI Voice Agent that automates candidate screening, interview scheduling, communication assessment, and structured reporting."
+              metrics={[
+                { value: "70%", label: "Screening velocity" },
+                { value: "100%", label: "Candidate handling" },
+                { value: "85%", label: "Assessment quality" },
+              ]}
+              accent="var(--brand-green)"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Why Pure */}
+      <section className="px-5 lg:px-8 py-20">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader
+            eyebrow="Why teams pick Pure"
+            title={
+              <>
+                A Delivery Model Built For Enterprise Trust,{" "}
+                <span className="text-gradient-brand">Startup Velocity.</span>
+              </>
+            }
+            description="We sit in the middle of the diagram — close enough to your business to think like an owner, big enough to staff and deliver at enterprise scale."
+          />
+
+          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {[
+              {
+                Icon: ShieldCheck,
+                title: "Compliance-first delivery",
+                body: "SOC 2 Type II aligned process, ISO 27001 controls, DPDP-ready data handling. Your security team will sleep well.",
+                accent: "var(--brand-blue)",
+              },
+              {
+                Icon: Sparkles,
+                title: "Senior by default",
+                body: "Average 9 years of experience on every squad. No bait-and-switch — the engineers you meet are the engineers who ship.",
+                accent: "var(--brand-orange)",
+              },
+              {
+                Icon: Globe2,
+                title: "India-rooted, globally minded",
+                body: "Bengaluru, Hyderabad and Pune talent pools, with project leads working in your timezone — North America, EMEA, APAC.",
+                accent: "var(--brand-green)",
+              },
+              {
+                Icon: Clock4,
+                title: "Two-week launch cycles",
+                body: "Demoable progress every fortnight. We don't disappear for three months and hand over a tarball.",
+                accent: "var(--brand-red)",
+              },
+              {
+                Icon: HeartHandshake,
+                title: "Partnership, not ticket-work",
+                body: "Average client tenure is 3.4 years. We invest in understanding your business, not just closing JIRAs.",
+                accent: "var(--brand-yellow)",
+              },
+              {
+                Icon: TrendingUp,
+                title: "Outcomes, measured",
+                body: "Every engagement comes with a defined success metric. We share dashboards, not just status reports.",
+                accent: "var(--brand-blue)",
+              },
+            ].map(({ Icon, title, body, accent }) => (
+              <div
+                key={title}
+                className="glass-card rounded-2xl p-6 transition-transform hover:-translate-y-1 duration-300"
+              >
+                <span
+                  className="grid h-11 w-11 place-items-center rounded-xl text-white"
+                  style={{
+                    background: `linear-gradient(135deg, ${accent}, color-mix(in oklab, ${accent} 55%, white))`,
+                  }}
+                >
+                  <Icon className="h-5 w-5" />
+                </span>
+                <h3 className="mt-4 text-lg font-display font-semibold capitalize">{title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="px-5 lg:px-8 py-20">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader
+            eyebrow="In their words"
+            title={
+              <>
+                The Kind of Feedback That Gets,{" "}
+                <span className="text-gradient-brand">Out of Bed.</span>
+              </>
+            }
+          />
+          <TestimonialCarousel />
+        </div>
+      </section>
+
+      <CTASection
+        title="Let's Build Something Your Customers Brag About."
+        description="Tell us where you are, where you'd like to be, and the constraints in between. We'll come back in 48 hours with a concrete plan."
+      />
+    </>
+  );
+}
