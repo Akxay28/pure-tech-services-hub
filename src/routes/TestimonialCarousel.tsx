@@ -94,6 +94,7 @@ const testimonials = [
     company: "DY Patil Educational Federation",
     initials: "SP",
     project: "PROJECT: AI Quotation Paper & Interview",
+    avatar: "/testimonial/riteshbhole.jpg",
   },
   {
     quote: "The student portal and AI interview system built by Pure Technology has dramatically improved our student engagement and administrative efficiency. A truly future-ready solution.",

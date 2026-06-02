@@ -43,6 +43,14 @@ export const Route = createFileRoute("/")({
 });
 
 // ─── TESTIMONIALS DATA ────────────────────────────────────────────────────────
+const accentColors = [
+  "var(--brand-red)",
+  "var(--brand-blue)",
+  "var(--brand-orange)",
+  "var(--brand-green)",
+  "var(--brand-yellow)",
+];
+
 
 const testimonials = [
   {
@@ -52,7 +60,7 @@ const testimonials = [
     company: "Bridgestone",
     initials: "RP",
     accent: "var(--brand-red)",
-    project: "PROJECT: Tire Inspection & Uniformity",
+    project: "Tire Inspection & Uniformity",
     // avatar: "/testimonials/rajendra-patel.jpg",
   },
   {
@@ -62,7 +70,7 @@ const testimonials = [
     company: "29 Forward Ammunition Depot",
     initials: "PS",
     accent: "var(--brand-blue)",
-    project: "PROJECT: Weapon Management System",
+    project: "Weapon Management System",
   },
   {
     quote: "Pure Technology delivered the GED software and pulley concentricity solution with exceptional technical depth. Their team grasped our engineering requirements quickly and delivered a robust, production-ready system.",
@@ -72,7 +80,7 @@ const testimonials = [
     initials: "RB",
     accent: "var(--brand-orange)",
     avatar: "/testimonial/riteshbhole.jpg",
-    project: "PROJECT: GED Software & Pulley Concentricity",
+    project: "GED Software & Pulley Concentricity",
   },
   {
     quote: "The tire inspection and uniformity platform exceeded our expectations. The team understood our manufacturing requirements deeply and delivered a solution that integrated seamlessly into our production line.",
@@ -80,7 +88,7 @@ const testimonials = [
     role: "Engineering Lead",
     company: "Bridgestone",
     initials: "RP",
-    project: "PROJECT: Tire Inspection & Uniformity",
+    project: "Tire Inspection & Uniformity",
   },
   {
     quote: "The weapon management system built by Pure Technology brought much-needed precision and accountability to our depot operations. Reliable, secure, and built to defence-grade standards.",
@@ -88,7 +96,7 @@ const testimonials = [
     role: "Captain",
     company: "29 Forward Ammunition Depot",
     initials: "PS",
-    project: "PROJECT: Weapon Management System",
+    project: "Weapon Management System",
   },
   {
     quote: "Pure Technology delivered the GED software and pulley concentricity solution with exceptional technical depth. Their team grasped our engineering requirements quickly and delivered a robust, production-ready system.",
@@ -96,7 +104,7 @@ const testimonials = [
     role: "Deputy General Manager",
     company: "Schindler",
     initials: "RB",
-    project: "PROJECT: GED Software & Pulley Concentricity",
+    project: "GED Software & Pulley Concentricity",
   },
   {
     quote: "The web portal and cybersecurity solution delivered by Pure Technology gave us the reliability and security compliance we needed for government-grade operations. Highly professional team.",
@@ -104,7 +112,7 @@ const testimonials = [
     role: "Officer",
     company: "PCDA (O)",
     initials: "JT",
-    project: "PROJECT: Web Portal & Cyber Security",
+    project: "Web Portal & Cyber Security",
   },
   {
     quote: "Pure Technology built a robust vehicle management system that streamlined our fleet operations significantly. Their technical expertise and timely delivery made the entire engagement smooth.",
@@ -112,7 +120,7 @@ const testimonials = [
     role: "Manager",
     company: "Sandvik",
     initials: "MS",
-    project: "PROJECT: Vehicle Management System",
+    project: "Vehicle Management System",
   },
   {
     quote: "The AI calling solution integrated with Zoho transformed how we handle client outreach. Pure Technology understood our business needs precisely and delivered a seamless, intelligent workflow.",
@@ -120,7 +128,7 @@ const testimonials = [
     role: "Director",
     company: "AA Consultancy",
     initials: "PR",
-    project: "PROJECT: AI Calling with Zoho Integration",
+    project: "AI Calling with Zoho Integration",
   },
   {
     quote: "The AI-based quotation paper generation and interview system has revolutionized our academic processes. Pure Technology brought innovation that we didn't think was possible in the education space.",
@@ -128,7 +136,8 @@ const testimonials = [
     role: "Director",
     company: "DY Patil Educational Federation",
     initials: "SP",
-    project: "PROJECT: AI Quotation Paper & Interview",
+    project: "AI Quotation Paper & Interview",
+    avatar: "/testimonial/sushantpatil.jpg",
   },
   {
     quote: "The student portal and AI interview system built by Pure Technology has dramatically improved our student engagement and administrative efficiency. A truly future-ready solution.",
@@ -136,7 +145,7 @@ const testimonials = [
     role: "Director",
     company: "DIMR",
     initials: "SA",
-    project: "PROJECT: Student Portal & AI Interview",
+    project: "Student Portal & AI Interview",
   },
   {
     quote: "Pure Technology delivered our emailer platform with great attention to detail and design quality. The solution was clean, scalable, and exactly what our media operations needed.",
@@ -144,7 +153,7 @@ const testimonials = [
     role: "Manager",
     company: "Sakal Media",
     initials: "MP",
-    project: "PROJECT: Emailer Platform",
+    project: "Emailer Platform",
   },
   {
     quote: "The internal AI agent built by Pure Technology has streamlined our processes beyond expectations. It handles complex workflows intelligently and has saved our team countless hours.",
@@ -152,7 +161,9 @@ const testimonials = [
     role: "Manager",
     company: "Comsense Technologies",
     initials: "SB",
-    project: "PROJECT: AI Agent for Internal Process",
+    project: "AI Agent for Internal Process",
+    avatar: "/testimonial/sagarbabar.png",
+
   },
   {
     quote: "Pure Technology delivered a payroll and expense management system that perfectly fits our organizational scale. Reliable, accurate, and easy for our HR team to operate.",
@@ -160,7 +171,7 @@ const testimonials = [
     role: "Manager",
     company: "Mahabeej",
     initials: "KA",
-    project: "PROJECT: Payroll & Expense Management",
+    project: "Payroll & Expense Management",
   },
   {
     quote: "The AI-based newsletter solution built for Reliance has elevated our internal communications. Pure Technology delivered a smart, automated system that saves significant editorial effort.",
@@ -168,7 +179,7 @@ const testimonials = [
     role: "Manager",
     company: "Reliance Industries",
     initials: "KB",
-    project: "PROJECT: AI Newsletter",
+    project: "AI Newsletter",
   },
   {
     quote: "The lead portal built by Pure Technology is intuitive, fast, and exactly what our sales team needed. It has improved our lead tracking and conversion workflows considerably.",
@@ -176,7 +187,9 @@ const testimonials = [
     role: "Director",
     company: "Botonym",
     initials: "RG",
-    project: "PROJECT: Lead Portal",
+    project: "Lead Portal",
+    avatar: "/team/rajashreeGandhi.jpg",
+
   },
 ];
 
@@ -209,7 +222,7 @@ function TestimonialCarousel() {
             role={t.role}
             company={t.company}
             initials={t.initials}
-            accent={t.accent}
+            accent={accentColors[(active + i) % accentColors.length]}
             project={t.project}
             avatar={t.avatar}
           />

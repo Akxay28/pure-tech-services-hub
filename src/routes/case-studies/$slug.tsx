@@ -49,13 +49,20 @@ function CaseStudyPage() {
     <div className="min-h-screen bg-background">
       {/* Back button */}
       <div className="mx-auto max-w-5xl px-5 lg:px-8 pt-8">
-        <Link
+        <button
+          onClick={() => window.history.back()}
+          className="inline-flex items-center gap-2 cursor-pointer text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back
+        </button>
+        {/* <Link
           to="/"
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
         >
           <ArrowLeft className="h-4 w-4" />
-          Back
-        </Link>
+          Backs
+        </Link> */}
       </div>
 
       <div className="mx-auto max-w-5xl px-5 lg:px-8 pb-24">

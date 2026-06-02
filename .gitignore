@@ -16,6 +16,9 @@ dist-ssr
 .nitro
 *.local
 
+# OpenSpec
+openspec/
+
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars

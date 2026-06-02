@@ -187,35 +187,24 @@ export function ClientMarquee() {
   );
 }
 
+// In your Testimonial component in Primitives.tsx
+
 export function Testimonial({
-  quote,
-  name,
-  role,
-  company,
-  initials,
+  quote, name, role, company, initials,
   accent = "var(--brand-blue)",
-  project, // ← add
-  email,
-  avatar, // ← add
+  project, email, avatar,
+  onAvatarError,           // ← add this prop
 }: {
-  quote: string;
-  name: string;
-  role: string;
-  company: string;
-  initials: string;
-  accent?: string;
-  project?: string; // ← add
-  email?: string;
-  avatar?: string; // ← add
+  quote: string; name: string; role: string; company: string;
+  initials: string; accent?: string; project?: string;
+  email?: string; avatar?: string;
+  onAvatarError?: () => void;  // ← add this type
 }) {
+  // No useState needed here anymore!
+
   return (
     <figure className="glass-card rounded-3xl p-7 h-full flex flex-col">
-      <svg
-        viewBox="0 0 24 24"
-        className="h-7 w-7 text-foreground/30"
-        fill="currentColor"
-        aria-hidden
-      >
+      <svg viewBox="0 0 24 24" className="h-7 w-7 text-foreground/30" fill="currentColor" aria-hidden>
         <path d="M7.17 6A5.17 5.17 0 0 0 2 11.17V18h6.83v-6.83H5.17A2 2 0 0 1 7.17 9V6Zm10 0A5.17 5.17 0 0 0 12 11.17V18h6.83v-6.83h-3.66A2 2 0 0 1 17.17 9V6Z" />
       </svg>
       <blockquote className="mt-4 text-base sm:text-lg leading-relaxed text-foreground/90 flex-1">
@@ -223,7 +212,12 @@ export function Testimonial({
       </blockquote>
       <figcaption className="mt-6 flex items-center gap-3">
         {avatar ? (
-          <img src={avatar} alt={name} className="h-11 w-11 rounded-full object-cover shrink-0" />
+          <img
+            src={avatar}
+            alt={name}
+            className="h-11 w-11 rounded-full object-cover shrink-0"
+            onError={onAvatarError}   // ← calls parent to persist the error
+          />
         ) : (
           <span
             className="grid h-11 w-11 place-items-center rounded-full font-display font-semibold text-white shrink-0"
@@ -250,7 +244,6 @@ export function Testimonial({
     </figure>
   );
 }
-
 // ─── CASE STUDY TYPES ─────────────────────────────────────────────────────────
 
 type CaseStudy = {
