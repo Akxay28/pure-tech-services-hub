@@ -105,7 +105,8 @@ export function FirstVisitEnquiryModal() {
             <div className="px-6 pb-7 pt-8 sm:px-10 sm:pb-10 sm:pt-9">
               <div className="pr-12">
                 <div className="inline-flex items-center gap-2 rounded-full bg-[color:var(--brand-pink-soft)] px-3 py-1 text-xs font-semibold uppercase tracking-[0.15em] text-[color:var(--brand-purple)]">
-                  <Sparkles className="h-3.5 w-3.5 text-[color:var(--brand-pink)]" />
+                  {/* Sparkle Emoji */}
+                  {/* <Sparkles className="h-3.5 w-3.5 text-[color:var(--brand-pink)]" /> */}
                   Start a conversation
                 </div>
                 <DialogPrimitive.Title className="mt-4 text-2xl sm:text-3xl font-display font-bold leading-tight text-foreground">

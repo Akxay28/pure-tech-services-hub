@@ -418,9 +418,31 @@ export function CTASection({
 }) {
   return (
     <section className="px-5 lg:px-8 py-20">
-      <div className="relative mx-auto max-w-7xl rounded-[2rem] overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-brand opacity-95" />
-        <div className="absolute inset-0 bg-[radial-gradient(60%_80%_at_80%_20%,white,transparent_60%)] opacity-30" />
+      <div className="relative mx-auto max-w-7xl rounded-[2rem] overflow-hidden isolate">
+        <div className="absolute inset-0 liquid-cta opacity-95" />
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div
+            className="absolute -top-24 -left-24 w-[36rem] h-[36rem] rounded-full opacity-45 blur-[90px] animate-blob-1"
+            style={{ background: "var(--brand-blue)" }}
+          />
+          <div
+            className="absolute -top-20 right-6 w-[34rem] h-[34rem] rounded-full opacity-35 blur-[85px] animate-blob-2"
+            style={{ background: "var(--brand-red)" }}
+          />
+          <div
+            className="absolute top-1/2 -left-16 w-[36rem] h-[36rem] rounded-full opacity-40 blur-[90px] animate-blob-3"
+            style={{ background: "var(--brand-green)" }}
+          />
+          <div
+            className="absolute bottom-8 right-0 w-[32rem] h-[32rem] rounded-full opacity-40 blur-[85px] animate-blob-4"
+            style={{ background: "var(--brand-orange)" }}
+          />
+          <div
+            className="absolute top-8 left-1/3 w-[34rem] h-[34rem] rounded-full opacity-45 blur-[90px] animate-blob-5"
+            style={{ background: "var(--brand-yellow)" }}
+          />
+        </div>
+        <div className="absolute inset-0 bg-[radial-gradient(60%_80%_at_80%_20%,white,transparent_60%)] opacity-20" />
         <div className="relative px-8 sm:px-14 py-16 lg:py-20 grid lg:grid-cols-2 gap-10 items-center">
           <div className="text-white">
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold leading-tight">

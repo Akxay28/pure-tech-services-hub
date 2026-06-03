@@ -376,33 +376,115 @@ function Home() {
               conclusion="Cloudwise AI established secure on-premises infrastructure eliminating internet dependencies while enabling unprecedented operational efficiencies and maintaining highest security standards."
             />
 
+<CaseStudyCard
+  client="Global Recruitment & Talent Development Organization"
+  industry="Human Resources & Career Development"
+  image="/homeCaseStudy/2 case study.webp"
+  challenge="Candidates were underperforming due to inadequate practice opportunities, delayed and subjective feedback, expensive coaching programs, and increasing risks associated with remote hiring and fraudulent interview practices."
+  outcome="Developed Questa AI Interviewer, an AI-powered interview preparation platform featuring GPT-driven interview simulations, real-time speech analytics, smart proctoring, and performance dashboards."
+  metrics={[
+    { value: "78%", label: "Higher interview success rates" },
+    { value: "85%", label: "Improvement in speech confidence" },
+    { value: "60%", label: "Reduction in preparation time" },
+  ]}
+  accent="var(--brand-purple)"
+  projectName="Questa AI Interviewer – Interview Simulation Platform"
+  objective="AI-powered interview preparation platform transforming candidate training through intelligent interview simulations, speech analytics, and smart proctoring. Enables candidates to practice, improve communication skills, and achieve measurable interview success."
+  solutions={[
+    "AI Interview Simulation: GPT-powered system generating role-specific interview questions and realistic interview experiences.",
+    "Real-Time Speech Analytics: Voice recognition technology analyzing fluency, confidence, speaking pace, and communication effectiveness.",
+    "Smart Proctoring: AI-driven video monitoring with behavioral analysis to ensure interview integrity and prevent fraudulent activities.",
+    "Performance Analytics Dashboard: Detailed scoring, personalized feedback, progress tracking, and skill-gap identification.",
+  ]}
+  challenges={[
+    "Candidates lacked realistic interview practice opportunities before assessments.",
+    "Traditional feedback mechanisms were delayed, inconsistent, and subjective.",
+    "Professional interview coaching programs were expensive and inaccessible for many candidates.",
+    "Remote hiring processes introduced integrity risks and fraudulent interview practices.",
+  ]}
+  keyBenefits={[
+    { value: "78%", label: "Increase in interview success rates" },
+    { value: "60%", label: "Reduction in preparation time" },
+    { value: "85%", label: "Improvement in speech confidence" },
+    { value: "70%", label: "Reduction in coaching costs" },
+  ]}
+  results={[
+    "78% higher interview pass rates",
+    "65% reduction in filler words and speech hesitation",
+    "$250K annual cost savings",
+    "Scaled from 50 to 1,500+ candidates assessed monthly",
+  ]}
+  techStack={[
+    { category: "Languages", items: "Python", icon: "ti-code" },
+    { category: "Database", items: "PostgreSQL", icon: "ti-database" },
+    { category: "Deployment", items: "On-Premises", icon: "ti-server" },
+    { category: "Frameworks", items: "Django", icon: "ti-layout" },
+    { category: "AI/ML", items: "GPT Models, Wav2Vec 2.0, Speech Analytics", icon: "ti-brain" },
+  ]}
+  conclusion="Questa AI Interviewer transformed interview preparation through AI-powered simulations, real-time communication analysis, and intelligent assessment workflows. The platform enabled candidates to improve interview performance while helping organizations conduct scalable, objective, and data-driven talent evaluations."
+/>
+{/* 
             <CaseStudyCard
-              client="Global Recruitment & Talent Development Organization"
-              industry="Human Resources & Career Development"
-              image="/homeCaseStudy/2 case study.webp"
-              challenge="Candidates were underperforming due to inadequate practice opportunities, delayed and subjective feedback, expensive coaching programs, and increasing risks associated with remote hiring and fraudulent interview practices."
-              outcome="Developed the Questa AI Interviewer platform featuring AI-powered interview simulations, real-time speech analytics, smart proctoring, and performance dashboards."
-              metrics={[
-                { value: "78%", label: "Higher interview success rates" },
-                { value: "85%", label: "Improvement in speech confidence" },
-                { value: "60%", label: "Reduction in preparation time" },
-              ]}
-              accent="var(--brand-orange)"
-            />
-
-            <CaseStudyCard
-              client="AI Voice Agent for Recruitment Process Automation"
+              client="Voice AI Assistant for Intelligent Candidate Evaluation"
               industry="Recruitment Technology"
               image="/homeCaseStudy/3 case study.webp"
               challenge="Manual screening processes, subjective candidate evaluations, and constant interview coordination created hiring delays, inconsistent assessments, and operational inefficiencies."
-              outcome="Implemented an AI Voice Agent that automates candidate screening, interview scheduling, communication assessment, and structured reporting."
+              outcome="Implemented an AI Voice Agent that automates candidate screening through natural conversations, evaluates communication skills, schedules interviews, and generates structured assessment reports, significantly reducing manual recruitment effort and improving hiring efficiency."
               metrics={[
                 { value: "70%", label: "Screening velocity" },
                 { value: "100%", label: "Candidate handling" },
                 { value: "85%", label: "Assessment quality" },
               ]}
               accent="var(--brand-green)"
-            />
+            /> */}
+
+<CaseStudyCard
+  client="Global Real Estate & B2B Sales Organization"
+  industry="Real Estate, B2B SaaS & Sales"
+  image="/homeCaseStudy/ai calling bot.png"
+  challenge="Sales teams were spending the majority of their time on repetitive outbound calling, struggling with inconsistent follow-ups, limited scalability, and after-hours response gaps that resulted in missed opportunities and lost revenue."
+  outcome="Developed an AI Calling Bot that autonomously initiates conversations, qualifies leads, schedules meetings, recognizes customer intent in real time, and updates CRM systems automatically."
+  metrics={[
+    { value: "90%", label: "Reduction in manual calling time" },
+    { value: "65%", label: "Increase in conversion rates" },
+    { value: "10X", label: "Growth in outreach capacity" },
+  ]}
+  accent="var(--brand-orange)"
+  projectName="Sales Acceleration with AI Calling Bot"
+  objective="Intelligent voice automation platform revolutionizing lead engagement through autonomous calling, real-time intent recognition, automated scheduling, and CRM synchronization, resulting in significantly higher conversion rates and operational efficiency."
+  solutions={[
+    "AI Voice Calling: Conversational AI capable of conducting natural, human-like phone conversations with prospects.",
+    "Real-Time Intent Recognition: Machine learning models analyzing customer responses and generating contextual follow-up actions.",
+    "Automated Scheduling: Calendar integrations enabling seamless meeting booking and coordination.",
+    "CRM Integration: Real-time synchronization of lead status, call outcomes, and engagement data across sales systems.",
+  ]}
+  challenges={[
+    "Sales teams spending 70–80% of their time on repetitive outbound calling activities.",
+    "Revenue loss caused by inconsistent lead follow-up processes.",
+    "Difficulty scaling outreach without increasing operational headcount.",
+    "After-hours response delays resulting in high lead abandonment rates.",
+  ]}
+  keyBenefits={[
+    { value: "90%", label: "Reduction in manual calling time" },
+    { value: "65%", label: "Increase in conversion rates" },
+    { value: "10X", label: "Expansion of outreach capacity" },
+    { value: "85%", label: "Improvement in contact rates" },
+  ]}
+  results={[
+    "Scaled daily outreach from 500 to 5,000+ calls",
+    "Improved conversion rates from 12% to 65%",
+    "$450K annual operational savings",
+    "40–75% revenue growth across campaigns",
+  ]}
+  techStack={[
+    { category: "Languages", items: "Python", icon: "ti-code" },
+    { category: "Database", items: "PostgreSQL", icon: "ti-database" },
+    { category: "Cloud", items: "AWS", icon: "ti-server" },
+    { category: "Frameworks", items: "Django", icon: "ti-layout" },
+    { category: "AI/ML", items: "TTS, LLM, STT Pipeline", icon: "ti-brain" },
+  ]}
+  conclusion="The AI Calling Bot transformed outbound sales operations by creating an intelligent voice automation ecosystem that dramatically increased outreach capacity, improved lead engagement, reduced operational costs, and delivered measurable revenue growth without requiring additional sales headcount."
+/>
           </div>
         </div>
       </section>

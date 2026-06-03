@@ -15,6 +15,21 @@ const SOCIAL_LINKS = [
   },
 ] as const;
 
+const OFFICES = {
+  pune: {
+    label: "Pune",
+    country: "India",
+    address:
+      "603, White Square, Hinjewadi-Wakad Road, Near Wakad Bridge, Phase 1, Hinjawadi, Pune, Maharashtra 411057",
+  },
+  dubai: {
+    label: "Dubai",
+    country: "UAE",
+    address:
+      "PURE TECHNOLOGY - FZE, Premises Number: Office-C1-1F-SF5944, Ajman Free Zone C1 Building, Business District: Ajman Free Zone, Makani No. 4442612247",
+  },
+} as const;
+
 export function Footer() {
   return (
     <footer className="relative mt-24 border-t border-border bg-surface-muted">
@@ -106,12 +121,18 @@ export function Footer() {
                 <Phone className="h-4 w-4 mt-0.5 shrink-0" />
                 +91 99701 11283
               </a>
-              <div className="flex items-start gap-2 text-muted-foreground">
-                <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
-                <span>
-                  603, White Square, Hinjewadi-Wakad Road, Near Wakad Bridge,
-                  Phase 1, Hinjawadi, Pune, Maharashtra 411057
-                </span>
+              <div className="space-y-4 text-muted-foreground">
+                {Object.values(OFFICES).map((office) => (
+                  <div key={office.label} className="flex items-start gap-2">
+                    <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
+                    <span>
+                    <span className="block font-medium text-foreground">
+                      {office.label}, {office.country}
+                    </span>
+                    {office.address}
+                    </span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
