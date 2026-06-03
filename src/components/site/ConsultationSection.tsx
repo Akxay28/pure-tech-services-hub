@@ -32,7 +32,7 @@ export function ConsultationSection({
             </p>
             <h2 className="mt-3 text-4xl sm:text-5xl font-display font-bold leading-tight tracking-tight">
             Turn Your Vision <br />
-              Get <span className="text-gradient-brand">Into Reality</span>
+              <span className="text-gradient-brand">Into Reality</span>
             </h2>
 
             <h3 className="mt-10 text-2xl sm:text-3xl font-display font-bold">What's Next?</h3>
