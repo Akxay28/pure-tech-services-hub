@@ -9,7 +9,7 @@ import {
   Stat,
   CTASection,
 } from "@/components/site/Primitives";
-import { MeetTheTeam } from "@/components/site/MeetTheTeam";
+import { ConsultationSection } from "@/components/site/ConsultationSection";
 import { CaseStudiesSection } from "./CaseStudiesSection";
 import type { CaseStudy } from "@/lib/case-study";
 import { accentAt, brandIconGradient, outcomeCardThemeAt } from "@/lib/brand-colors";
@@ -267,7 +267,7 @@ export function SubServicePage(p: SubServicePageProps) {
         </div>
       </section>
 
-      <MeetTheTeam />
+      <ConsultationSection formSource={`Service page - ${p.eyebrow}`} />
 
       <CTASection
         title="Ready to scope this in detail?"

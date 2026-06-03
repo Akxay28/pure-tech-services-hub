@@ -51,10 +51,10 @@ const accentColors = [
   "var(--brand-yellow)",
 ];
 
-
 const testimonials = [
   {
-    quote: "The tire inspection and uniformity platform exceeded our expectations. The team understood our manufacturing requirements deeply and delivered a solution that integrated seamlessly into our production line.",
+    quote:
+      "The tire inspection and uniformity platform exceeded our expectations. The team understood our manufacturing requirements deeply and delivered a solution that integrated seamlessly into our production line.",
     name: "Rajendra Patel",
     role: "Engineering Lead",
     company: "Bridgestone",
@@ -64,7 +64,8 @@ const testimonials = [
     // avatar: "/testimonials/rajendra-patel.jpg",
   },
   {
-    quote: "The weapon management system built by Pure Technology brought much-needed precision and accountability to our depot operations. Reliable, secure, and built to defence-grade standards.",
+    quote:
+      "The weapon management system built by Pure Technology brought much-needed precision and accountability to our depot operations. Reliable, secure, and built to defence-grade standards.",
     name: "Capt Praveen Sab",
     role: "Captain",
     company: "29 Forward Ammunition Depot",
@@ -73,7 +74,8 @@ const testimonials = [
     project: "Weapon Management System",
   },
   {
-    quote: "Pure Technology delivered the GED software and pulley concentricity solution with exceptional technical depth. Their team grasped our engineering requirements quickly and delivered a robust, production-ready system.",
+    quote:
+      "Pure Technology delivered the GED software and pulley concentricity solution with exceptional technical depth. Their team grasped our engineering requirements quickly and delivered a robust, production-ready system.",
     name: "Ritesh Bhole",
     role: "Deputy General Manager",
     company: "Schindler",
@@ -83,7 +85,8 @@ const testimonials = [
     project: "GED Software & Pulley Concentricity",
   },
   {
-    quote: "The tire inspection and uniformity platform exceeded our expectations. The team understood our manufacturing requirements deeply and delivered a solution that integrated seamlessly into our production line.",
+    quote:
+      "The tire inspection and uniformity platform exceeded our expectations. The team understood our manufacturing requirements deeply and delivered a solution that integrated seamlessly into our production line.",
     name: "Rajendra Patel",
     role: "Engineering Lead",
     company: "Bridgestone",
@@ -91,7 +94,8 @@ const testimonials = [
     project: "Tire Inspection & Uniformity",
   },
   {
-    quote: "The weapon management system built by Pure Technology brought much-needed precision and accountability to our depot operations. Reliable, secure, and built to defence-grade standards.",
+    quote:
+      "The weapon management system built by Pure Technology brought much-needed precision and accountability to our depot operations. Reliable, secure, and built to defence-grade standards.",
     name: "Capt Praveen Sab",
     role: "Captain",
     company: "29 Forward Ammunition Depot",
@@ -99,7 +103,8 @@ const testimonials = [
     project: "Weapon Management System",
   },
   {
-    quote: "Pure Technology delivered the GED software and pulley concentricity solution with exceptional technical depth. Their team grasped our engineering requirements quickly and delivered a robust, production-ready system.",
+    quote:
+      "Pure Technology delivered the GED software and pulley concentricity solution with exceptional technical depth. Their team grasped our engineering requirements quickly and delivered a robust, production-ready system.",
     name: "Ritesh Bhole",
     role: "Deputy General Manager",
     company: "Schindler",
@@ -107,7 +112,8 @@ const testimonials = [
     project: "GED Software & Pulley Concentricity",
   },
   {
-    quote: "The web portal and cybersecurity solution delivered by Pure Technology gave us the reliability and security compliance we needed for government-grade operations. Highly professional team.",
+    quote:
+      "The web portal and cybersecurity solution delivered by Pure Technology gave us the reliability and security compliance we needed for government-grade operations. Highly professional team.",
     name: "J N Tulekar",
     role: "Officer",
     company: "PCDA (O)",
@@ -115,7 +121,8 @@ const testimonials = [
     project: "Web Portal & Cyber Security",
   },
   {
-    quote: "Pure Technology built a robust vehicle management system that streamlined our fleet operations significantly. Their technical expertise and timely delivery made the entire engagement smooth.",
+    quote:
+      "Pure Technology built a robust vehicle management system that streamlined our fleet operations significantly. Their technical expertise and timely delivery made the entire engagement smooth.",
     name: "Madhusudan Sadani",
     role: "Manager",
     company: "Sandvik",
@@ -123,7 +130,8 @@ const testimonials = [
     project: "Vehicle Management System",
   },
   {
-    quote: "The AI calling solution integrated with Zoho transformed how we handle client outreach. Pure Technology understood our business needs precisely and delivered a seamless, intelligent workflow.",
+    quote:
+      "The AI calling solution integrated with Zoho transformed how we handle client outreach. Pure Technology understood our business needs precisely and delivered a seamless, intelligent workflow.",
     name: "Prabin",
     role: "Director",
     company: "AA Consultancy",
@@ -131,7 +139,8 @@ const testimonials = [
     project: "AI Calling with Zoho Integration",
   },
   {
-    quote: "The AI-based quotation paper generation and interview system has revolutionized our academic processes. Pure Technology brought innovation that we didn't think was possible in the education space.",
+    quote:
+      "The AI-based quotation paper generation and interview system has revolutionized our academic processes. Pure Technology brought innovation that we didn't think was possible in the education space.",
     name: "Dr Sushant Patil",
     role: "Director",
     company: "DY Patil Educational Federation",
@@ -140,7 +149,8 @@ const testimonials = [
     avatar: "/testimonial/sushantpatil.jpg",
   },
   {
-    quote: "The student portal and AI interview system built by Pure Technology has dramatically improved our student engagement and administrative efficiency. A truly future-ready solution.",
+    quote:
+      "The student portal and AI interview system built by Pure Technology has dramatically improved our student engagement and administrative efficiency. A truly future-ready solution.",
     name: "Dr Sajid Alvi",
     role: "Director",
     company: "DIMR",
@@ -148,7 +158,8 @@ const testimonials = [
     project: "Student Portal & AI Interview",
   },
   {
-    quote: "Pure Technology delivered our emailer platform with great attention to detail and design quality. The solution was clean, scalable, and exactly what our media operations needed.",
+    quote:
+      "Pure Technology delivered our emailer platform with great attention to detail and design quality. The solution was clean, scalable, and exactly what our media operations needed.",
     name: "Mrunal Pawar",
     role: "Manager",
     company: "Sakal Media",
@@ -156,17 +167,18 @@ const testimonials = [
     project: "Emailer Platform",
   },
   {
-    quote: "The internal AI agent built by Pure Technology has streamlined our processes beyond expectations. It handles complex workflows intelligently and has saved our team countless hours.",
+    quote:
+      "The internal AI agent built by Pure Technology has streamlined our processes beyond expectations. It handles complex workflows intelligently and has saved our team countless hours.",
     name: "Sagar Babar",
     role: "Manager",
     company: "Comsense Technologies",
     initials: "SB",
     project: "AI Agent for Internal Process",
     avatar: "/testimonial/sagarbabar.png",
-
   },
   {
-    quote: "Pure Technology delivered a payroll and expense management system that perfectly fits our organizational scale. Reliable, accurate, and easy for our HR team to operate.",
+    quote:
+      "Pure Technology delivered a payroll and expense management system that perfectly fits our organizational scale. Reliable, accurate, and easy for our HR team to operate.",
     name: "Mr Khan Ahmed",
     role: "Manager",
     company: "Mahabeej",
@@ -174,7 +186,8 @@ const testimonials = [
     project: "Payroll & Expense Management",
   },
   {
-    quote: "The AI-based newsletter solution built for Reliance has elevated our internal communications. Pure Technology delivered a smart, automated system that saves significant editorial effort.",
+    quote:
+      "The AI-based newsletter solution built for Reliance has elevated our internal communications. Pure Technology delivered a smart, automated system that saves significant editorial effort.",
     name: "Mrs Kaval Bajwa",
     role: "Manager",
     company: "Reliance Industries",
@@ -182,14 +195,14 @@ const testimonials = [
     project: "AI Newsletter",
   },
   {
-    quote: "The lead portal built by Pure Technology is intuitive, fast, and exactly what our sales team needed. It has improved our lead tracking and conversion workflows considerably.",
+    quote:
+      "The lead portal built by Pure Technology is intuitive, fast, and exactly what our sales team needed. It has improved our lead tracking and conversion workflows considerably.",
     name: "Rajashree Gandhi",
     role: "Director",
     company: "Botonym",
     initials: "RG",
     project: "Lead Portal",
     avatar: "/team/rajashreeGandhi.jpg",
-
   },
 ];
 
@@ -320,8 +333,7 @@ function Home() {
             eyebrow="Client outcomes"
             title={
               <>
-                Real Numbers From Recent{" "}
-                <span className="text-gradient-brand">Engagements.</span>
+                Real Numbers From Recent <span className="text-gradient-brand">Engagements.</span>
               </>
             }
             description="Recent AI deliveries measured in rupees saved, hours recovered, and trust earned."
@@ -371,59 +383,67 @@ function Home() {
                 { category: "Database", items: "Postgres", icon: "ti-database" },
                 { category: "Cloud", items: "On-Premises", icon: "ti-server" },
                 { category: "Frameworks", items: "React.js & Node.js", icon: "ti-layout" },
-                { category: "AI/ML", items: "Langchain, LangGraph, LLMs, Vector Databases", icon: "ti-brain" },
+                {
+                  category: "AI/ML",
+                  items: "Langchain, LangGraph, LLMs, Vector Databases",
+                  icon: "ti-brain",
+                },
               ]}
               conclusion="Cloudwise AI established secure on-premises infrastructure eliminating internet dependencies while enabling unprecedented operational efficiencies and maintaining highest security standards."
             />
 
-<CaseStudyCard
-  client="Global Recruitment & Talent Development Organization"
-  industry="Human Resources & Career Development"
-  image="/homeCaseStudy/2 case study.webp"
-  challenge="Candidates were underperforming due to inadequate practice opportunities, delayed and subjective feedback, expensive coaching programs, and increasing risks associated with remote hiring and fraudulent interview practices."
-  outcome="Developed Questa AI Interviewer, an AI-powered interview preparation platform featuring GPT-driven interview simulations, real-time speech analytics, smart proctoring, and performance dashboards."
-  metrics={[
-    { value: "78%", label: "Higher interview success rates" },
-    { value: "85%", label: "Improvement in speech confidence" },
-    { value: "60%", label: "Reduction in preparation time" },
-  ]}
-  accent="var(--brand-purple)"
-  projectName="Questa AI Interviewer – Interview Simulation Platform"
-  objective="AI-powered interview preparation platform transforming candidate training through intelligent interview simulations, speech analytics, and smart proctoring. Enables candidates to practice, improve communication skills, and achieve measurable interview success."
-  solutions={[
-    "AI Interview Simulation: GPT-powered system generating role-specific interview questions and realistic interview experiences.",
-    "Real-Time Speech Analytics: Voice recognition technology analyzing fluency, confidence, speaking pace, and communication effectiveness.",
-    "Smart Proctoring: AI-driven video monitoring with behavioral analysis to ensure interview integrity and prevent fraudulent activities.",
-    "Performance Analytics Dashboard: Detailed scoring, personalized feedback, progress tracking, and skill-gap identification.",
-  ]}
-  challenges={[
-    "Candidates lacked realistic interview practice opportunities before assessments.",
-    "Traditional feedback mechanisms were delayed, inconsistent, and subjective.",
-    "Professional interview coaching programs were expensive and inaccessible for many candidates.",
-    "Remote hiring processes introduced integrity risks and fraudulent interview practices.",
-  ]}
-  keyBenefits={[
-    { value: "78%", label: "Increase in interview success rates" },
-    { value: "60%", label: "Reduction in preparation time" },
-    { value: "85%", label: "Improvement in speech confidence" },
-    { value: "70%", label: "Reduction in coaching costs" },
-  ]}
-  results={[
-    "78% higher interview pass rates",
-    "65% reduction in filler words and speech hesitation",
-    "$250K annual cost savings",
-    "Scaled from 50 to 1,500+ candidates assessed monthly",
-  ]}
-  techStack={[
-    { category: "Languages", items: "Python", icon: "ti-code" },
-    { category: "Database", items: "PostgreSQL", icon: "ti-database" },
-    { category: "Deployment", items: "On-Premises", icon: "ti-server" },
-    { category: "Frameworks", items: "Django", icon: "ti-layout" },
-    { category: "AI/ML", items: "GPT Models, Wav2Vec 2.0, Speech Analytics", icon: "ti-brain" },
-  ]}
-  conclusion="Questa AI Interviewer transformed interview preparation through AI-powered simulations, real-time communication analysis, and intelligent assessment workflows. The platform enabled candidates to improve interview performance while helping organizations conduct scalable, objective, and data-driven talent evaluations."
-/>
-{/* 
+            <CaseStudyCard
+              client="Global Recruitment & Talent Development Organization"
+              industry="Human Resources & Career Development"
+              image="/homeCaseStudy/2 case study.webp"
+              challenge="Candidates were underperforming due to inadequate practice opportunities, delayed and subjective feedback, expensive coaching programs, and increasing risks associated with remote hiring and fraudulent interview practices."
+              outcome="Developed Questa AI Interviewer, an AI-powered interview preparation platform featuring GPT-driven interview simulations, real-time speech analytics, smart proctoring, and performance dashboards."
+              metrics={[
+                { value: "78%", label: "Higher interview success rates" },
+                { value: "85%", label: "Improvement in speech confidence" },
+                { value: "60%", label: "Reduction in preparation time" },
+              ]}
+              accent="var(--brand-purple)"
+              projectName="Questa AI Interviewer – Interview Simulation Platform"
+              objective="AI-powered interview preparation platform transforming candidate training through intelligent interview simulations, speech analytics, and smart proctoring. Enables candidates to practice, improve communication skills, and achieve measurable interview success."
+              solutions={[
+                "AI Interview Simulation: GPT-powered system generating role-specific interview questions and realistic interview experiences.",
+                "Real-Time Speech Analytics: Voice recognition technology analyzing fluency, confidence, speaking pace, and communication effectiveness.",
+                "Smart Proctoring: AI-driven video monitoring with behavioral analysis to ensure interview integrity and prevent fraudulent activities.",
+                "Performance Analytics Dashboard: Detailed scoring, personalized feedback, progress tracking, and skill-gap identification.",
+              ]}
+              challenges={[
+                "Candidates lacked realistic interview practice opportunities before assessments.",
+                "Traditional feedback mechanisms were delayed, inconsistent, and subjective.",
+                "Professional interview coaching programs were expensive and inaccessible for many candidates.",
+                "Remote hiring processes introduced integrity risks and fraudulent interview practices.",
+              ]}
+              keyBenefits={[
+                { value: "78%", label: "Increase in interview success rates" },
+                { value: "60%", label: "Reduction in preparation time" },
+                { value: "85%", label: "Improvement in speech confidence" },
+                { value: "70%", label: "Reduction in coaching costs" },
+              ]}
+              results={[
+                "78% higher interview pass rates",
+                "65% reduction in filler words and speech hesitation",
+                "$250K annual cost savings",
+                "Scaled from 50 to 1,500+ candidates assessed monthly",
+              ]}
+              techStack={[
+                { category: "Languages", items: "Python", icon: "ti-code" },
+                { category: "Database", items: "PostgreSQL", icon: "ti-database" },
+                { category: "Deployment", items: "On-Premises", icon: "ti-server" },
+                { category: "Frameworks", items: "Django", icon: "ti-layout" },
+                {
+                  category: "AI/ML",
+                  items: "GPT Models, Wav2Vec 2.0, Speech Analytics",
+                  icon: "ti-brain",
+                },
+              ]}
+              conclusion="Questa AI Interviewer transformed interview preparation through AI-powered simulations, real-time communication analysis, and intelligent assessment workflows. The platform enabled candidates to improve interview performance while helping organizations conduct scalable, objective, and data-driven talent evaluations."
+            />
+            {/* 
             <CaseStudyCard
               client="Voice AI Assistant for Intelligent Candidate Evaluation"
               industry="Recruitment Technology"
@@ -438,53 +458,53 @@ function Home() {
               accent="var(--brand-green)"
             /> */}
 
-<CaseStudyCard
-  client="Global Real Estate & B2B Sales Organization"
-  industry="Real Estate, B2B SaaS & Sales"
-  image="/homeCaseStudy/ai calling bot.png"
-  challenge="Sales teams were spending the majority of their time on repetitive outbound calling, struggling with inconsistent follow-ups, limited scalability, and after-hours response gaps that resulted in missed opportunities and lost revenue."
-  outcome="Developed an AI Calling Bot that autonomously initiates conversations, qualifies leads, schedules meetings, recognizes customer intent in real time, and updates CRM systems automatically."
-  metrics={[
-    { value: "90%", label: "Reduction in manual calling time" },
-    { value: "65%", label: "Increase in conversion rates" },
-    { value: "10X", label: "Growth in outreach capacity" },
-  ]}
-  accent="var(--brand-orange)"
-  projectName="Sales Acceleration with AI Calling Bot"
-  objective="Intelligent voice automation platform revolutionizing lead engagement through autonomous calling, real-time intent recognition, automated scheduling, and CRM synchronization, resulting in significantly higher conversion rates and operational efficiency."
-  solutions={[
-    "AI Voice Calling: Conversational AI capable of conducting natural, human-like phone conversations with prospects.",
-    "Real-Time Intent Recognition: Machine learning models analyzing customer responses and generating contextual follow-up actions.",
-    "Automated Scheduling: Calendar integrations enabling seamless meeting booking and coordination.",
-    "CRM Integration: Real-time synchronization of lead status, call outcomes, and engagement data across sales systems.",
-  ]}
-  challenges={[
-    "Sales teams spending 70–80% of their time on repetitive outbound calling activities.",
-    "Revenue loss caused by inconsistent lead follow-up processes.",
-    "Difficulty scaling outreach without increasing operational headcount.",
-    "After-hours response delays resulting in high lead abandonment rates.",
-  ]}
-  keyBenefits={[
-    { value: "90%", label: "Reduction in manual calling time" },
-    { value: "65%", label: "Increase in conversion rates" },
-    { value: "10X", label: "Expansion of outreach capacity" },
-    { value: "85%", label: "Improvement in contact rates" },
-  ]}
-  results={[
-    "Scaled daily outreach from 500 to 5,000+ calls",
-    "Improved conversion rates from 12% to 65%",
-    "$450K annual operational savings",
-    "40–75% revenue growth across campaigns",
-  ]}
-  techStack={[
-    { category: "Languages", items: "Python", icon: "ti-code" },
-    { category: "Database", items: "PostgreSQL", icon: "ti-database" },
-    { category: "Cloud", items: "AWS", icon: "ti-server" },
-    { category: "Frameworks", items: "Django", icon: "ti-layout" },
-    { category: "AI/ML", items: "TTS, LLM, STT Pipeline", icon: "ti-brain" },
-  ]}
-  conclusion="The AI Calling Bot transformed outbound sales operations by creating an intelligent voice automation ecosystem that dramatically increased outreach capacity, improved lead engagement, reduced operational costs, and delivered measurable revenue growth without requiring additional sales headcount."
-/>
+            <CaseStudyCard
+              client="Global Real Estate & B2B Sales Organization"
+              industry="Real Estate, B2B SaaS & Sales"
+              image="/homeCaseStudy/ai calling bot.png"
+              challenge="Sales teams were spending the majority of their time on repetitive outbound calling, struggling with inconsistent follow-ups, limited scalability, and after-hours response gaps that resulted in missed opportunities and lost revenue."
+              outcome="Developed an AI Calling Bot that autonomously initiates conversations, qualifies leads, schedules meetings, recognizes customer intent in real time, and updates CRM systems automatically."
+              metrics={[
+                { value: "90%", label: "Reduction in manual calling time" },
+                { value: "65%", label: "Increase in conversion rates" },
+                { value: "10X", label: "Growth in outreach capacity" },
+              ]}
+              accent="var(--brand-orange)"
+              projectName="Sales Acceleration with AI Calling Bot"
+              objective="Intelligent voice automation platform revolutionizing lead engagement through autonomous calling, real-time intent recognition, automated scheduling, and CRM synchronization, resulting in significantly higher conversion rates and operational efficiency."
+              solutions={[
+                "AI Voice Calling: Conversational AI capable of conducting natural, human-like phone conversations with prospects.",
+                "Real-Time Intent Recognition: Machine learning models analyzing customer responses and generating contextual follow-up actions.",
+                "Automated Scheduling: Calendar integrations enabling seamless meeting booking and coordination.",
+                "CRM Integration: Real-time synchronization of lead status, call outcomes, and engagement data across sales systems.",
+              ]}
+              challenges={[
+                "Sales teams spending 70–80% of their time on repetitive outbound calling activities.",
+                "Revenue loss caused by inconsistent lead follow-up processes.",
+                "Difficulty scaling outreach without increasing operational headcount.",
+                "After-hours response delays resulting in high lead abandonment rates.",
+              ]}
+              keyBenefits={[
+                { value: "90%", label: "Reduction in manual calling time" },
+                { value: "65%", label: "Increase in conversion rates" },
+                { value: "10X", label: "Expansion of outreach capacity" },
+                { value: "85%", label: "Improvement in contact rates" },
+              ]}
+              results={[
+                "Scaled daily outreach from 500 to 5,000+ calls",
+                "Improved conversion rates from 12% to 65%",
+                "$450K annual operational savings",
+                "40–75% revenue growth across campaigns",
+              ]}
+              techStack={[
+                { category: "Languages", items: "Python", icon: "ti-code" },
+                { category: "Database", items: "PostgreSQL", icon: "ti-database" },
+                { category: "Cloud", items: "AWS", icon: "ti-server" },
+                { category: "Frameworks", items: "Django", icon: "ti-layout" },
+                { category: "AI/ML", items: "TTS, LLM, STT Pipeline", icon: "ti-brain" },
+              ]}
+              conclusion="The AI Calling Bot transformed outbound sales operations by creating an intelligent voice automation ecosystem that dramatically increased outreach capacity, improved lead engagement, reduced operational costs, and delivered measurable revenue growth without requiring additional sales headcount."
+            />
           </div>
         </div>
       </section>

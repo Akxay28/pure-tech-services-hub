@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { Mail, Phone, MapPin, ArrowRight, Check } from "lucide-react";
 import { PageHero, SectionHeader } from "@/components/site/Primitives";
+import { submitContactForm } from "@/lib/contact-submit";
 
 const CONTACT_EMAIL = "contact@puretechnology.in";
 
@@ -95,6 +96,8 @@ function Contact() {
 
 function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   if (submitted) {
     return (
@@ -124,9 +127,26 @@ function ContactForm() {
   return (
     <form
       className="lg:col-span-7 glass-card rounded-3xl p-7 sm:p-10 space-y-5"
-      onSubmit={(e) => {
+      onSubmit={async (e) => {
         e.preventDefault();
-        setSubmitted(true);
+        setError("");
+        setSubmitting(true);
+        try {
+          const formData = new FormData(e.currentTarget);
+          await submitContactForm({
+            ...Object.fromEntries(formData),
+            formSource: "Contact page",
+          });
+          setSubmitted(true);
+        } catch (sendError) {
+          setError(
+            sendError instanceof Error
+              ? sendError.message
+              : "Could not send your enquiry. Please try again.",
+          );
+        } finally {
+          setSubmitting(false);
+        }
       }}
     >
       <div className="grid sm:grid-cols-2 gap-4">
@@ -166,11 +186,13 @@ function ContactForm() {
       </div>
       <button
         type="submit"
+        disabled={submitting}
         className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3.5 text-sm font-medium text-background hover:opacity-90 transition-opacity shadow-soft"
       >
-        Send Message
+        {submitting ? "Sending..." : "Send Message"}
         <ArrowRight className="h-4 w-4" />
       </button>
+      {error && <p className="text-sm text-destructive">{error}</p>}
       <p className="text-xs text-muted-foreground">
         We respond to every enquiry within 24 hours. By submitting, you agree to
         be contacted regarding your message.

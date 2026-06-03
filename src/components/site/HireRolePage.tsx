@@ -12,7 +12,6 @@ import {
   BrandIconBox,
   BrandTitle,
 } from "@/components/site/Primitives";
-import { MeetTheTeam } from "@/components/site/MeetTheTeam";
 import {
   accentAt,
   brandIconGradient,
@@ -20,6 +19,7 @@ import {
   BRAND,
 } from "@/lib/brand-colors";
 import type { HireCategory } from "@/lib/hire-roles";
+import { ConsultationSection } from "@/components/site/ConsultationSection";
  
 export type HireRolePageProps = {
   slug: string;
@@ -313,6 +313,8 @@ export function HireRolePage(p: HireRolePageProps) {
         </div>
       </section>
 
+      <ConsultationSection formSource={`Hire page - ${p.roleTitle}`} />
+
       {/* Related roles */}
       <section className="px-5 lg:px-8 py-16">
         <div className="mx-auto max-w-7xl glass-panel rounded-3xl p-8 sm:p-10 flex flex-col lg:flex-row lg:items-center gap-6 justify-between">
@@ -342,7 +344,6 @@ export function HireRolePage(p: HireRolePageProps) {
         </div>
       </section>
 
-      <MeetTheTeam />
       <CTASection
         title={`Ready to hire ${roleLower}?`}
         description="Share your brief — we'll send a calibrated shortlist within five business days. No spam, no junior bait-and-switch."

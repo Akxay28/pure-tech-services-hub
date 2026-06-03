@@ -23,7 +23,7 @@ import {
   Stat,
   BrandTitle,
 } from "@/components/site/Primitives";
-import { MeetTheTeam } from "./MeetTheTeam";
+import { ConsultationSection } from "@/components/site/ConsultationSection";
 import { CaseStudiesSection } from "./CaseStudiesSection";
 import type { CaseStudy } from "@/lib/case-study";
 import {
@@ -263,7 +263,7 @@ export function ServicePage(p: ServicePageProps) {
         </div>
       </section>
 
-      <MeetTheTeam />
+      <ConsultationSection formSource={`Service page - ${p.eyebrow}`} />
       <CTASection {...p.cta} />
     </>
   );

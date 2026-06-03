@@ -1,6 +1,7 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { ArrowRight, Check, Sparkles, X } from "lucide-react";
 import { type FormEvent, useEffect, useState } from "react";
+import { submitContactForm } from "@/lib/contact-submit";
 
 const MODAL_STORAGE_KEY = "pure-technology:first-visit-enquiry-dismissed";
 const MODAL_OPEN_DELAY_MS = 80_000;
@@ -22,6 +23,8 @@ const SERVICE_OPTIONS = [
 export function FirstVisitEnquiryModal() {
   const [open, setOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     let openTimer: ReturnType<typeof window.setTimeout> | undefined;
@@ -56,14 +59,31 @@ export function FirstVisitEnquiryModal() {
     setOpen(true);
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError("");
+    setSubmitting(true);
     try {
-      window.sessionStorage.setItem(MODAL_STORAGE_KEY, "true");
-    } catch {
-      // Showing the confirmation does not depend on storage availability.
+      const formData = new FormData(event.currentTarget);
+      await submitContactForm({
+        ...Object.fromEntries(formData),
+        formSource: "First visit enquiry modal",
+      });
+      try {
+        window.sessionStorage.setItem(MODAL_STORAGE_KEY, "true");
+      } catch {
+        // Showing the confirmation does not depend on storage availability.
+      }
+      setSubmitted(true);
+    } catch (sendError) {
+      setError(
+        sendError instanceof Error
+          ? sendError.message
+          : "Could not send your enquiry. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
     }
-    setSubmitted(true);
   };
 
   return (
@@ -172,12 +192,14 @@ export function FirstVisitEnquiryModal() {
                   </p>
                   <button
                     type="submit"
+                    disabled={submitting}
                     className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background shadow-soft transition-opacity hover:opacity-90"
                   >
-                    Send enquiry
+                    {submitting ? "Sending..." : "Send enquiry"}
                     <ArrowRight className="h-4 w-4" />
                   </button>
                 </div>
+                {error && <p className="text-sm text-destructive">{error}</p>}
               </form>
             </div>
           )}
