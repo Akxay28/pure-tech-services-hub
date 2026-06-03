@@ -31,8 +31,8 @@ export function ConsultationSection({
               Free consultation
             </p>
             <h2 className="mt-3 text-4xl sm:text-5xl font-display font-bold leading-tight tracking-tight">
-              Got an Idea? <br />
-              Get <span className="text-gradient-brand">FREE Consultation</span>
+            Turn Your Vision <br />
+              Get <span className="text-gradient-brand">Into Reality</span>
             </h2>
 
             <h3 className="mt-10 text-2xl sm:text-3xl font-display font-bold">What's Next?</h3>
