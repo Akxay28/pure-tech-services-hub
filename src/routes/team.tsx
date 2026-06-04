@@ -43,22 +43,6 @@ function TeamPage() {
             />
           ))}
         </div>
-
-                <p className="mx-auto mt-10 max-w-2xl text-center text-sm text-[color:var(--brand-purple)]/60">
-          the above image is only for the sample purpose, we can add all our team members in this page if we want, or we can remove this page also waiting for the confirmation from Anuj sir{" "}
-          {/* <code className="rounded bg-[color:var(--brand-pink-soft)]/60 px-1.5 py-0.5 text-xs">
-            NAV_TEAM_CONTACTS
-          </code> */}
-          {/* . Add more profiles only in{" "}
-          <code className="rounded bg-[color:var(--brand-pink-soft)]/60 px-1.5 py-0.5 text-xs">
-            TEAM_PAGE_EXTRA_CONTACTS
-          </code>{" "}
-          inside{" "}
-          <code className="rounded bg-[color:var(--brand-pink-soft)]/60 px-1.5 py-0.5 text-xs">
-            src/lib/team-contacts.ts
-          </code> */}
-          .
-        </p>
       </section>
 
       <CTASection

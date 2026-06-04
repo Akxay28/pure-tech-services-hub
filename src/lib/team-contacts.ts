@@ -49,15 +49,15 @@ export const NAV_TEAM_CONTACTS: TeamContact[] = [
 
 export const TEAM_PAGE_EXTRA_CONTACTS: TeamContact[] = [
   // Example:
-  {
-    id: "new-member",
-    name: "Ms. Example Name",
-    role: "Role Title",
-    bio: "Short description.",
-    image: "/team/example.jpg",
-    email: "example@puretechnology.in",
-    linkedin: "https://www.linkedin.com/in/example",
-  },
+  // {
+  //   id: "new-member",
+  //   name: "Ms. Example Name",
+  //   role: "Role Title",
+  //   bio: "Short description.",
+  //   image: "/team/example.jpg",
+  //   email: "example@puretechnology.in",
+  //   linkedin: "https://www.linkedin.com/in/example",
+  // },
 ];
 
 /** Full roster on the /team page (nav trio + extras above). */
