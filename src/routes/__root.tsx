@@ -12,6 +12,9 @@ import appCss from "../styles.css?url";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { FirstVisitEnquiryModal } from "@/components/site/FirstVisitEnquiryModal";
+import { GoogleAnalytics } from "@/components/site/GoogleAnalytics";
+
+const GA_MEASUREMENT_ID = "G-38WFSYMQQP";
 
 function NotFoundComponent() {
   return (
@@ -79,6 +82,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         name: "referrer",
         content: "strict-origin-when-cross-origin",
       },
+      {
+        name: "google-site-verification",
+        content: "FNJE8ALEdzCZyVLbsSlQpSmWLmavQAytOA4Ppx-d6wg",
+      },
       { title: "Pure Technology — AI, Engineering & Tech Talent from India" },
       {
         name: "description",
@@ -123,6 +130,17 @@ function RootShell({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GA_MEASUREMENT_ID}', { send_page_view: false });
+            `,
+          }}
+        />
       </head>
       <body>
         {children}
@@ -144,6 +162,7 @@ function RootComponent() {
         </main>
         <Footer />
         <FirstVisitEnquiryModal />
+        <GoogleAnalytics />
       </div>
     </QueryClientProvider>
   );
