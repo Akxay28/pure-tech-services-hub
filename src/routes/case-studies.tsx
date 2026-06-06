@@ -735,56 +735,6 @@ const studies = [
     "conclusion": "Integrating TQM tools and lean methodology into a centralized web portal transformed operational practices and safety, driving continuous improvement. This solution sets a benchmark for organizations seeking operational excellence and innovation."
   },
 
-  // Bridgestone - chemical inventory - Software development  
-  {
-    "client": "Chemical Inventory & Management",
-    "sector": "Tire Manufacturing",
-    "accent": "var(--brand-blue)",
-    "image": "/homeCaseStudy/Chemical Inventory & Management - bridgestone.png",
-    "headline": "AI-powered Chemical Inventory FIFO Management System reduced chemical waste by 25% and boosted compliance by 70%.",
-    "body": "Built a Chemical Inventory FIFO Management System with IoT and RFID-based real-time tracking, smart alert systems, and an AI/ML-powered cloud dashboard. Ensures FIFO compliance, minimizes waste, and automates supervisor notifications for non-compliant actions.",
-    "metrics": [
-      { "v": "25%", "l": "Reduction in Chemical Wastage" },
-      { "v": "40%", "l": "Improvement in Inventory Tracking Efficiency" },
-      { "v": "60%", "l": "Reduction in Manual Efforts" }
-    ],
-    "related": "/services/chemical-inventory-fifo-management",
-  
-    "projectName": "Chemical Inventory FIFO Management System",
-    "objective": "The project aimed to ensure FIFO compliance, automate chemical tracking using IoT and RFID, and reduce manual efforts through smart alerts. It focused on improving safety, minimizing waste, and providing real-time insights via a cloud dashboard powered by AI and ML.",
-    "solutions": [
-      "AI-Powered Tracking: Automated real-time tracking with IoT and RFID.",
-      "Smart Alerts: Hooter and buzzer alert system to prevent incorrect material movement.",
-      "Supervisor Notification: Automated image-based alerts for non-compliant actions.",
-      "Cloud Dashboard: Real-time monitoring of chemical inventory (Pro and Non-Pro)."
-    ],
-    "challenges": [
-      "Difficulty in tracking chemical storage and FIFO compliance.",
-      "Inefficient monitoring of trolley movement.",
-      "Risk of expired materials affecting production quality."
-    ],
-    "keyBenefits": [
-      { "value": "25%", "label": "Reduction in Chemical Wastage" },
-      { "value": "40%", "label": "Improvement in Inventory Tracking Efficiency" },
-      { "value": "60%", "label": "Reduction in Manual Efforts" },
-      { "value": "70%", "label": "Boost in Compliance & Safety" }
-    ],
-    "results": [
-      "Reduced chemical waste and costs",
-      "Improved inventory accuracy",
-      "Lower manual effort",
-      "Faster issue detection",
-      "Better safety and compliance",
-      "Smarter, data-driven decisions"
-    ],
-    "techStack": [
-      { "category": "Languages", "items": ".Net Core", "icon": "ti-code" },
-      { "category": "Database", "items": "SQL Server", "icon": "ti-database" },
-      { "category": "Hardware", "items": "IOT Device", "icon": "ti-device-desktop" },
-      { "category": "AI/ML", "items": "Predictive Analytics", "icon": "ti-brain" }
-    ],
-    "conclusion": "The implementation of this solution significantly reduced chemical waste, enhanced tracking accuracy, and ensured compliance with FIFO standards, demonstrating the power of AI-driven inventory management in manufacturing."
-  },
   {
     // Questa AI
     "client": "Global Recruitment & Talent Development Organization",
