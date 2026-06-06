@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { ArrowUpRight, Check, Linkedin, Mail, Phone } from "lucide-react";
+import { Check, Linkedin, Mail, Phone } from "lucide-react";
 import { accentAt, brandIconGradient, BRAND } from "@/lib/brand-colors";
 import { NAV_TEAM_CONTACTS } from "@/lib/team-contacts";
 import { submitContactForm } from "@/lib/contact-submit";
@@ -165,13 +165,9 @@ export function ConsultationSection({
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="inline-flex items-center rounded-full text-sm font-bold text-white shadow-soft transition-transform duration-300 hover:-translate-y-0.5"
-                  style={{ background: BRAND.gradientBrand }}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3.5 text-sm font-medium text-background shadow-soft transition-opacity hover:opacity-90 disabled:pointer-events-none disabled:opacity-50"
                 >
-                  <span className="grid h-14 w-14 place-items-center rounded-full border-r border-white/25">
-                    <ArrowUpRight className="h-5 w-5" />
-                  </span>
-                  <span className="px-10">{submitting ? "SENDING" : "SUBMIT"}</span>
+                  {submitting ? "Sending..." : "Submit"}
                 </button>
               </div>
               {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
