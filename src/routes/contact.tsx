@@ -5,6 +5,26 @@ import { PageHero, SectionHeader } from "@/components/site/Primitives";
 import { submitContactForm } from "@/lib/contact-submit";
 
 const CONTACT_EMAIL = "contact@puretechnology.in";
+const CONTACT_NUMBERS = [
+  {
+    label: "HR & Carrers",
+    number: "+91 73875 81577",
+    href: "tel:+917387581577",
+    color: "var(--brand-purple)",
+  },
+  {
+    label: "For Support",
+    number: "+91 83298 49726",
+    href: "tel:+918329849726",
+    color: "var(--brand-orange)",
+  },
+  {
+    label: "For Project",
+    number: "+91 99701 11283",
+    href: "tel:+919970111283",
+    color: "var(--brand-red)",
+  },
+] as const;
 
 const EXPLORING_OPTIONS = [
   "IT Staff Augmentation",
@@ -264,30 +284,25 @@ function ContactSidebar() {
               {CONTACT_EMAIL}
             </span>
           </a>
-          <a
-            className="flex items-start gap-3 text-foreground/85 hover:text-foreground"
-            href="tel:+918329849726"
-          >
-            <ContactIcon color="var(--brand-orange)">
-              <Phone className="h-4 w-4" />
-            </ContactIcon>
-            <span>
-              <span className="block text-xs text-muted-foreground">Phone</span>
-              +91 83298 49726
-            </span>
-          </a>
-          <a
-            className="flex items-start gap-3 text-foreground/85 hover:text-foreground"
-            href="tel:+919970111283"
-          >
-            <ContactIcon color="var(--brand-red)">
-              <Phone className="h-4 w-4" />
-            </ContactIcon>
-            <span>
-              <span className="block text-xs text-muted-foreground">Phone</span>
-              +91 99701 11283
-            </span>
-          </a>
+          {CONTACT_NUMBERS.map((contact) => (
+            <a
+              key={contact.label}
+              className="flex items-start gap-3 rounded-2xl border border-border/70 bg-surface-muted/60 p-3 text-foreground/85 hover:text-foreground"
+              href={contact.href}
+            >
+              <ContactIcon color={contact.color}>
+                <Phone className="h-4 w-4" />
+              </ContactIcon>
+              <span>
+                <span className="block text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                  {contact.label}
+                </span>
+                <span className="text-base font-display font-bold text-foreground">
+                  {contact.number}
+                </span>
+              </span>
+            </a>
+          ))}
           <div className="flex items-start gap-3 text-foreground/85">
             <ContactIcon color="var(--brand-green)">
               <MapPin className="h-4 w-4" />

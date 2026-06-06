@@ -162,10 +162,10 @@ function BenefitsPerksPage() {
             role — including health coverage, leave, learning support, and any role-specific perks.
           </p>
           <a
-            href="mailto:hr@puretechnology.in"
+            href="mailto:jobs@puretechnology.in"
             className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-foreground underline underline-offset-4 hover:opacity-80"
           >
-            Questions? Email hr@puretechnology.in
+            Questions? Email jobs@puretechnology.in
           </a>
         </div>
       </section>

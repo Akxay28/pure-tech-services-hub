@@ -419,7 +419,13 @@ function About() {
         secondaryLabel="Explore Services"
         secondaryTo="/services"
         contactEmail="contact@puretechnology.in"
-        contactPhone="+91 83298 49726"
+        contactPhones={[
+          {
+            label: "Project",
+            number: "+91 99701 11283",
+            href: "tel:+919970111283",
+          },
+        ]}
       />
     </>
   );

@@ -15,6 +15,12 @@ const SOCIAL_LINKS = [
   },
 ] as const;
 
+const CONTACT_NUMBERS = [
+  { label: "HR & Carrers", number: "+91 73875 81577", href: "tel:+917387581577" },
+  { label: "For Support", number: "+91 83298 49726", href: "tel:+918329849726" },
+  { label: "For Project", number: "+91 99701 11283", href: "tel:+919970111283" },
+] as const;
+
 const OFFICES = {
   pune: {
     label: "Pune",
@@ -107,20 +113,21 @@ export function Footer() {
                 <Mail className="h-4 w-4 mt-0.5 shrink-0" />
                 contact@puretechnology.in
               </a>
-              <a
-                href="tel:+918329849726"
-                className="flex items-start gap-2 text-muted-foreground hover:text-foreground"
-              >
-                <Phone className="h-4 w-4 mt-0.5 shrink-0" />
-                +91 83298 49726
-              </a>
-              <a
-                href="tel:+919970111283"
-                className="flex items-start gap-2 text-muted-foreground hover:text-foreground"
-              >
-                <Phone className="h-4 w-4 mt-0.5 shrink-0" />
-                +91 99701 11283
-              </a>
+              {CONTACT_NUMBERS.map((contact) => (
+                <a
+                  key={contact.label}
+                  href={contact.href}
+                  className="flex items-start gap-2 text-muted-foreground hover:text-foreground"
+                >
+                  <Phone className="h-4 w-4 mt-0.5 shrink-0" />
+                  <span>
+                    <span className="block text-xs font-semibold uppercase tracking-[0.12em] text-foreground">
+                      {contact.label}
+                    </span>
+                    {contact.number}
+                  </span>
+                </a>
+              ))}
               <div className="space-y-4 text-muted-foreground">
                 {Object.values(OFFICES).map((office) => (
                   <div key={office.label} className="flex items-start gap-2">

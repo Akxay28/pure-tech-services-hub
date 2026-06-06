@@ -139,7 +139,7 @@ const employeeTestimonials = [
   },
 ];
 
-const HR_EMAIL = "hr@puretechnology.in";
+const HR_EMAIL = "jobs@puretechnology.in";
 
 function CareersPage() {
   return (

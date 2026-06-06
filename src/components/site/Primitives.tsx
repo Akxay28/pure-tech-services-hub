@@ -406,6 +406,7 @@ export function CTASection({
   secondaryTo = "/services",
   contactEmail,
   contactPhone,
+  contactPhones,
 }: {
   title: string;
   description: string;
@@ -415,7 +416,12 @@ export function CTASection({
   secondaryTo?: string;
   contactEmail?: string;
   contactPhone?: string;
+  contactPhones?: { label: string; number: string; href?: string }[];
 }) {
+  const phoneContacts =
+    contactPhones ??
+    (contactPhone ? [{ label: "Phone", number: contactPhone }] : []);
+
   return (
     <section className="px-5 lg:px-8 py-20">
       <div className="relative mx-auto max-w-7xl rounded-[2rem] overflow-hidden isolate">
@@ -451,8 +457,8 @@ export function CTASection({
             <p className="mt-4 text-white/85 text-base sm:text-lg leading-relaxed max-w-xl">
               {description}
             </p>
-            {(contactEmail || contactPhone) && (
-              <p className="mt-5 text-sm text-white/80 space-y-1">
+            {(contactEmail || phoneContacts.length > 0) && (
+              <div className="mt-5 space-y-2 text-sm text-white/80">
                 {contactEmail && (
                   <a
                     href={`mailto:${contactEmail}`}
@@ -461,15 +467,22 @@ export function CTASection({
                     {contactEmail}
                   </a>
                 )}
-                {contactPhone && (
+                {phoneContacts.map((contact) => (
                   <a
-                    href={`tel:${contactPhone.replace(/\s/g, "")}`}
-                    className="block hover:text-white transition-colors"
+                    key={contact.label}
+                    href={
+                      contact.href ??
+                      `tel:${contact.number.replace(/[^\d+]/g, "")}`
+                    }
+                    className="flex flex-wrap items-center gap-2 hover:text-white transition-colors"
                   >
-                    {contactPhone}
+                    <span className="rounded-full bg-white/15 px-2 py-0.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white">
+                      {contact.label}
+                    </span>
+                    <span>{contact.number}</span>
                   </a>
-                )}
-              </p>
+                ))}
+              </div>
             )}
           </div>
           <div className="flex flex-col sm:flex-row lg:justify-end gap-3">
