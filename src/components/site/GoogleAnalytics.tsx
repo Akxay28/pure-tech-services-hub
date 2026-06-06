@@ -22,7 +22,7 @@ export function GoogleAnalytics() {
       return;
     }
 
-    const pagePath = `${location.pathname}${location.search}${location.hash}`;
+    const pagePath = location.href;
 
     if (lastTrackedPath.current === pagePath) {
       return;
@@ -34,7 +34,7 @@ export function GoogleAnalytics() {
       page_location: window.location.href,
       page_title: document.title,
     });
-  }, [location.hash, location.pathname, location.search]);
+  }, [location.href]);
 
   return null;
 }
