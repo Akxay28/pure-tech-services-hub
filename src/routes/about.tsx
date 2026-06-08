@@ -58,7 +58,7 @@ const leadership = [
   { name: "Mr. Anuj Bajaj", role: "Founder & Director", initials: "AB", accent: "var(--brand-blue)", image: "/team/anuj-bajaj.jpg" },
   { name: "Mr. Rajesh Munde", role: "Founder & CEO", initials: "RM", accent: "var(--brand-orange)", image: "/team/rajesh-munde.jpg" },
   { name: "Mr. Parag Thakur", role: "Sales Director", initials: "PT", accent: "var(--brand-green)", image: "/team/parag-thakur.jpg" },
-  { name: "Mr. Sumit Gupta", role: "VP", initials: "SG", accent: "var(--brand-red)", image: "/team/Sumit-G.webp" },
+  { name: "Mr. Sumit Gupta", role: "VP - Sales & Marketing", initials: "SG", accent: "var(--brand-red)", image: "/team/Sumit-G.webp" },
   { name: "Mr. Shirish Vispute", role: "CTO Advisor", initials: "SV", accent: "var(--brand-blue)", image: "/team/Shirish Vispute.jpg" },
   { name: "Mr. Govind Innani", role: "Advisor", initials: "GI", accent: "var(--brand-orange)", image: "/team/govindInnani.png" },
   { name: "Mr. Jalindra Shinde", role: "CTO", initials: "JS", accent: "var(--brand-green)", image: "/team/jalindrashinde.png" },
