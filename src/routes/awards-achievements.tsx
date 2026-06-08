@@ -46,7 +46,7 @@ const stats = [
   { number: "2013", label: "Company founded" },
   { number: "50+", label: "Customer engagements completed" },
   { number: "10", label: "Countries reached" },
-  { number: "2026", label: "AI interview product launched" },
+  { number: "Fortune 500", label: "Enterprise projects delivered" },
 ];
 
 const brandAccents = [
@@ -414,6 +414,86 @@ function JourneySection() {
   );
 }
 
+function Fortune500HighlightSection() {
+  return (
+    <section className="px-5 lg:px-8 py-20">
+      <style>{`
+        .fortune-glow-yellow {
+          animation: fortuneGlowYellow 4.8s ease-in-out infinite alternate;
+        }
+        .fortune-glow-blue {
+          animation: fortuneGlowBlue 5.4s ease-in-out infinite alternate;
+        }
+        @keyframes fortuneGlowYellow {
+          0% { transform: translate3d(0, 0, 0) scale(1); }
+          35% { transform: translate3d(-230px, 58px, 0) scale(1.18); }
+          70% { transform: translate3d(-88px, 178px, 0) scale(.9); }
+          100% { transform: translate3d(-292px, 98px, 0) scale(1.14); }
+        }
+        @keyframes fortuneGlowBlue {
+          0% { transform: translate3d(0, 0, 0) scale(1); }
+          30% { transform: translate3d(190px, -70px, 0) scale(1.16); }
+          68% { transform: translate3d(58px, -172px, 0) scale(.9); }
+          100% { transform: translate3d(260px, -106px, 0) scale(1.12); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .fortune-glow-yellow,
+          .fortune-glow-blue {
+            animation: none;
+          }
+        }
+      `}</style>
+      <div className="mx-auto max-w-7xl">
+        <div className="relative overflow-hidden rounded-[2rem] border border-border bg-surface px-6 py-10 sm:px-10 lg:px-12">
+          <div
+            className="fortune-glow-yellow absolute -right-20 -top-24 h-72 w-72 rounded-full opacity-20 blur-3xl"
+            style={{ background: "var(--brand-yellow)" }}
+          />
+          <div
+            className="fortune-glow-blue absolute -bottom-24 -left-20 h-72 w-72 rounded-full opacity-20 blur-3xl"
+            style={{ background: "var(--brand-blue)" }}
+          />
+
+          <div className="relative grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-muted px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+                <span
+                  className="h-1.5 w-1.5 rounded-full"
+                  style={{ background: "var(--brand-yellow)" }}
+                />
+                Enterprise milestone
+              </div>
+              <h2 className="mt-4 text-3xl sm:text-4xl font-display font-bold tracking-tight">
+                Delivered for <span className="text-gradient-brand">Fortune 500</span> companies.
+              </h2>
+              <p className="mt-4 max-w-xl text-base text-muted-foreground leading-relaxed">
+                In 2017, Pure Technology successfully delivered projects for Fortune 500 companies,
+                including Bridgestone and Schindler.
+              </p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {["Bridgestone", "Schindler"].map((company, i) => (
+                <div key={company} className="glass-card rounded-2xl p-6">
+                  <BrandIconBox color={brandAccents[i + 1]} size="lg">
+                    <Handshake className="h-6 w-6" />
+                  </BrandIconBox>
+                  <p className="mt-5 text-xl font-display font-semibold text-foreground">
+                    {company}
+                  </p>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
+                    Fortune 500 enterprise project delivered as part of the 2017 milestone.
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function RecognitionsSection() {
   return (
     <section className="px-5 lg:px-8 py-20">
@@ -469,6 +549,7 @@ function AwardsAchievementsPage() {
 
       <StatsSection />
       <JourneySection />
+      <Fortune500HighlightSection />
       <RecognitionsSection />
 
       <CTASection
