@@ -44,45 +44,45 @@ type Role = {
 };
 
 const roles: Role[] = [
+  // {
+  //   title: "Business Development Specialist",
+  //   team: "Business Development",
+  //   location: "Pune",
+  //   type: "Full-time",
+  //   tag: "IT Sector",
+  //   blurb:
+  //     "Drive new business across our IT services portfolio — from AI and product engineering to staff augmentation. You'll partner with leadership on pipeline, proposals, and client relationships.",
+  //   accent: "var(--brand-orange)",
+  // },
+  // {
+  //   title: "AI Developer / Engineer",
+  //   team: "AI Solutions",
+  //   location: "Pune",
+  //   type: "Full-time",
+  //   tag: "AI & Automation",
+  //   blurb:
+  //     "Build intelligent systems for startups and enterprises — LLM integrations, automation workflows, and production-ready AI features aligned to real client outcomes.",
+  //   accent: "var(--brand-blue)",
+  // },
+  // {
+  //   title: "Full Stack Developer",
+  //   team: "Product Engineering",
+  //   location: "Pune",
+  //   type: "Full-time",
+  //   tag: "Web & SaaS",
+  //   blurb:
+  //     "Ship end-to-end product work for global clients — modern frontends, APIs, and cloud-backed services with a team that cares about maintainability and delivery quality.",
+  //   accent: "var(--brand-green)",
+  // },
   {
-    title: "Business Development Specialist",
-    team: "Business Development",
-    location: "Pune",
-    type: "Full-time",
-    tag: "IT Sector",
-    blurb:
-      "Drive new business across our IT services portfolio — from AI and product engineering to staff augmentation. You'll partner with leadership on pipeline, proposals, and client relationships.",
-    accent: "var(--brand-orange)",
-  },
-  {
-    title: "AI Developer / Engineer",
-    team: "AI Solutions",
-    location: "Pune",
-    type: "Full-time",
-    tag: "AI & Automation",
-    blurb:
-      "Build intelligent systems for startups and enterprises — LLM integrations, automation workflows, and production-ready AI features aligned to real client outcomes.",
-    accent: "var(--brand-blue)",
-  },
-  {
-    title: "Full Stack Developer",
+    title: ".NET Fresher",
     team: "Product Engineering",
     location: "Pune",
     type: "Full-time",
-    tag: "Web & SaaS",
+    tag: ".NET Development",
     blurb:
-      "Ship end-to-end product work for global clients — modern frontends, APIs, and cloud-backed services with a team that cares about maintainability and delivery quality.",
-    accent: "var(--brand-green)",
-  },
-  {
-    title: "IT Staff Augmentation Consultant",
-    team: "Talent & Delivery",
-    location: "Pune",
-    type: "Full-time",
-    tag: "Staffing",
-    blurb:
-      "Match senior engineers to client needs, own delivery quality, and uphold our no-bait-and-switch promise — senior talent, transparent placements, long-term relationships.",
-    accent: "var(--brand-red)",
+      "Join our team as a .NET Fresher! Work alongside experienced mentors, build real-world applications, and kickstart your career delivering software solutions to global clients.",
+    accent: "var(--brand-blue)",
   },
 ];
 
