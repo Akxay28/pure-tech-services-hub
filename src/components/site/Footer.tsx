@@ -1,13 +1,13 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone, MapPin, Linkedin, Facebook } from "lucide-react";
+import { Mail, Phone, Linkedin, Facebook } from "lucide-react";
 import logo from "@/assets/pure-tech-logo.png";
 
 const SOCIAL_LINKS = [
-  {
-    label: "Pure Technology on Facebook",
-    href: "https://www.facebook.com/puretechnologypune",
-    Icon: Facebook,
-  },
+  // {
+  //   label: "Pure Technology on Facebook",
+  //   href: "https://www.facebook.com/puretechnologypune",
+  //   Icon: Facebook,
+  // },
   {
     label: "Pure Technology on LinkedIn",
     href: "https://www.linkedin.com/company/pure-technology",
@@ -16,25 +16,18 @@ const SOCIAL_LINKS = [
 ] as const;
 
 const CONTACT_NUMBERS = [
-  { label: "HR & Carrers", number: "+91 73875 81577", href: "tel:+917387581577" },
+  { label: "For HR & Carrers", number: "+91 73875 81577", href: "tel:+917387581577" },
   { label: "For Support", number: "+91 83298 49726", href: "tel:+918329849726" },
-  { label: "For Project", number: "+91 99701 11283", href: "tel:+919970111283" },
+  { label: "For AI Project", number: "+91 99701 11283", href: "tel:+919970111283" },
+  { label: "For Hire Resource", number: "+91 73854 55380", href: "tel:+919970111283" },
+
 ] as const;
 
-const OFFICES = {
-  pune: {
-    label: "Pune",
-    country: "India",
-    address:
-      "603, White Square, Hinjewadi-Wakad Road, Near Wakad Bridge, Phase 1, Hinjawadi, Pune, Maharashtra 411057",
-  },
-  dubai: {
-    label: "Dubai",
-    country: "UAE",
-    address:
-      "PURE TECHNOLOGY - FZE, Premises Number: Office-C1-1F-SF5944, Ajman Free Zone C1 Building, Business District: Ajman Free Zone, Makani No. 4442612247",
-  },
-} as const;
+const FOOTER_FLAGS = [
+  { label: "India", flag: "india" },
+  { label: "UAE", flag: "uae" },
+  { label: "USA", flag: "usa" },
+] as const;
 
 export function Footer() {
   return (
@@ -101,7 +94,6 @@ export function Footer() {
                 { label: "Contact", to: "/contact" },
                 { label: "Case Studies", to: "/case-studies" },
                 { label: "Gallery", to: "/gallery" },
-                { label: "Mission & Vision", to: "/mission-vision" },
               ]}
             />
             <div className="space-y-3 text-sm">
@@ -128,17 +120,15 @@ export function Footer() {
                   </span>
                 </a>
               ))}
-              <div className="space-y-4 text-muted-foreground">
-                {Object.values(OFFICES).map((office) => (
-                  <div key={office.label} className="flex items-start gap-2">
-                    <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
-                    <span>
-                    <span className="block font-medium text-foreground">
-                      {office.label}, {office.country}
-                    </span>
-                    {office.address}
-                    </span>
-                  </div>
+              <div className="flex items-center gap-2 pt-1" aria-label="Office countries">
+                {FOOTER_FLAGS.map((item) => (
+                  <span
+                    key={item.flag}
+                    className="grid h-9 w-9 shrink-0 place-items-center overflow-hidden rounded-full bg-surface ring-1 ring-border"
+                    title={item.label}
+                  >
+                    <FlagIcon flag={item.flag} />
+                  </span>
                 ))}
               </div>
             </div>
@@ -161,6 +151,71 @@ export function Footer() {
         </div>
       </div>
     </footer>
+  );
+}
+
+function FlagIcon({ flag }: { flag: (typeof FOOTER_FLAGS)[number]["flag"] }) {
+  if (flag === "india") {
+    return (
+      <svg viewBox="0 0 60 60" className="h-full w-full" aria-hidden="true">
+        <rect width="60" height="20" fill="#ff671f" />
+        <rect y="20" width="60" height="20" fill="#ffffff" />
+        <rect y="40" width="60" height="20" fill="#046a38" />
+        <circle cx="30" cy="30" r="7" fill="none" stroke="#06038d" strokeWidth="1.4" />
+        <circle cx="30" cy="30" r="1.2" fill="#06038d" />
+        {Array.from({ length: 24 }).map((_, index) => (
+          <line
+            key={index}
+            x1="30"
+            y1="30"
+            x2="30"
+            y2="23"
+            stroke="#06038d"
+            strokeWidth="0.55"
+            transform={`rotate(${index * 15} 30 30)`}
+          />
+        ))}
+      </svg>
+    );
+  }
+
+  if (flag === "uae") {
+    return (
+      <svg viewBox="0 0 60 60" className="h-full w-full" aria-hidden="true">
+        <rect width="60" height="20" fill="#00843d" />
+        <rect y="20" width="60" height="20" fill="#ffffff" />
+        <rect y="40" width="60" height="20" fill="#000000" />
+        <rect width="15" height="60" fill="#ce1126" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 60 60" className="h-full w-full" aria-hidden="true">
+      {Array.from({ length: 13 }).map((_, index) => (
+        <rect
+          key={index}
+          y={(index * 60) / 13}
+          width="60"
+          height={60 / 13}
+          fill={index % 2 === 0 ? "#b31942" : "#ffffff"}
+        />
+      ))}
+      <rect width="28" height="32" fill="#0a3161" />
+      {Array.from({ length: 30 }).map((_, index) => {
+        const row = Math.floor(index / 6);
+        const col = index % 6;
+        return (
+          <circle
+            key={index}
+            cx={4 + col * 4.3 + (row % 2 ? 2 : 0)}
+            cy={4 + row * 5}
+            r="1"
+            fill="#ffffff"
+          />
+        );
+      })}
+    </svg>
   );
 }
 

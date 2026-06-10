@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
-import { Mail, Phone, MapPin, ArrowRight, Check } from "lucide-react";
+import { Mail, Phone, ArrowRight, Check } from "lucide-react";
 import { PageHero, SectionHeader } from "@/components/site/Primitives";
 import { submitContactForm } from "@/lib/contact-submit";
 
 const CONTACT_EMAIL = "contact@puretechnology.in";
 const CONTACT_NUMBERS = [
   {
-    label: "HR & Carrers",
+    label: "For HR & Carrers",
     number: "+91 73875 81577",
     href: "tel:+917387581577",
     color: "var(--brand-purple)",
@@ -19,10 +19,43 @@ const CONTACT_NUMBERS = [
     color: "var(--brand-orange)",
   },
   {
-    label: "For Project",
+    label: "For AI Project",
     number: "+91 99701 11283",
     href: "tel:+919970111283",
     color: "var(--brand-red)",
+  },
+  {
+    label: "For Hire Resource",
+    number: "+91 73854 55380",
+    href: "tel:+917385455380",
+    color: "var(--brand-green)",
+  },
+
+] as const;
+
+const OFFICE_LOCATIONS = [
+  {
+    city: "Pune",
+    country: "India",
+    flag: "india",
+    label: "Head Office",
+    address:
+      "603, White Square, Hinjewadi-Wakad Road, Near Wakad Bridge, Phase 1, Hinjawadi, Pune, Maharashtra 411057",
+  },
+  {
+    city: "Dubai",
+    country: "UAE",
+    flag: "uae",
+    label: "Middle East Office",
+    address:
+      "PURE TECHNOLOGY - FZE, Premises Number: Office-C1-1F-SF5944, Ajman Free Zone C1 Building, Business District: Ajman Free Zone, Makani No. 4442612247",
+  },
+  {
+    city: "Weston, Florida",
+    country: "USA",
+    flag: "usa",
+    label: "USA Office",
+    address: "286 Racquet Club Road, Apt 202, Weston, Florida 33326",
   },
 ] as const;
 
@@ -77,7 +110,7 @@ function Contact() {
       />
 
       <section className="px-5 mt-25 lg:px-8 pb-24">
-        <div className="mx-auto max-w-7xl grid lg:grid-cols-12 gap-10">
+        <div className="mx-auto max-w-7xl grid items-start lg:items-stretch lg:grid-cols-12 gap-10">
           <ContactForm />
           <ContactSidebar />
         </div>
@@ -86,24 +119,27 @@ function Contact() {
       <section className="px-5 lg:px-8 pb-24">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Where we work"
-            title="Pune is home. We deliver from everywhere."
+            eyebrow="Office locations"
+            title="Reach us across India, UAE, and the USA."
           />
-          <div className="mt-10 grid md:grid-cols-2 gap-5">
-            {[
-              {
-                city: "Pune (HQ)",
-                addr: "603, White Square, Hinjewadi-Wakad Road, Near Wakad Bridge, Phase 1, Hinjawadi, Pune, Maharashtra 411057",
-              },
-              {
-                city: "Remote Teams",
-                addr: "Developers and consultants working across India, Middle East, Europe & North America",
-              },
-            ].map((o) => (
-              <div key={o.city} className="glass-card rounded-2xl p-6">
-                <div className="font-display font-semibold text-lg">{o.city}</div>
-                <div className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                  {o.addr}
+          <div className="mt-10 grid md:grid-cols-3 gap-5">
+            {OFFICE_LOCATIONS.map((office) => (
+              <div key={office.label} className="glass-card rounded-2xl p-6">
+                <div className="flex items-start gap-3">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full bg-surface-muted ring-1 ring-border">
+                    <FlagIcon flag={office.flag} />
+                  </span>
+                  <div>
+                    <div className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                      {office.label}
+                    </div>
+                    <div className="mt-1 font-display font-semibold text-lg">
+                      {office.city}, {office.country}
+                    </div>
+                  </div>
+                </div>
+                <div className="mt-4 text-sm text-muted-foreground leading-relaxed">
+                  {office.address}
                 </div>
               </div>
             ))}
@@ -114,6 +150,71 @@ function Contact() {
   );
 }
 
+function FlagIcon({ flag }: { flag: (typeof OFFICE_LOCATIONS)[number]["flag"] }) {
+  if (flag === "india") {
+    return (
+      <svg viewBox="0 0 60 60" className="h-full w-full" aria-hidden="true">
+        <rect width="60" height="20" fill="#ff671f" />
+        <rect y="20" width="60" height="20" fill="#ffffff" />
+        <rect y="40" width="60" height="20" fill="#046a38" />
+        <circle cx="30" cy="30" r="7" fill="none" stroke="#06038d" strokeWidth="1.4" />
+        <circle cx="30" cy="30" r="1.2" fill="#06038d" />
+        {Array.from({ length: 24 }).map((_, index) => (
+          <line
+            key={index}
+            x1="30"
+            y1="30"
+            x2="30"
+            y2="23"
+            stroke="#06038d"
+            strokeWidth="0.55"
+            transform={`rotate(${index * 15} 30 30)`}
+          />
+        ))}
+      </svg>
+    );
+  }
+
+  if (flag === "uae") {
+    return (
+      <svg viewBox="0 0 60 60" className="h-full w-full" aria-hidden="true">
+        <rect width="60" height="20" fill="#00843d" />
+        <rect y="20" width="60" height="20" fill="#ffffff" />
+        <rect y="40" width="60" height="20" fill="#000000" />
+        <rect width="15" height="60" fill="#ce1126" />
+      </svg>
+    );
+  }
+
+  return (
+    <svg viewBox="0 0 60 60" className="h-full w-full" aria-hidden="true">
+      {Array.from({ length: 13 }).map((_, index) => (
+        <rect
+          key={index}
+          y={(index * 60) / 13}
+          width="60"
+          height={60 / 13}
+          fill={index % 2 === 0 ? "#b31942" : "#ffffff"}
+        />
+      ))}
+      <rect width="28" height="32" fill="#0a3161" />
+      {Array.from({ length: 30 }).map((_, index) => {
+        const row = Math.floor(index / 6);
+        const col = index % 6;
+        return (
+          <circle
+            key={index}
+            cx={4 + col * 4.3 + (row % 2 ? 2 : 0)}
+            cy={4 + row * 5}
+            r="1"
+            fill="#ffffff"
+          />
+        );
+      })}
+    </svg>
+  );
+}
+
 function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -121,7 +222,7 @@ function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="lg:col-span-7 glass-card rounded-3xl p-10 flex flex-col items-start gap-4">
+      <div className="lg:col-span-7 self-start glass-card rounded-3xl p-10 flex flex-col items-start gap-4">
         <span
           className="grid h-12 w-12 place-items-center rounded-2xl text-white"
           style={{ background: "var(--gradient-brand)" }}
@@ -146,7 +247,7 @@ function ContactForm() {
 
   return (
     <form
-      className="lg:col-span-7 glass-card rounded-3xl p-7 sm:p-10 space-y-5"
+      className="lg:col-span-7 self-start glass-card rounded-3xl p-7 sm:p-10 space-y-5"
       onSubmit={async (e) => {
         e.preventDefault();
         setError("");
@@ -268,8 +369,8 @@ function ContactIcon({
 
 function ContactSidebar() {
   return (
-    <aside className="lg:col-span-5 space-y-4">
-      <div className="glass-card rounded-3xl p-6 sm:p-7 space-y-5">
+    <aside className="lg:col-span-5 lg:self-stretch flex flex-col gap-4">
+      <div className="glass-card rounded-3xl p-6 sm:p-7 space-y-5 lg:flex-1">
         <h3 className="font-display font-semibold text-lg">Reach us directly</h3>
         <div className="space-y-4 text-sm">
           <a
@@ -303,34 +404,7 @@ function ContactSidebar() {
               </span>
             </a>
           ))}
-          <div className="flex items-start gap-3 text-foreground/85">
-            <ContactIcon color="var(--brand-green)">
-              <MapPin className="h-4 w-4" />
-            </ContactIcon>
-            <span className="min-w-0 flex-1 leading-relaxed">
-              <span className="block text-xs text-muted-foreground">
-                Headquartered at
-              </span>
-              603, White Square, Hinjewadi-Wakad Road, Near Wakad Bridge, Phase
-              1, Hinjawadi, Pune, Maharashtra 411057
-            </span>
-          </div>
         </div>
-      </div>
-
-      <div className="rounded-3xl border border-border bg-surface-muted/70 p-6 sm:p-7 space-y-3">
-        <h3 className="font-display font-semibold text-lg">For media & press</h3>
-        <p className="text-sm text-muted-foreground leading-relaxed">
-          For interviews, partnerships, or media enquiries about Pure Technology,
-          write to us at{" "}
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
-            className="text-foreground underline"
-          >
-            {CONTACT_EMAIL}
-          </a>
-          .
-        </p>
       </div>
 
       <div className="rounded-3xl border border-border bg-surface-muted/70 p-6 sm:p-7 space-y-3">

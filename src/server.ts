@@ -291,8 +291,14 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
   return brandedErrorResponse();
 }
 
+let isDbSeeded = false;
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
+    if (!isDbSeeded) {
+      isDbSeeded = true;
+      import("./lib/db-seed").then((m) => m.seedDatabase()).catch(err => console.error("Auto seeding failed:", err));
+    }
     try {
       const url = new URL(request.url);
       if (url.pathname === "/api/contact") {

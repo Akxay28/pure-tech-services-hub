@@ -6,9 +6,10 @@ import { submitContactForm } from "@/lib/contact-submit";
 
 const CONTACT_EMAIL = "contact@puretechnology.in";
 const CONTACT_NUMBERS = [
-  { label: "HR & Carrers", number: "+91 73875 81577", href: "tel:+917387581577" },
+  { label: "For HR & Carrers", number: "+91 73875 81577", href: "tel:+917387581577" },
   { label: "For Support", number: "+91 83298 49726", href: "tel:+918329849726" },
-  { label: "For Project", number: "+91 99701 11283", href: "tel:+919970111283" },
+  { label: "For AI Project", number: "+91 99701 11283", href: "tel:+919970111283" },
+  { label: "For Hire Resource", number: "+91 73854 55380", href: "tel:+919970111283" },
 ] as const;
 
 const CONSULTATION_STEPS = [

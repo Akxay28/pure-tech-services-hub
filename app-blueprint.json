@@ -1,0 +1,185 @@
+{
+  "project": {
+    "name": "Pure Technology Services Hub",
+    "architecture": "TanStack Start (Full-stack SSR React Application)",
+    "frameworks": ["React 19", "Vite 7", "TypeScript 5.8", "Tailwind CSS v4"],
+    "router": "TanStack Router",
+    "deployment": "Cloudflare Pages (via wrangler.jsonc)",
+    "entryPoints": {
+      "client": "src/start.ts",
+      "server": "src/server.ts"
+    }
+  },
+  "backend": {
+    "endpoints": [
+      {
+        "path": "/api/contact",
+        "method": "POST",
+        "description": "Main lead contact form endpoint. Standardizes and forwards visitor details via Resend API to design@puretechnology.in and shravan.shinde@puretechnology.in.",
+        "handler": "src/server.ts (handleContactRequest)",
+        "payloadFormat": {
+          "name/visitor-name": "string (required)",
+          "email/visitor-email": "string (required)",
+          "phone/visitor-phone": "string (optional)",
+          "company/visitor-company": "string (optional)",
+          "role": "string (optional)",
+          "interest/service": "string (optional)",
+          "message/requirements/description": "string (required)",
+          "formSource": "string (optional)"
+        }
+      }
+    ],
+    "clientHelpers": [
+      {
+        "file": "src/lib/contact-submit.ts",
+        "functions": [
+          {
+            "name": "submitContactForm",
+            "params": "ContactPayload (key-value pair map of form entries)",
+            "behavior": "Sends POST request to /api/contact and throws Error on failure."
+          }
+        ]
+      }
+    ]
+  },
+  "staticRegistries": {
+    "hireRoles": {
+      "file": "src/lib/hire-roles.ts",
+      "description": "Contains metadata for developers roles available to hire. Indexed by slugs like 'ai-developers', 'android-developers', etc."
+    },
+    "subServices": {
+      "file": "src/lib/sub-services.ts",
+      "description": "Contains detailed services metadata indexed by sub-service slug."
+    },
+    "caseStudies": {
+      "file": "src/lib/case-studies-by-service.ts",
+      "description": "Contains lists of case studies mapped to subServices slug and mainServices key."
+    },
+    "teamContacts": {
+      "file": "src/lib/team-contacts.ts",
+      "description": "Contains members list for navigation and linkedin links."
+    }
+  },
+  "routes": [
+    {
+      "path": "/",
+      "file": "src/routes/index.tsx",
+      "description": "Main Landing Page. Features a hero carousel, YouTube showreel embed, case studies summaries, core value propositions, customer reviews, and a CTA section."
+    },
+    {
+      "path": "/about",
+      "file": "src/routes/about.tsx",
+      "description": "About company history, convictions, executive team, customer testimonials, and main consulting CTA."
+    },
+    {
+      "path": "/awards-achievements",
+      "file": "src/routes/awards-achievements.tsx",
+      "description": "Displays timeline, milestones, certificates, and highlights of Pure Technology."
+    },
+    {
+      "path": "/careers",
+      "file": "src/routes/careers.tsx",
+      "description": "Parent layout route for career-related routes."
+    },
+    {
+      "path": "/careers/",
+      "file": "src/routes/careers.index.tsx",
+      "description": "Careers landing page. Lists active open positions (e.g. .NET Fresher) and handles jobs application mailto link."
+    },
+    {
+      "path": "/careers/benefits-perks",
+      "file": "src/routes/careers.benefits-perks.tsx",
+      "description": "Highlights workplace culture, insurance benefits, professional growth, and lifestyle perks."
+    },
+    {
+      "path": "/careers/life-at-pure-technology",
+      "file": "src/routes/careers.life-at-pure-technology.tsx",
+      "description": "Photo gallery and team outing showcase of Pure Technology culture."
+    },
+    {
+      "path": "/case-studies",
+      "file": "src/routes/case-studies.tsx",
+      "description": "Directory of case studies. Displays a list of all client achievements (Bridgestone, CEAT, Schindler, Sandvik, Tata AutoComp, PCDA, etc.)."
+    },
+    {
+      "path": "/case-studies/$slug",
+      "file": "src/routes/case-studies/$slug.tsx",
+      "description": "Case study details route. NOTE: Currently reads raw data from sessionStorage.getItem('caseStudy') which breaks on direct refresh or deep linking. Integration with TanStack Loaders or API is required to fetch details dynamically."
+    },
+    {
+      "path": "/contact",
+      "file": "src/routes/contact.tsx",
+      "description": "Main contact page. Features direct phone/email contact numbers, addresses, and the ContactForm submitting to /api/contact."
+    },
+    {
+      "path": "/gallery",
+      "file": "src/routes/gallery.tsx",
+      "description": "Portfolio/gallery section displaying office culture, awards, and events."
+    },
+    {
+      "path": "/mission-vision",
+      "file": "src/routes/mission-vision.tsx",
+      "description": "Company mission statement, vision for future, and core operational values."
+    },
+    {
+      "path": "/team",
+      "file": "src/routes/team.tsx",
+      "description": "Grid of team members showing photos, names, and roles."
+    },
+    {
+      "path": "/hire/$slug",
+      "file": "src/routes/hire.$slug.tsx",
+      "description": "Fallback dynamic hiring page loader. Feeds from src/lib/hire-roles.ts using the parameter slug."
+    },
+    {
+      "path": "/services/$slug",
+      "file": "src/routes/services.$slug.tsx",
+      "description": "Fallback dynamic service sub-page loader. Feeds from src/lib/sub-services.ts."
+    },
+    {
+      "prefix": "/services.*",
+      "files": [
+        "src/routes/services.ai-solutions.tsx",
+        "src/routes/services.product-engineering.tsx",
+        "src/routes/services.it-staffing.tsx",
+        "src/routes/services.ai-agents-development.tsx",
+        "src/routes/services.web-application-development.tsx",
+        "src/routes/services.mobile-app-development.tsx",
+        "src/routes/services.cloud-computing.tsx",
+        "src/routes/services.cloud-infrastructure.tsx",
+        "src/routes/services.custom-ai-development.tsx",
+        "src/routes/services.cybersecurity.tsx",
+        "src/routes/services.data-engineering.tsx",
+        "src/routes/services.front-end-development.tsx",
+        "src/routes/services.generative-ai-development.tsx"
+      ],
+      "description": "Specific sub-service pages. Import main service case studies and include specialized TechnologyExpertiseSection cards for roles."
+    },
+    {
+      "prefix": "/hire.*",
+      "files": [
+        "src/routes/hire.ai-developers.tsx",
+        "src/routes/hire.android-developers.tsx",
+        "src/routes/hire.backend-developers.tsx",
+        "src/routes/hire.frontend-developers.tsx",
+        "src/routes/hire.fullstack-developers.tsx",
+        "src/routes/hire.devops-developers.tsx",
+        "src/routes/hire.chatbot-developers.tsx",
+        "src/routes/hire.software-developer.tsx"
+      ],
+      "description": "Specific hiring roles landing pages. Render via HireRolePage using role-specific configurations."
+    }
+  ],
+  "components": {
+    "site": {
+      "ConsultationSection.tsx": "Submits name, email, phone, company, requirements to submitContactForm.",
+      "FirstVisitEnquiryModal.tsx": "A popup modal appearing after a delay. Submits visitor details and service selections.",
+      "Header.tsx": "Global navigation menu. Integrates links for About, Services, Case Studies, Careers, and Contact.",
+      "Footer.tsx": "Global footer with links, email address, address details, and direct contact numbers.",
+      "HireRolePage.tsx": "Layout wrapper for hire developer pages.",
+      "ServicePage.tsx": "Layout wrapper for main service categories.",
+      "SubServicePage.tsx": "Layout wrapper for dynamic sub-service pages.",
+      "Primitives.tsx": "Hosts UI building blocks like BrandIconBox, BrandTitle, PageHero, PrimaryButton, GhostButton, SectionHeader, ClientMarquee, Testimonial, CaseStudyCard, and CTASection."
+    }
+  }
+}

@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
 
+import { getCaseStudyBySlugAction } from "../../lib/admin-actions";
+
 type TechStack = { category: string; items: string; icon: string };
 type Metric = { value: string; label: string };
 
@@ -23,12 +25,16 @@ type CaseStudyState = {
 };
 
 export const Route = createFileRoute("/case-studies/$slug")({
+  loader: async ({ params }) => {
+    const study = await getCaseStudyBySlugAction(params.slug);
+    return { study };
+  },
   component: CaseStudyPage,
 });
 
 function CaseStudyPage() {
-  const study = JSON.parse(sessionStorage.getItem("caseStudy") ?? "null") as CaseStudyState | null;
-  const ac = study?.accent ?? "var(--brand-blue)";
+  const { study } = Route.useLoaderData();
+  const ac = (study as any)?.accent ?? "var(--brand-blue)";
 
   if (!study) {
     return (

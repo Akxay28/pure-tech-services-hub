@@ -278,20 +278,10 @@ export function CaseStudyCard({
 }: CaseStudy) {
   const router = useRouter();
 
-  const slug = client
+  const slug = (rest as any).slug || client
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
-
-  const study = { client, industry, challenge, outcome, metrics, accent, image, ...rest };
-
-  function handleExplore() {
-    sessionStorage.setItem("caseStudy", JSON.stringify(study));
-    router.navigate({
-      to: "/case-studies/$slug",
-      params: { slug },
-    });
-  }
 
   return (
     <article
@@ -382,13 +372,14 @@ export function CaseStudyCard({
 
         {/* Button */}
         <div className="mt-10 flex justify-center">
-          <button
-            onClick={handleExplore}
+          <Link
+            to="/case-studies/$slug"
+            params={{ slug }}
             className="group flex items-center cursor-pointer gap-2 rounded-full border border-border bg-surface/60 px-6 py-2.5 text-sm font-medium text-foreground/80 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-surface hover:text-foreground"
           >
             Read More
             <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-          </button>
+          </Link>
         </div>
       </div>
     </article>

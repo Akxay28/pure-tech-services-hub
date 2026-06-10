@@ -18,10 +18,12 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CaseStudiesRouteImport } from './routes/case-studies'
 import { Route as CareersRouteImport } from './routes/careers'
 import { Route as AwardsAchievementsRouteImport } from './routes/awards-achievements'
+import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as CareersIndexRouteImport } from './routes/careers.index'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ServicesWebApplicationDevelopmentRouteImport } from './routes/services.web-application-development'
 import { Route as ServicesSoftwareDevelopmentRouteImport } from './routes/services.software-development'
 import { Route as ServicesProductEngineeringRouteImport } from './routes/services.product-engineering'
@@ -67,6 +69,10 @@ import { Route as HireSlugRouteImport } from './routes/hire.$slug'
 import { Route as CaseStudiesSlugRouteImport } from './routes/case-studies/$slug'
 import { Route as CareersLifeAtPureTechnologyRouteImport } from './routes/careers.life-at-pure-technology'
 import { Route as CareersBenefitsPerksRouteImport } from './routes/careers.benefits-perks'
+import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminNewRouteImport } from './routes/admin.new'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminEditIdRouteImport } from './routes/admin.edit.$id'
 
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
@@ -113,6 +119,11 @@ const AwardsAchievementsRoute = AwardsAchievementsRouteImport.update({
   path: '/awards-achievements',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -132,6 +143,11 @@ const CareersIndexRoute = CareersIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => CareersRoute,
+} as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
 } as any)
 const ServicesWebApplicationDevelopmentRoute =
   ServicesWebApplicationDevelopmentRouteImport.update({
@@ -374,10 +390,31 @@ const CareersBenefitsPerksRoute = CareersBenefitsPerksRouteImport.update({
   path: '/benefits-perks',
   getParentRoute: () => CareersRoute,
 } as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminNewRoute = AdminNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminEditIdRoute = AdminEditIdRouteImport.update({
+  id: '/edit/$id',
+  path: '/edit/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/awards-achievements': typeof AwardsAchievementsRoute
   '/careers': typeof CareersRouteWithChildren
   '/case-studies': typeof CaseStudiesRouteWithChildren
@@ -387,6 +424,9 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/new': typeof AdminNewRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/careers/benefits-perks': typeof CareersBenefitsPerksRoute
   '/careers/life-at-pure-technology': typeof CareersLifeAtPureTechnologyRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
@@ -432,8 +472,10 @@ export interface FileRoutesByFullPath {
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
+  '/admin/': typeof AdminIndexRoute
   '/careers/': typeof CareersIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/admin/edit/$id': typeof AdminEditIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -445,6 +487,9 @@ export interface FileRoutesByTo {
   '/mission-vision': typeof MissionVisionRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/new': typeof AdminNewRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/careers/benefits-perks': typeof CareersBenefitsPerksRoute
   '/careers/life-at-pure-technology': typeof CareersLifeAtPureTechnologyRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
@@ -490,13 +535,16 @@ export interface FileRoutesByTo {
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
+  '/admin': typeof AdminIndexRoute
   '/careers': typeof CareersIndexRoute
   '/services': typeof ServicesIndexRoute
+  '/admin/edit/$id': typeof AdminEditIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRouteWithChildren
   '/awards-achievements': typeof AwardsAchievementsRoute
   '/careers': typeof CareersRouteWithChildren
   '/case-studies': typeof CaseStudiesRouteWithChildren
@@ -506,6 +554,9 @@ export interface FileRoutesById {
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
+  '/admin/login': typeof AdminLoginRoute
+  '/admin/new': typeof AdminNewRoute
+  '/admin/settings': typeof AdminSettingsRoute
   '/careers/benefits-perks': typeof CareersBenefitsPerksRoute
   '/careers/life-at-pure-technology': typeof CareersLifeAtPureTechnologyRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
@@ -551,14 +602,17 @@ export interface FileRoutesById {
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
+  '/admin/': typeof AdminIndexRoute
   '/careers/': typeof CareersIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/admin/edit/$id': typeof AdminEditIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
     | '/awards-achievements'
     | '/careers'
     | '/case-studies'
@@ -568,6 +622,9 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/team'
+    | '/admin/login'
+    | '/admin/new'
+    | '/admin/settings'
     | '/careers/benefits-perks'
     | '/careers/life-at-pure-technology'
     | '/case-studies/$slug'
@@ -613,8 +670,10 @@ export interface FileRouteTypes {
     | '/services/product-engineering'
     | '/services/software-development'
     | '/services/web-application-development'
+    | '/admin/'
     | '/careers/'
     | '/services/'
+    | '/admin/edit/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -626,6 +685,9 @@ export interface FileRouteTypes {
     | '/mission-vision'
     | '/sitemap.xml'
     | '/team'
+    | '/admin/login'
+    | '/admin/new'
+    | '/admin/settings'
     | '/careers/benefits-perks'
     | '/careers/life-at-pure-technology'
     | '/case-studies/$slug'
@@ -671,12 +733,15 @@ export interface FileRouteTypes {
     | '/services/product-engineering'
     | '/services/software-development'
     | '/services/web-application-development'
+    | '/admin'
     | '/careers'
     | '/services'
+    | '/admin/edit/$id'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
     | '/awards-achievements'
     | '/careers'
     | '/case-studies'
@@ -686,6 +751,9 @@ export interface FileRouteTypes {
     | '/services'
     | '/sitemap.xml'
     | '/team'
+    | '/admin/login'
+    | '/admin/new'
+    | '/admin/settings'
     | '/careers/benefits-perks'
     | '/careers/life-at-pure-technology'
     | '/case-studies/$slug'
@@ -731,13 +799,16 @@ export interface FileRouteTypes {
     | '/services/product-engineering'
     | '/services/software-development'
     | '/services/web-application-development'
+    | '/admin/'
     | '/careers/'
     | '/services/'
+    | '/admin/edit/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRouteWithChildren
   AwardsAchievementsRoute: typeof AwardsAchievementsRoute
   CareersRoute: typeof CareersRouteWithChildren
   CaseStudiesRoute: typeof CaseStudiesRouteWithChildren
@@ -836,6 +907,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AwardsAchievementsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -863,6 +941,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/careers/'
       preLoaderRoute: typeof CareersIndexRouteImport
       parentRoute: typeof CareersRoute
+    }
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/services/web-application-development': {
       id: '/services/web-application-development'
@@ -1179,8 +1264,54 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareersBenefitsPerksRouteImport
       parentRoute: typeof CareersRoute
     }
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/new': {
+      id: '/admin/new'
+      path: '/new'
+      fullPath: '/admin/new'
+      preLoaderRoute: typeof AdminNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/edit/$id': {
+      id: '/admin/edit/$id'
+      path: '/edit/$id'
+      fullPath: '/admin/edit/$id'
+      preLoaderRoute: typeof AdminEditIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
   }
 }
+
+interface AdminRouteChildren {
+  AdminLoginRoute: typeof AdminLoginRoute
+  AdminNewRoute: typeof AdminNewRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminEditIdRoute: typeof AdminEditIdRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminLoginRoute: AdminLoginRoute,
+  AdminNewRoute: AdminNewRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  AdminEditIdRoute: AdminEditIdRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 interface CareersRouteChildren {
   CareersBenefitsPerksRoute: typeof CareersBenefitsPerksRoute
@@ -1265,6 +1396,7 @@ const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRouteWithChildren,
   AwardsAchievementsRoute: AwardsAchievementsRoute,
   CareersRoute: CareersRouteWithChildren,
   CaseStudiesRoute: CaseStudiesRouteWithChildren,
