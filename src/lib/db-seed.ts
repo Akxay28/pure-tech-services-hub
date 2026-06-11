@@ -2,6 +2,12 @@ import { connectToDatabase } from "./mongodb";
 import { getEnvValue } from "./env";
 import { hashPassword, verifyPassword } from "./auth";
 import { studies } from "./static-case-studies";
+import { seedBlogs } from "./static-blogs";
+
+function getErrorSummary(error: unknown) {
+  if (error instanceof Error) return error.message.split("\n")[0];
+  return String(error);
+}
 
 export async function seedDatabase() {
   try {
@@ -60,7 +66,25 @@ export async function seedDatabase() {
       await caseStudiesCol.insertMany(formattedStudies);
       console.log(`[DB Seed] Seeded ${formattedStudies.length} case studies successfully.`);
     }
+
+    // 3. Seed blog posts
+    const blogsCol = db.collection("blogs");
+    await blogsCol.createIndex({ slug: 1 }, { unique: true });
+
+    const blogsCount = await blogsCol.countDocuments();
+    if (blogsCount === 0 && Array.isArray(seedBlogs)) {
+      const now = new Date();
+      const formattedBlogs = seedBlogs.map((blog) => ({
+        ...blog,
+        views: 0,
+        createdAt: now,
+        updatedAt: now,
+      }));
+
+      await blogsCol.insertMany(formattedBlogs);
+      console.log(`[DB Seed] Seeded ${formattedBlogs.length} blogs successfully.`);
+    }
   } catch (error) {
-    console.error("[DB Seed] Seeding error:", error);
+    console.warn("[DB Seed] Skipped seeding because MongoDB is unavailable:", getErrorSummary(error));
   }
 }

@@ -1,24 +1,24 @@
 import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
-import { getCaseStudiesAction, deleteCaseStudyAction } from "@/lib/admin-actions";
+import { getBlogsAction, deleteBlogAction } from "@/lib/admin-actions";
 import { Plus, Edit2, Trash2, ExternalLink } from "lucide-react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export const Route = createFileRoute("/admin/")({
+export const Route = createFileRoute("/admin/blogs/")({
   loader: async () => {
-    return { studies: await getCaseStudiesAction() };
+    return { blogs: await getBlogsAction() };
   },
-  component: AdminDashboard,
+  component: AdminBlogsDashboard,
 });
 
-function AdminDashboard() {
-  const { studies } = Route.useLoaderData();
+function AdminBlogsDashboard() {
+  const { blogs } = Route.useLoaderData();
   const router = useRouter();
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9;
-  const totalPages = Math.ceil(studies.length / itemsPerPage);
-  const paginatedStudies = studies.slice(
+  const totalPages = Math.ceil(blogs.length / itemsPerPage);
+  const paginatedBlogs = blogs.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage,
   );
@@ -29,19 +29,24 @@ function AdminDashboard() {
     }
   }, [currentPage, totalPages]);
 
-  async function handleDelete(id: string, clientName: string) {
-    if (!window.confirm(`Are you sure you want to delete the case study for "${clientName}"?`)) {
+  async function handleDelete(id: string, title: string) {
+    if (id.startsWith("static-")) {
+      toast.error("Static demo posts cannot be deleted. Try adding a custom blog post first!");
+      return;
+    }
+
+    if (!window.confirm(`Are you sure you want to delete the blog post "${title}"?`)) {
       return;
     }
 
     setDeletingId(id);
     try {
-      const res = await deleteCaseStudyAction({ data: id });
+      const res = await deleteBlogAction({ data: id });
       if (res?.success) {
-        toast.success(`Deleted case study for "${clientName}" successfully.`);
+        toast.success(`Deleted blog post "${title}" successfully.`);
         router.invalidate();
       } else {
-        toast.error("Could not delete the case study.");
+        toast.error("Could not delete the blog post.");
       }
     } catch (err: any) {
       toast.error(err?.message || "An error occurred during deletion.");
@@ -54,17 +59,17 @@ function AdminDashboard() {
     <div className="space-y-8 animate-fade-in">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-display font-bold">Case Studies</h1>
+          <h1 className="text-3xl font-display font-bold">Blog Posts</h1>
           <p className="text-sm text-muted-foreground mt-1">
-            Manage client case studies, view metrics, and publish new outcomes
+            Manage your blog articles, SEO settings, post views, and publish updates
           </p>
         </div>
         <Link
-          to="/admin/new"
+          to="/admin/blogs/new"
           className="inline-flex items-center justify-center gap-2 bg-foreground text-background font-semibold px-5 py-3 rounded-2xl shadow-soft hover:opacity-90 active:scale-[0.98] transition-all cursor-pointer"
         >
           <Plus className="h-4.5 w-4.5" />
-          Add Case Study
+          Add Blog Post
         </Link>
       </div>
 
@@ -73,53 +78,43 @@ function AdminDashboard() {
           <table className="w-full text-left border-collapse text-sm">
             <thead>
               <tr className="border-b border-border bg-surface-muted/50 text-muted-foreground font-semibold">
-                <th className="p-5">Client / Project</th>
-                <th className="p-5">Industry</th>
-                <th className="p-5">Metrics</th>
+                <th className="p-5">Title / Slug</th>
+                <th className="p-5">Category</th>
+                <th className="p-5">Author</th>
+                <th className="p-5">Views</th>
                 <th className="p-5 text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border/60">
-              {studies.length === 0 ? (
+              {blogs.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="p-10 text-center text-muted-foreground">
-                    No case studies found. Click "Add Case Study" to create one.
+                  <td colSpan={5} className="p-10 text-center text-muted-foreground">
+                    No blog posts found. Click "Add Blog Post" to create one.
                   </td>
                 </tr>
               ) : (
-                paginatedStudies.map((s) => (
-                  <tr key={s._id} className="hover:bg-surface-muted/20 transition-colors">
+                paginatedBlogs.map((b) => (
+                  <tr key={b._id} className="hover:bg-surface-muted/20 transition-colors">
                     <td className="p-5 max-w-sm">
-                      <div className="font-semibold text-foreground text-base">{s.client}</div>
+                      <div className="font-semibold text-foreground text-base line-clamp-1">{b.title}</div>
                       <div className="text-xs text-muted-foreground mt-1 font-mono tracking-tight line-clamp-1">
-                        /{s.slug}
+                        /blog/{b.slug}
                       </div>
-                    </td>
-                    <td className="p-5 text-foreground/80 font-medium">
-                      {s.industry || (s as any).sector || "N/A"}
                     </td>
                     <td className="p-5">
-                      <div className="flex flex-wrap gap-1.5">
-                        {s.metrics?.slice(0, 3).map((m: any, idx: number) => (
-                          <span
-                            key={idx}
-                            className="inline-flex items-center text-[11px] font-semibold bg-primary/10 text-primary px-2.5 py-1 rounded-full"
-                          >
-                            {m.value || m.v}: {m.label || m.l}
-                          </span>
-                        ))}
-                        {s.metrics && s.metrics.length > 3 && (
-                          <span className="inline-flex items-center text-[10px] bg-secondary text-muted-foreground px-2 py-0.5 rounded-full">
-                            +{s.metrics.length - 3} more
-                          </span>
-                        )}
-                      </div>
+                      <span className="inline-flex items-center text-[11px] font-semibold bg-primary/10 text-primary px-2.5 py-1 rounded-full">
+                        {b.category}
+                      </span>
+                    </td>
+                    <td className="p-5 text-foreground/80 font-medium">{b.author.split(",")[0]}</td>
+                    <td className="p-5 text-muted-foreground font-semibold">
+                      {Number(b.views || 0).toLocaleString()}
                     </td>
                     <td className="p-5 text-right">
                       <div className="flex items-center justify-end gap-2.5">
                         <Link
-                          to="/case-studies/$slug"
-                          params={{ slug: s.slug }}
+                          to="/blog/$slug"
+                          params={{ slug: b.slug }}
                           target="_blank"
                           className="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-xl transition-all"
                           title="View Live Page"
@@ -127,16 +122,16 @@ function AdminDashboard() {
                           <ExternalLink className="h-4.5 w-4.5" />
                         </Link>
                         <Link
-                          to="/admin/edit/$id"
-                          params={{ id: s._id }}
+                          to="/admin/blogs/edit/$id"
+                          params={{ id: b._id }}
                           className="p-2 text-primary hover:bg-primary/10 rounded-xl transition-all"
                           title="Edit"
                         >
                           <Edit2 className="h-4.5 w-4.5" />
                         </Link>
                         <button
-                          onClick={() => handleDelete(s._id, s.client)}
-                          disabled={deletingId === s._id}
+                          onClick={() => handleDelete(b._id, b.title)}
+                          disabled={deletingId === b._id}
                           className="p-2 text-destructive hover:bg-destructive/10 rounded-xl transition-all cursor-pointer disabled:opacity-50"
                           title="Delete"
                         >
@@ -154,7 +149,7 @@ function AdminDashboard() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-t border-border bg-surface/60 px-5 py-4">
             <p className="text-xs font-medium text-muted-foreground">
               Showing {(currentPage - 1) * itemsPerPage + 1}-
-              {Math.min(currentPage * itemsPerPage, studies.length)} of {studies.length}
+              {Math.min(currentPage * itemsPerPage, blogs.length)} of {blogs.length}
             </p>
             <div className="flex items-center justify-end gap-2">
               <button

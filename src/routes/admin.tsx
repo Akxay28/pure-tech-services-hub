@@ -1,54 +1,71 @@
-import { createFileRoute, redirect, Outlet, Link, useRouter } from "@tanstack/react-router";
-import { LayoutDashboard, LogOut, Settings } from "lucide-react";
+import { createFileRoute, redirect, Outlet, Link } from "@tanstack/react-router";
+import { LayoutDashboard, LogOut, Settings, BookOpen } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { checkAuthAction, logoutAction } from "@/lib/admin-actions";
-import { ADMIN_TAB_SESSION_KEY } from "@/lib/admin-session";
+
+import React from "react";
+
+class ErrorBoundary extends React.Component<
+  { children: React.ReactNode },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error: any) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    console.error("ErrorBoundary caught an error", error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="p-8 bg-destructive/10 border border-destructive/20 text-destructive rounded-2xl">
+          <h2 className="text-lg font-bold">Something went wrong rendering this section:</h2>
+          <p className="text-sm font-mono mt-2">{this.state.error?.toString()}</p>
+          <pre className="text-xs font-mono mt-4 overflow-auto max-w-full p-4 bg-surface-muted rounded-xl border border-border">
+            {this.state.error?.stack}
+          </pre>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
 
 export const Route = createFileRoute("/admin")({
-  ssr: false,
   loader: async ({ location }) => {
     const isLoginPage = location.pathname === "/admin/login";
     const auth = await checkAuthAction();
 
-    if (typeof window === "undefined") {
-      return { auth };
-    }
-
-    const hasActiveTabSession = sessionStorage.getItem(ADMIN_TAB_SESSION_KEY) === "true";
-
-    if ((!auth.authenticated || !hasActiveTabSession) && !isLoginPage) {
-      sessionStorage.removeItem(ADMIN_TAB_SESSION_KEY);
-      if (auth.authenticated) {
-        await logoutAction();
-      }
+    if (!auth.authenticated && !isLoginPage) {
       throw redirect({
         to: "/admin/login" as any,
       });
     }
 
-    if (auth.authenticated && hasActiveTabSession && isLoginPage) {
+    if (auth.authenticated && isLoginPage) {
       throw redirect({
         to: "/admin" as any,
       });
     }
 
-    return {
-      auth:
-        auth.authenticated && hasActiveTabSession ? auth : { authenticated: false, username: "" },
-    };
+    return { auth };
   },
   component: AdminLayout,
 });
 
 function AdminLayout() {
   const { auth } = Route.useLoaderData();
-  const router = useRouter();
 
   async function handleLogout() {
-    sessionStorage.removeItem(ADMIN_TAB_SESSION_KEY);
     await logoutAction();
-    router.invalidate();
-    router.navigate({ to: "/admin/login" as any });
+    window.location.href = "/admin/login";
   }
 
   // If not logged in and on login page, just render without header/nav
@@ -71,11 +88,20 @@ function AdminLayout() {
             <nav className="hidden md:flex items-center gap-1">
               <Link
                 to="/admin"
+                activeOptions={{ exact: true }}
                 className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium hover:bg-secondary transition-colors"
                 activeProps={{ className: "bg-secondary text-primary" }}
               >
                 <LayoutDashboard className="h-4 w-4" />
                 Case Studies
+              </Link>
+              <Link
+                to="/admin/blogs"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium hover:bg-secondary transition-colors"
+                activeProps={{ className: "bg-secondary text-primary" }}
+              >
+                <BookOpen className="h-4 w-4" />
+                Blogs
               </Link>
               <Link
                 to="/admin/settings"
@@ -106,7 +132,9 @@ function AdminLayout() {
       {/* Admin Content Area */}
       <main className="flex-1 bg-surface-muted/30">
         <div className="mx-auto max-w-7xl px-5 lg:px-8 py-10">
-          <Outlet />
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
         </div>
       </main>
     </div>

@@ -415,13 +415,12 @@ const hireItems: Record<HireTabKey, HireItem[]> = {
   ],
 };
 
-type NavItem = { label: string; to?: string; type: "mega" | "simple" | "hire" | "company" };
+type NavItem = { label: string; to?: string; type: "mega" | "simple" | "hire" | "company" | "link" };
 const nav: NavItem[] = [
   { label: "Services", to: "/services", type: "mega" },
   { label: "Hire Developers", type: "hire" },
   { label: "Company", type: "company" },
-  // Resource menu
-  // { label: "Resources", type: "simple" },
+  { label: "Blog", to: "/blog", type: "link" },
 ];
 
 export function Header() {
@@ -482,8 +481,8 @@ export function Header() {
                 <div
                   key={item.label}
                   className="relative"
-                  onMouseEnter={() => openMenu(item.label)}
-                  onMouseLeave={scheduleClose}
+                  onMouseEnter={item.type !== "link" ? () => openMenu(item.label) : undefined}
+                  onMouseLeave={item.type !== "link" ? scheduleClose : undefined}
                 >
                   {item.to ? (
                     <Link
@@ -491,12 +490,14 @@ export function Header() {
                       className="relative flex items-center gap-1 px-4 py-2.5 text-[15px] font-semibold tracking-tight text-[color:var(--brand-purple)] hover:text-[color:var(--brand-pink)] transition-colors"
                     >
                       {item.label}
-                      <ChevronDown
-                        className={`h-3.5 w-3.5 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                      />
+                      {item.type !== "link" && (
+                        <ChevronDown
+                          className={`h-3.5 w-3.5 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                        />
+                      )}
                       <span
                         className={`absolute left-4 right-4 -bottom-0.5 h-[2px] rounded-full bg-[image:var(--gradient-cta)] origin-left transition-transform duration-300 ${
-                          isOpen ? "scale-x-100" : "scale-x-0"
+                          isOpen || (item.type === "link" && location.pathname.startsWith(item.to)) ? "scale-x-100" : "scale-x-0"
                         }`}
                       />
                     </Link>
@@ -506,9 +507,11 @@ export function Header() {
                       className="relative flex items-center gap-1 px-4 py-2.5 text-[15px] font-semibold tracking-tight text-[color:var(--brand-purple)] hover:text-[color:var(--brand-pink)] transition-colors"
                     >
                       {item.label}
-                      <ChevronDown
-                        className={`h-3.5 w-3.5 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
-                      />
+                      {item.type !== "link" && (
+                        <ChevronDown
+                          className={`h-3.5 w-3.5 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`}
+                        />
+                      )}
                       <span
                         className={`absolute left-4 right-4 -bottom-0.5 h-[2px] rounded-full bg-[image:var(--gradient-cta)] origin-left transition-transform duration-300 ${
                           isOpen ? "scale-x-100" : "scale-x-0"
@@ -607,6 +610,12 @@ export function Header() {
                 title="Company"
                 items={[...companyItems.about, ...companyItems.careers]}
               />
+              <Link
+                to="/blog"
+                className="block w-full px-4 py-3 text-sm font-semibold text-[color:var(--brand-purple)] rounded-2xl border border-border/60 hover:bg-[color:var(--brand-pink-soft)]/20 transition-colors"
+              >
+                Blog
+              </Link>
               <div className="rounded-2xl border border-border/60 overflow-hidden">
                 <div className="px-4 py-3 text-sm font-semibold text-[color:var(--brand-purple)]">
                   Connect with our team

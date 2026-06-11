@@ -1,8 +1,7 @@
-import { createFileRoute, useRouter } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Lock, User, AlertCircle } from "lucide-react";
 import { getCaptchaConfigAction, loginAction } from "@/lib/admin-actions";
-import { ADMIN_TAB_SESSION_KEY } from "@/lib/admin-session";
 
 declare global {
   interface Window {
@@ -68,7 +67,6 @@ function AdminLogin() {
   const [loading, setLoading] = useState(false);
   const captchaRef = useRef<HTMLDivElement | null>(null);
   const widgetIdRef = useRef<CaptchaWidgetId | undefined>(undefined);
-  const router = useRouter();
 
   useEffect(() => {
     const provider = captchaConfig.provider as CaptchaProvider;
@@ -135,11 +133,8 @@ function AdminLogin() {
 
     try {
       await loginAction({ data: { username, password, captchaToken } });
-      sessionStorage.setItem(ADMIN_TAB_SESSION_KEY, "true");
-      router.invalidate();
-      router.navigate({ to: "/admin" as any });
+      window.location.href = "/admin";
     } catch (err: any) {
-      sessionStorage.removeItem(ADMIN_TAB_SESSION_KEY);
       const message = err?.message || "";
       const canShowServerMessage =
         message.includes("Too many failed login attempts") || message.includes("Captcha");
@@ -235,6 +230,13 @@ function AdminLogin() {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
+
+          <a
+            href="/"
+            className="block text-center text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Go to website
+          </a>
         </form>
       </div>
     </div>

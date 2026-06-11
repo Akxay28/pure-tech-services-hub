@@ -26,7 +26,7 @@ type CaseStudyState = {
 
 export const Route = createFileRoute("/case-studies/$slug")({
   loader: async ({ params }) => {
-    const study = await getCaseStudyBySlugAction(params.slug);
+    const study = await getCaseStudyBySlugAction({ data: params.slug });
     return { study };
   },
   component: CaseStudyPage,

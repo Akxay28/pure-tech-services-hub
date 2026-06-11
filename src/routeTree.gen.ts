@@ -17,12 +17,14 @@ import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CaseStudiesRouteImport } from './routes/case-studies'
 import { Route as CareersRouteImport } from './routes/careers'
+import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AwardsAchievementsRouteImport } from './routes/awards-achievements'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as CareersIndexRouteImport } from './routes/careers.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as ServicesWebApplicationDevelopmentRouteImport } from './routes/services.web-application-development'
 import { Route as ServicesSoftwareDevelopmentRouteImport } from './routes/services.software-development'
@@ -69,10 +71,14 @@ import { Route as HireSlugRouteImport } from './routes/hire.$slug'
 import { Route as CaseStudiesSlugRouteImport } from './routes/case-studies/$slug'
 import { Route as CareersLifeAtPureTechnologyRouteImport } from './routes/careers.life-at-pure-technology'
 import { Route as CareersBenefitsPerksRouteImport } from './routes/careers.benefits-perks'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminNewRouteImport } from './routes/admin.new'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminBlogsIndexRouteImport } from './routes/admin.blogs.index'
 import { Route as AdminEditIdRouteImport } from './routes/admin.edit.$id'
+import { Route as AdminBlogsNewRouteImport } from './routes/admin.blogs.new'
+import { Route as AdminBlogsEditIdRouteImport } from './routes/admin.blogs.edit.$id'
 
 const TeamRoute = TeamRouteImport.update({
   id: '/team',
@@ -114,6 +120,11 @@ const CareersRoute = CareersRouteImport.update({
   path: '/careers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogRoute = BlogRouteImport.update({
+  id: '/blog',
+  path: '/blog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AwardsAchievementsRoute = AwardsAchievementsRouteImport.update({
   id: '/awards-achievements',
   path: '/awards-achievements',
@@ -143,6 +154,11 @@ const CareersIndexRoute = CareersIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => CareersRoute,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlogRoute,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
@@ -390,6 +406,11 @@ const CareersBenefitsPerksRoute = CareersBenefitsPerksRouteImport.update({
   path: '/benefits-perks',
   getParentRoute: () => CareersRoute,
 } as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => BlogRoute,
+} as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
@@ -405,9 +426,24 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminBlogsIndexRoute = AdminBlogsIndexRouteImport.update({
+  id: '/blogs/',
+  path: '/blogs/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminEditIdRoute = AdminEditIdRouteImport.update({
   id: '/edit/$id',
   path: '/edit/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBlogsNewRoute = AdminBlogsNewRouteImport.update({
+  id: '/blogs/new',
+  path: '/blogs/new',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminBlogsEditIdRoute = AdminBlogsEditIdRouteImport.update({
+  id: '/blogs/edit/$id',
+  path: '/blogs/edit/$id',
   getParentRoute: () => AdminRoute,
 } as any)
 
@@ -416,6 +452,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/awards-achievements': typeof AwardsAchievementsRoute
+  '/blog': typeof BlogRouteWithChildren
   '/careers': typeof CareersRouteWithChildren
   '/case-studies': typeof CaseStudiesRouteWithChildren
   '/contact': typeof ContactRoute
@@ -427,6 +464,7 @@ export interface FileRoutesByFullPath {
   '/admin/login': typeof AdminLoginRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/careers/benefits-perks': typeof CareersBenefitsPerksRoute
   '/careers/life-at-pure-technology': typeof CareersLifeAtPureTechnologyRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
@@ -473,9 +511,13 @@ export interface FileRoutesByFullPath {
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
   '/admin/': typeof AdminIndexRoute
+  '/blog/': typeof BlogIndexRoute
   '/careers/': typeof CareersIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/admin/blogs/new': typeof AdminBlogsNewRoute
   '/admin/edit/$id': typeof AdminEditIdRoute
+  '/admin/blogs/': typeof AdminBlogsIndexRoute
+  '/admin/blogs/edit/$id': typeof AdminBlogsEditIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -490,6 +532,7 @@ export interface FileRoutesByTo {
   '/admin/login': typeof AdminLoginRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/careers/benefits-perks': typeof CareersBenefitsPerksRoute
   '/careers/life-at-pure-technology': typeof CareersLifeAtPureTechnologyRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
@@ -536,9 +579,13 @@ export interface FileRoutesByTo {
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
   '/admin': typeof AdminIndexRoute
+  '/blog': typeof BlogIndexRoute
   '/careers': typeof CareersIndexRoute
   '/services': typeof ServicesIndexRoute
+  '/admin/blogs/new': typeof AdminBlogsNewRoute
   '/admin/edit/$id': typeof AdminEditIdRoute
+  '/admin/blogs': typeof AdminBlogsIndexRoute
+  '/admin/blogs/edit/$id': typeof AdminBlogsEditIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -546,6 +593,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/awards-achievements': typeof AwardsAchievementsRoute
+  '/blog': typeof BlogRouteWithChildren
   '/careers': typeof CareersRouteWithChildren
   '/case-studies': typeof CaseStudiesRouteWithChildren
   '/contact': typeof ContactRoute
@@ -557,6 +605,7 @@ export interface FileRoutesById {
   '/admin/login': typeof AdminLoginRoute
   '/admin/new': typeof AdminNewRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/blog/$slug': typeof BlogSlugRoute
   '/careers/benefits-perks': typeof CareersBenefitsPerksRoute
   '/careers/life-at-pure-technology': typeof CareersLifeAtPureTechnologyRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
@@ -603,9 +652,13 @@ export interface FileRoutesById {
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
   '/admin/': typeof AdminIndexRoute
+  '/blog/': typeof BlogIndexRoute
   '/careers/': typeof CareersIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/admin/blogs/new': typeof AdminBlogsNewRoute
   '/admin/edit/$id': typeof AdminEditIdRoute
+  '/admin/blogs/': typeof AdminBlogsIndexRoute
+  '/admin/blogs/edit/$id': typeof AdminBlogsEditIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -614,6 +667,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/awards-achievements'
+    | '/blog'
     | '/careers'
     | '/case-studies'
     | '/contact'
@@ -625,6 +679,7 @@ export interface FileRouteTypes {
     | '/admin/login'
     | '/admin/new'
     | '/admin/settings'
+    | '/blog/$slug'
     | '/careers/benefits-perks'
     | '/careers/life-at-pure-technology'
     | '/case-studies/$slug'
@@ -671,9 +726,13 @@ export interface FileRouteTypes {
     | '/services/software-development'
     | '/services/web-application-development'
     | '/admin/'
+    | '/blog/'
     | '/careers/'
     | '/services/'
+    | '/admin/blogs/new'
     | '/admin/edit/$id'
+    | '/admin/blogs/'
+    | '/admin/blogs/edit/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -688,6 +747,7 @@ export interface FileRouteTypes {
     | '/admin/login'
     | '/admin/new'
     | '/admin/settings'
+    | '/blog/$slug'
     | '/careers/benefits-perks'
     | '/careers/life-at-pure-technology'
     | '/case-studies/$slug'
@@ -734,15 +794,20 @@ export interface FileRouteTypes {
     | '/services/software-development'
     | '/services/web-application-development'
     | '/admin'
+    | '/blog'
     | '/careers'
     | '/services'
+    | '/admin/blogs/new'
     | '/admin/edit/$id'
+    | '/admin/blogs'
+    | '/admin/blogs/edit/$id'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/admin'
     | '/awards-achievements'
+    | '/blog'
     | '/careers'
     | '/case-studies'
     | '/contact'
@@ -754,6 +819,7 @@ export interface FileRouteTypes {
     | '/admin/login'
     | '/admin/new'
     | '/admin/settings'
+    | '/blog/$slug'
     | '/careers/benefits-perks'
     | '/careers/life-at-pure-technology'
     | '/case-studies/$slug'
@@ -800,9 +866,13 @@ export interface FileRouteTypes {
     | '/services/software-development'
     | '/services/web-application-development'
     | '/admin/'
+    | '/blog/'
     | '/careers/'
     | '/services/'
+    | '/admin/blogs/new'
     | '/admin/edit/$id'
+    | '/admin/blogs/'
+    | '/admin/blogs/edit/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -810,6 +880,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRouteWithChildren
   AwardsAchievementsRoute: typeof AwardsAchievementsRoute
+  BlogRoute: typeof BlogRouteWithChildren
   CareersRoute: typeof CareersRouteWithChildren
   CaseStudiesRoute: typeof CaseStudiesRouteWithChildren
   ContactRoute: typeof ContactRoute
@@ -900,6 +971,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog': {
+      id: '/blog'
+      path: '/blog'
+      fullPath: '/blog'
+      preLoaderRoute: typeof BlogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/awards-achievements': {
       id: '/awards-achievements'
       path: '/awards-achievements'
@@ -941,6 +1019,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/careers/'
       preLoaderRoute: typeof CareersIndexRouteImport
       parentRoute: typeof CareersRoute
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof BlogRoute
     }
     '/admin/': {
       id: '/admin/'
@@ -1264,6 +1349,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareersBenefitsPerksRouteImport
       parentRoute: typeof CareersRoute
     }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof BlogRoute
+    }
     '/admin/settings': {
       id: '/admin/settings'
       path: '/settings'
@@ -1285,11 +1377,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/blogs/': {
+      id: '/admin/blogs/'
+      path: '/blogs'
+      fullPath: '/admin/blogs/'
+      preLoaderRoute: typeof AdminBlogsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/edit/$id': {
       id: '/admin/edit/$id'
       path: '/edit/$id'
       fullPath: '/admin/edit/$id'
       preLoaderRoute: typeof AdminEditIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/blogs/new': {
+      id: '/admin/blogs/new'
+      path: '/blogs/new'
+      fullPath: '/admin/blogs/new'
+      preLoaderRoute: typeof AdminBlogsNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/blogs/edit/$id': {
+      id: '/admin/blogs/edit/$id'
+      path: '/blogs/edit/$id'
+      fullPath: '/admin/blogs/edit/$id'
+      preLoaderRoute: typeof AdminBlogsEditIdRouteImport
       parentRoute: typeof AdminRoute
     }
   }
@@ -1300,7 +1413,10 @@ interface AdminRouteChildren {
   AdminNewRoute: typeof AdminNewRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminBlogsNewRoute: typeof AdminBlogsNewRoute
   AdminEditIdRoute: typeof AdminEditIdRoute
+  AdminBlogsIndexRoute: typeof AdminBlogsIndexRoute
+  AdminBlogsEditIdRoute: typeof AdminBlogsEditIdRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -1308,10 +1424,25 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminNewRoute: AdminNewRoute,
   AdminSettingsRoute: AdminSettingsRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminBlogsNewRoute: AdminBlogsNewRoute,
   AdminEditIdRoute: AdminEditIdRoute,
+  AdminBlogsIndexRoute: AdminBlogsIndexRoute,
+  AdminBlogsEditIdRoute: AdminBlogsEditIdRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
+interface BlogRouteChildren {
+  BlogSlugRoute: typeof BlogSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+}
+
+const BlogRouteChildren: BlogRouteChildren = {
+  BlogSlugRoute: BlogSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
+}
+
+const BlogRouteWithChildren = BlogRoute._addFileChildren(BlogRouteChildren)
 
 interface CareersRouteChildren {
   CareersBenefitsPerksRoute: typeof CareersBenefitsPerksRoute
@@ -1398,6 +1529,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AdminRoute: AdminRouteWithChildren,
   AwardsAchievementsRoute: AwardsAchievementsRoute,
+  BlogRoute: BlogRouteWithChildren,
   CareersRoute: CareersRouteWithChildren,
   CaseStudiesRoute: CaseStudiesRouteWithChildren,
   ContactRoute: ContactRoute,
