@@ -25,28 +25,7 @@ async function getServerEntry(): Promise<ServerEntry> {
   return serverEntryPromise;
 }
 
-function errorText(error: unknown): string {
-  if (error instanceof Error) {
-    return [error.name, error.message, error.stack].filter(Boolean).join("\n\n");
-  }
-  return String(error);
-}
-
-async function brandedErrorResponse(
-  request?: Request,
-  env?: unknown,
-  error?: unknown,
-): Promise<Response> {
-  const debugKey = await envValue(env, "DEPLOY_DEBUG_KEY");
-  const suppliedKey = request ? new URL(request.url).searchParams.get("debug_key") : "";
-
-  if (debugKey && suppliedKey === debugKey) {
-    return new Response(errorText(error ?? "No captured error was available."), {
-      status: 500,
-      headers: { "content-type": "text/plain; charset=utf-8" },
-    });
-  }
-
+function brandedErrorResponse(): Response {
   return new Response(renderErrorPage(), {
     status: 500,
     headers: { "content-type": "text/html; charset=utf-8" },
@@ -259,51 +238,6 @@ async function handleContactRequest(request: Request, env: unknown): Promise<Res
   return jsonResponse({ ok: true });
 }
 
-async function handleMongoHealthRequest(request: Request, env: unknown): Promise<Response> {
-  const debugKey = await envValue(env, "DEPLOY_DEBUG_KEY");
-  const suppliedKey = new URL(request.url).searchParams.get("debug_key");
-
-  if (!debugKey || suppliedKey !== debugKey) {
-    return jsonResponse({ message: "Not found" }, { status: 404 });
-  }
-
-  const startedAt = Date.now();
-  try {
-    const { checkMongoConnection } = await import("./lib/mongodb");
-    const result = await checkMongoConnection();
-    return jsonResponse({
-      ...result,
-      totalMs: Date.now() - startedAt,
-      hasMongoUri: Boolean(
-        (await envValue(env, "MONGODB_URI")) || (await envValue(env, "MONGO_URI")),
-      ),
-      hasMongoDb: Boolean(
-        (await envValue(env, "MONGODB_DB")) ||
-          (await envValue(env, "MONGODB_DATABASE")) ||
-          (await envValue(env, "MONGO_DB")),
-      ),
-    });
-  } catch (error) {
-    console.error("[Mongo Health] Failed:", error);
-    return jsonResponse(
-      {
-        ok: false,
-        message: error instanceof Error ? error.message : String(error),
-        totalMs: Date.now() - startedAt,
-        hasMongoUri: Boolean(
-          (await envValue(env, "MONGODB_URI")) || (await envValue(env, "MONGO_URI")),
-        ),
-        hasMongoDb: Boolean(
-          (await envValue(env, "MONGODB_DB")) ||
-            (await envValue(env, "MONGODB_DATABASE")) ||
-            (await envValue(env, "MONGO_DB")),
-        ),
-      },
-      { status: 500 },
-    );
-  }
-}
-
 function isCatastrophicSsrErrorBody(body: string, responseStatus: number): boolean {
   let payload: unknown;
   try {
@@ -344,11 +278,7 @@ function withEmbedFriendlyHeaders(response: Response): Response {
   });
 }
 
-async function normalizeCatastrophicSsrResponse(
-  request: Request,
-  env: unknown,
-  response: Response,
-): Promise<Response> {
+async function normalizeCatastrophicSsrResponse(response: Response): Promise<Response> {
   if (response.status < 500) return response;
   const contentType = response.headers.get("content-type") ?? "";
   if (!contentType.includes("application/json")) return response;
@@ -358,9 +288,8 @@ async function normalizeCatastrophicSsrResponse(
     return response;
   }
 
-  const error = consumeLastCapturedError() ?? new Error(`h3 swallowed SSR error: ${body}`);
-  console.error(error);
-  return brandedErrorResponse(request, env, error);
+  console.error(consumeLastCapturedError() ?? new Error(`h3 swallowed SSR error: ${body}`));
+  return brandedErrorResponse();
 }
 
 let isDbSeeded = false;
@@ -377,16 +306,13 @@ export default {
       if (url.pathname === "/api/contact") {
         return await handleContactRequest(request, env);
       }
-      if (url.pathname === "/__mongo-health") {
-        return await handleMongoHealthRequest(request, env);
-      }
 
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return withEmbedFriendlyHeaders(await normalizeCatastrophicSsrResponse(request, env, response));
+      return withEmbedFriendlyHeaders(await normalizeCatastrophicSsrResponse(response));
     } catch (error) {
       console.error(error);
-      return brandedErrorResponse(request, env, error);
+      return brandedErrorResponse();
     }
   },
 };
