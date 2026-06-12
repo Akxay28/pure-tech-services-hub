@@ -9,7 +9,7 @@
  *
  * Hostinger setup:
  *   Startup file: hostinger-server.mjs
- *   Node version: 22.12+
+ *   Node version: 20.19+
  */
 
 import { createRequire } from "node:module";
@@ -25,6 +25,19 @@ if (typeof globalThis.require === "undefined") {
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 const CLIENT_DIR = join(__dirname, "dist", "client");
 const SERVER_ENTRY = "./dist/server/server.js";
+
+function logStartup(message, value = "") {
+  console.log(`[startup] ${message}${value ? ` ${value}` : ""}`);
+}
+
+async function exists(path) {
+  return Boolean(await stat(path).catch(() => null));
+}
+
+function nodeVersionIsSupported() {
+  const [major, minor] = process.versions.node.split(".").map(Number);
+  return major > 20 || (major === 20 && minor >= 19);
+}
 
 async function loadEnvFile(filePath) {
   try {
@@ -55,7 +68,20 @@ async function loadEnvFile(filePath) {
   }
 }
 
-await loadEnvFile(join(__dirname, ".env"));
+logStartup("cwd:", process.cwd());
+logStartup("server dir:", __dirname);
+logStartup("node:", process.version);
+logStartup("port env:", process.env.PORT || process.env.APP_PORT || "not-set");
+
+let startupError = "";
+
+if (!nodeVersionIsSupported()) {
+  startupError = `Unsupported Node.js ${process.version}. Hostinger must use Node.js 20.19.0 or higher.`;
+  console.error(`[startup] ${startupError}`);
+}
+
+const envLoaded = await loadEnvFile(join(__dirname, ".env"));
+logStartup(".env loaded:", String(envLoaded));
 
 if (!process.env.MONGODB_URI) {
   console.warn(
@@ -65,13 +91,26 @@ if (!process.env.MONGODB_URI) {
   console.log("[server] MONGODB_URI loaded");
 }
 
-const serverMod = await import(SERVER_ENTRY);
-const app = serverMod.default;
+logStartup("dist/client exists:", String(await exists(CLIENT_DIR)));
+logStartup("dist/server/server.js exists:", String(await exists(join(__dirname, "dist", "server", "server.js"))));
 
-if (typeof app?.fetch !== "function") {
-  throw new Error(
-    `[server] ${SERVER_ENTRY} did not export a fetch handler. Run npm run build again.`
-  );
+let app;
+if (!startupError) {
+  try {
+    const serverMod = await import(SERVER_ENTRY);
+    app = serverMod.default;
+  } catch (error) {
+    startupError = `Failed to import ${SERVER_ENTRY}. Make sure npm run build completed and dist/ was uploaded. ${
+      error instanceof Error ? error.message : String(error)
+    }`;
+    console.error(`[startup] ${startupError}`);
+    console.error(error);
+  }
+}
+
+if (!startupError && typeof app?.fetch !== "function") {
+  startupError = `${SERVER_ENTRY} did not export a fetch handler. Run npm run build again.`;
+  console.error(`[startup] ${startupError}`);
 }
 
 const MIME = {
@@ -153,6 +192,7 @@ const server = createServer(async (req, res) => {
           hasDistClient: Boolean(await stat(CLIENT_DIR).catch(() => null)),
           hasMongoUri: Boolean(process.env.MONGODB_URI),
           hasDebugKey: Boolean(process.env.DEPLOY_DEBUG_KEY),
+          startupError,
           time: new Date().toISOString(),
         },
         null,
@@ -169,6 +209,24 @@ const server = createServer(async (req, res) => {
     }
 
     if (await serveStatic(url.pathname, res)) return;
+
+    if (startupError || typeof app?.fetch !== "function") {
+      const body = [
+        "Application startup failed.",
+        "",
+        startupError || "The server entry did not load correctly.",
+        "",
+        "Check Hostinger Node version, startup file, build command, and whether dist/ was uploaded.",
+      ].join("\n");
+
+      res.writeHead(500, {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-store",
+        "Content-Length": String(Buffer.byteLength(body)),
+      });
+      res.end(body);
+      return;
+    }
 
     const bodyChunks = [];
     for await (const chunk of req) bodyChunks.push(chunk);
