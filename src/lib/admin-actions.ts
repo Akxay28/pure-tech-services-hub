@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { connectToDatabase } from "./mongodb";
+import { connectToDatabase, getMongoModule } from "./mongodb";
 import {
   ADMIN_SESSION_MAX_AGE_SECONDS,
   verifyPassword,
@@ -52,7 +52,7 @@ function logFallbackWarning(message: string, error: unknown) {
 const loggedFallbackWarnings = new Set<string>();
 
 async function getObjectIdClass(): Promise<typeof MongoObjectId> {
-  const { ObjectId } = await import("mongodb");
+  const { ObjectId } = await getMongoModule();
   return ObjectId;
 }
 

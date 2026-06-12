@@ -3,14 +3,56 @@ import { getEnvValue } from "./env";
 
 let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;
+let cachedDbName: string | null = null;
+let cachedMongoModule: typeof import("mongodb") | null = null;
+
+async function firstEnvValue(keys: string[]) {
+  for (const key of keys) {
+    const value = await getEnvValue(key);
+    if (value?.trim()) return value.trim();
+  }
+  return undefined;
+}
+
+function isRequireInteropError(error: unknown) {
+  return error instanceof Error && /\brequire is not defined\b/i.test(error.message);
+}
+
+export async function getMongoModule(): Promise<typeof import("mongodb")> {
+  if (cachedMongoModule) return cachedMongoModule;
+
+  try {
+    cachedMongoModule = await import("mongodb");
+    return cachedMongoModule;
+  } catch (error) {
+    if (!isRequireInteropError(error)) throw error;
+
+    try {
+      const { createRequire } = await import("node:module");
+      const nodeRequire = createRequire(import.meta.url);
+      cachedMongoModule = nodeRequire("mongodb") as typeof import("mongodb");
+      return cachedMongoModule;
+    } catch (fallbackError) {
+      const reason =
+        fallbackError instanceof Error ? fallbackError.message : String(fallbackError);
+      throw new Error(
+        `MongoDB driver load failed after ESM/CommonJS fallback. ${reason}`,
+      );
+    }
+  }
+}
 
 export async function connectToDatabase() {
-  const uri = await getEnvValue("MONGODB_URI");
+  const uri = await firstEnvValue(["MONGODB_URI", "MONGO_URI"]);
   if (!uri) {
     throw new Error("MONGODB_URI environment variable is not defined.");
   }
 
-  const explicitDbName = await getEnvValue("MONGODB_DB");
+  const explicitDbName = await firstEnvValue([
+    "MONGODB_DB",
+    "MONGODB_DATABASE",
+    "MONGO_DB",
+  ]);
   let dbName = explicitDbName || "pure_tech";
   try {
     const parsedUrl = new URL(uri);
@@ -27,7 +69,7 @@ export async function connectToDatabase() {
     return { client: cachedClient, db: cachedDb };
   }
 
-  const { MongoClient } = await import("mongodb");
+  const { MongoClient } = await getMongoModule();
   const client = new MongoClient(uri, {
     maxPoolSize: 10,
     connectTimeoutMS: 10000,
@@ -41,6 +83,7 @@ export async function connectToDatabase() {
 
     cachedClient = client;
     cachedDb = db;
+    cachedDbName = dbName;
 
     return { client, db };
   } catch (error) {
@@ -54,4 +97,16 @@ export async function connectToDatabase() {
       ].join(" "),
     );
   }
+}
+
+export async function checkMongoConnection() {
+  const startedAt = Date.now();
+  const { db } = await connectToDatabase();
+  await db.command({ ping: 1 });
+
+  return {
+    ok: true,
+    dbName: cachedDbName || db.databaseName,
+    latencyMs: Date.now() - startedAt,
+  };
 }
