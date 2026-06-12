@@ -51,6 +51,16 @@ function logFallbackWarning(message: string, error: unknown) {
 
 const loggedFallbackWarnings = new Set<string>();
 
+function formatDateToString(dateInput: Date | string) {
+  const d = new Date(dateInput);
+  if (isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 function toClientBlog(item: any) {
   const fallbackTitle = item.metaTitle || item.title;
   const fallbackDescription = item.metaDescription || item.excerpt;
@@ -62,6 +72,9 @@ function toClientBlog(item: any) {
     metaDescription: fallbackDescription,
     metaKeywords: item.metaKeywords || "",
     views: Number(item.views || 0),
+    status: item.status || "published",
+    publishDate: item.publishDate ? new Date(item.publishDate).toISOString() : undefined,
+    date: item.date || formatDateToString(item.createdAt || new Date()),
   };
 }
 
@@ -703,11 +716,21 @@ export const createBlogAction = createServerFn()
       throw new Error(`A blog post with the URL slug "${slug}" already exists.`);
     }
 
+    const now = new Date();
+    const status = data.status || "published";
+    const publishDateVal = status === "scheduled" && data.publishDate ? new Date(data.publishDate) : undefined;
+    const dateStr = status === "scheduled" && publishDateVal
+      ? formatDateToString(publishDateVal)
+      : formatDateToString(now);
+
     const newBlog = {
       ...blogData,
+      status,
+      publishDate: publishDateVal,
+      date: dateStr,
       views: 0,
-      createdAt: new Date(),
-      updatedAt: new Date(),
+      createdAt: now,
+      updatedAt: now,
     };
 
     const result = await db.collection("blogs").insertOne(newBlog);
@@ -728,6 +751,19 @@ export const updateBlogAction = createServerFn()
     const { _id, createdAt, views, ...updateData } = blogData;
     const blogsCol = db.collection("blogs");
 
+    const status = blogData.status || "published";
+    const publishDateVal = status === "scheduled" && blogData.publishDate ? new Date(blogData.publishDate) : undefined;
+    const dateStr = status === "scheduled" && publishDateVal
+      ? formatDateToString(publishDateVal)
+      : (blogData.date || formatDateToString(new Date()));
+
+    const finalUpdateData = {
+      ...updateData,
+      status,
+      publishDate: publishDateVal,
+      date: dateStr,
+    };
+
     if (id.startsWith("static-")) {
       await blogsCol.createIndex({ slug: 1 }, { unique: true });
       const existing = await blogsCol.findOne({ slug });
@@ -739,7 +775,7 @@ export const updateBlogAction = createServerFn()
         { slug },
         {
           $set: {
-            ...updateData,
+            ...finalUpdateData,
             slug,
             updatedAt: new Date(),
           },
@@ -774,7 +810,7 @@ export const updateBlogAction = createServerFn()
       { _id: new ObjectId(id) },
       {
         $set: {
-          ...updateData,
+          ...finalUpdateData,
           slug,
           updatedAt: new Date(),
         },
@@ -809,22 +845,44 @@ export const deleteBlogAction = createServerFn()
   });
 
 // 13. Get All Blog Posts
-export const getBlogsAction = createServerFn().handler(async () => {
-  try {
-    const { db } = await connectToDatabase();
-    await seedBlogsIfEmpty(db);
+export const getBlogsAction = createServerFn()
+  .inputValidator((data: any) => data as { admin?: boolean } | undefined)
+  .handler(async ({ data }) => {
+    try {
+      const { db } = await connectToDatabase();
+      await seedBlogsIfEmpty(db);
 
-    const list = await db.collection("blogs").find({}).sort({ createdAt: -1 }).toArray();
-    return list.map(toClientBlog);
-  } catch (error) {
-    logFallbackWarning("[DB Fallback] Failed to get blogs, falling back to static data:", error);
-    return staticBlogs.map((item, index) => ({
-      ...item,
-      _id: `static-${index}`,
-      views: 0,
-    }));
-  }
-});
+      const isAdmin = data?.admin || false;
+      let query = {};
+
+      if (!isAdmin) {
+        const now = new Date();
+        query = {
+          $or: [
+            { status: "published" },
+            { status: { $exists: false } },
+            {
+              $and: [
+                { status: "scheduled" },
+                { publishDate: { $lte: now } }
+              ]
+            }
+          ]
+        };
+      }
+
+      const list = await db.collection("blogs").find(query).sort({ createdAt: -1 }).toArray();
+      return list.map(toClientBlog);
+    } catch (error) {
+      logFallbackWarning("[DB Fallback] Failed to get blogs, falling back to static data:", error);
+      return staticBlogs.map((item, index) => ({
+        ...item,
+        _id: `static-${index}`,
+        views: 0,
+        status: "published",
+      }));
+    }
+  });
 
 // 14. Get Single Blog Post by Slug
 export const getBlogBySlugAction = createServerFn()
@@ -834,9 +892,35 @@ export const getBlogBySlugAction = createServerFn()
       const { db } = await connectToDatabase();
       await seedBlogsIfEmpty(db);
 
+      let isAdmin = false;
+      try {
+        await verifyAdminAuth();
+        isAdmin = true;
+      } catch {
+        // Not admin
+      }
+
+      let query: any = { slug };
+      if (!isAdmin) {
+        const now = new Date();
+        query = {
+          slug,
+          $or: [
+            { status: "published" },
+            { status: { $exists: false } },
+            {
+              $and: [
+                { status: "scheduled" },
+                { publishDate: { $lte: now } }
+              ]
+            }
+          ]
+        };
+      }
+
       const result = await db.collection("blogs").findOneAndUpdate(
-        { slug },
-        { $inc: { views: 1 } },
+        query,
+        { $inc: { views: isAdmin ? 0 : 1 } },
         { returnDocument: "after" },
       );
       if (!result) {
@@ -851,6 +935,7 @@ export const getBlogBySlugAction = createServerFn()
         ...fallback,
         _id: `static-${staticBlogs.indexOf(fallback)}`,
         views: 0,
+        status: "published",
       };
     }
   });

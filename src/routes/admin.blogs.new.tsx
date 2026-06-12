@@ -17,7 +17,13 @@ function AddNewBlogPostPage() {
     try {
       const res = await createBlogAction({ data });
       if (res?.success) {
-        toast.success(`Published blog post successfully!`);
+        if (data.status === "draft") {
+          toast.success("Saved blog post as draft!");
+        } else if (data.status === "scheduled") {
+          toast.success("Scheduled blog post successfully!");
+        } else {
+          toast.success("Published blog post successfully!");
+        }
         router.navigate({ to: "/admin/blogs" });
       } else {
         toast.error("Could not publish the blog post.");

@@ -16,6 +16,8 @@ export type BlogFormData = {
   descriptionTop: string;
   imageMiddle: string;
   descriptionBottom: string;
+  status: "published" | "draft" | "scheduled";
+  publishDate?: string;
 };
 
 const DEFAULT_FORM: BlogFormData = {
@@ -32,6 +34,16 @@ const DEFAULT_FORM: BlogFormData = {
   descriptionTop: "",
   imageMiddle: "",
   descriptionBottom: "",
+  status: "published",
+  publishDate: "",
+};
+
+const formatToDatetimeLocal = (dateInput: any) => {
+  if (!dateInput) return "";
+  const d = new Date(dateInput);
+  if (isNaN(d.getTime())) return "";
+  const tzOffset = d.getTimezoneOffset() * 60000;
+  return new Date(d.getTime() - tzOffset).toISOString().slice(0, 16);
 };
 
 export function BlogForm({
@@ -52,6 +64,8 @@ export function BlogForm({
     metaTitle: initialData?.metaTitle || initialData?.title || "",
     metaDescription: initialData?.metaDescription || initialData?.excerpt || "",
     metaKeywords: initialData?.metaKeywords || "",
+    status: initialData?.status || "published",
+    publishDate: initialData?.publishDate ? formatToDatetimeLocal(initialData.publishDate) : "",
   });
 
   function formatSlug(value: string) {
@@ -243,6 +257,34 @@ export function BlogForm({
                 <option value="var(--brand-purple)">Brand Purple</option>
               </select>
             </div>
+
+            {/* Publish Status */}
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-foreground">Publish Status*</label>
+              <select
+                value={formData.status}
+                onChange={(e) => handleFieldChange("status", e.target.value as any)}
+                className="w-full px-4 py-3 bg-surface border border-input rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring"
+              >
+                <option value="published">Publish Immediately</option>
+                <option value="scheduled">Schedule Post</option>
+                <option value="draft">Save as Draft</option>
+              </select>
+            </div>
+
+            {/* Publish Date & Time (Conditional) */}
+            {formData.status === "scheduled" && (
+              <div className="space-y-2 animate-fade-in md:col-span-2">
+                <label className="text-sm font-semibold text-foreground">Publish Date & Time*</label>
+                <input
+                  type="datetime-local"
+                  required
+                  value={formData.publishDate || ""}
+                  onChange={(e) => handleFieldChange("publishDate", e.target.value)}
+                  className="w-full px-4 py-3 bg-surface border border-input rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring"
+                />
+              </div>
+            )}
 
             {/* Excerpt */}
             <div className="space-y-2 md:col-span-2">

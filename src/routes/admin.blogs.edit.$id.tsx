@@ -35,7 +35,13 @@ function EditBlogPostPage() {
         },
       });
       if (res?.success) {
-        toast.success(`Updated blog post successfully!`);
+        if (data.status === "draft") {
+          toast.success("Saved blog post as draft!");
+        } else if (data.status === "scheduled") {
+          toast.success("Scheduled blog post successfully!");
+        } else {
+          toast.success("Updated and published blog post successfully!");
+        }
         router.navigate({ to: "/admin/blogs" });
       } else {
         toast.error("Could not update the blog post.");

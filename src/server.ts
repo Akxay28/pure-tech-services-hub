@@ -1,4 +1,5 @@
 import "./lib/error-capture";
+import { setGlobalEnv } from "./lib/env";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
@@ -295,6 +296,7 @@ let isDbSeeded = false;
 
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
+    setGlobalEnv(env);
     if (!isDbSeeded) {
       isDbSeeded = true;
       import("./lib/db-seed").then((m) => m.seedDatabase()).catch(err => console.error("Auto seeding failed:", err));

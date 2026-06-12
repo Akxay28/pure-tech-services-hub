@@ -6,7 +6,7 @@ import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/blogs/")({
   loader: async () => {
-    return { blogs: await getBlogsAction() };
+    return { blogs: await getBlogsAction({ data: { admin: true } }) };
   },
   component: AdminBlogsDashboard,
 });
@@ -81,6 +81,7 @@ function AdminBlogsDashboard() {
                 <th className="p-5">Title / Slug</th>
                 <th className="p-5">Category</th>
                 <th className="p-5">Author</th>
+                <th className="p-5">Status</th>
                 <th className="p-5">Views</th>
                 <th className="p-5 text-right">Actions</th>
               </tr>
@@ -88,7 +89,7 @@ function AdminBlogsDashboard() {
             <tbody className="divide-y divide-border/60">
               {blogs.length === 0 ? (
                 <tr>
-                  <td colSpan={5} className="p-10 text-center text-muted-foreground">
+                  <td colSpan={6} className="p-10 text-center text-muted-foreground">
                     No blog posts found. Click "Add Blog Post" to create one.
                   </td>
                 </tr>
@@ -107,6 +108,31 @@ function AdminBlogsDashboard() {
                       </span>
                     </td>
                     <td className="p-5 text-foreground/80 font-medium">{b.author.split(",")[0]}</td>
+                    <td className="p-5">
+                      {b.status === "draft" && (
+                        <span className="inline-flex items-center text-[11px] font-bold bg-muted text-muted-foreground px-2.5 py-1 rounded-full border border-border animate-pulse-soft">
+                          Draft
+                        </span>
+                      )}
+                      {b.status === "published" && (
+                        <span className="inline-flex items-center text-[11px] font-bold bg-emerald-500/10 text-emerald-600 px-2.5 py-1 rounded-full border border-emerald-500/20">
+                          Published
+                        </span>
+                      )}
+                      {b.status === "scheduled" && (
+                        <span className="inline-flex flex-col text-[11px] font-bold bg-brand-blue/10 text-brand-blue px-2.5 py-1 rounded-2xl border border-brand-blue/20 max-w-[150px]">
+                          <span>Scheduled</span>
+                          {b.publishDate && (
+                            <span className="text-[9px] font-medium opacity-85 mt-0.5 font-sans whitespace-nowrap">
+                              {new Intl.DateTimeFormat("en-US", {
+                                dateStyle: "short",
+                                timeStyle: "short",
+                              }).format(new Date(b.publishDate))}
+                            </span>
+                          )}
+                        </span>
+                      )}
+                    </td>
                     <td className="p-5 text-muted-foreground font-semibold">
                       {Number(b.views || 0).toLocaleString()}
                     </td>
