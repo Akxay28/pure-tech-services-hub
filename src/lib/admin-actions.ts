@@ -6,7 +6,7 @@ import {
   createSessionToken,
   verifySessionToken,
 } from "./auth";
-import { ObjectId } from "mongodb";
+import type { ObjectId as MongoObjectId } from "mongodb";
 import { studies } from "./static-case-studies";
 import { staticBlogs } from "./static-blogs";
 
@@ -50,6 +50,11 @@ function logFallbackWarning(message: string, error: unknown) {
 }
 
 const loggedFallbackWarnings = new Set<string>();
+
+async function getObjectIdClass(): Promise<typeof MongoObjectId> {
+  const { ObjectId } = await import("mongodb");
+  return ObjectId;
+}
 
 function formatDateToString(dateInput: Date | string) {
   const d = new Date(dateInput);
@@ -541,6 +546,7 @@ export const updateCaseStudyAction = createServerFn()
     if (!id) throw new Error("Case study ID is required.");
 
     const { db } = await connectToDatabase();
+    const ObjectId = await getObjectIdClass();
 
     const slug = study.client
       .toLowerCase()
@@ -577,6 +583,7 @@ export const deleteCaseStudyAction = createServerFn()
     if (!id) throw new Error("Case study ID is required.");
 
     const { db } = await connectToDatabase();
+    const ObjectId = await getObjectIdClass();
     const result = await db.collection("case_studies").deleteOne({ _id: new ObjectId(id) });
 
     if (result.deletedCount === 0) {
@@ -656,6 +663,7 @@ export const getCaseStudyByIdAction = createServerFn()
     if (!id) return null;
     try {
       const { db } = await connectToDatabase();
+      const ObjectId = await getObjectIdClass();
       const item = await db.collection("case_studies").findOne({ _id: new ObjectId(id) });
       if (!item) return null;
       return {
@@ -750,6 +758,7 @@ export const updateBlogAction = createServerFn()
     const { slug } = blogData;
     const { _id, createdAt, views, ...updateData } = blogData;
     const blogsCol = db.collection("blogs");
+    const ObjectId = await getObjectIdClass();
 
     const status = blogData.status || "published";
     const publishDateVal = status === "scheduled" && blogData.publishDate ? new Date(blogData.publishDate) : undefined;
@@ -830,6 +839,7 @@ export const deleteBlogAction = createServerFn()
   .handler(async ({ data: id }) => {
     await verifyAdminAuth();
     if (!id) throw new Error("Blog ID is required.");
+    const ObjectId = await getObjectIdClass();
     if (!ObjectId.isValid(id)) {
       throw new Error("Invalid blog ID.");
     }
@@ -956,6 +966,7 @@ export const getBlogByIdAction = createServerFn()
         views: 0,
       };
     }
+    const ObjectId = await getObjectIdClass();
     if (!ObjectId.isValid(id)) {
       return null;
     }
