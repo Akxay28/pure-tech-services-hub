@@ -22,12 +22,30 @@ const browserAsyncHooksPlugin = {
 
 // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
 // @cloudflare/vite-plugin builds from this — wrangler.jsonc main alone is insufficient.
+const nodeRequireForServerChunksPlugin = {
+  name: "node-require-for-server-chunks",
+  renderChunk(code: string, _chunk: unknown, outputOptions: { dir?: string }) {
+    const outputDir = outputOptions.dir ? path.normalize(outputOptions.dir) : "";
+    const isServerBuild = outputDir.endsWith(path.normalize("dist/server"));
+    if (!isServerBuild || !code.includes("require(")) return null;
+
+    return {
+      code: [
+        'import { createRequire as __createRequire } from "node:module";',
+        "const require = globalThis.require || __createRequire(import.meta.url);",
+        code,
+      ].join("\n"),
+      map: null,
+    };
+  },
+};
+
 export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
   vite: {
-    plugins: [browserAsyncHooksPlugin],
+    plugins: [browserAsyncHooksPlugin, nodeRequireForServerChunksPlugin],
     optimizeDeps: {
       exclude: ["@tanstack/start-client-core", "@tanstack/react-start"],
     },
