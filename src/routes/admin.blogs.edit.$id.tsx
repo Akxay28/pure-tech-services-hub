@@ -9,6 +9,8 @@ export const Route = createFileRoute("/admin/blogs/edit/$id")({
     const blog = await getBlogByIdAction({ data: params.id });
     return { blog };
   },
+  // Always re-fetch fresh data from the server — never serve cached blog content
+  staleTime: 0,
   component: EditBlogPostPage,
 });
 
@@ -42,6 +44,8 @@ function EditBlogPostPage() {
         } else {
           toast.success("Updated and published blog post successfully!");
         }
+        // Invalidate all cached loader data so the list + edit routes re-fetch fresh data
+        await router.invalidate();
         router.navigate({ to: "/admin/blogs" });
       } else {
         toast.error("Could not update the blog post.");

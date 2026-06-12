@@ -10,6 +10,8 @@ export const getRouter = () => {
     context: { queryClient },
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
+    // Always re-fetch loader data on navigation — prevents stale data when revisiting routes
+    defaultStaleTime: 0,
   });
 
   return router;

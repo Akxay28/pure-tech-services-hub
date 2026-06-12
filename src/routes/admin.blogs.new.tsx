@@ -24,6 +24,8 @@ function AddNewBlogPostPage() {
         } else {
           toast.success("Published blog post successfully!");
         }
+        // Invalidate cached loader data so the list refreshes immediately
+        await router.invalidate();
         router.navigate({ to: "/admin/blogs" });
       } else {
         toast.error("Could not publish the blog post.");
