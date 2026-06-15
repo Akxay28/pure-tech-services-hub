@@ -59,7 +59,10 @@ export function CaseStudyForm({
     ...initialData,
     solutions: initialData?.solutions || [""],
     challenges: initialData?.challenges || [""],
-    metrics: initialData?.metrics?.map((m: any) => ({ value: m.value || m.v || "", label: m.label || m.l || "" })) || [{ value: "", label: "" }],
+    metrics: initialData?.metrics?.map((m: any) => ({
+      value: m.value || m.v || "",
+      label: m.label || m.l || "",
+    })) || [{ value: "", label: "" }],
     keyBenefits: initialData?.keyBenefits || [{ value: "", label: "" }],
     results: initialData?.results || [""],
     techStack: initialData?.techStack || [{ category: "", items: "", icon: "ti-code" }],
@@ -72,7 +75,11 @@ export function CaseStudyForm({
   }
 
   // Dynamic Array Handlers
-  function handleArrayChange(field: "solutions" | "challenges" | "results", index: number, value: string) {
+  function handleArrayChange(
+    field: "solutions" | "challenges" | "results",
+    index: number,
+    value: string,
+  ) {
     setFormData((prev) => {
       const arr = [...prev[field]];
       arr[index] = value;
@@ -92,7 +99,12 @@ export function CaseStudyForm({
   }
 
   // Metrics Array Handlers
-  function handleMetricChange(field: "metrics" | "keyBenefits", index: number, key: keyof Metric, value: string) {
+  function handleMetricChange(
+    field: "metrics" | "keyBenefits",
+    index: number,
+    key: keyof Metric,
+    value: string,
+  ) {
     setFormData((prev) => {
       const arr = [...prev[field]];
       arr[index] = { ...arr[index], [key]: value };
@@ -130,7 +142,10 @@ export function CaseStudyForm({
   function removeTechItem(index: number) {
     setFormData((prev) => {
       const arr = prev.techStack.filter((_, idx) => idx !== index);
-      return { ...prev, techStack: arr.length ? arr : [{ category: "", items: "", icon: "ti-code" }] };
+      return {
+        ...prev,
+        techStack: arr.length ? arr : [{ category: "", items: "", icon: "ti-code" }],
+      };
     });
   }
 
@@ -143,8 +158,12 @@ export function CaseStudyForm({
       challenges: formData.challenges.filter((c) => c.trim() !== ""),
       results: formData.results.filter((r) => r.trim() !== ""),
       metrics: formData.metrics.filter((m) => m.value.trim() !== "" || m.label.trim() !== ""),
-      keyBenefits: formData.keyBenefits.filter((b) => b.value.trim() !== "" || b.label.trim() !== ""),
-      techStack: formData.techStack.filter((t) => t.category.trim() !== "" || t.items.trim() !== ""),
+      keyBenefits: formData.keyBenefits.filter(
+        (b) => b.value.trim() !== "" || b.label.trim() !== "",
+      ),
+      techStack: formData.techStack.filter(
+        (t) => t.category.trim() !== "" || t.items.trim() !== "",
+      ),
     };
     await onSubmit(cleanedData);
   }
@@ -174,7 +193,11 @@ export function CaseStudyForm({
           <button type="button" onClick={() => setActiveTab("basic")} className={tabClass("basic")}>
             Basic Info
           </button>
-          <button type="button" onClick={() => setActiveTab("metrics")} className={tabClass("metrics")}>
+          <button
+            type="button"
+            onClick={() => setActiveTab("metrics")}
+            className={tabClass("metrics")}
+          >
             Metrics & Benefits
           </button>
           <button type="button" onClick={() => setActiveTab("lists")} className={tabClass("lists")}>
@@ -187,7 +210,6 @@ export function CaseStudyForm({
 
         {/* Tab Content */}
         <div className="glass-card border border-border bg-surface/50 rounded-3xl p-6 sm:p-8 space-y-6">
-          
           {/* TAB 1: BASIC INFORMATION */}
           {activeTab === "basic" && (
             <div className="space-y-6">
@@ -216,7 +238,9 @@ export function CaseStudyForm({
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-foreground">Industry / Sector*</label>
+                  <label className="text-sm font-semibold text-foreground">
+                    Industry / Sector*
+                  </label>
                   <input
                     type="text"
                     required
@@ -227,7 +251,9 @@ export function CaseStudyForm({
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-semibold text-foreground">Accent Color (CSS Variable or Hex)*</label>
+                  <label className="text-sm font-semibold text-foreground">
+                    Accent Color (CSS Variable or Hex)*
+                  </label>
                   <select
                     value={formData.accent}
                     onChange={(e) => handleFieldChange("accent", e.target.value)}
@@ -245,14 +271,16 @@ export function CaseStudyForm({
                   <label className="text-sm font-semibold text-foreground">Image Path / URL</label>
                   <input
                     type="text"
-                    placeholder="e.g. /homeCaseStudy/Warehouse Management System.png"
+                    placeholder="e.g. https://res.cloudinary.com/.../case-study.png"
                     value={formData.image}
                     onChange={(e) => handleFieldChange("image", e.target.value)}
                     className="w-full px-4 py-3 bg-surface border border-input rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring font-mono"
                   />
                 </div>
                 <div className="space-y-2 md:col-span-2">
-                  <label className="text-sm font-semibold text-foreground">Related Service URL Path</label>
+                  <label className="text-sm font-semibold text-foreground">
+                    Related Service URL Path
+                  </label>
                   <input
                     type="text"
                     placeholder="e.g. /services/software-development"
@@ -262,7 +290,9 @@ export function CaseStudyForm({
                   />
                 </div>
                 <div className="space-y-2 md:col-span-2">
-                  <label className="text-sm font-semibold text-foreground">Card Highlight Summary (Headline)*</label>
+                  <label className="text-sm font-semibold text-foreground">
+                    Card Highlight Summary (Headline)*
+                  </label>
                   <input
                     type="text"
                     required
@@ -273,7 +303,9 @@ export function CaseStudyForm({
                   />
                 </div>
                 <div className="space-y-2 md:col-span-2">
-                  <label className="text-sm font-semibold text-foreground">Card Brief Description (Body)*</label>
+                  <label className="text-sm font-semibold text-foreground">
+                    Card Brief Description (Body)*
+                  </label>
                   <textarea
                     required
                     rows={4}
@@ -284,7 +316,9 @@ export function CaseStudyForm({
                   />
                 </div>
                 <div className="space-y-2 md:col-span-2">
-                  <label className="text-sm font-semibold text-foreground">Full Project Objective*</label>
+                  <label className="text-sm font-semibold text-foreground">
+                    Full Project Objective*
+                  </label>
                   <textarea
                     required
                     rows={4}
@@ -312,8 +346,12 @@ export function CaseStudyForm({
           {activeTab === "metrics" && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-lg font-bold border-b border-border pb-3">Card Summary Metrics</h3>
-                <p className="text-xs text-muted-foreground mt-1">Exactly 3 metrics displayed on the case study card.</p>
+                <h3 className="text-lg font-bold border-b border-border pb-3">
+                  Card Summary Metrics
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Exactly 3 metrics displayed on the case study card.
+                </p>
                 <div className="mt-4 space-y-4">
                   {formData.metrics.map((item, idx) => (
                     <div key={idx} className="flex gap-4 items-center">
@@ -321,14 +359,18 @@ export function CaseStudyForm({
                         type="text"
                         placeholder="Value (e.g. 70%)"
                         value={item.value}
-                        onChange={(e) => handleMetricChange("metrics", idx, "value", e.target.value)}
+                        onChange={(e) =>
+                          handleMetricChange("metrics", idx, "value", e.target.value)
+                        }
                         className="w-1/3 px-4 py-3 bg-surface border border-input rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring"
                       />
                       <input
                         type="text"
                         placeholder="Label (e.g. reduction in manual workload)"
                         value={item.label}
-                        onChange={(e) => handleMetricChange("metrics", idx, "label", e.target.value)}
+                        onChange={(e) =>
+                          handleMetricChange("metrics", idx, "label", e.target.value)
+                        }
                         className="flex-1 px-4 py-3 bg-surface border border-input rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring"
                       />
                       <button
@@ -352,7 +394,9 @@ export function CaseStudyForm({
 
               <div className="pt-6 border-t border-border">
                 <h3 className="text-lg font-bold">Key Benefits List</h3>
-                <p className="text-xs text-muted-foreground mt-1">Benefits displayed on the detail page.</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Benefits displayed on the detail page.
+                </p>
                 <div className="mt-4 space-y-4">
                   {formData.keyBenefits.map((item, idx) => (
                     <div key={idx} className="flex gap-4 items-center">
@@ -360,14 +404,18 @@ export function CaseStudyForm({
                         type="text"
                         placeholder="Value (e.g. 91%)"
                         value={item.value}
-                        onChange={(e) => handleMetricChange("keyBenefits", idx, "value", e.target.value)}
+                        onChange={(e) =>
+                          handleMetricChange("keyBenefits", idx, "value", e.target.value)
+                        }
                         className="w-1/3 px-4 py-3 bg-surface border border-input rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring"
                       />
                       <input
                         type="text"
                         placeholder="Description"
                         value={item.label}
-                        onChange={(e) => handleMetricChange("keyBenefits", idx, "label", e.target.value)}
+                        onChange={(e) =>
+                          handleMetricChange("keyBenefits", idx, "label", e.target.value)
+                        }
                         className="flex-1 px-4 py-3 bg-surface border border-input rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring"
                       />
                       <button
@@ -396,11 +444,15 @@ export function CaseStudyForm({
             <div className="space-y-8">
               {/* Solutions */}
               <div className="space-y-4">
-                <h3 className="text-lg font-bold border-b border-border pb-3">Solutions Implemented</h3>
+                <h3 className="text-lg font-bold border-b border-border pb-3">
+                  Solutions Implemented
+                </h3>
                 <div className="space-y-3">
                   {formData.solutions.map((item, idx) => (
                     <div key={idx} className="flex gap-4 items-center">
-                      <span className="text-sm font-semibold text-muted-foreground w-6">#{idx + 1}</span>
+                      <span className="text-sm font-semibold text-muted-foreground w-6">
+                        #{idx + 1}
+                      </span>
                       <input
                         type="text"
                         required
@@ -434,7 +486,9 @@ export function CaseStudyForm({
                 <div className="space-y-3">
                   {formData.challenges.map((item, idx) => (
                     <div key={idx} className="flex gap-4 items-center">
-                      <span className="text-sm font-semibold text-muted-foreground w-6">#{idx + 1}</span>
+                      <span className="text-sm font-semibold text-muted-foreground w-6">
+                        #{idx + 1}
+                      </span>
                       <input
                         type="text"
                         required
@@ -468,7 +522,9 @@ export function CaseStudyForm({
                 <div className="space-y-3">
                   {formData.results.map((item, idx) => (
                     <div key={idx} className="flex gap-4 items-center">
-                      <span className="text-sm font-semibold text-muted-foreground w-6">#{idx + 1}</span>
+                      <span className="text-sm font-semibold text-muted-foreground w-6">
+                        #{idx + 1}
+                      </span>
                       <input
                         type="text"
                         required
@@ -504,9 +560,14 @@ export function CaseStudyForm({
               <h3 className="text-lg font-bold border-b border-border pb-3">Technology Stack</h3>
               <div className="space-y-4">
                 {formData.techStack.map((item, idx) => (
-                  <div key={idx} className="grid sm:grid-cols-3 gap-4 items-center p-4 rounded-2xl border border-border bg-surface-muted/30">
+                  <div
+                    key={idx}
+                    className="grid sm:grid-cols-3 gap-4 items-center p-4 rounded-2xl border border-border bg-surface-muted/30"
+                  >
                     <div className="space-y-1">
-                      <label className="text-xs text-muted-foreground">Category (e.g. Frameworks)</label>
+                      <label className="text-xs text-muted-foreground">
+                        Category (e.g. Frameworks)
+                      </label>
                       <input
                         type="text"
                         placeholder="Category"
@@ -516,7 +577,9 @@ export function CaseStudyForm({
                       />
                     </div>
                     <div className="space-y-1">
-                      <label className="text-xs text-muted-foreground">Items (e.g. React.js, Node.js)</label>
+                      <label className="text-xs text-muted-foreground">
+                        Items (e.g. React.js, Node.js)
+                      </label>
                       <input
                         type="text"
                         placeholder="Items"
@@ -563,7 +626,6 @@ export function CaseStudyForm({
               </div>
             </div>
           )}
-
         </div>
 
         {/* Submit Actions */}

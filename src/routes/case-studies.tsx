@@ -1,4 +1,5 @@
 import { createFileRoute, Outlet, useMatchRoute, Link } from "@tanstack/react-router";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import {
   PageHero,
@@ -9,6 +10,8 @@ import {
   CTASection,
 } from "@/components/site/Primitives";
 import { getCaseStudiesAction } from "../lib/admin-actions";
+
+const CASE_STUDIES_PER_PAGE = 9;
 
 export const Route = createFileRoute("/case-studies")({
   loader: async () => {
@@ -39,6 +42,27 @@ function CaseStudiesLayout() {
   const { studies } = Route.useLoaderData();
   const matchRoute = useMatchRoute();
   const isSlug = matchRoute({ to: "/case-studies/$slug" });
+  const [page, setPage] = useState(1);
+  const totalPages = Math.max(1, Math.ceil(studies.length / CASE_STUDIES_PER_PAGE));
+  const paginatedStudies = useMemo(() => {
+    const start = (page - 1) * CASE_STUDIES_PER_PAGE;
+    return studies.slice(start, start + CASE_STUDIES_PER_PAGE);
+  }, [page, studies]);
+
+  useEffect(() => {
+    if (page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
+
+  const goToPage = (nextPage: number) => {
+    const safePage = Math.min(Math.max(nextPage, 1), totalPages);
+    setPage(safePage);
+    window.requestAnimationFrame(() => {
+      document.getElementById("case-study-grid")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  };
 
   if (isSlug) return <Outlet />;
 
@@ -66,8 +90,8 @@ function CaseStudiesLayout() {
             title="Outcomes worth writing down."
             description="Anonymised where the client requires it — numbers are always real."
           />
-          <div className="mt-12 grid items-stretch gap-6 lg:grid-cols-3">
-            {studies.map((s) => (
+          <div id="case-study-grid" className="mt-12 grid items-stretch gap-6 lg:grid-cols-3">
+            {paginatedStudies.map((s) => (
               <div key={s.client} className="flex h-full flex-col gap-3">
                 <CaseStudyCard
                   client={s.client}
@@ -98,6 +122,42 @@ function CaseStudiesLayout() {
               </div>
             ))}
           </div>
+
+          {totalPages > 1 && (
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={() => goToPage(page - 1)}
+                disabled={page === 1}
+                className="rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-secondary disabled:pointer-events-none disabled:opacity-40"
+              >
+                Previous
+              </button>
+              {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+                <button
+                  key={pageNumber}
+                  type="button"
+                  onClick={() => goToPage(pageNumber)}
+                  aria-current={pageNumber === page ? "page" : undefined}
+                  className={`grid h-10 w-10 place-items-center rounded-full border text-sm font-semibold transition-colors ${
+                    pageNumber === page
+                      ? "border-transparent bg-primary text-primary-foreground"
+                      : "border-border bg-surface text-foreground hover:bg-secondary"
+                  }`}
+                >
+                  {pageNumber}
+                </button>
+              ))}
+              <button
+                type="button"
+                onClick={() => goToPage(page + 1)}
+                disabled={page === totalPages}
+                className="rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-secondary disabled:pointer-events-none disabled:opacity-40"
+              >
+                Next
+              </button>
+            </div>
+          )}
         </div>
       </section>
 

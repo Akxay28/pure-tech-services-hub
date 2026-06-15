@@ -19,6 +19,134 @@ const CAPTCHA_VERIFY_URLS = {
   hcaptcha: "https://hcaptcha.com/siteverify",
 } as const;
 
+const CLOUDINARY_CASE_STUDY_IMAGES: Record<string, string> = {
+  "Warehouse Management System":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510620/Warehouse_Management_System_qld9oo.png",
+  "Quick Response Board":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510616/Quick_Response_Board_-_tata_autocomp_ivgwql.png",
+  "Safety Dashboard System":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510616/Safety_Dashboard_System_bridgestone_r2rb4r.png",
+  "Vehicle Access Management System":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510618/Vehicle_Access_Management_System_-_sandvik_bkc5pd.png",
+  "Bladder Inventory System":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510625/Bladder_Inventory_System_-_bridgestone_msxqyc.png",
+  VisitorPass:
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510619/visitor_pass_bzblgf.png",
+  "MTR Raw Material Report Digitalization":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510613/MTR_Raw_Material_Report_Digitalization_-_Bridgestone_x29guf.png",
+  "MHE Trolly ":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510613/MHE_Trolly_Bridgestone_ayrimg.png",
+  "MHE Trolly":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510613/MHE_Trolly_Bridgestone_ayrimg.png",
+  "KPI Dashboard for Manufacturing":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510612/KPI_Dashboard_bridgestone_j89icc.png",
+  "TMA usage monitoring":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510617/TMA_usage_monitoring_-_bridgestone_z81qsv.png",
+  "AI-powered Dot Serial Code Generation":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510623/AI-powered_Dot_Serial_Code_Generation_-_bridgestone_pwdqao.png",
+  "AIML-powered tire verification system":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510612/IML-powered_tire_verification_system_-_ceat_xza9ed.png",
+  "TQM-powered digital portal":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510618/TQM-powered_digital_portal_-_tata_taco_qq3yap.png",
+  "Global Recruitment & Talent Development Organization":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510621/2_case_study_f3rho2.png",
+  "Global E-Learning & Digital Marketing Agency - QgenX":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510615/QgenX_tmngke.png",
+  "Global Real Estate & B2B Sales Organization":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510622/ai_calling_bot_yfbmj5.png",
+  "Global Financial Institution":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/v1781510612/global_financial_institution_ze0ex6.png",
+  "IoT-Diesel consumption system":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/v1781510611/IoT-Diesel_consumption_system_-_bridgestone_uprzqa.png",
+  "Global Wellness & Spiritual Guidance Platform":
+    "https://res.cloudinary.com/dra0hwsh4/image/upload/v1781510624/astrologyAi_dh4t4g.png",
+};
+
+const CLOUDINARY_CASE_STUDY_IMAGES_BY_PATH: Record<string, string> = {
+  "/homeCaseStudy/warehouse-management-system.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Warehouse Management System"],
+  "/homeCaseStudy/Warehouse Management System.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Warehouse Management System"],
+  "/homeCaseStudy/quick-response-board-tata-autocomp.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Quick Response Board"],
+  "/homeCaseStudy/Quick Response Board - tata autocomp.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Quick Response Board"],
+  "/homeCaseStudy/safety-dashboard-system-bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Safety Dashboard System"],
+  "/homeCaseStudy/Safety Dashboard System bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Safety Dashboard System"],
+  "/homeCaseStudy/vehicle-access-management-system-sandvik.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Vehicle Access Management System"],
+  "/homeCaseStudy/Vehicle Access Management System - sandvik.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Vehicle Access Management System"],
+  "/homeCaseStudy/bladder-inventory-system-bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Bladder Inventory System"],
+  "/homeCaseStudy/Bladder Inventory System - bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Bladder Inventory System"],
+  "/homeCaseStudy/visitor-pass.png": CLOUDINARY_CASE_STUDY_IMAGES.VisitorPass,
+  "/homeCaseStudy/visitor pass.png": CLOUDINARY_CASE_STUDY_IMAGES.VisitorPass,
+  "/homeCaseStudy/mtr-raw-material-report-digitalization-bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["MTR Raw Material Report Digitalization"],
+  "/homeCaseStudy/MTR Raw Material Report Digitalization - Bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["MTR Raw Material Report Digitalization"],
+  "/homeCaseStudy/mhe-trolly-bridgestone.png": CLOUDINARY_CASE_STUDY_IMAGES["MHE Trolly"],
+  "/homeCaseStudy/MHE Trolly Bridgestone.png": CLOUDINARY_CASE_STUDY_IMAGES["MHE Trolly"],
+  "/homeCaseStudy/kpi-dashboard-bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["KPI Dashboard for Manufacturing"],
+  "/homeCaseStudy/KPI Dashboard bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["KPI Dashboard for Manufacturing"],
+  "/homeCaseStudy/tma-usage-monitoring-bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["TMA usage monitoring"],
+  "/homeCaseStudy/TMA usage monitoring - bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["TMA usage monitoring"],
+  "/homeCaseStudy/ai-powered-dot-serial-code-generation-bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["AI-powered Dot Serial Code Generation"],
+  "/homeCaseStudy/AI-powered Dot Serial Code Generation - bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["AI-powered Dot Serial Code Generation"],
+  "/homeCaseStudy/iml-powered-tire-verification-system-ceat.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["AIML-powered tire verification system"],
+  "/homeCaseStudy/IML-powered tire verification system - ceat.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["AIML-powered tire verification system"],
+  "/homeCaseStudy/tqm-powered-digital-portal-tata-taco.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["TQM-powered digital portal"],
+  "/homeCaseStudy/TQM-powered digital portal - tata taco.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["TQM-powered digital portal"],
+  "/homeCaseStudy/questa-ai-interviewer.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Global Recruitment & Talent Development Organization"],
+  "/homeCaseStudy/questa-ai-interviewer.webp":
+    CLOUDINARY_CASE_STUDY_IMAGES["Global Recruitment & Talent Development Organization"],
+  "/homeCaseStudy/2 case study.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Global Recruitment & Talent Development Organization"],
+  "/homeCaseStudy/qgenx.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Global E-Learning & Digital Marketing Agency - QgenX"],
+  "/homeCaseStudy/QgenX.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Global E-Learning & Digital Marketing Agency - QgenX"],
+  "/homeCaseStudy/ai-calling-bot.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Global Real Estate & B2B Sales Organization"],
+  "/homeCaseStudy/ai calling bot.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Global Real Estate & B2B Sales Organization"],
+  "/homeCaseStudy/global-financial-institution.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Global Financial Institution"],
+  "/homeCaseStudy/global financial institution.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Global Financial Institution"],
+  "/homeCaseStudy/iot-diesel-consumption-system-bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["IoT-Diesel consumption system"],
+  "/homeCaseStudy/IoT-Diesel consumption system - bridgestone.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["IoT-Diesel consumption system"],
+  "/homeCaseStudy/astrology-ai.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Global Wellness & Spiritual Guidance Platform"],
+  "/homeCaseStudy/astrologyAi.png":
+    CLOUDINARY_CASE_STUDY_IMAGES["Global Wellness & Spiritual Guidance Platform"],
+};
+
+function normalizeCaseStudyImage<T extends { client?: string; image?: string }>(item: T): T {
+  const image =
+    (item.client && CLOUDINARY_CASE_STUDY_IMAGES[item.client]) ||
+    (item.image && CLOUDINARY_CASE_STUDY_IMAGES_BY_PATH[item.image]);
+
+  return image ? { ...item, image } : item;
+}
+
 type CaptchaProvider = keyof typeof CAPTCHA_VERIFY_URLS;
 type CaptchaConfig = {
   enabled: boolean;
@@ -601,10 +729,12 @@ export const getCaseStudiesAction = createServerFn().handler(async () => {
     const { db } = await connectToDatabase();
     const list = await db.collection("case_studies").find({}).sort({ createdAt: -1 }).toArray();
     // Map ObjectId to string to support clean JSON serialization
-    return list.map((item) => ({
-      ...item,
-      _id: item._id.toString(),
-    }));
+    return list.map((item) =>
+      normalizeCaseStudyImage({
+        ...item,
+        _id: item._id.toString(),
+      }),
+    );
   } catch (error) {
     logFallbackWarning(
       "[DB Fallback] Failed to get case studies, falling back to static data:",
@@ -615,11 +745,11 @@ export const getCaseStudiesAction = createServerFn().handler(async () => {
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
-      return {
+      return normalizeCaseStudyImage({
         ...item,
         slug,
         _id: `static-${index}`,
-      };
+      });
     });
   }
 });
@@ -637,21 +767,21 @@ export const getCaseStudyBySlugAction = createServerFn()
             .replace(/(^-|-$)/g, "") === slug,
       );
       if (!item) return null;
-      return {
+      return normalizeCaseStudyImage({
         ...item,
         slug,
         _id: `static-${studies.indexOf(item)}`,
-      };
+      });
     };
 
     try {
       const { db } = await connectToDatabase();
       const item = await db.collection("case_studies").findOne({ slug });
       if (!item) return getStaticStudy();
-      return {
+      return normalizeCaseStudyImage({
         ...item,
         _id: item._id.toString(),
-      };
+      });
     } catch (error) {
       logFallbackWarning(
         `[DB Fallback] Failed to get case study by slug "${slug}", falling back to static data:`,
@@ -672,10 +802,10 @@ export const getCaseStudyByIdAction = createServerFn()
       const ObjectId = await getObjectIdClass();
       const item = await db.collection("case_studies").findOne({ _id: new ObjectId(id) });
       if (!item) return null;
-      return {
+      return normalizeCaseStudyImage({
         ...item,
         _id: item._id.toString(),
-      };
+      });
     } catch (error) {
       logFallbackWarning(
         `[DB Fallback] Failed to get case study by ID "${id}", falling back to static data:`,

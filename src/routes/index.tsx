@@ -447,7 +447,7 @@ function Home() {
             <CaseStudyCard
               client="Voice AI Assistant for Intelligent Candidate Evaluation"
               industry="Recruitment Technology"
-              image="/homeCaseStudy/3 case study.webp"
+              image="/homeCaseStudy/home-case-study-3.webp"
               challenge="Manual screening processes, subjective candidate evaluations, and constant interview coordination created hiring delays, inconsistent assessments, and operational inefficiencies."
               outcome="Implemented an AI Voice Agent that automates candidate screening through natural conversations, evaluates communication skills, schedules interviews, and generates structured assessment reports, significantly reducing manual recruitment effort and improving hiring efficiency."
               metrics={[

@@ -109,7 +109,8 @@ export const caseStudiesByService: Record<SubServiceSlug, CaseStudy[]> = {
     {
       client: "Fortune 500 Retail Co.",
       industry: "Retail",
-      image: "/homeCaseStudy/1 case study.webp",
+      image:
+        "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510620/Warehouse_Management_System_qld9oo.png",
       challenge:
         "Three outsourcing vendors, rising run-cost, and no captive engineering muscle in India — leadership wanted a GCC without a two-year setup programme.",
       outcome:
@@ -123,7 +124,8 @@ export const caseStudiesByService: Record<SubServiceSlug, CaseStudy[]> = {
     {
       client: "Fortune 500 Retail Co.",
       industry: "Retail",
-      image: "/homeCaseStudy/1 case study.webp",
+      image:
+        "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510620/Warehouse_Management_System_qld9oo.png",
       challenge:
         "Three outsourcing vendors, rising run-cost, and no captive engineering muscle in India — leadership wanted a GCC without a two-year setup programme.",
       outcome:

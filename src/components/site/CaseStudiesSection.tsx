@@ -21,7 +21,7 @@ export function CaseStudiesSection({
   caseStudies,
   accent = "var(--brand-blue)",
   eyebrow = "Case studies",
-  image = "/homeCaseStudy/2 case study.webp",
+  image = "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510621/2_case_study_f3rho2.png",
   title = "Recent work, anonymised where it has to be.",
   description = "Numbers are real, names are sometimes changed at the client's request.",
 }: CaseStudiesSectionProps) {

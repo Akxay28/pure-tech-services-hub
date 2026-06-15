@@ -148,18 +148,46 @@ export function Stat({ value, label }: { value: string; label: string }) {
 }
 
 const logoStrip = [
-  { name: "Principal Controller of Defense Accounts", logo: "/logos/defensel llooio.png" },
-  { name: "Schlier", logo: "/logos/schlier.png" },
-  { name: "A & Associate", logo: "/logos/a and associate.png" },
-  { name: "Bajaj", logo: "/logos/bajaj logo.png" },
-  { name: "Bridgestone", logo: "/logos/bridgestone logoooo.png" },
-  { name: "Defense Logistics", logo: "/logos/defensel llooio.png" },
-  { name: "Dy Patil", logo: "/logos/dy atuoipo.png" },
-  { name: "Kohler", logo: "/logos/kohlerr.png" },
-  { name: "Sakal Money", logo: "/logos/sakal money.png" },
-  { name: "Schlier", logo: "/logos/schlier.png" },
-  { name: "Snapwork", logo: "/logos/snapwork.png" },
-  { name: "Tata Motors", logo: "/logos/tata motorrs.png" },
+  {
+    name: "Principal Controller of Defense Accounts",
+    logo: "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781521231/defensel_llooio_vv9dg8.png",
+  },
+  {
+    name: "Schneider Electric",
+    logo: "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781521235/schlier_pa76qa.png",
+  },
+  {
+    name: "A & Associate",
+    logo: "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781521239/a_and_associate_iuogoi.png",
+  },
+  {
+    name: "Bajaj Finserv",
+    logo: "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781521240/bajaj_logo_v6ejmh.png",
+  },
+  {
+    name: "Bridgestone",
+    logo: "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781521241/bridgestone_logoooo_atltwv.png",
+  },
+  {
+    name: "DY Patil",
+    logo: "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781521232/dy_atuoipo_fognyb.png",
+  },
+  {
+    name: "Kohler",
+    logo: "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781521232/kohlerr_ps0nga.png",
+  },
+  {
+    name: "Sakal",
+    logo: "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781521234/sakal_money_bqth3c.png",
+  },
+  {
+    name: "Snapwork",
+    logo: "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781521236/snapwork_m1ohh0.png",
+  },
+  {
+    name: "Tata Motors",
+    logo: "https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781521237/tata_motorrs_gi9khz.png",
+  },
 ];
 
 export function ClientMarquee() {
@@ -284,6 +312,10 @@ type CaseStudy = {
 
 // ─── CASE STUDY CARD ──────────────────────────────────────────────────────────
 
+const legacyCaseStudyImages: Record<string, string> = {
+  "/homeCaseStudy/home-case-study-3.webp": "/homeCaseStudy/3%20case%20study.webp",
+};
+
 export function CaseStudyCard({
   client,
   industry,
@@ -338,6 +370,13 @@ export function CaseStudyCard({
             src={image}
             alt={client}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+            onError={(event) => {
+              const fallback = legacyCaseStudyImages[image];
+              const fallbackUrl = fallback ? new URL(fallback, window.location.href).href : "";
+              if (fallback && event.currentTarget.src !== fallbackUrl) {
+                event.currentTarget.src = fallback;
+              }
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute top-4 left-4">
