@@ -1,6 +1,15 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import {
+  ArrowLeft,
+  Bold,
+  Heading2,
+  Heading3,
+  Italic,
+  List,
+  ListOrdered,
+  RemoveFormatting,
+} from "lucide-react";
 
 export type BlogFormData = {
   title: string;
@@ -38,6 +47,362 @@ const DEFAULT_FORM: BlogFormData = {
   publishDate: "",
 };
 
+const META_DESCRIPTION_MAX_LENGTH = 1000;
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function isHtmlContent(value: string) {
+  return /<\/?(p|h2|h3|ul|ol|li|strong|b|em|i|br)\b/i.test(value);
+}
+
+function inlineMarkdownToHtml(value: string) {
+  return escapeHtml(value)
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*([^*]+)\*/g, "<em>$1</em>");
+}
+
+function plainTextToEditorHtml(value: string) {
+  const lines = value.replace(/\r\n?/g, "\n").split("\n");
+  const html: string[] = [];
+  let listType: "ul" | "ol" | null = null;
+
+  const closeList = () => {
+    if (!listType) return;
+    html.push(`</${listType}>`);
+    listType = null;
+  };
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) {
+      closeList();
+      continue;
+    }
+
+    const unordered = line.match(/^[-*]\s+(.+)$/);
+    const ordered = line.match(/^\d+[.)]\s+(.+)$/);
+    if (unordered || ordered) {
+      const nextListType = unordered ? "ul" : "ol";
+      if (listType !== nextListType) {
+        closeList();
+        html.push(`<${nextListType}>`);
+        listType = nextListType;
+      }
+      html.push(`<li>${inlineMarkdownToHtml((unordered || ordered)?.[1] || "")}</li>`);
+      continue;
+    }
+
+    closeList();
+
+    const heading = line.match(/^(#{2,3})\s+(.+)$/);
+    if (heading) {
+      html.push(
+        `<${heading[1].length === 2 ? "h2" : "h3"}>${inlineMarkdownToHtml(heading[2])}</${heading[1].length === 2 ? "h2" : "h3"}>`,
+      );
+      continue;
+    }
+
+    const strongHeading = line.match(/^\*\*(.+)\*\*$/);
+    if (strongHeading) {
+      html.push(`<h2>${inlineMarkdownToHtml(strongHeading[1])}</h2>`);
+      continue;
+    }
+
+    html.push(`<p>${inlineMarkdownToHtml(line)}</p>`);
+  }
+
+  closeList();
+  return html.join("");
+}
+
+function cleanGoogleDocsHtml(html: string) {
+  if (typeof window === "undefined") return "";
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  const output: string[] = [];
+
+  const textFrom = (node: Node) => (node.textContent || "").replace(/\u00a0/g, " ").trim();
+
+  const inlineHtml = (node: Node): string => {
+    if (node.nodeType === Node.TEXT_NODE) return escapeHtml(node.textContent || "");
+    if (!(node instanceof HTMLElement)) return "";
+
+    const tag = node.tagName.toLowerCase();
+    const childHtml = Array.from(node.childNodes).map(inlineHtml).join("");
+    const fontWeight = node.style.fontWeight;
+    const fontStyle = node.style.fontStyle;
+    const textDecoration = node.style.textDecoration;
+    const isBold =
+      tag === "b" || tag === "strong" || fontWeight === "bold" || Number(fontWeight) >= 600;
+    const isItalic = tag === "i" || tag === "em" || fontStyle === "italic";
+    const isUnderline = tag === "u" || textDecoration.includes("underline");
+
+    if (tag === "br") return "<br>";
+    if (tag === "a") {
+      const href = node.getAttribute("href") || "";
+      const safeHref = /^(https?:|mailto:|tel:|\/)/i.test(href) ? href : "";
+      return safeHref ? `<a href="${escapeHtml(safeHref)}">${childHtml}</a>` : childHtml;
+    }
+
+    let wrapped = childHtml;
+    if (isBold) wrapped = `<strong>${wrapped}</strong>`;
+    if (isItalic) wrapped = `<em>${wrapped}</em>`;
+    if (isUnderline) wrapped = `<u>${wrapped}</u>`;
+    return wrapped;
+  };
+
+  const blocks = Array.from(doc.body.querySelectorAll("h1,h2,h3,p,li,div")).filter(
+    (element) => !element.parentElement?.closest("h1,h2,h3,p,li,div"),
+  );
+  let listType: "ul" | "ol" | null = null;
+
+  const closeList = () => {
+    if (!listType) return;
+    output.push(`</${listType}>`);
+    listType = null;
+  };
+
+  for (const element of blocks) {
+    const text = textFrom(element);
+    if (!text) continue;
+
+    const tag = element.tagName.toLowerCase();
+    if (tag === "li") {
+      const parentTag = element.closest("ol") ? "ol" : "ul";
+      if (listType !== parentTag) {
+        closeList();
+        output.push(`<${parentTag}>`);
+        listType = parentTag;
+      }
+      output.push(`<li>${inlineHtml(element)}</li>`);
+      continue;
+    }
+
+    closeList();
+    const isLarge =
+      tag === "h1" ||
+      tag === "h2" ||
+      tag === "h3" ||
+      Number.parseFloat(window.getComputedStyle(element).fontSize || "0") >= 20;
+    const blockTag = isLarge ? "h2" : "p";
+    output.push(`<${blockTag}>${inlineHtml(element)}</${blockTag}>`);
+  }
+
+  closeList();
+  return output.join("");
+}
+
+function sanitizeEditorHtml(html: string) {
+  return html
+    .replace(/<script[\s\S]*?<\/script>/gi, "")
+    .replace(/<style[\s\S]*?<\/style>/gi, "")
+    .replace(/<div\b[^>]*>/gi, "<p>")
+    .replace(/<\/div>/gi, "</p>")
+    .replace(/\s(?:on\w+|style)=("[^"]*"|'[^']*'|[^\s>]+)/gi, "")
+    .replace(/<(?!\/?(?:p|h2|h3|ul|ol|li|strong|b|em|i|u|a|br)\b)[^>]*>/gi, "")
+    .replace(/<a\b([^>]*)>/gi, (_tag, attrs: string) => {
+      const href = attrs.match(/\shref=(["'])(.*?)\1/i)?.[2] || "";
+      if (!/^(https?:|mailto:|tel:|\/)/i.test(href)) return "<a>";
+      return `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">`;
+    });
+}
+
+function htmlToPlainText(html: string) {
+  if (typeof window === "undefined") return html;
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(sanitizeEditorHtml(html), "text/html");
+  const lines: string[] = [];
+
+  const inlineMarkdown = (node: Node): string => {
+    if (node.nodeType === Node.TEXT_NODE) return node.textContent || "";
+    if (!(node instanceof HTMLElement)) return "";
+
+    const tag = node.tagName.toLowerCase();
+    const childText = Array.from(node.childNodes).map(inlineMarkdown).join("");
+
+    if (tag === "strong" || tag === "b") return `**${childText}**`;
+    if (tag === "em" || tag === "i") return `*${childText}*`;
+    if (tag === "br") return "\n";
+
+    return childText;
+  };
+
+  const walk = (node: Element) => {
+    const tag = node.tagName.toLowerCase();
+    const text = inlineMarkdown(node)
+      .replace(/\u00a0/g, " ")
+      .trim();
+    if (!text) return;
+
+    if (tag === "h2") {
+      lines.push(`## ${text}`);
+      return;
+    }
+    if (tag === "h3") {
+      lines.push(`### ${text}`);
+      return;
+    }
+    if (tag === "li") {
+      const marker = node.closest("ol") ? "1." : "-";
+      lines.push(`${marker} ${text}`);
+      return;
+    }
+    if (tag === "p") {
+      lines.push(text);
+    }
+  };
+
+  Array.from(doc.body.querySelectorAll("h2,h3,p,li")).forEach(walk);
+  return lines.join("\n\n");
+}
+
+function RichContentEditor({
+  label,
+  value,
+  onChange,
+  onRegisterSync,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  onRegisterSync?: (sync: () => string) => void;
+}) {
+  const editorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const editor = editorRef.current;
+    if (!editor) return;
+
+    const nextHtml = isHtmlContent(value)
+      ? sanitizeEditorHtml(value)
+      : plainTextToEditorHtml(value);
+    if (editor.innerHTML !== nextHtml) editor.innerHTML = nextHtml;
+  }, [value]);
+
+  function updateValue() {
+    const editor = editorRef.current;
+    if (!editor) return;
+    onChange(sanitizeEditorHtml(editor.innerHTML));
+  }
+
+  useEffect(() => {
+    onRegisterSync?.(() => {
+      const editor = editorRef.current;
+      const nextValue = sanitizeEditorHtml(editor?.innerHTML || "");
+      onChange(nextValue);
+      return nextValue;
+    });
+  }, [onChange, onRegisterSync]);
+
+  function runCommand(command: string, commandValue?: string) {
+    editorRef.current?.focus();
+    document.execCommand("defaultParagraphSeparator", false, "p");
+    document.execCommand(command, false, commandValue);
+    updateValue();
+  }
+
+  function handlePaste(event: React.ClipboardEvent<HTMLDivElement>) {
+    event.preventDefault();
+    const html = event.clipboardData.getData("text/html");
+    const text = event.clipboardData.getData("text/plain");
+    const pastedHtml = html ? cleanGoogleDocsHtml(html) : plainTextToEditorHtml(text);
+    document.execCommand("insertHTML", false, sanitizeEditorHtml(pastedHtml));
+    updateValue();
+  }
+
+  const buttonClass =
+    "inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-surface text-foreground/80 transition-colors hover:bg-secondary hover:text-foreground";
+
+  return (
+    <div className="space-y-2 md:col-span-2">
+      <label className="text-sm font-semibold text-foreground">{label}</label>
+      <div className="overflow-hidden rounded-2xl border border-input bg-surface focus-within:ring-2 focus-within:ring-ring/50 focus-within:border-ring">
+        <div className="flex flex-wrap items-center gap-2 border-b border-border bg-background/70 p-2">
+          <button
+            type="button"
+            className={buttonClass}
+            onClick={() => runCommand("formatBlock", "h2")}
+            title="Heading 2"
+          >
+            <Heading2 className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            className={buttonClass}
+            onClick={() => runCommand("formatBlock", "h3")}
+            title="Heading 3"
+          >
+            <Heading3 className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            className={buttonClass}
+            onClick={() => runCommand("bold")}
+            title="Bold"
+          >
+            <Bold className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            className={buttonClass}
+            onClick={() => runCommand("italic")}
+            title="Italic"
+          >
+            <Italic className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            className={buttonClass}
+            onClick={() => runCommand("insertUnorderedList")}
+            title="Bulleted list"
+          >
+            <List className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            className={buttonClass}
+            onClick={() => runCommand("insertOrderedList")}
+            title="Numbered list"
+          >
+            <ListOrdered className="h-4 w-4" />
+          </button>
+          <button
+            type="button"
+            className={buttonClass}
+            onClick={() => runCommand("removeFormat")}
+            title="Clear formatting"
+          >
+            <RemoveFormatting className="h-4 w-4" />
+          </button>
+        </div>
+        <div
+          ref={editorRef}
+          contentEditable
+          role="textbox"
+          aria-multiline="true"
+          onInput={updateValue}
+          onBlur={updateValue}
+          onPaste={handlePaste}
+          className="min-h-[260px] w-full px-4 py-3 text-sm leading-relaxed outline-none [&_a]:text-primary [&_a]:underline [&_h2]:mb-3 [&_h2]:mt-5 [&_h2]:text-2xl [&_h2]:font-bold [&_h3]:mb-2 [&_h3]:mt-4 [&_h3]:text-xl [&_h3]:font-bold [&_li]:my-1 [&_ol]:list-decimal [&_ol]:pl-6 [&_p]:my-3 [&_ul]:list-disc [&_ul]:pl-6"
+          suppressContentEditableWarning
+        />
+      </div>
+      <p className="text-xs text-muted-foreground">
+        Paste from Google Docs here, or use the toolbar to format headings, bold, italic, and lists.
+      </p>
+    </div>
+  );
+}
+
 const formatToDatetimeLocal = (dateInput: any) => {
   if (!dateInput) return "";
   const d = new Date(dateInput);
@@ -57,6 +422,8 @@ export function BlogForm({
   loading: boolean;
   title: string;
 }) {
+  const syncDescriptionTopRef = useRef<(() => string) | null>(null);
+  const syncDescriptionBottomRef = useRef<(() => string) | null>(null);
   const [formData, setFormData] = useState<BlogFormData>({
     ...DEFAULT_FORM,
     ...initialData,
@@ -105,7 +472,13 @@ export function BlogForm({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    await onSubmit(formData);
+    const descriptionTop = syncDescriptionTopRef.current?.() ?? formData.descriptionTop;
+    const descriptionBottom = syncDescriptionBottomRef.current?.() ?? formData.descriptionBottom;
+    await onSubmit({
+      ...formData,
+      descriptionTop: htmlToPlainText(descriptionTop),
+      descriptionBottom: htmlToPlainText(descriptionBottom),
+    });
   }
 
   return (
@@ -123,7 +496,7 @@ export function BlogForm({
       <form onSubmit={handleSubmit} className="space-y-8">
         <div className="glass-card border border-border bg-surface/50 rounded-3xl p-6 sm:p-8 space-y-6">
           <h3 className="text-lg font-bold border-b border-border pb-3">Blog Post Information</h3>
-          
+
           <div className="grid md:grid-cols-2 gap-6">
             {/* Title */}
             <div className="space-y-2 md:col-span-2">
@@ -167,7 +540,9 @@ export function BlogForm({
                 <div className="space-y-2">
                   <div className="flex items-center justify-between gap-3">
                     <label className="text-sm font-semibold text-foreground">Meta Title*</label>
-                    <span className="text-xs text-muted-foreground">{formData.metaTitle.length}/60</span>
+                    <span className="text-xs text-muted-foreground">
+                      {formData.metaTitle.length}/60
+                    </span>
                   </div>
                   <input
                     type="text"
@@ -182,18 +557,26 @@ export function BlogForm({
 
                 <div className="space-y-2 md:col-span-2">
                   <div className="flex items-center justify-between gap-3">
-                    <label className="text-sm font-semibold text-foreground">Meta Description*</label>
-                    <span className="text-xs text-muted-foreground">{formData.metaDescription.length}/160</span>
+                    <label className="text-sm font-semibold text-foreground">
+                      Meta Description*
+                    </label>
+                    <span className="text-xs text-muted-foreground">
+                      {formData.metaDescription.length}/{META_DESCRIPTION_MAX_LENGTH}
+                    </span>
                   </div>
                   <textarea
                     required
-                    rows={3}
-                    maxLength={180}
+                    rows={5}
+                    maxLength={META_DESCRIPTION_MAX_LENGTH}
                     placeholder="Write a clear search result description with the main keyword and value of this article."
                     value={formData.metaDescription}
                     onChange={(e) => handleFieldChange("metaDescription", e.target.value)}
                     className="w-full px-4 py-3 bg-surface border border-input rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring resize-none"
                   />
+                  <p className="text-xs text-muted-foreground">
+                    Search engines usually display around 150-160 characters, but longer
+                    descriptions can now be saved.
+                  </p>
                 </div>
 
                 <div className="space-y-2 md:col-span-2">
@@ -275,7 +658,9 @@ export function BlogForm({
             {/* Publish Date & Time (Conditional) */}
             {formData.status === "scheduled" && (
               <div className="space-y-2 animate-fade-in md:col-span-2">
-                <label className="text-sm font-semibold text-foreground">Publish Date & Time*</label>
+                <label className="text-sm font-semibold text-foreground">
+                  Publish Date & Time*
+                </label>
                 <input
                   type="datetime-local"
                   required
@@ -288,7 +673,9 @@ export function BlogForm({
 
             {/* Excerpt */}
             <div className="space-y-2 md:col-span-2">
-              <label className="text-sm font-semibold text-foreground">Excerpt (Brief card description)*</label>
+              <label className="text-sm font-semibold text-foreground">
+                Excerpt (Brief card description)*
+              </label>
               <textarea
                 required
                 rows={3}
@@ -301,7 +688,9 @@ export function BlogForm({
 
             {/* 1. Top Image */}
             <div className="space-y-2 md:col-span-2 pt-4 border-t border-border">
-              <h4 className="text-base font-bold text-foreground">1. Hero Section (Start of Blog)</h4>
+              <h4 className="text-base font-bold text-foreground">
+                1. Hero Section (Start of Blog)
+              </h4>
               <label className="text-sm font-semibold text-foreground">Hero Image Path / URL</label>
               <input
                 type="text"
@@ -312,23 +701,21 @@ export function BlogForm({
               />
             </div>
 
-            {/* descriptionTop */}
-            <div className="space-y-2 md:col-span-2">
-              <label className="text-sm font-semibold text-foreground">Content - First Block (Before Middle Image)*</label>
-              <textarea
-                required
-                rows={8}
-                placeholder="Enter the first half of your blog post contents. Separate paragraphs with double enter spacing."
-                value={formData.descriptionTop}
-                onChange={(e) => handleFieldChange("descriptionTop", e.target.value)}
-                className="w-full px-4 py-3 bg-surface border border-input rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring font-sans"
-              />
-            </div>
+            <RichContentEditor
+              label="Content - First Block (Before Middle Image)*"
+              value={formData.descriptionTop}
+              onChange={(value) => handleFieldChange("descriptionTop", value)}
+              onRegisterSync={(sync) => {
+                syncDescriptionTopRef.current = sync;
+              }}
+            />
 
             {/* 2. Middle Image */}
             <div className="space-y-2 md:col-span-2 pt-4 border-t border-border">
               <h4 className="text-base font-bold text-foreground">2. Middle Image Section</h4>
-              <label className="text-sm font-semibold text-foreground">Middle Image Path / URL</label>
+              <label className="text-sm font-semibold text-foreground">
+                Middle Image Path / URL
+              </label>
               <input
                 type="text"
                 placeholder="e.g. /blogs/vibe-coding-mid.png"
@@ -338,18 +725,14 @@ export function BlogForm({
               />
             </div>
 
-            {/* descriptionBottom */}
-            <div className="space-y-2 md:col-span-2">
-              <label className="text-sm font-semibold text-foreground">Content - Second Block (After Middle Image)*</label>
-              <textarea
-                required
-                rows={8}
-                placeholder="Enter the continuing content of the blog post to be shown below the middle image."
-                value={formData.descriptionBottom}
-                onChange={(e) => handleFieldChange("descriptionBottom", e.target.value)}
-                className="w-full px-4 py-3 bg-surface border border-input rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-ring/50 focus:border-ring font-sans"
-              />
-            </div>
+            <RichContentEditor
+              label="Content - Second Block (After Middle Image)*"
+              value={formData.descriptionBottom}
+              onChange={(value) => handleFieldChange("descriptionBottom", value)}
+              onRegisterSync={(sync) => {
+                syncDescriptionBottomRef.current = sync;
+              }}
+            />
           </div>
         </div>
 
