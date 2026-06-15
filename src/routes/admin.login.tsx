@@ -18,6 +18,8 @@ declare global {
       reset: (widgetId?: string) => void;
     };
     grecaptcha?: {
+      ready?: (callback: () => void) => void;
+      execute?: (siteKey: string, options: { action: string }) => Promise<string>;
       render: (
         container: HTMLElement,
         options: {
@@ -48,7 +50,7 @@ type CaptchaProvider = "recaptcha" | "turnstile" | "hcaptcha";
 type CaptchaWidgetId = string | number;
 
 const captchaScripts: Record<CaptchaProvider, string> = {
-  recaptcha: "https://www.google.com/recaptcha/api.js?render=explicit",
+  recaptcha: "https://www.google.com/recaptcha/api.js",
   turnstile: "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit",
   hcaptcha: "https://js.hcaptcha.com/1/api.js?render=explicit",
 };
@@ -72,6 +74,31 @@ function AdminLogin() {
     const provider = captchaConfig.provider as CaptchaProvider;
     if (!captchaConfig.enabled || !captchaConfig.siteKey || !provider) return;
 
+    if (provider === "recaptcha") {
+      const expectedScriptUrl = `${captchaScripts.recaptcha}?render=${encodeURIComponent(
+        captchaConfig.siteKey,
+      )}`;
+      const existingScript = document.querySelector(
+        `script[data-captcha-provider="${provider}"]`,
+      ) as HTMLScriptElement | null;
+      if (existingScript?.src.includes(`render=${encodeURIComponent(captchaConfig.siteKey)}`)) {
+        return;
+      }
+      existingScript?.remove();
+      captchaRef.current?.replaceChildren();
+
+      const script = document.createElement("script");
+      script.src = expectedScriptUrl;
+      script.dataset.captchaProvider = provider;
+      script.async = true;
+      script.defer = true;
+      document.head.appendChild(script);
+      return;
+    }
+
+    let retryCount = 0;
+    let retryTimer: number | undefined;
+
     const renderCaptcha = () => {
       if (!captchaRef.current || widgetIdRef.current) return;
       const captchaApi =
@@ -82,6 +109,17 @@ function AdminLogin() {
             : window.hcaptcha;
 
       if (!captchaApi) return;
+      if (typeof captchaApi.render !== "function") {
+        if (retryCount < 30) {
+          retryCount += 1;
+          retryTimer = window.setTimeout(renderCaptcha, 200);
+        } else {
+          setError(
+            "Captcha could not load. Please refresh the page or disable captcha in settings.",
+          );
+        }
+        return;
+      }
 
       widgetIdRef.current = captchaApi.render(captchaRef.current, {
         sitekey: captchaConfig.siteKey,
@@ -91,12 +129,24 @@ function AdminLogin() {
       });
     };
 
+    const renderWhenReady = () => {
+      if (provider === "recaptcha" && typeof window.grecaptcha?.ready === "function") {
+        window.grecaptcha.ready(renderCaptcha);
+        return;
+      }
+      renderCaptcha();
+    };
+
     const existingScript = document.querySelector(
       `script[data-captcha-provider="${provider}"]`,
     ) as HTMLScriptElement | null;
     if (existingScript) {
-      renderCaptcha();
-      return;
+      existingScript.addEventListener("load", renderWhenReady, { once: true });
+      renderWhenReady();
+      return () => {
+        existingScript.removeEventListener("load", renderWhenReady);
+        if (retryTimer) window.clearTimeout(retryTimer);
+      };
     }
 
     const script = document.createElement("script");
@@ -104,15 +154,17 @@ function AdminLogin() {
     script.dataset.captchaProvider = provider;
     script.async = true;
     script.defer = true;
-    script.onload = renderCaptcha;
+    script.onload = renderWhenReady;
     document.head.appendChild(script);
+
+    return () => {
+      if (retryTimer) window.clearTimeout(retryTimer);
+    };
   }, [captchaConfig.enabled, captchaConfig.provider, captchaConfig.siteKey]);
 
   function resetCaptcha() {
     const provider = captchaConfig.provider as CaptchaProvider;
-    if (provider === "recaptcha" && typeof widgetIdRef.current === "number") {
-      window.grecaptcha?.reset(widgetIdRef.current);
-    } else if (provider === "turnstile" && typeof widgetIdRef.current === "string") {
+    if (provider === "turnstile" && typeof widgetIdRef.current === "string") {
       window.turnstile?.reset(widgetIdRef.current);
     } else if (provider === "hcaptcha" && typeof widgetIdRef.current === "string") {
       window.hcaptcha?.reset(widgetIdRef.current);
@@ -120,11 +172,31 @@ function AdminLogin() {
     setCaptchaToken("");
   }
 
+  async function getRecaptchaToken() {
+    if (captchaConfig.provider !== "recaptcha") return captchaToken;
+
+    return await new Promise<string>((resolve, reject) => {
+      const grecaptcha = window.grecaptcha;
+      if (!grecaptcha?.ready || !grecaptcha.execute) {
+        reject(new Error("Captcha is still loading. Please try again."));
+        return;
+      }
+
+      grecaptcha.ready(() => {
+        grecaptcha
+          .execute(captchaConfig.siteKey, { action: "admin_login" })
+          .then(resolve)
+          .catch(() => reject(new Error("Captcha could not be completed. Please try again.")));
+      });
+    });
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
 
-    if (captchaConfig.enabled && !captchaToken) {
+    const provider = captchaConfig.provider as CaptchaProvider;
+    if (captchaConfig.enabled && provider !== "recaptcha" && !captchaToken) {
       setError("Please complete the captcha.");
       return;
     }
@@ -132,10 +204,11 @@ function AdminLogin() {
     setLoading(true);
 
     try {
-      await loginAction({ data: { username, password, captchaToken } });
+      const token = captchaConfig.enabled ? await getRecaptchaToken() : "";
+      await loginAction({ data: { username, password, captchaToken: token } });
       window.location.href = "/admin";
-    } catch (err: any) {
-      const message = err?.message || "";
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "";
       const canShowServerMessage =
         message.includes("Too many failed login attempts") || message.includes("Captcha");
       setError(canShowServerMessage ? message : "Invalid username or password.");
@@ -217,7 +290,7 @@ function AdminLogin() {
             </div>
           </div>
 
-          {captchaConfig.enabled && (
+          {captchaConfig.enabled && captchaConfig.provider !== "recaptcha" && (
             <div className="min-h-[65px]">
               <div ref={captchaRef} />
             </div>
@@ -225,7 +298,10 @@ function AdminLogin() {
 
           <button
             type="submit"
-            disabled={loading || (captchaConfig.enabled && !captchaToken)}
+            disabled={
+              loading ||
+              (captchaConfig.enabled && captchaConfig.provider !== "recaptcha" && !captchaToken)
+            }
             className="w-full bg-foreground text-background font-semibold py-3.5 rounded-2xl shadow-soft hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50 disabled:pointer-events-none cursor-pointer flex items-center justify-center"
           >
             {loading ? "Logging in..." : "Login"}

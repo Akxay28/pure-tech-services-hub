@@ -1,21 +1,14 @@
 import { useState, type ReactNode } from "react";
-import { Check, Linkedin, Mail, Phone } from "lucide-react";
-import { accentAt, brandIconGradient, BRAND } from "@/lib/brand-colors";
+import { Check, Linkedin, Phone } from "lucide-react";
+import { BRAND } from "@/lib/brand-colors";
 import { NAV_TEAM_CONTACTS } from "@/lib/team-contacts";
 import { submitContactForm } from "@/lib/contact-submit";
 
-const CONTACT_EMAIL = "contact@puretechnology.in";
 const CONTACT_NUMBERS = [
   { label: "For HR & Carrers", number: "+91 73875 81577", href: "tel:+917387581577" },
   { label: "For Support", number: "+91 83298 49726", href: "tel:+918329849726" },
   { label: "For AI Project", number: "+91 99701 11283", href: "tel:+919970111283" },
   { label: "For Hire Resource", number: "+91 73854 55380", href: "tel:+919970111283" },
-] as const;
-
-const CONSULTATION_STEPS = [
-  "Drop your requirement and our expert will analyze further",
-  "Outlining it, we will build roadmap and connect with you",
-  "Further, finalize the approach and begin implementation",
 ] as const;
 
 export function ConsultationSection({
@@ -29,40 +22,20 @@ export function ConsultationSection({
 
   return (
     <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
-      <div className="mx-auto max-w-7xl grid lg:grid-cols-12 gap-10 lg:gap-14 items-stretch">
-        <div className="lg:col-span-5 flex flex-col justify-center">
-          <div className="max-w-xl">
+      <div className="mx-auto grid max-w-7xl items-start gap-10 lg:grid-cols-12 lg:gap-14">
+        <div className="flex h-full flex-col lg:col-span-5">
+          <div className="flex h-full max-w-xl flex-col">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               Free consultation
             </p>
             <h2 className="mt-3 text-4xl sm:text-5xl font-display font-bold leading-tight tracking-tight">
-            Turn Your Vision <br />
+              Turn Your Vision <br />
               <span className="text-gradient-brand">Into Reality</span>
             </h2>
 
-            <h3 className="mt-10 text-2xl sm:text-3xl font-display font-bold">What's Next?</h3>
-            <ol className="mt-6 space-y-5">
-              {CONSULTATION_STEPS.map((step, i) => (
-                <li key={step} className="relative flex gap-5">
-                  {i < CONSULTATION_STEPS.length - 1 && (
-                    <span className="absolute left-6 top-12 h-[calc(100%-1rem)] w-px bg-border" />
-                  )}
-                  <span
-                    className="relative z-10 grid h-12 w-12 shrink-0 place-items-center rounded-full text-base font-display font-bold text-white"
-                    style={{ background: brandIconGradient(accentAt(i)) }}
-                  >
-                    {i + 1}
-                  </span>
-                  <p className="pt-1.5 text-base text-muted-foreground leading-relaxed">
-                    {step}
-                  </p>
-                </li>
-              ))}
-            </ol>
-
-            <div className="mt-10">
-              <h3 className="text-xl font-display font-bold">Connect with Our Team</h3>
-              <div className="mt-5 flex items-center">
+            <div className="mt-9 flex flex-1 flex-col justify-between rounded-3xl border border-border/70 bg-surface/70 p-5 shadow-sm">
+              <h3 className="text-lg font-display font-bold">Connect with Our Team</h3>
+              <div className="mt-4 flex items-center">
                 {NAV_TEAM_CONTACTS.map((member, i) => (
                   <a
                     key={member.id}
@@ -70,7 +43,7 @@ export function ConsultationSection({
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`LinkedIn profile of ${member.name}`}
-                    className="group relative h-24 w-24 overflow-hidden rounded-full border-4 border-background bg-surface shadow-soft sm:h-28 sm:w-28"
+                    className="group relative h-20 w-20 overflow-hidden rounded-full border-4 border-background bg-surface shadow-soft sm:h-24 sm:w-24"
                     style={{
                       marginLeft: i === 0 ? 0 : "-1.25rem",
                       zIndex: NAV_TEAM_CONTACTS.length - i,
@@ -88,10 +61,7 @@ export function ConsultationSection({
                 ))}
               </div>
 
-              <div className="mt-7 flex flex-wrap gap-3">
-                <ContactPill href={`mailto:${CONTACT_EMAIL}`} icon={<Mail className="h-4 w-4" />}>
-                  {CONTACT_EMAIL}
-                </ContactPill>
+              <div className="mt-6 flex flex-wrap gap-2.5">
                 {CONTACT_NUMBERS.map((contact) => (
                   <ContactPill
                     key={contact.label}
@@ -108,7 +78,7 @@ export function ConsultationSection({
         </div>
 
         <form
-          className="lg:col-span-7 rounded-3xl border border-border bg-surface p-6 shadow-soft sm:p-8 lg:p-12"
+          className="self-start rounded-3xl border border-border bg-surface p-6 shadow-soft sm:p-8 lg:col-span-7 lg:p-10"
           onSubmit={async (e) => {
             e.preventDefault();
             setError("");
@@ -139,12 +109,10 @@ export function ConsultationSection({
               >
                 <Check className="h-7 w-7" />
               </span>
-              <h3 className="mt-6 text-3xl font-display font-bold">
-                Thanks, we've got it.
-              </h3>
+              <h3 className="mt-6 text-3xl font-display font-bold">Thanks, we've got it.</h3>
               <p className="mt-3 max-w-md text-muted-foreground leading-relaxed">
-                Our team will review your requirements and get back to you within 24
-                hours with the next steps.
+                Our team will review your requirements and get back to you within 24 hours with the
+                next steps.
               </p>
             </div>
           ) : (
@@ -155,10 +123,16 @@ export function ConsultationSection({
               <div className="mt-9 grid sm:grid-cols-2 gap-x-6 gap-y-7">
                 <UnderlineField label="Your Name*" name="name" required />
                 <UnderlineField label="Email Address*" name="email" type="email" required />
-                <UnderlineField label="Phone Number*" name="phone" type="tel" required prefix="+91" />
+                <UnderlineField
+                  label="Phone Number*"
+                  name="phone"
+                  type="tel"
+                  required
+                  prefix="+91"
+                />
                 <UnderlineField label="Company" name="company" />
               </div>
-              <div className="mt-8">
+              <div className="mt-7">
                 <label className="text-sm text-muted-foreground" htmlFor="requirements">
                   Please describe your project requirements*
                 </label>
@@ -166,11 +140,11 @@ export function ConsultationSection({
                   id="requirements"
                   name="requirements"
                   required
-                  rows={7}
-                  className="mt-3 w-full resize-none border-0 border-b border-foreground/80 bg-transparent px-0 py-3 text-sm outline-none transition-colors focus:border-primary"
+                  rows={4}
+                  className="mt-3 w-full resize-y border-0 border-b border-foreground/80 bg-transparent px-0 py-3 text-sm outline-none transition-colors focus:border-primary"
                 />
               </div>
-              <div className="mt-8 flex justify-end">
+              <div className="mt-7 flex justify-end">
                 <button
                   type="submit"
                   disabled={submitting}
@@ -202,11 +176,11 @@ function ContactPill({
   return (
     <a
       href={href}
-      className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface px-3.5 py-2.5 text-sm font-medium shadow-soft transition-all hover:-translate-y-0.5 hover:text-primary"
+      className="inline-flex items-center gap-2 rounded-full border border-border bg-background/75 px-3.5 py-2 text-sm font-medium shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/25 hover:text-primary hover:shadow-soft"
     >
       <span className="text-primary">{icon}</span>
       {label && (
-        <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-bold uppercase tracking-[0.12em] text-primary">
+        <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-bold uppercase tracking-[0.1em] text-primary">
           {label}
         </span>
       )}

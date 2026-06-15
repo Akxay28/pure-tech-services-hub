@@ -72,7 +72,6 @@ import { Route as CaseStudiesSlugRouteImport } from './routes/case-studies/$slug
 import { Route as CareersLifeAtPureTechnologyRouteImport } from './routes/careers.life-at-pure-technology'
 import { Route as CareersBenefitsPerksRouteImport } from './routes/careers.benefits-perks'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
-import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminNewRouteImport } from './routes/admin.new'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminBlogsIndexRouteImport } from './routes/admin.blogs.index'
@@ -411,11 +410,6 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BlogRoute,
 } as any)
-const AdminSettingsRoute = AdminSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AdminRoute,
-} as any)
 const AdminNewRoute = AdminNewRouteImport.update({
   id: '/new',
   path: '/new',
@@ -463,7 +457,6 @@ export interface FileRoutesByFullPath {
   '/team': typeof TeamRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/new': typeof AdminNewRoute
-  '/admin/settings': typeof AdminSettingsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/careers/benefits-perks': typeof CareersBenefitsPerksRoute
   '/careers/life-at-pure-technology': typeof CareersLifeAtPureTechnologyRoute
@@ -531,7 +524,6 @@ export interface FileRoutesByTo {
   '/team': typeof TeamRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/new': typeof AdminNewRoute
-  '/admin/settings': typeof AdminSettingsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/careers/benefits-perks': typeof CareersBenefitsPerksRoute
   '/careers/life-at-pure-technology': typeof CareersLifeAtPureTechnologyRoute
@@ -604,7 +596,6 @@ export interface FileRoutesById {
   '/team': typeof TeamRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/new': typeof AdminNewRoute
-  '/admin/settings': typeof AdminSettingsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/careers/benefits-perks': typeof CareersBenefitsPerksRoute
   '/careers/life-at-pure-technology': typeof CareersLifeAtPureTechnologyRoute
@@ -678,7 +669,6 @@ export interface FileRouteTypes {
     | '/team'
     | '/admin/login'
     | '/admin/new'
-    | '/admin/settings'
     | '/blog/$slug'
     | '/careers/benefits-perks'
     | '/careers/life-at-pure-technology'
@@ -746,7 +736,6 @@ export interface FileRouteTypes {
     | '/team'
     | '/admin/login'
     | '/admin/new'
-    | '/admin/settings'
     | '/blog/$slug'
     | '/careers/benefits-perks'
     | '/careers/life-at-pure-technology'
@@ -818,7 +807,6 @@ export interface FileRouteTypes {
     | '/team'
     | '/admin/login'
     | '/admin/new'
-    | '/admin/settings'
     | '/blog/$slug'
     | '/careers/benefits-perks'
     | '/careers/life-at-pure-technology'
@@ -1356,13 +1344,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof BlogRoute
     }
-    '/admin/settings': {
-      id: '/admin/settings'
-      path: '/settings'
-      fullPath: '/admin/settings'
-      preLoaderRoute: typeof AdminSettingsRouteImport
-      parentRoute: typeof AdminRoute
-    }
     '/admin/new': {
       id: '/admin/new'
       path: '/new'
@@ -1411,7 +1392,6 @@ declare module '@tanstack/react-router' {
 interface AdminRouteChildren {
   AdminLoginRoute: typeof AdminLoginRoute
   AdminNewRoute: typeof AdminNewRoute
-  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminBlogsNewRoute: typeof AdminBlogsNewRoute
   AdminEditIdRoute: typeof AdminEditIdRoute
@@ -1422,7 +1402,6 @@ interface AdminRouteChildren {
 const AdminRouteChildren: AdminRouteChildren = {
   AdminLoginRoute: AdminLoginRoute,
   AdminNewRoute: AdminNewRoute,
-  AdminSettingsRoute: AdminSettingsRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminBlogsNewRoute: AdminBlogsNewRoute,
   AdminEditIdRoute: AdminEditIdRoute,

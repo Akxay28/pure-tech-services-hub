@@ -1,5 +1,5 @@
 import { createFileRoute, redirect, Outlet, Link } from "@tanstack/react-router";
-import { LayoutDashboard, LogOut, Settings, BookOpen } from "lucide-react";
+import { LayoutDashboard, LogOut, BookOpen } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { checkAuthAction, logoutAction } from "@/lib/admin-actions";
 
@@ -9,16 +9,16 @@ class ErrorBoundary extends React.Component<
   { children: React.ReactNode },
   { hasError: boolean; error: Error | null }
 > {
-  constructor(props: any) {
+  constructor(props: { children: React.ReactNode }) {
     super(props);
     this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError(error: any) {
+  static getDerivedStateFromError(error: Error) {
     return { hasError: true, error };
   }
 
-  componentDidCatch(error: any, errorInfo: any) {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     console.error("ErrorBoundary caught an error", error, errorInfo);
   }
 
@@ -45,13 +45,13 @@ export const Route = createFileRoute("/admin")({
 
     if (!auth.authenticated && !isLoginPage) {
       throw redirect({
-        to: "/admin/login" as any,
+        to: "/admin/login",
       });
     }
 
     if (auth.authenticated && isLoginPage) {
       throw redirect({
-        to: "/admin" as any,
+        to: "/admin",
       });
     }
 
@@ -102,14 +102,6 @@ function AdminLayout() {
               >
                 <BookOpen className="h-4 w-4" />
                 Blogs
-              </Link>
-              <Link
-                to="/admin/settings"
-                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium hover:bg-secondary transition-colors"
-                activeProps={{ className: "bg-secondary text-primary" }}
-              >
-                <Settings className="h-4 w-4" />
-                Captcha
               </Link>
             </nav>
           </div>

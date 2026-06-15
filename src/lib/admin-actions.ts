@@ -154,14 +154,6 @@ type CaptchaConfig = {
   siteKey: string;
 };
 
-type StoredCaptchaSettings = {
-  _id: "captcha";
-  provider: CaptchaProvider | "";
-  siteKey: string;
-  secretKey: string;
-  updatedAt?: Date;
-};
-
 function getErrorSummary(error: unknown) {
   if (error instanceof Error) {
     return error.message.split("\n")[0];
@@ -415,29 +407,6 @@ async function getCaptchaConfig(includeSecret = false): Promise<
     };
   }
 
-  let storedSettings: StoredCaptchaSettings | null = null;
-
-  try {
-    storedSettings = await Promise.race([
-      (async () => {
-        const { db } = await connectToDatabase();
-        return db.collection("admin_settings").findOne({ _id: "captcha" });
-      })(),
-      new Promise<null>((resolve) => setTimeout(() => resolve(null), 2000)),
-    ]);
-  } catch (error) {
-    logFallbackWarning("[Captcha Config] Failed to read database settings:", error);
-  }
-
-  if (storedSettings?.provider && storedSettings.siteKey) {
-    return {
-      enabled: true,
-      provider: storedSettings.provider,
-      siteKey: storedSettings.siteKey,
-      ...(includeSecret ? { secretKey: storedSettings.secretKey } : {}),
-    };
-  }
-
   return {
     enabled: false,
     provider: "",
@@ -485,57 +454,6 @@ async function verifyCaptcha(captchaToken?: string) {
 export const getCaptchaConfigAction = createServerFn().handler(async () => {
   return getCaptchaConfig(false);
 });
-
-export const getAdminCaptchaSettingsAction = createServerFn().handler(async () => {
-  await verifyAdminAuth();
-  const captchaConfig = await getCaptchaConfig(true);
-
-  return {
-    provider: captchaConfig.provider,
-    siteKey: captchaConfig.siteKey,
-    secretKey: captchaConfig.secretKey || "",
-  };
-});
-
-export const updateCaptchaSettingsAction = createServerFn()
-  .inputValidator(
-    (data: any) =>
-      data as {
-        provider?: CaptchaProvider | "";
-        siteKey?: string;
-        secretKey?: string;
-      },
-  )
-  .handler(async ({ data }) => {
-    await verifyAdminAuth();
-
-    const provider = data.provider || "";
-    if (provider && !["recaptcha", "turnstile", "hcaptcha"].includes(provider)) {
-      throw new Error("Unsupported captcha provider.");
-    }
-
-    const siteKey = data.siteKey?.trim() || "";
-    const secretKey = data.secretKey?.trim() || "";
-    if (provider && (!siteKey || !secretKey)) {
-      throw new Error("Site key and secret key are required for captcha.");
-    }
-
-    const { db } = await connectToDatabase();
-    await db.collection("admin_settings").updateOne(
-      { _id: "captcha" },
-      {
-        $set: {
-          provider,
-          siteKey,
-          secretKey,
-          updatedAt: new Date(),
-        },
-      },
-      { upsert: true },
-    );
-
-    return { success: true };
-  });
 
 // 1. Admin Login
 export const loginAction = createServerFn()
