@@ -14,6 +14,7 @@ export interface CaseStudiesSectionProps {
 }
 
 function publicImagePath(path: string) {
+  if (/^https?:\/\//i.test(path)) return path;
   return path.startsWith("/") ? path : `/${path}`;
 }
 
