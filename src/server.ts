@@ -9,17 +9,20 @@ type ServerEntry = {
 };
 
 const CONTACT_RECIPIENTS = [
-  { email: "design@puretechnology.in", apiKeyEnv: "RESEND_API_KEY" },
-  { email: "shravan.shinde@puretechnology.in", apiKeyEnv: "RESEND_API_KEY_SHRAVAN" },
+  {
+    email: "anuj@puretechnology.in",
+    apiKeyEnv: "RESEND_API_KEY",
+    fromEnv: "RESEND_FROM_EMAIL_ANUJ",
+  },
 ];
-const DEFAULT_RESEND_FROM = "Pure Technology <onboarding@resend.dev>";
+const DEFAULT_RESEND_FROM = "Pure Technology <anuj@puretechnology.in>";
 
 let serverEntryPromise: Promise<ServerEntry> | undefined;
 
 async function getServerEntry(): Promise<ServerEntry> {
   if (!serverEntryPromise) {
     serverEntryPromise = import("@tanstack/react-start/server-entry").then(
-      (m) => ((m as { default?: ServerEntry }).default ?? (m as unknown as ServerEntry)),
+      (m) => (m as { default?: ServerEntry }).default ?? (m as unknown as ServerEntry),
     );
   }
   return serverEntryPromise;
@@ -110,9 +113,7 @@ function formatField(label: string, value: string): string {
 function buildContactEmail(payload: ContactPayload) {
   const formSource = textField(payload, "formSource") || "Website contact form";
   const name =
-    textField(payload, "name") ||
-    textField(payload, "visitor-name") ||
-    "Website visitor";
+    textField(payload, "name") || textField(payload, "visitor-name") || "Website visitor";
   const email = textField(payload, "email") || textField(payload, "visitor-email");
   const phone = textField(payload, "phone") || textField(payload, "visitor-phone");
   const company = textField(payload, "company") || textField(payload, "visitor-company");
@@ -194,19 +195,21 @@ async function handleContactRequest(request: Request, env: unknown): Promise<Res
     );
   }
 
-  const primaryApiKey = await envValue(env, "RESEND_API_KEY");
-  if (!primaryApiKey) {
-    console.error("Missing RESEND_API_KEY");
-    return jsonResponse(
-      { message: "Email service is not configured yet." },
-      { status: 500 },
-    );
-  }
+  const fallbackApiKey = await envValue(env, "RESEND_API_KEY");
 
-  const from = (await envValue(env, "RESEND_FROM_EMAIL")) ?? DEFAULT_RESEND_FROM;
+  const defaultFrom = (await envValue(env, "RESEND_FROM_EMAIL")) ?? DEFAULT_RESEND_FROM;
+  let sentCount = 0;
+  const failedRecipients: string[] = [];
 
   for (const recipient of CONTACT_RECIPIENTS) {
-    const apiKey = (await envValue(env, recipient.apiKeyEnv)) ?? primaryApiKey;
+    const apiKey = (await envValue(env, recipient.apiKeyEnv)) ?? fallbackApiKey;
+    if (!apiKey) {
+      console.error(`Missing ${recipient.apiKeyEnv}`);
+      failedRecipients.push(recipient.email);
+      continue;
+    }
+    const from = (await envValue(env, recipient.fromEnv)) ?? defaultFrom;
+
     const resendResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -228,11 +231,19 @@ async function handleContactRequest(request: Request, env: unknown): Promise<Res
       console.error(
         `Resend send failed for ${recipient.email}: ${resendResponse.status} ${errorBody}`,
       );
-      return jsonResponse(
-        { message: "Could not send your enquiry. Please try again." },
-        { status: 502 },
-      );
+      failedRecipients.push(recipient.email);
+      continue;
     }
+
+    sentCount += 1;
+  }
+
+  if (sentCount === 0) {
+    console.error(`Resend send failed for all recipients: ${failedRecipients.join(", ")}`);
+    return jsonResponse(
+      { message: "Could not send your enquiry. Please try again." },
+      { status: 502 },
+    );
   }
 
   return jsonResponse({ ok: true });
@@ -299,7 +310,9 @@ export default {
     setGlobalEnv(env);
     if (!isDbSeeded) {
       isDbSeeded = true;
-      import("./lib/db-seed").then((m) => m.seedDatabase()).catch(err => console.error("Auto seeding failed:", err));
+      import("./lib/db-seed")
+        .then((m) => m.seedDatabase())
+        .catch((err) => console.error("Auto seeding failed:", err));
     }
     try {
       const url = new URL(request.url);

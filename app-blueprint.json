@@ -15,7 +15,7 @@
       {
         "path": "/api/contact",
         "method": "POST",
-        "description": "Main lead contact form endpoint. Standardizes and forwards visitor details via Resend API to design@puretechnology.in and shravan.shinde@puretechnology.in.",
+        "description": "Main lead contact form endpoint. Standardizes and forwards visitor details via Resend API to anuj@puretechnology.in and shravan.shinde@puretechnology.in.",
         "handler": "src/server.ts (handleContactRequest)",
         "payloadFormat": {
           "name/visitor-name": "string (required)",
