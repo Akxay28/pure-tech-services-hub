@@ -190,21 +190,38 @@ export function ClientMarquee() {
 // In your Testimonial component in Primitives.tsx
 
 export function Testimonial({
-  quote, name, role, company, initials,
+  quote,
+  name,
+  role,
+  company,
+  initials,
   accent = "var(--brand-blue)",
-  project, email, avatar,
-  onAvatarError,           // ← add this prop
+  project,
+  email,
+  avatar,
+  onAvatarError, // ← add this prop
 }: {
-  quote: string; name: string; role: string; company: string;
-  initials: string; accent?: string; project?: string;
-  email?: string; avatar?: string;
-  onAvatarError?: () => void;  // ← add this type
+  quote: string;
+  name: string;
+  role: string;
+  company: string;
+  initials: string;
+  accent?: string;
+  project?: string;
+  email?: string;
+  avatar?: string;
+  onAvatarError?: () => void; // ← add this type
 }) {
   // No useState needed here anymore!
 
   return (
     <figure className="glass-card rounded-3xl p-7 h-full flex flex-col">
-      <svg viewBox="0 0 24 24" className="h-7 w-7 text-foreground/30" fill="currentColor" aria-hidden>
+      <svg
+        viewBox="0 0 24 24"
+        className="h-7 w-7 text-foreground/30"
+        fill="currentColor"
+        aria-hidden
+      >
         <path d="M7.17 6A5.17 5.17 0 0 0 2 11.17V18h6.83v-6.83H5.17A2 2 0 0 1 7.17 9V6Zm10 0A5.17 5.17 0 0 0 12 11.17V18h6.83v-6.83h-3.66A2 2 0 0 1 17.17 9V6Z" />
       </svg>
       <blockquote className="mt-4 text-base sm:text-lg leading-relaxed text-foreground/90 flex-1">
@@ -216,7 +233,7 @@ export function Testimonial({
             src={avatar}
             alt={name}
             className="h-11 w-11 rounded-full object-cover shrink-0"
-            onError={onAvatarError}   // ← calls parent to persist the error
+            onError={onAvatarError} // ← calls parent to persist the error
           />
         ) : (
           <span
@@ -262,6 +279,7 @@ type CaseStudy = {
   results?: string[];
   techStack?: { category: string; items: string; icon: string }[];
   conclusion?: string;
+  slug?: string;
 };
 
 // ─── CASE STUDY CARD ──────────────────────────────────────────────────────────
@@ -274,18 +292,20 @@ export function CaseStudyCard({
   metrics,
   accent = "var(--brand-blue)",
   image,
-  ...rest
+  slug: providedSlug,
 }: CaseStudy) {
   const router = useRouter();
 
-  const slug = (rest as any).slug || client
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/(^-|-$)/g, "");
+  const slug =
+    providedSlug ||
+    client
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
 
   return (
     <article
-      className="group relative overflow-hidden rounded-[28px] glass-card border border-white/10 transition-all duration-500 hover:-translate-y-1"
+      className="group relative flex h-full min-h-[680px] flex-col overflow-hidden rounded-[28px] glass-card border border-white/10 transition-all duration-500 hover:-translate-y-1"
       onMouseMove={(e) => {
         const rect = e.currentTarget.getBoundingClientRect();
         e.currentTarget.style.setProperty("--x", `${e.clientX - rect.left}px`);
@@ -332,7 +352,7 @@ export function CaseStudyCard({
       )}
 
       {/* Content */}
-      <div className="relative z-10 p-5">
+      <div className="relative z-10 flex flex-1 flex-col p-5">
         <div className="flex items-center justify-between gap-3">
           <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
             Case study
@@ -342,23 +362,23 @@ export function CaseStudyCard({
 
         <h3 className="mt-2.5 text-xl font-display capitalize font-bold">{client}</h3>
 
-        <div className="mt-4 space-y-3 text-sm leading-relaxed text-foreground/85">
-          <p>
+        <div className="mt-4 flex-1 space-y-3 text-sm leading-relaxed text-foreground/85">
+          <p className="line-clamp-4">
             <span className="font-semibold text-foreground">Challenge — </span>
             {challenge}
           </p>
-          <p>
+          <p className="line-clamp-4">
             <span className="font-semibold text-foreground">What we did — </span>
             {outcome}
           </p>
         </div>
 
         {/* Metrics */}
-        <div className="mt-5 grid grid-cols-3 gap-2">
+        <div className="mt-5 grid min-h-[112px] grid-cols-3 gap-2">
           {metrics.map((m) => (
             <div
               key={m.label}
-              className="rounded-xl border border-white/10 bg-white/[0.03] px-2 py-3 text-center backdrop-blur-md"
+              className="flex flex-col items-center justify-center rounded-xl border border-white/10 bg-white/[0.03] px-2 py-3 text-center backdrop-blur-md"
             >
               <div className="text-lg font-display font-bold" style={{ color: accent }}>
                 {m.value}
@@ -410,8 +430,7 @@ export function CTASection({
   contactPhones?: { label: string; number: string; href?: string }[];
 }) {
   const phoneContacts =
-    contactPhones ??
-    (contactPhone ? [{ label: "Phone", number: contactPhone }] : []);
+    contactPhones ?? (contactPhone ? [{ label: "Phone", number: contactPhone }] : []);
 
   return (
     <section className="px-5 lg:px-8 py-20">
@@ -461,10 +480,7 @@ export function CTASection({
                 {phoneContacts.map((contact) => (
                   <a
                     key={contact.label}
-                    href={
-                      contact.href ??
-                      `tel:${contact.number.replace(/[^\d+]/g, "")}`
-                    }
+                    href={contact.href ?? `tel:${contact.number.replace(/[^\d+]/g, "")}`}
                     className="flex flex-wrap items-center gap-2 hover:text-white transition-colors"
                   >
                     <span className="rounded-full bg-white/15 px-2 py-0.5 text-[11px] font-bold uppercase tracking-[0.12em] text-white">

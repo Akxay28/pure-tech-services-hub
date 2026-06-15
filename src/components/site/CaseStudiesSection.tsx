@@ -28,31 +28,26 @@ export function CaseStudiesSection({
   return (
     <section className="px-5 lg:px-8 py-20">
       <div className="mx-auto max-w-7xl">
-        <SectionHeader
-          eyebrow={eyebrow}
-          title={title}
-          description={description}
-        />
-       <div
-  className={`mt-12 grid gap-6 ${
-    caseStudies.length >= 3
-      ? "lg:grid-cols-3"
-      : caseStudies.length === 2
-        ? "lg:grid-cols-2"
-        : "max-w-2xl"
-  }`}
->
+        <SectionHeader eyebrow={eyebrow} title={title} description={description} />
+        <div
+          className={`mt-12 grid gap-6 ${
+            caseStudies.length >= 3
+              ? "lg:grid-cols-3"
+              : caseStudies.length === 2
+                ? "lg:grid-cols-2"
+                : "max-w-2xl"
+          }`}
+        >
           {caseStudies.map((c, i) => {
             const preferredAccent = c.accent ?? accentAt(i);
-            const cardAccent =
-              i > 0 && preferredAccent === accent ? accentAt(i) : preferredAccent;
+            const cardAccent = i > 0 && preferredAccent === accent ? accentAt(i) : preferredAccent;
 
             return (
               <CaseStudyCard
                 key={c.client}
                 {...c}
                 image={publicImagePath(c.image ?? image)}
-                accent={i === 0 ? c.accent ?? accent : cardAccent}
+                accent={i === 0 ? (c.accent ?? accent) : cardAccent}
               />
             );
           })}

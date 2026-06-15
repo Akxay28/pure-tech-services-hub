@@ -1,7 +1,107 @@
 import type { CaseStudy } from "@/lib/case-study";
 import { subServices } from "@/lib/sub-services";
+import { studies as staticCaseStudies } from "@/lib/static-case-studies";
 
 export type SubServiceSlug = keyof typeof subServices;
+
+type StaticCaseStudy = (typeof staticCaseStudies)[number];
+
+function caseStudySlug(client: string) {
+  return client
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/(^-|-$)/g, "");
+}
+
+function toServiceCaseStudy(study: StaticCaseStudy): CaseStudy {
+  return {
+    client: study.client,
+    industry: study.sector,
+    challenge: study.headline,
+    outcome: study.body,
+    image: study.image,
+    accent: study.accent,
+    slug: caseStudySlug(study.client),
+    metrics: study.metrics.map((metric) => ({
+      value: metric.v,
+      label: metric.l,
+    })),
+    projectName: study.projectName,
+    objective: study.objective,
+    solutions: study.solutions,
+    challenges: study.challenges,
+    keyBenefits: study.keyBenefits,
+    results: study.results,
+    techStack: study.techStack,
+    conclusion: study.conclusion,
+  };
+}
+
+function realCaseStudiesForClients(clients: string[]) {
+  return clients
+    .map((client) => staticCaseStudies.find((study) => study.client === client))
+    .filter((study): study is StaticCaseStudy => Boolean(study))
+    .map(toServiceCaseStudy);
+}
+
+const realCaseStudyClientsByService: Partial<Record<SubServiceSlug, string[]>> = {
+  "software-development": [
+    "Warehouse Management System",
+    "Quick Response Board",
+    "Safety Dashboard System",
+  ],
+  "web-application-development": [
+    "VisitorPass",
+    "MTR Raw Material Report Digitalization",
+    "TQM-powered digital portal",
+  ],
+  "mobile-app-development": ["Bladder Inventory System"],
+  "cloud-infrastructure": [
+    "Local GPT for Secure Financial Operations",
+    "IoT-Diesel consumption system",
+  ],
+  "front-end-development": [
+    "VisitorPass",
+    "Enterprise Software Solutions",
+    "Global E-Learning & Digital Marketing Agency - QgenX",
+  ],
+  "data-engineering": [
+    "KPI Dashboard for Manufacturing",
+    "TMA usage monitoring",
+    "IoT-Diesel consumption system",
+  ],
+  cybersecurity: ["Vehicle Access Management System", "Global Financial Institution"],
+  "ai-strategy-consulting": [
+    "Global Financial Institution",
+    "KPI Dashboard for Manufacturing",
+    "TMA usage monitoring",
+  ],
+  "custom-ai-development": [
+    "Global Wellness & Spiritual Guidance Platform",
+    "AIML-powered tire verification system",
+    "Professional Event Photography Organization",
+  ],
+  "ai-chatbot-development": [
+    "Global E-Learning & Digital Marketing Agency - QgenX",
+    "Enterprise Software Solutions",
+    "Global Recruitment & Talent Development Organization",
+  ],
+  "generative-ai-development": [
+    "Global E-Learning & Digital Marketing Agency - QgenX",
+    "Professional Event Photography Organization",
+    "Enterprise Software Solutions",
+  ],
+  "ai-agents-development": [
+    "Enterprise Talent Solutions",
+    "Global Real Estate & B2B Sales Organization",
+    "PaintMinds",
+  ],
+  "ai-integration": [
+    "Global Real Estate & B2B Sales Organization",
+    "PaintMinds",
+    "Local GPT for Secure Financial Operations",
+  ],
+};
 
 /** Per-page case study content — same card layout, different copy per service slug */
 export const caseStudiesByService: Record<SubServiceSlug, CaseStudy[]> = {
@@ -656,6 +756,12 @@ export const mainServiceCaseStudies: Record<
 };
 
 export function getCaseStudiesForService(slug: SubServiceSlug): CaseStudy[] {
+  const realClients = realCaseStudyClientsByService[slug];
+  if (realClients) {
+    const realStudies = realCaseStudiesForClients(realClients);
+    if (realStudies.length > 0) return realStudies;
+  }
+
   return caseStudiesByService[slug];
 }
 

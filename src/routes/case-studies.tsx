@@ -35,7 +35,6 @@ export const Route = createFileRoute("/case-studies")({
 
 export { studies } from "../lib/static-case-studies";
 
-
 function CaseStudiesLayout() {
   const { studies } = Route.useLoaderData();
   const matchRoute = useMatchRoute();
@@ -67,9 +66,9 @@ function CaseStudiesLayout() {
             title="Outcomes worth writing down."
             description="Anonymised where the client requires it — numbers are always real."
           />
-          <div className="mt-12 grid lg:grid-cols-3 gap-6">
+          <div className="mt-12 grid items-stretch gap-6 lg:grid-cols-3">
             {studies.map((s) => (
-              <div key={s.client} className="space-y-3">
+              <div key={s.client} className="flex h-full flex-col gap-3">
                 <CaseStudyCard
                   client={s.client}
                   industry={s.sector}

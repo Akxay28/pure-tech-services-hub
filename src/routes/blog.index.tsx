@@ -2,7 +2,40 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { PageHero, CTASection, SectionHeader } from "@/components/site/Primitives";
 import { getBlogsAction } from "@/lib/admin-actions";
-import { ArrowRight, Calendar, User } from "lucide-react";
+import { ArrowRight, Calendar, Clock4, Eye, User } from "lucide-react";
+
+function stripContentMarkup(value = "") {
+  return value
+    .replace(/<[^>]*>/g, " ")
+    .replace(/[#*_`>-]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+type BlogCardPost = {
+  readTime?: string;
+  title?: string;
+  excerpt?: string;
+  descriptionTop?: string;
+  descriptionBottom?: string;
+};
+
+function getReadTime(post: BlogCardPost) {
+  if (post.readTime) return post.readTime;
+
+  const text = [post.title, post.excerpt, post.descriptionTop, post.descriptionBottom]
+    .map(stripContentMarkup)
+    .join(" ");
+  const words = text.split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return `${minutes} min read`;
+}
+
+function formatViews(views: unknown) {
+  const count = Number(views || 0);
+  if (count >= 1000) return `${(count / 1000).toFixed(count >= 10000 ? 0 : 1)}k views`;
+  return `${count} ${count === 1 ? "view" : "views"}`;
+}
 
 export const Route = createFileRoute("/blog/")({
   loader: async () => {
@@ -13,7 +46,8 @@ export const Route = createFileRoute("/blog/")({
       { title: "Blog & Insights — Pure Technology" },
       {
         name: "description",
-        content: "Explore industry trends, engineering best practices, Vibe Coding paradigms, and digital transformation insights from Pure Technology.",
+        content:
+          "Explore industry trends, engineering best practices, Vibe Coding paradigms, and digital transformation insights from Pure Technology.",
       },
       { property: "og:title", content: "Blog & Insights — Pure Technology" },
     ],
@@ -82,10 +116,13 @@ function BlogPage() {
         description="Thought leadership, practical tutorials, and operational strategies for scaling modern product engineering teams and integrating generative AI."
       />
 
-      <section id="blog-list-section" className="px-5 lg:px-8 py-20 bg-background relative overflow-hidden">
+      <section
+        id="blog-list-section"
+        className="px-5 lg:px-8 py-20 bg-background relative overflow-hidden"
+      >
         {/* Glow decorative background */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-mesh opacity-30 blur-3xl pointer-events-none rounded-full" />
-        
+
         <div className="mx-auto max-w-7xl relative z-10">
           <SectionHeader
             eyebrow="Latest Articles"
@@ -100,10 +137,7 @@ function BlogPage() {
                 className="group relative flex flex-col overflow-hidden rounded-[24px] glass-card border border-white/10 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_50px_-15px_rgba(46,11,125,0.15)]"
               >
                 {/* Visual Accent Bar */}
-                <div
-                  className="h-1.5 w-full shrink-0"
-                  style={{ background: post.accent }}
-                />
+                <div className="h-1.5 w-full shrink-0" style={{ background: post.accent }} />
 
                 {/* Top Image */}
                 <div className="relative h-[220px] overflow-hidden bg-muted">
@@ -113,12 +147,14 @@ function BlogPage() {
                     className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
-                  
+
                   {/* Category Badge */}
                   <div className="absolute top-4 left-4">
                     <span
                       className="rounded-full border border-white/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.12em] text-white backdrop-blur-md"
-                      style={{ backgroundColor: `color-mix(in oklab, ${post.accent} 70%, transparent)` }}
+                      style={{
+                        backgroundColor: `color-mix(in oklab, ${post.accent} 70%, transparent)`,
+                      }}
                     >
                       {post.category}
                     </span>
@@ -129,10 +165,18 @@ function BlogPage() {
                 <div className="flex-1 p-6 flex flex-col justify-between">
                   <div>
                     {/* Meta info */}
-                    <div className="flex items-center gap-4 text-xs text-muted-foreground font-semibold uppercase tracking-wider mb-3">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground font-semibold uppercase tracking-wider mb-3">
                       <span className="flex items-center gap-1">
                         <Calendar className="h-3.5 w-3.5" />
                         {post.date}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Clock4 className="h-3.5 w-3.5" />
+                        {getReadTime(post)}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Eye className="h-3.5 w-3.5" />
+                        {formatViews(post.views)}
                       </span>
                     </div>
 

@@ -29,8 +29,7 @@ function AiSolutions() {
       eyebrow="AI Solutions"
       title={
         <>
-          From clever demo to{" "}
-          <span className="text-gradient-brand">enterprise-grade AI.</span>
+          From clever demo to <span className="text-gradient-brand">enterprise-grade AI.</span>
         </>
       }
       lede="We help BFSI, healthcare, retail, and SaaS leaders translate GenAI ambition into reliable products — with the guardrails, observability, and governance their security and legal teams actually approve."
@@ -131,6 +130,7 @@ function AiSolutions() {
         },
       ]}
       caseStudies={getCaseStudiesForMainService("ai-solutions")}
+      showCaseStudies
       testimonials={[
         {
           quote:
@@ -197,27 +197,82 @@ function AiSolutions() {
             {
               label: "GenAI & LLMs",
               cards: [
-                { role: "LLM Engineers",    level: "L6", category: "GenAI & RAG",    tech: ["LangChain", "OpenAI", "Anthropic"] },
-                { role: "RAG Specialists",  level: "L5", category: "Retrieval",      tech: ["Pinecone", "Weaviate", "pgvector"] },
-                { role: "Prompt Engineers", level: "L4", category: "Prompt Design",  tech: ["DSPy", "Guidance", "LMQL"] },
-                { role: "AI Safety Eng.",   level: "L6", category: "Guardrails",     tech: ["Evals", "Presidio", "Rebuff"] },
+                {
+                  role: "LLM Engineers",
+                  level: "L6",
+                  category: "GenAI & RAG",
+                  tech: ["LangChain", "OpenAI", "Anthropic"],
+                },
+                {
+                  role: "RAG Specialists",
+                  level: "L5",
+                  category: "Retrieval",
+                  tech: ["Pinecone", "Weaviate", "pgvector"],
+                },
+                {
+                  role: "Prompt Engineers",
+                  level: "L4",
+                  category: "Prompt Design",
+                  tech: ["DSPy", "Guidance", "LMQL"],
+                },
+                {
+                  role: "AI Safety Eng.",
+                  level: "L6",
+                  category: "Guardrails",
+                  tech: ["Evals", "Presidio", "Rebuff"],
+                },
               ],
             },
             {
               label: "ML & Data",
               cards: [
-                { role: "ML Engineers",   level: "L5", category: "Modelling",      tech: ["PyTorch", "TensorFlow", "Keras"] },
-                { role: "Data Engineers", level: "L5", category: "Pipelines",      tech: ["Spark", "Airflow", "dbt"] },
-                { role: "MLOps Eng.",     level: "L6", category: "Ops & Infra",    tech: ["MLflow", "Ray", "BentoML"] },
-                { role: "Data Scientists",level: "L4", category: "Analytics",      tech: ["Pandas", "Scikit-learn", "SQL"] },
+                {
+                  role: "ML Engineers",
+                  level: "L5",
+                  category: "Modelling",
+                  tech: ["PyTorch", "TensorFlow", "Keras"],
+                },
+                {
+                  role: "Data Engineers",
+                  level: "L5",
+                  category: "Pipelines",
+                  tech: ["Spark", "Airflow", "dbt"],
+                },
+                {
+                  role: "MLOps Eng.",
+                  level: "L6",
+                  category: "Ops & Infra",
+                  tech: ["MLflow", "Ray", "BentoML"],
+                },
+                {
+                  role: "Data Scientists",
+                  level: "L4",
+                  category: "Analytics",
+                  tech: ["Pandas", "Scikit-learn", "SQL"],
+                },
               ],
             },
             {
               label: "Vision & Docs",
               cards: [
-                { role: "CV Engineers",      level: "L5", category: "Computer Vision",  tech: ["OpenCV", "YOLO", "Detectron2"] },
-                { role: "Document AI Eng.",  level: "L5", category: "Document AI",      tech: ["Tesseract", "LayoutLM", "AWS Textract"] },
-                { role: "Multimodal Eng.",   level: "L6", category: "Multimodal AI",    tech: ["CLIP", "LLaVA", "Gemini Vision"] },
+                {
+                  role: "CV Engineers",
+                  level: "L5",
+                  category: "Computer Vision",
+                  tech: ["OpenCV", "YOLO", "Detectron2"],
+                },
+                {
+                  role: "Document AI Eng.",
+                  level: "L5",
+                  category: "Document AI",
+                  tech: ["Tesseract", "LayoutLM", "AWS Textract"],
+                },
+                {
+                  role: "Multimodal Eng.",
+                  level: "L6",
+                  category: "Multimodal AI",
+                  tech: ["CLIP", "LLaVA", "Gemini Vision"],
+                },
               ],
             },
           ]}

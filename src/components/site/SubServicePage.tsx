@@ -38,6 +38,7 @@ export type SubServicePageProps = {
   /** Per-page case study cards — same layout, content from route or getSubServicePageProps() */
   caseStudies?: CaseStudy[];
   caseStudiesCopy?: CaseStudiesCopy;
+  showCaseStudies?: boolean;
   /** Optional section — pass from the route for this slug only */
   extraSection?: ReactNode;
 };
@@ -126,10 +127,7 @@ export function SubServicePage(p: SubServicePageProps) {
       {/* Outcomes */}
       <section className="px-5 lg:px-8 py-20">
         <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            eyebrow="Outcomes that matter"
-            title="Numbers from real engagements."
-          />
+          <SectionHeader eyebrow="Outcomes that matter" title="Numbers from real engagements." />
           <div className="mt-12 grid md:grid-cols-3 gap-5">
             {p.outcomes.map((o, i) => {
               const theme = outcomeCardThemeAt(i);
@@ -148,12 +146,8 @@ export function SubServicePage(p: SubServicePageProps) {
                   >
                     {o.metric}
                   </div>
-                  <div className="mt-2 text-sm font-semibold text-foreground">
-                    {o.label}
-                  </div>
-                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                    {o.context}
-                  </p>
+                  <div className="mt-2 text-sm font-semibold text-foreground">{o.label}</div>
+                  <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{o.context}</p>
                 </div>
               );
             })}
@@ -161,11 +155,16 @@ export function SubServicePage(p: SubServicePageProps) {
         </div>
       </section>
 
-      {p.caseStudies && p.caseStudies.length > 0 && (
+      {p.showCaseStudies && p.caseStudies && p.caseStudies.length > 0 && (
         <CaseStudiesSection
-          caseStudies={p.caseStudies}
+          caseStudies={p.caseStudies.slice(0, 3)}
           accent={p.accent}
-          {...p.caseStudiesCopy}
+          eyebrow={p.caseStudiesCopy?.eyebrow ?? "Related case studies"}
+          title={p.caseStudiesCopy?.title ?? "Proof from similar work."}
+          description={
+            p.caseStudiesCopy?.description ??
+            "A few relevant engagements that match this service area."
+          }
         />
       )}
 
@@ -212,8 +211,6 @@ export function SubServicePage(p: SubServicePageProps) {
         </section>
       )} */}
 
-
-
       {/* FAQs */}
       <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
         <div className="mx-auto max-w-4xl">
@@ -242,8 +239,7 @@ export function SubServicePage(p: SubServicePageProps) {
 
       {/* Sibling links */}
       <section className="px-5 lg:px-8 py-16">
-        <div className="mx-auto max-w-7xl bg-surface-muted/60 border-y border-border shadow-soft rounded-3xl p-8 sm:p-10 flex flex-col lg:flex-row lg:items-center gap-6 justify-between"
-        >
+        <div className="mx-auto max-w-7xl bg-surface-muted/60 border-y border-border shadow-soft rounded-3xl p-8 sm:p-10 flex flex-col lg:flex-row lg:items-center gap-6 justify-between">
           <div>
             <div className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
               Related services
@@ -253,17 +249,17 @@ export function SubServicePage(p: SubServicePageProps) {
             </h3>
           </div>
           <div className="flex flex-wrap gap-3">
-  {p.siblingLinks.map((l) => (
-    <Link
-      key={l.to}
-      to={l.to as never}
-      className="inline-flex items-center gap-2 rounded-full bg-surface border border-border px-5 py-3 text-sm font-medium transition-all duration-700 hover:text-white hover:border-transparent hover:[background:var(--gradient-brand)]"
-    >
-      {l.label}
-      <ArrowRight className="h-4 w-4" />
-    </Link>
-  ))}
-</div>
+            {p.siblingLinks.map((l) => (
+              <Link
+                key={l.to}
+                to={l.to as never}
+                className="inline-flex items-center gap-2 rounded-full bg-surface border border-border px-5 py-3 text-sm font-medium transition-all duration-700 hover:text-white hover:border-transparent hover:[background:var(--gradient-brand)]"
+              >
+                {l.label}
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 

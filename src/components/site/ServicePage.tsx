@@ -26,12 +26,7 @@ import {
 import { ConsultationSection } from "@/components/site/ConsultationSection";
 import { CaseStudiesSection } from "./CaseStudiesSection";
 import type { CaseStudy } from "@/lib/case-study";
-import {
-  accentAt,
-  brandIconGradient,
-  BRAND,
-  testimonialAccentAt,
-} from "@/lib/brand-colors";
+import { accentAt, brandIconGradient, BRAND, testimonialAccentAt } from "@/lib/brand-colors";
 import { BrandIconBox } from "@/components/site/Primitives";
 
 export type Capability = { title: string; body: string };
@@ -49,6 +44,7 @@ export type ServicePageProps = {
   engagement: { name: string; desc: string; bullets: string[] }[];
   /** Omit to hide; or pass `<CaseStudiesSection />` via extraSection on other page types */
   caseStudies?: CaseStudy[];
+  showCaseStudies?: boolean;
   testimonials: React.ComponentProps<typeof Testimonial>[];
   faqs: Faq[];
   cta: { title: string; description: string };
@@ -60,11 +56,7 @@ export type ServicePageProps = {
 export function ServicePage(p: ServicePageProps) {
   return (
     <>
-      <PageHero
-        eyebrow={p.eyebrow}
-        title={p.title}
-        description={p.lede}
-      >
+      <PageHero eyebrow={p.eyebrow} title={p.title} description={p.lede}>
         <div className="flex flex-col sm:flex-row gap-3">
           <PrimaryButton to="/contact">Start a conversation</PrimaryButton>
           <GhostButton to="/services">Back to all services</GhostButton>
@@ -81,10 +73,7 @@ export function ServicePage(p: ServicePageProps) {
         <div className="mx-auto max-w-7xl grid lg:grid-cols-12 gap-10">
           <div className="lg:col-span-5">
             <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-              <span
-                className="h-1 w-6 rounded-full"
-                style={{ background: BRAND.gradientBrand }}
-              />
+              <span className="h-1 w-6 rounded-full" style={{ background: BRAND.gradientBrand }} />
               The practice
             </div>
             <h2 className="mt-3 text-3xl lg:text-4xl font-display font-bold leading-tight">
@@ -119,13 +108,9 @@ export function ServicePage(p: ServicePageProps) {
                   <BrandIconBox color={accentAt(i)} size="sm">
                     <Check className="h-4 w-4" />
                   </BrandIconBox>
-                  <h3 className="text-base font-display font-semibold">
-                    {c.title}
-                  </h3>
+                  <h3 className="text-base font-display font-semibold">{c.title}</h3>
                 </div>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                  {c.body}
-                </p>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{c.body}</p>
               </div>
             ))}
           </div>
@@ -135,10 +120,7 @@ export function ServicePage(p: ServicePageProps) {
       {/* Process */}
       <section className="px-5 lg:px-8 py-20">
         <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            eyebrow="Methodology"
-            title="A repeatable path from idea to outcome."
-          />
+          <SectionHeader eyebrow="Methodology" title="A repeatable path from idea to outcome." />
           <div className="mt-12 relative">
             <div className="hidden lg:block absolute left-0 right-0 top-12 h-px bg-border" />
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -150,12 +132,8 @@ export function ServicePage(p: ServicePageProps) {
                   >
                     {i + 1}
                   </div>
-                  <h3 className="mt-5 text-lg font-display font-semibold">
-                    {s.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                    {s.body}
-                  </p>
+                  <h3 className="mt-5 text-lg font-display font-semibold">{s.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.body}</p>
                 </div>
               ))}
             </div>
@@ -172,25 +150,17 @@ export function ServicePage(p: ServicePageProps) {
           />
           <div className="mt-12 grid lg:grid-cols-3 gap-5">
             {p.engagement.map((m, i) => (
-              <div
-                key={m.name}
-                className="glass-card rounded-3xl p-7 flex flex-col"
-              >
+              <div key={m.name} className="glass-card rounded-3xl p-7 flex flex-col">
                 <div
                   className="text-xs font-semibold uppercase tracking-[0.18em]"
                   style={{ color: accentAt(i) }}
                 >
                   {m.name}
                 </div>
-                <p className="mt-3 text-sm text-foreground/85 leading-relaxed">
-                  {m.desc}
-                </p>
+                <p className="mt-3 text-sm text-foreground/85 leading-relaxed">{m.desc}</p>
                 <ul className="mt-5 space-y-2.5 flex-1">
                   {m.bullets.map((b) => (
-                    <li
-                      key={b}
-                      className="flex items-start gap-2.5 text-sm text-foreground/85"
-                    >
+                    <li key={b} className="flex items-start gap-2.5 text-sm text-foreground/85">
                       <span
                         className="mt-1.5 h-1.5 w-1.5 rounded-full shrink-0"
                         style={{ background: accentAt(i) }}
@@ -205,24 +175,23 @@ export function ServicePage(p: ServicePageProps) {
         </div>
       </section>
 
-      {p.caseStudies && p.caseStudies.length > 0 && (
-        <CaseStudiesSection caseStudies={p.caseStudies} accent={p.accent} />
+      {p.showCaseStudies && p.caseStudies && p.caseStudies.length > 0 && (
+        <CaseStudiesSection
+          caseStudies={p.caseStudies.slice(0, 3)}
+          accent={p.accent}
+          eyebrow="Related case studies"
+          title="Proof from similar work."
+          description="A few relevant engagements that match this practice area."
+        />
       )}
 
       {/* Testimonials */}
       <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
         <div className="mx-auto max-w-7xl">
-          <SectionHeader
-            eyebrow="Voices"
-            title="What the people writing the cheques say."
-          />
+          <SectionHeader eyebrow="Voices" title="What the people writing the cheques say." />
           <div className="mt-12 grid lg:grid-cols-3 gap-5">
             {p.testimonials.map((t, i) => (
-              <Testimonial
-                key={t.name}
-                {...t}
-                accent={t.accent ?? testimonialAccentAt(i)}
-              />
+              <Testimonial key={t.name} {...t} accent={t.accent ?? testimonialAccentAt(i)} />
             ))}
           </div>
         </div>
@@ -245,7 +214,8 @@ export function ServicePage(p: ServicePageProps) {
               We rarely do just one of these.
             </h3>
             <p className="mt-2 text-muted-foreground max-w-xl">
-              Most engagements eventually pull in a sibling practice — talent into AI, AI into product, product into talent.
+              Most engagements eventually pull in a sibling practice — talent into AI, AI into
+              product, product into talent.
             </p>
           </div>
           <div className="flex flex-wrap gap-3">
@@ -291,9 +261,7 @@ function FaqList({ faqs }: { faqs: Faq[] }) {
                   onClick={() => setOpen(isOpen ? null : i)}
                   className="w-full flex items-center justify-between gap-4 p-5 text-left"
                 >
-                  <span className="font-display font-semibold text-base sm:text-lg">
-                    {f.q}
-                  </span>
+                  <span className="font-display font-semibold text-base sm:text-lg">{f.q}</span>
                   <span
                     className="grid h-8 w-8 shrink-0 place-items-center rounded-full text-white transition-transform"
                     style={{ background: brandIconGradient(accentAt(i)) }}
@@ -369,10 +337,7 @@ function TrustSection() {
       <div className="mx-auto max-w-7xl">
         <div className="max-w-3xl">
           <div className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
-            <span
-              className="h-1 w-6 rounded-full"
-              style={{ background: BRAND.gradientBrand }}
-            />
+            <span className="h-1 w-6 rounded-full" style={{ background: BRAND.gradientBrand }} />
             Why trust Pure Technology
           </div>
           <h2 className="mt-3 text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight">
@@ -380,8 +345,8 @@ function TrustSection() {
             <span className="text-gradient-brand">renew with us, year after year.</span>
           </h2>
           <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-            Trust isn't a logo wall — it's the operating rigour you feel from
-            the first call. Here's what backs ours.
+            Trust isn't a logo wall — it's the operating rigour you feel from the first call. Here's
+            what backs ours.
           </p>
         </div>
 
@@ -394,12 +359,8 @@ function TrustSection() {
               <BrandIconBox color={accent}>
                 <Icon className="h-5 w-5" />
               </BrandIconBox>
-              <h3 className="mt-4 text-lg font-display font-semibold">
-                {title}
-              </h3>
-              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">
-                {body}
-              </p>
+              <h3 className="mt-4 text-lg font-display font-semibold">{title}</h3>
+              <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{body}</p>
             </div>
           ))}
         </div>
@@ -410,10 +371,7 @@ function TrustSection() {
           </span>
           {badges.map((b, i) => (
             <span key={b} className="inline-flex items-center gap-2">
-              <span
-                className="h-1.5 w-1.5 rounded-full"
-                style={{ background: accentAt(i) }}
-              />
+              <span className="h-1.5 w-1.5 rounded-full" style={{ background: accentAt(i) }} />
               {b}
             </span>
           ))}

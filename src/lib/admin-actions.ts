@@ -478,14 +478,16 @@ export const loginAction = createServerFn()
       return { success: true, username };
     } catch (dbError: any) {
       logFallbackWarning("[Login] Database validation failed:", dbError);
-      const isValidationError = 
+      const isValidationError =
         dbError.message === "Invalid username or password." ||
         dbError.message.includes("Captcha") ||
         dbError.message.includes("Too many failed");
       if (isValidationError) {
         throw dbError;
       }
-      throw new Error("Database connection failed. Please log in using the default admin credentials.");
+      throw new Error(
+        "Database connection failed. Please log in using the default admin credentials.",
+      );
     }
   });
 
@@ -626,19 +628,7 @@ export const getCaseStudiesAction = createServerFn().handler(async () => {
 export const getCaseStudyBySlugAction = createServerFn()
   .inputValidator((slug: string) => slug)
   .handler(async ({ data: slug }) => {
-    try {
-      const { db } = await connectToDatabase();
-      const item = await db.collection("case_studies").findOne({ slug });
-      if (!item) return null;
-      return {
-        ...item,
-        _id: item._id.toString(),
-      };
-    } catch (error) {
-      logFallbackWarning(
-        `[DB Fallback] Failed to get case study by slug "${slug}", falling back to static data:`,
-        error,
-      );
+    const getStaticStudy = () => {
       const item = studies.find(
         (s) =>
           s.client
@@ -652,6 +642,22 @@ export const getCaseStudyBySlugAction = createServerFn()
         slug,
         _id: `static-${studies.indexOf(item)}`,
       };
+    };
+
+    try {
+      const { db } = await connectToDatabase();
+      const item = await db.collection("case_studies").findOne({ slug });
+      if (!item) return getStaticStudy();
+      return {
+        ...item,
+        _id: item._id.toString(),
+      };
+    } catch (error) {
+      logFallbackWarning(
+        `[DB Fallback] Failed to get case study by slug "${slug}", falling back to static data:`,
+        error,
+      );
+      return getStaticStudy();
     }
   });
 
@@ -726,10 +732,12 @@ export const createBlogAction = createServerFn()
 
     const now = new Date();
     const status = data.status || "published";
-    const publishDateVal = status === "scheduled" && data.publishDate ? new Date(data.publishDate) : undefined;
-    const dateStr = status === "scheduled" && publishDateVal
-      ? formatDateToString(publishDateVal)
-      : formatDateToString(now);
+    const publishDateVal =
+      status === "scheduled" && data.publishDate ? new Date(data.publishDate) : undefined;
+    const dateStr =
+      status === "scheduled" && publishDateVal
+        ? formatDateToString(publishDateVal)
+        : formatDateToString(now);
 
     const newBlog = {
       ...blogData,
@@ -761,10 +769,12 @@ export const updateBlogAction = createServerFn()
     const ObjectId = await getObjectIdClass();
 
     const status = blogData.status || "published";
-    const publishDateVal = status === "scheduled" && blogData.publishDate ? new Date(blogData.publishDate) : undefined;
-    const dateStr = status === "scheduled" && publishDateVal
-      ? formatDateToString(publishDateVal)
-      : (blogData.date || formatDateToString(new Date()));
+    const publishDateVal =
+      status === "scheduled" && blogData.publishDate ? new Date(blogData.publishDate) : undefined;
+    const dateStr =
+      status === "scheduled" && publishDateVal
+        ? formatDateToString(publishDateVal)
+        : blogData.date || formatDateToString(new Date());
 
     const finalUpdateData = {
       ...updateData,
@@ -872,12 +882,9 @@ export const getBlogsAction = createServerFn()
             { status: "published" },
             { status: { $exists: false } },
             {
-              $and: [
-                { status: "scheduled" },
-                { publishDate: { $lte: now } }
-              ]
-            }
-          ]
+              $and: [{ status: "scheduled" }, { publishDate: { $lte: now } }],
+            },
+          ],
         };
       }
 
@@ -919,20 +926,15 @@ export const getBlogBySlugAction = createServerFn()
             { status: "published" },
             { status: { $exists: false } },
             {
-              $and: [
-                { status: "scheduled" },
-                { publishDate: { $lte: now } }
-              ]
-            }
-          ]
+              $and: [{ status: "scheduled" }, { publishDate: { $lte: now } }],
+            },
+          ],
         };
       }
 
-      const result = await db.collection("blogs").findOneAndUpdate(
-        query,
-        { $inc: { views: isAdmin ? 0 : 1 } },
-        { returnDocument: "after" },
-      );
+      const result = await db
+        .collection("blogs")
+        .findOneAndUpdate(query, { $inc: { views: isAdmin ? 0 : 1 } }, { returnDocument: "after" });
       if (!result) {
         return null;
       }

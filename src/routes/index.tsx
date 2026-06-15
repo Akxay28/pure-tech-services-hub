@@ -311,12 +311,12 @@ function Home() {
                 </div>
               </div>
 
-              <div className="relative w-full min-h-[280px] overflow-hidden rounded-2xl shadow-soft">
+              <div className="relative self-center w-full aspect-video overflow-hidden rounded-2xl shadow-soft bg-black">
                 <YouTubeEmbed
                   videoId="4DpEGb4HG7w"
                   title="Pure Technology showreel"
                   autoplay={true}
-                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100%+2px)] h-[calc(100%+40px)]"
+                  className="absolute top-1/2 left-1/2 h-[102%] w-[102%] -translate-x-1/2 -translate-y-1/2"
                 />
               </div>
             </div>
@@ -343,7 +343,7 @@ function Home() {
             <CaseStudyCard
               client="Local GPT for Secure Financial Operations"
               industry="Financial Services & Banking"
-              image="/homeCaseStudy/cloudwise-local-gpt.webp"
+              image="https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510627/cloudwise-local-gpt_ha2gs1.webp"
               challenge="Strict regulatory requirements prevented external data sharing, while disconnected legacy systems and sensitive financial records limited AI adoption."
               outcome="Implemented a fully on-premises AI platform with offline LLMs, secure document intelligence, SQL-based analytics, and workflow automation."
               metrics={[
@@ -395,7 +395,7 @@ function Home() {
             <CaseStudyCard
               client="Global Recruitment & Talent Development Organization"
               industry="Human Resources & Career Development"
-              image="/homeCaseStudy/2 case study.webp"
+              image="https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510621/2_case_study_r5ijel.webp"
               challenge="Candidates were underperforming due to inadequate practice opportunities, delayed and subjective feedback, expensive coaching programs, and increasing risks associated with remote hiring and fraudulent interview practices."
               outcome="Developed Questa AI Interviewer, an AI-powered interview preparation platform featuring GPT-driven interview simulations, real-time speech analytics, smart proctoring, and performance dashboards."
               metrics={[
@@ -461,7 +461,7 @@ function Home() {
             <CaseStudyCard
               client="Global Real Estate & B2B Sales Organization"
               industry="Real Estate, B2B SaaS & Sales"
-              image="/homeCaseStudy/ai calling bot.png"
+              image="https://res.cloudinary.com/dra0hwsh4/image/upload/q_auto/f_auto/v1781510622/ai_calling_bot_yfbmj5.png"
               challenge="Sales teams were spending the majority of their time on repetitive outbound calling, struggling with inconsistent follow-ups, limited scalability, and after-hours response gaps that resulted in missed opportunities and lost revenue."
               outcome="Developed an AI Calling Bot that autonomously initiates conversations, qualifies leads, schedules meetings, recognizes customer intent in real time, and updates CRM systems automatically."
               metrics={[
@@ -505,6 +505,13 @@ function Home() {
               ]}
               conclusion="The AI Calling Bot transformed outbound sales operations by creating an intelligent voice automation ecosystem that dramatically increased outreach capacity, improved lead engagement, reduced operational costs, and delivered measurable revenue growth without requiring additional sales headcount."
             />
+          </div>
+
+          <div className="mt-10 flex justify-center">
+            <GhostButton to="/case-studies">
+              View more case studies
+              <ArrowRight className="h-4 w-4" />
+            </GhostButton>
           </div>
         </div>
       </section>

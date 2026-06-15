@@ -11,4 +11,13 @@ export interface CaseStudy {
   metrics: CaseStudyMetric[];
   accent?: string;
   image?: string;
+  slug?: string;
+  projectName?: string;
+  objective?: string;
+  solutions?: string[];
+  challenges?: string[];
+  keyBenefits?: CaseStudyMetric[];
+  results?: string[];
+  techStack?: { category: string; items: string; icon: string }[];
+  conclusion?: string;
 }

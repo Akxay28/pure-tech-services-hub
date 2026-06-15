@@ -1,14 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
-import {
-  ArrowRight,
-  Camera,
-  ChevronLeft,
-  ChevronRight,
-  Images,
-  X,
-} from "lucide-react";
+import { ArrowRight, Camera, ChevronLeft, ChevronRight, Images, PlayCircle, X } from "lucide-react";
 import { CTASection, PageHero, SectionHeader } from "@/components/site/Primitives";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +26,7 @@ type GalleryImage = {
   title: string;
   /** Section name — images with the same category are grouped automatically. */
   category: string;
+  type?: "image" | "video";
 };
 
 /**
@@ -43,21 +37,21 @@ type GalleryImage = {
  */
 const galleryImages: GalleryImage[] = [
   {
-    src: "/hero/slide-1.jpg",
-    alt: "Pure Technology professional team member",
-    title: "People Behind Delivery",
-    category: "Team",
-  },
-  {
-    src: "/team/parag-thakur.jpg",
-    alt: "Pure Technology team portrait",
-    title: "Client Partnerships",
-    category: "Team",
-  },
-  {
     src: "/team/anuj-bajaj.jpg",
     alt: "Anuj Bajaj — Pure Technology leadership",
     title: "Anuj Bajaj",
+    category: "Leadership",
+  },
+  {
+    src: "/team/govindInnani.png",
+    alt: "Govind Innani - Pure Technology leadership",
+    title: "Govind Innani",
+    category: "Leadership",
+  },
+  {
+    src: "/team/jalindrashinde.png",
+    alt: "Jalindra Shinde - Pure Technology leadership",
+    title: "Jalindra Shinde",
     category: "Leadership",
   },
   {
@@ -67,40 +61,70 @@ const galleryImages: GalleryImage[] = [
     category: "Leadership",
   },
   {
+    src: "/team/rajashreeGandhi.jpg",
+    alt: "Rajashree Gandhi - Pure Technology leadership",
+    title: "Rajashree Gandhi",
+    category: "Leadership",
+  },
+  {
     src: "/team/rajesh-munde.jpg",
     alt: "Rajesh Munde — Pure Technology leadership",
     title: "Rajesh Munde",
     category: "Leadership",
   },
   {
-    src: "/homeCaseStudy/1 case study.webp",
-    alt: "Digital product case study display",
-    title: "Products In Motion",
-    category: "Work",
+    src: "/team/Shirish Vispute.jpg",
+    alt: "Shirish Vispute - Pure Technology leadership",
+    title: "Shirish Vispute",
+    category: "Leadership",
   },
   {
-    src: "/homeCaseStudy/3 case study.webp",
-    alt: "Project result presentation",
-    title: "Outcomes We Celebrate",
-    category: "Delivery",
+    src: "/team/Sumit-G.webp",
+    alt: "Sumit G - Pure Technology leadership",
+    title: "Sumit G",
+    category: "Leadership",
   },
   {
-    src: "/hero/slide-3.jpg",
-    alt: "Pure Technology workplace moment",
-    title: "Building Together",
-    category: "Culture",
+    src: "https://res.cloudinary.com/dra0hwsh4/image/upload/v1781511706/ganesh_chaturti_2025_cgqaae.jpg",
+    alt: "Pure Technology Ganesh Chaturthi 2025 celebration",
+    title: "Ganesh Chaturthi 2025",
+    category: "Festivals - 2024",
+  },
+  {
+    src: "https://res.cloudinary.com/dra0hwsh4/image/upload/v1781511701/ganesh_chaturti_2025_-_2_fg7rkf.jpg",
+    alt: "Team gathering during Ganesh Chaturthi 2025 at Pure Technology",
+    title: "Ganesh Chaturthi Team Celebration",
+    category: "Festivals - 2024",
+  },
+  {
+    src: "https://res.cloudinary.com/dra0hwsh4/image/upload/v1781511701/ganesh_chaturti_2025_-_3_kocodm.jpg",
+    alt: "Ganesh Chaturthi 2025 festive moment at Pure Technology",
+    title: "Festive Moments At Pure Technology",
+    category: "Festivals - 2024",
+  },
+  {
+    src: "https://res.cloudinary.com/dra0hwsh4/image/upload/v1781511702/holi_one_j6xxru.jpg",
+    alt: "Pure Technology Holi celebration",
+    title: "Holi Celebration",
+    category: "Festivals - 2024",
+  },
+  {
+    src: "https://res.cloudinary.com/dra0hwsh4/image/upload/v1781511701/holi_2_hbbtly.jpg",
+    alt: "Team celebrating Holi at Pure Technology",
+    title: "Holi Team Celebration",
+    category: "Festivals - 2024",
+  },
+  {
+    src: "https://res.cloudinary.com/dra0hwsh4/video/upload/v1781511700/holi_video_hllyqd.mp4",
+    alt: "Pure Technology Holi celebration video",
+    title: "Holi Celebration Video",
+    category: "Festivals - 2024",
+    type: "video",
   },
 ];
 
 /** Optional: section display order. Categories not listed appear alphabetically after these. */
-const categoryOrder: string[] = [
-  "Leadership",
-  "Team",
-  "Work",
-  "Culture",
-  "Delivery",
-  "Company",
-];
+const categoryOrder: string[] = ["Festivals - 2024", "Company"];
 
 type GalleryCategory = {
   name: string;
@@ -111,6 +135,8 @@ type GalleryCategory = {
 function buildCategories(images: GalleryImage[], order: string[]): GalleryCategory[] {
   const grouped = new Map<string, GalleryImage[]>();
   for (const image of images) {
+    if (image.category === "Leadership") continue;
+
     const list = grouped.get(image.category) ?? [];
     list.push(image);
     grouped.set(image.category, list);
@@ -129,16 +155,16 @@ function buildCategories(images: GalleryImage[], order: string[]): GalleryCatego
 }
 
 const categoryColor: Record<string, string> = {
-  Team: "bg-blue-500/20 text-blue-200 border-blue-400/30",
-  Leadership: "bg-violet-500/20 text-violet-200 border-violet-400/30",
-  Work: "bg-emerald-500/20 text-emerald-200 border-emerald-400/30",
   Company: "bg-violet-500/20 text-violet-200 border-violet-400/30",
-  Culture: "bg-amber-500/20 text-amber-200 border-amber-400/30",
-  Delivery: "bg-rose-500/20 text-rose-200 border-rose-400/30",
+  "Festivals - 2024": "bg-orange-500/20 text-orange-100 border-orange-300/30",
 };
 
 function categoryBadgeClass(category: string) {
   return categoryColor[category] ?? "bg-white/10 text-white border-white/20";
+}
+
+function isVideo(item: GalleryImage) {
+  return item.type === "video";
 }
 
 function CategoryCard({
@@ -158,12 +184,23 @@ function CategoryCard({
       className="group relative w-full overflow-hidden rounded-2xl bg-neutral-900 text-left shadow-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--brand-pink)] focus-visible:ring-offset-2 focus-visible:ring-offset-background"
     >
       <div className="relative aspect-[4/3] w-full sm:aspect-[16/10]">
-        <img
-          src={section.cover.src}
-          alt={section.cover.alt}
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-        />
+        {isVideo(section.cover) ? (
+          <video
+            src={section.cover.src}
+            muted
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+            aria-label={section.cover.alt}
+          />
+        ) : (
+          <img
+            src={section.cover.src}
+            alt={section.cover.alt}
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+          />
+        )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/10" />
         <div className="absolute inset-0 bg-black/15 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
@@ -181,7 +218,7 @@ function CategoryCard({
           </h3>
           <p className="mt-1 flex items-center gap-1.5 text-sm text-white/75">
             <Images className="h-4 w-4 shrink-0" aria-hidden />
-            {count} {count === 1 ? "photo" : "photos"} — click to view
+            {count} {count === 1 ? "item" : "items"} — click to view
           </p>
         </div>
       </div>
@@ -245,9 +282,7 @@ function CategoryLightbox({
           <p className="text-xs font-semibold uppercase tracking-widest text-white/60">
             {state.category}
           </p>
-          <p className="truncate text-sm font-medium text-white sm:text-base">
-            {current.title}
-          </p>
+          <p className="truncate text-sm font-medium text-white sm:text-base">{current.title}</p>
         </div>
         <div className="flex shrink-0 items-center gap-3">
           <span className="text-sm tabular-nums text-white/70">
@@ -275,12 +310,23 @@ function CategoryLightbox({
           <ChevronLeft className="h-6 w-6 sm:h-7 sm:w-7" />
         </button>
 
-        <img
-          key={current.src}
-          src={current.src}
-          alt={current.alt}
-          className="max-h-full max-w-full object-contain"
-        />
+        {isVideo(current) ? (
+          <video
+            key={current.src}
+            src={current.src}
+            controls
+            autoPlay
+            className="max-h-full max-w-full object-contain"
+            aria-label={current.alt}
+          />
+        ) : (
+          <img
+            key={current.src}
+            src={current.src}
+            alt={current.alt}
+            className="max-h-full max-w-full object-contain"
+          />
+        )}
 
         <button
           type="button"
@@ -310,11 +356,22 @@ function CategoryLightbox({
                 aria-label={`View ${img.title}`}
                 aria-current={i === index}
               >
-                <img
-                  src={img.src}
-                  alt=""
-                  className="h-full w-full object-cover"
-                />
+                {isVideo(img) ? (
+                  <>
+                    <video
+                      src={img.src}
+                      muted
+                      playsInline
+                      preload="metadata"
+                      className="h-full w-full object-cover"
+                    />
+                    <span className="absolute inset-0 grid place-items-center bg-black/25 text-white">
+                      <PlayCircle className="h-6 w-6" />
+                    </span>
+                  </>
+                ) : (
+                  <img src={img.src} alt="" className="h-full w-full object-cover" />
+                )}
               </button>
             ))}
           </div>
@@ -326,10 +383,7 @@ function CategoryLightbox({
 }
 
 function GalleryPage() {
-  const categories = useMemo(
-    () => buildCategories(galleryImages, categoryOrder),
-    [],
-  );
+  const categories = useMemo(() => buildCategories(galleryImages, categoryOrder), []);
 
   const [lightbox, setLightbox] = useState<LightboxState | null>(null);
 
@@ -355,8 +409,7 @@ function GalleryPage() {
         eyebrow="Company Gallery"
         title={
           <>
-            Moments That Show{" "}
-            <span className="text-gradient-brand">How We Build Together.</span>
+            Moments That Show <span className="text-gradient-brand">How We Build Together.</span>
           </>
         }
         description="A growing collection of our people, culture, delivery milestones, and partnerships."
@@ -375,7 +428,7 @@ function GalleryPage() {
           <SectionHeader
             eyebrow="Our Moments"
             title="Life At Pure Technology, In Frames."
-            description="Browse by section — team, leadership, culture, delivery, and more. Each section opens a slideshow you can move through with the arrows or your keyboard."
+            description="Browse by section - team, leadership, culture, delivery, and more. Each section opens a slideshow you can move through with the arrows or your keyboard."
           />
 
           <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

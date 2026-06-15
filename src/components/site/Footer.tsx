@@ -20,13 +20,26 @@ const CONTACT_NUMBERS = [
   { label: "For Support", number: "+91 83298 49726", href: "tel:+918329849726" },
   { label: "For AI Project", number: "+91 99701 11283", href: "tel:+919970111283" },
   { label: "For Hire Resource", number: "+91 73854 55380", href: "tel:+7385455380" },
-
 ] as const;
 
 const FOOTER_FLAGS = [
-  { label: "India", flag: "india" },
-  { label: "UAE", flag: "uae" },
-  { label: "USA", flag: "usa" },
+  {
+    label: "India",
+    flag: "india",
+    address:
+      "603, White Square, Hinjewadi-Wakad Road, Near Wakad Bridge, Phase 1, Hinjawadi, Pune, Maharashtra 411057",
+  },
+  {
+    label: "UAE",
+    flag: "uae",
+    address:
+      "PURE TECHNOLOGY - FZE, Premises Number: Office-C1-1F-SF5944, Ajman Free Zone C1 Building, Business District: Ajman Free Zone, Makani No. 4442612247",
+  },
+  {
+    label: "USA",
+    flag: "usa",
+    address: "286 Racquet Club Road, Apt 202, Weston, Florida 33326",
+  },
 ] as const;
 
 export function Footer() {
@@ -38,26 +51,24 @@ export function Footer() {
           <div className="lg:col-span-5 space-y-5">
             <img src={logo} alt="Pure Technology" className="h-20 w-auto" />
             <p className="text-sm text-muted-foreground leading-relaxed max-w-md">
-              Pure Technology is a global AI and digital engineering company
-              helping startups, enterprises, and fast-growing businesses build
-              scalable technology products with speed and precision.
-              Headquartered in Pune, the company specializes in AI-powered
-              solutions, SaaS product engineering, enterprise application
-              development, cloud infrastructure, cybersecurity, and IT staff
-              augmentation.
+              Pure Technology is a global AI and digital engineering company helping startups,
+              enterprises, and fast-growing businesses build scalable technology products with speed
+              and precision. Headquartered in Pune, the company specializes in AI-powered solutions,
+              SaaS product engineering, enterprise application development, cloud infrastructure,
+              cybersecurity, and IT staff augmentation.
             </p>
             <div className="flex items-center gap-3">
               {SOCIAL_LINKS.map(({ label, href, Icon }) => (
                 <a
-                key={href}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="grid h-9 w-9 place-items-center rounded-full bg-black text-white hover:bg-zinc-800 transition-colors"
-                aria-label={label}
-              >
-                <Icon className="h-4 w-4" />
-              </a>
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="grid h-9 w-9 place-items-center rounded-full bg-black text-white hover:bg-zinc-800 transition-colors"
+                  aria-label={label}
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
               ))}
             </div>
           </div>
@@ -124,10 +135,22 @@ export function Footer() {
                 {FOOTER_FLAGS.map((item) => (
                   <span
                     key={item.flag}
-                    className="grid h-9 w-9 shrink-0 place-items-center overflow-hidden rounded-full bg-surface ring-1 ring-border"
-                    title={item.label}
+                    className="group relative grid h-9 w-9 shrink-0 place-items-center rounded-full bg-surface ring-1 ring-border transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    tabIndex={0}
+                    aria-label={`${item.label} office address`}
                   >
-                    <FlagIcon flag={item.flag} />
+                    <span className="grid h-full w-full place-items-center overflow-hidden rounded-full">
+                      <FlagIcon flag={item.flag} />
+                    </span>
+                    <span className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-3 w-64 -translate-x-1/2 rounded-lg border border-border bg-background px-4 py-3 text-left text-xs leading-relaxed text-foreground opacity-0 shadow-xl shadow-black/10 transition-all duration-200 group-hover:-translate-y-1 group-hover:opacity-100 group-focus-within:-translate-y-1 group-focus-within:opacity-100">
+                      <span className="mb-1 block text-[11px] font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+                        {item.label} Office
+                      </span>
+                      <span className="block normal-case tracking-normal text-muted-foreground">
+                        {item.address}
+                      </span>
+                      <span className="absolute left-1/2 top-full h-3 w-3 -translate-x-1/2 -translate-y-1/2 rotate-45 border-b border-r border-border bg-background" />
+                    </span>
                   </span>
                 ))}
               </div>
@@ -219,13 +242,7 @@ function FlagIcon({ flag }: { flag: (typeof FOOTER_FLAGS)[number]["flag"] }) {
   );
 }
 
-function FooterCol({
-  title,
-  items,
-}: {
-  title: string;
-  items: { label: string; to: string }[];
-}) {
+function FooterCol({ title, items }: { title: string; items: { label: string; to: string }[] }) {
   return (
     <div className="space-y-3 text-sm">
       <div className="font-semibold text-foreground">{title}</div>
