@@ -545,3 +545,35 @@
   }
 }
 /* End of GCC model section and in 12 weeks section */
+
+/* ── Blog TTS speak-button equaliser bars ── */
+@keyframes speakBar1 {
+  0%,
+  100% {
+    height: 30%;
+  }
+  50% {
+    height: 100%;
+  }
+}
+@keyframes speakBar2 {
+  0%,
+  100% {
+    height: 70%;
+  }
+  50% {
+    height: 20%;
+  }
+}
+@keyframes speakBar3 {
+  0%,
+  100% {
+    height: 50%;
+  }
+  33% {
+    height: 100%;
+  }
+  66% {
+    height: 25%;
+  }
+}

@@ -1,7 +1,8 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
-import { ArrowLeft, Calendar, User, Share2 } from "lucide-react";
+import { ArrowLeft, Calendar, User, Share2, Volume2, VolumeX, Pause, Play, Square } from "lucide-react";
 import { getBlogBySlugAction } from "@/lib/admin-actions";
 import { CTASection } from "@/components/site/Primitives";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type BlogContentBlock =
   | { type: "heading"; text: string; level: 2 | 3 }
@@ -209,6 +210,177 @@ function BlogContent({ content }: { content: string }) {
   );
 }
 
+// ── Extract plain text from HTML or markdown content ─────────────────────────
+function extractPlainText(content: string): string {
+  if (!content) return "";
+
+  if (isHtmlContent(content)) {
+    // Strip all HTML tags and decode entities
+    return content
+      .replace(/<[^>]*>/g, " ")
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'")
+      .replace(/&nbsp;/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  // Markdown: strip markers
+  return content
+    .replace(/^#{1,6}\s+/gm, "")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\*([^*]+)\*/g, "$1")
+    .replace(/^[-*]\s+/gm, "")
+    .replace(/^\d+[.)]\s+/gm, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// ── Text-to-Speech hook ───────────────────────────────────────────────────────
+type SpeechState = "idle" | "playing" | "paused";
+
+function useSpeech(text: string) {
+  const [state, setState] = useState<SpeechState>("idle");
+  const [supported, setSupported] = useState(false);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  useEffect(() => {
+    setSupported(typeof window !== "undefined" && "speechSynthesis" in window);
+    // Cancel speech when component unmounts or route changes
+    return () => {
+      if (typeof window !== "undefined" && window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
+  const speak = useCallback(() => {
+    if (!supported || !text) return;
+
+    // Already paused — resume
+    if (state === "paused") {
+      window.speechSynthesis.resume();
+      setState("playing");
+      return;
+    }
+
+    // Cancel any previous utterance
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.95;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    utterance.onstart = () => setState("playing");
+    utterance.onend = () => setState("idle");
+    utterance.onerror = () => setState("idle");
+    utterance.onpause = () => setState("paused");
+    utterance.onresume = () => setState("playing");
+
+    utteranceRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
+    setState("playing");
+  }, [supported, state, text]);
+
+  const pause = useCallback(() => {
+    if (!supported) return;
+    window.speechSynthesis.pause();
+    setState("paused");
+  }, [supported]);
+
+  const stop = useCallback(() => {
+    if (!supported) return;
+    window.speechSynthesis.cancel();
+    setState("idle");
+  }, [supported]);
+
+  return { state, supported, speak, pause, stop };
+}
+
+// ── Speak button UI ───────────────────────────────────────────────────────────
+function SpeakButton({ text }: { text: string }) {
+  const { state, supported, speak, pause, stop } = useSpeech(text);
+
+  if (!supported) return null;
+
+  const isPlaying = state === "playing";
+  const isPaused  = state === "paused";
+  const isActive  = isPlaying || isPaused;
+
+  return (
+    <div className="flex items-center gap-2.5">
+      {/* ── Main play/pause button ── */}
+      <button
+        id="blog-speak-button"
+        onClick={isPlaying ? pause : speak}
+        title={isPlaying ? "Pause reading" : isPaused ? "Resume reading" : "Listen to this article"}
+        aria-label={isPlaying ? "Pause reading" : isPaused ? "Resume reading" : "Read article aloud"}
+        className="relative inline-flex items-center gap-2.5 cursor-pointer select-none"
+      >
+        {/* Glow ring — pulses while playing */}
+        {isPlaying && (
+          <span
+            className="absolute inset-0 rounded-full animate-ping opacity-30"
+            style={{ background: "linear-gradient(135deg,#6366f1,#8b5cf6)" }}
+            aria-hidden="true"
+          />
+        )}
+
+        <span
+          className={`
+            relative inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 text-sm font-bold
+            transition-all duration-300
+            ${
+              isPlaying
+                ? "text-white shadow-[0_0_22px_4px_rgba(99,102,241,0.55)] scale-105"
+                : isPaused
+                  ? "text-white shadow-[0_4px_18px_rgba(139,92,246,0.4)]"
+                  : "text-white shadow-[0_4px_18px_rgba(99,102,241,0.35)] hover:scale-105 hover:shadow-[0_6px_24px_rgba(99,102,241,0.55)]"
+            }
+          `}
+          style={{
+            background: isPlaying
+              ? "linear-gradient(135deg,#6366f1 0%,#8b5cf6 50%,#a855f7 100%)"
+              : isPaused
+                ? "linear-gradient(135deg,#8b5cf6 0%,#a855f7 100%)"
+                : "linear-gradient(135deg,#6366f1 0%,#8b5cf6 60%,#ec4899 100%)",
+          }}
+        >
+          {/* Equaliser bars — only while playing */}
+          {isPlaying && (
+            <span className="flex items-end gap-[3px] h-4" aria-hidden="true">
+              <span className="w-[3px] rounded-full bg-white animate-[speakBar1_0.7s_ease-in-out_infinite]" />
+              <span className="w-[3px] rounded-full bg-white animate-[speakBar2_0.7s_ease-in-out_infinite_0.12s]" />
+              <span className="w-[3px] rounded-full bg-white animate-[speakBar3_0.7s_ease-in-out_infinite_0.24s]" />
+              <span className="w-[3px] rounded-full bg-white animate-[speakBar1_0.7s_ease-in-out_infinite_0.36s]" />
+            </span>
+          )}
+          {isPaused  && <Pause  className="h-4 w-4" />}
+          {!isActive && <Volume2 className="h-4 w-4" />}
+
+          {isPlaying ? "Pause" : isPaused ? "Resume" : "Listen to Article"}
+        </span>
+      </button>
+
+      {/* Stop button — appears only when active */}
+      {isActive && (
+        <button
+          onClick={stop}
+          title="Stop reading"
+          aria-label="Stop reading"
+          className="inline-flex items-center justify-center h-9 w-9 rounded-full border border-destructive/30 bg-destructive/10 text-destructive hover:bg-destructive hover:text-white transition-all duration-200 cursor-pointer"
+        >
+          <Square className="h-3.5 w-3.5 fill-current" />
+        </button>
+      )}
+    </div>
+  );
+}
+
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
     const post = await getBlogBySlugAction({ data: params.slug });
@@ -265,6 +437,16 @@ function BlogPostPage() {
   const { post } = Route.useLoaderData();
   const accentColor = post.accent;
 
+  // Build the full text for TTS: title + author + both content sections
+  const speechText = [
+    post.title,
+    post.author ? `By ${post.author}.` : "",
+    extractPlainText(post.descriptionTop || ""),
+    extractPlainText(post.descriptionBottom || ""),
+  ]
+    .filter(Boolean)
+    .join(". ");
+
   return (
     <div className="min-h-screen bg-background pb-20">
       <div className="mx-auto max-w-4xl px-5 lg:px-8 pt-8 flex items-center justify-between border-b border-border/40 pb-6">
@@ -276,6 +458,7 @@ function BlogPostPage() {
           Back to all articles
         </Link>
 
+        {/* ── Share button (top bar only) ── */}
         <button
           onClick={() => {
             if (navigator.share) {
@@ -294,7 +477,7 @@ function BlogPostPage() {
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
         >
           <Share2 className="h-4 w-4" />
-          Share article
+          <span className="hidden sm:inline">Share article</span>
         </button>
       </div>
 
@@ -322,6 +505,9 @@ function BlogPostPage() {
               <Calendar className="h-4 w-4" />
               {post.date}
             </span>
+
+            {/* ── 🔊 Speak button — right after the date ── */}
+            <SpeakButton text={speechText} />
           </div>
         </header>
 
@@ -347,6 +533,17 @@ function BlogPostPage() {
 
         <div className="text-base sm:text-lg leading-relaxed text-foreground/80 font-sans space-y-6">
           <BlogContent content={post.descriptionBottom} />
+        </div>
+
+        {/* ── Floating speak bar at bottom of article ── */}
+        <div className="mt-16 flex items-center justify-center">
+          <div className="inline-flex items-center gap-3 rounded-full border border-border bg-surface/80 backdrop-blur px-5 py-3 shadow-soft">
+            <Volume2 className="h-4 w-4 text-muted-foreground shrink-0" />
+            <span className="text-sm text-muted-foreground font-medium">
+              Want to listen instead?
+            </span>
+            <SpeakButton text={speechText} />
+          </div>
         </div>
       </article>
 
