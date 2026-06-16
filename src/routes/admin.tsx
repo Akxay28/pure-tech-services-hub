@@ -1,5 +1,5 @@
 import { createFileRoute, redirect, Outlet, Link } from "@tanstack/react-router";
-import { LayoutDashboard, LogOut, BookOpen } from "lucide-react";
+import { LayoutDashboard, LogOut, BookOpen, Briefcase } from "lucide-react";
 import { Toaster } from "@/components/ui/sonner";
 import { checkAuthAction, logoutAction } from "@/lib/admin-actions";
 
@@ -102,6 +102,14 @@ function AdminLayout() {
               >
                 <BookOpen className="h-4 w-4" />
                 Blogs
+              </Link>
+              <Link
+                to="/admin/careers"
+                className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium hover:bg-secondary transition-colors"
+                activeProps={{ className: "bg-secondary text-primary" }}
+              >
+                <Briefcase className="h-4 w-4" />
+                Careers
               </Link>
             </nav>
           </div>

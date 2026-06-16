@@ -415,9 +415,30 @@ async function getCaptchaConfig(includeSecret = false): Promise<
   };
 }
 
+async function isLocalhostRequest(): Promise<boolean> {
+  try {
+    const { getRequestHeader } = await import("@tanstack/react-start/server");
+    const host =
+      getRequestHeader("x-forwarded-host") ||
+      getRequestHeader("host") ||
+      "";
+    // Match localhost, 127.x.x.x, and ::1
+    return /^(localhost|127\.\d+\.\d+\.\d+|\[?::1\]?)(:\d+)?$/.test(host);
+  } catch {
+    // If we can't read the header, fall through to normal verification
+    return false;
+  }
+}
+
 async function verifyCaptcha(captchaToken?: string) {
   const captchaConfig = await getCaptchaConfig(true);
   if (!captchaConfig.enabled) return;
+
+  // ── Skip captcha on localhost so local development works without tokens ──
+  if (await isLocalhostRequest()) {
+    console.info("[Captcha] Skipped — localhost request detected.");
+    return;
+  }
 
   const { provider, secretKey } = captchaConfig;
   if (!provider || !secretKey) {
@@ -1032,6 +1053,150 @@ export const getBlogByIdAction = createServerFn()
       return toClientBlog(item);
     } catch (error) {
       logFallbackWarning(`[DB Fallback] Failed to get blog by ID "${id}":`, error);
+      return null;
+    }
+  });
+
+// ─── CAREER / JOB OPENINGS ACTIONS ────────────────────────────────────────────
+
+function toClientCareer(item: any) {
+  return {
+    ...item,
+    _id: item._id.toString(),
+    expiresAt: item.expiresAt ? new Date(item.expiresAt).toISOString() : null,
+    createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
+    updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
+  };
+}
+
+// 16. Create Career Opening
+export const createCareerAction = createServerFn()
+  .inputValidator((data: any) => data)
+  .handler(async ({ data }) => {
+    await verifyAdminAuth();
+    const { db } = await connectToDatabase();
+
+    const now = new Date();
+    const durationDays = Number(data.durationDays) || 30;
+    const expiresAt = new Date(now.getTime() + durationDays * 24 * 60 * 60 * 1000);
+
+    const newCareer = {
+      title: String(data.title || "").trim(),
+      team: String(data.team || "").trim(),
+      location: String(data.location || "Pune").trim(),
+      type: String(data.type || "Full-time").trim(),
+      tag: String(data.tag || "").trim(),
+      blurb: String(data.blurb || "").trim(),
+      accent: String(data.accent || "var(--brand-blue)").trim(),
+      durationDays,
+      expiresAt,
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    if (!newCareer.title) throw new Error("Job title is required.");
+    if (!newCareer.blurb) throw new Error("Job description is required.");
+
+    const result = await db.collection("careers").insertOne(newCareer);
+    return { success: true, id: result.insertedId.toString() };
+  });
+
+// 17. Update Career Opening
+export const updateCareerAction = createServerFn()
+  .inputValidator((data: any) => data as { id: string; career: any })
+  .handler(async ({ data }) => {
+    await verifyAdminAuth();
+    const { id, career } = data;
+    if (!id) throw new Error("Career ID is required.");
+
+    const { db } = await connectToDatabase();
+    const ObjectId = await getObjectIdClass();
+
+    const now = new Date();
+    const durationDays = Number(career.durationDays) || 30;
+    // Reset the expiry from the edit date whenever duration is updated
+    const expiresAt = new Date(now.getTime() + durationDays * 24 * 60 * 60 * 1000);
+
+    const { _id, createdAt, ...rest } = career;
+
+    const result = await db.collection("careers").updateOne(
+      { _id: new ObjectId(id) },
+      {
+        $set: {
+          title: String(rest.title || "").trim(),
+          team: String(rest.team || "").trim(),
+          location: String(rest.location || "Pune").trim(),
+          type: String(rest.type || "Full-time").trim(),
+          tag: String(rest.tag || "").trim(),
+          blurb: String(rest.blurb || "").trim(),
+          accent: String(rest.accent || "var(--brand-blue)").trim(),
+          durationDays,
+          expiresAt,
+          updatedAt: now,
+        },
+      },
+    );
+
+    if (result.matchedCount === 0) throw new Error("Career opening not found.");
+    return { success: true };
+  });
+
+// 18. Delete Career Opening
+export const deleteCareerAction = createServerFn()
+  .inputValidator((id: string) => id)
+  .handler(async ({ data: id }) => {
+    await verifyAdminAuth();
+    if (!id) throw new Error("Career ID is required.");
+
+    const { db } = await connectToDatabase();
+    const ObjectId = await getObjectIdClass();
+    const result = await db.collection("careers").deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 0) throw new Error("Career opening not found.");
+    return { success: true };
+  });
+
+// 19. Get All Career Openings
+export const getCareersAction = createServerFn()
+  .inputValidator((data: any) => data as { admin?: boolean } | undefined)
+  .handler(async ({ data }) => {
+    try {
+      const { db } = await connectToDatabase();
+      const isAdmin = data?.admin || false;
+
+      // Public: only show non-expired; Admin: show all
+      const query = isAdmin ? {} : { expiresAt: { $gt: new Date() } };
+
+      const list = await db
+        .collection("careers")
+        .find(query)
+        .sort({ createdAt: -1 })
+        .toArray();
+
+      return list.map(toClientCareer);
+    } catch (error) {
+      logFallbackWarning("[DB Fallback] Failed to get careers:", error);
+      return [];
+    }
+  });
+
+// 20. Get Single Career by ID (admin edit)
+export const getCareerByIdAction = createServerFn()
+  .inputValidator((id: string) => id)
+  .handler(async ({ data: id }) => {
+    await verifyAdminAuth();
+    if (!id) return null;
+
+    const ObjectId = await getObjectIdClass();
+    if (!ObjectId.isValid(id)) return null;
+
+    try {
+      const { db } = await connectToDatabase();
+      const item = await db.collection("careers").findOne({ _id: new ObjectId(id) });
+      if (!item) return null;
+      return toClientCareer(item);
+    } catch (error) {
+      logFallbackWarning(`[DB Fallback] Failed to get career by ID "${id}":`, error);
       return null;
     }
   });

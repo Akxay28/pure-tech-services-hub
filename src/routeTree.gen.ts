@@ -74,9 +74,12 @@ import { Route as CareersBenefitsPerksRouteImport } from './routes/careers.benef
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as AdminNewRouteImport } from './routes/admin.new'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminCareersIndexRouteImport } from './routes/admin.careers.index'
 import { Route as AdminBlogsIndexRouteImport } from './routes/admin.blogs.index'
 import { Route as AdminEditIdRouteImport } from './routes/admin.edit.$id'
+import { Route as AdminCareersNewRouteImport } from './routes/admin.careers.new'
 import { Route as AdminBlogsNewRouteImport } from './routes/admin.blogs.new'
+import { Route as AdminCareersEditIdRouteImport } from './routes/admin.careers.edit.$id'
 import { Route as AdminBlogsEditIdRouteImport } from './routes/admin.blogs.edit.$id'
 
 const TeamRoute = TeamRouteImport.update({
@@ -420,6 +423,11 @@ const AdminLoginRoute = AdminLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminCareersIndexRoute = AdminCareersIndexRouteImport.update({
+  id: '/careers/',
+  path: '/careers/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminBlogsIndexRoute = AdminBlogsIndexRouteImport.update({
   id: '/blogs/',
   path: '/blogs/',
@@ -430,9 +438,19 @@ const AdminEditIdRoute = AdminEditIdRouteImport.update({
   path: '/edit/$id',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminCareersNewRoute = AdminCareersNewRouteImport.update({
+  id: '/careers/new',
+  path: '/careers/new',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminBlogsNewRoute = AdminBlogsNewRouteImport.update({
   id: '/blogs/new',
   path: '/blogs/new',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCareersEditIdRoute = AdminCareersEditIdRouteImport.update({
+  id: '/careers/edit/$id',
+  path: '/careers/edit/$id',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminBlogsEditIdRoute = AdminBlogsEditIdRouteImport.update({
@@ -508,9 +526,12 @@ export interface FileRoutesByFullPath {
   '/careers/': typeof CareersIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/admin/blogs/new': typeof AdminBlogsNewRoute
+  '/admin/careers/new': typeof AdminCareersNewRoute
   '/admin/edit/$id': typeof AdminEditIdRoute
   '/admin/blogs/': typeof AdminBlogsIndexRoute
+  '/admin/careers/': typeof AdminCareersIndexRoute
   '/admin/blogs/edit/$id': typeof AdminBlogsEditIdRoute
+  '/admin/careers/edit/$id': typeof AdminCareersEditIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -575,9 +596,12 @@ export interface FileRoutesByTo {
   '/careers': typeof CareersIndexRoute
   '/services': typeof ServicesIndexRoute
   '/admin/blogs/new': typeof AdminBlogsNewRoute
+  '/admin/careers/new': typeof AdminCareersNewRoute
   '/admin/edit/$id': typeof AdminEditIdRoute
   '/admin/blogs': typeof AdminBlogsIndexRoute
+  '/admin/careers': typeof AdminCareersIndexRoute
   '/admin/blogs/edit/$id': typeof AdminBlogsEditIdRoute
+  '/admin/careers/edit/$id': typeof AdminCareersEditIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -647,9 +671,12 @@ export interface FileRoutesById {
   '/careers/': typeof CareersIndexRoute
   '/services/': typeof ServicesIndexRoute
   '/admin/blogs/new': typeof AdminBlogsNewRoute
+  '/admin/careers/new': typeof AdminCareersNewRoute
   '/admin/edit/$id': typeof AdminEditIdRoute
   '/admin/blogs/': typeof AdminBlogsIndexRoute
+  '/admin/careers/': typeof AdminCareersIndexRoute
   '/admin/blogs/edit/$id': typeof AdminBlogsEditIdRoute
+  '/admin/careers/edit/$id': typeof AdminCareersEditIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -720,9 +747,12 @@ export interface FileRouteTypes {
     | '/careers/'
     | '/services/'
     | '/admin/blogs/new'
+    | '/admin/careers/new'
     | '/admin/edit/$id'
     | '/admin/blogs/'
+    | '/admin/careers/'
     | '/admin/blogs/edit/$id'
+    | '/admin/careers/edit/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -787,9 +817,12 @@ export interface FileRouteTypes {
     | '/careers'
     | '/services'
     | '/admin/blogs/new'
+    | '/admin/careers/new'
     | '/admin/edit/$id'
     | '/admin/blogs'
+    | '/admin/careers'
     | '/admin/blogs/edit/$id'
+    | '/admin/careers/edit/$id'
   id:
     | '__root__'
     | '/'
@@ -858,9 +891,12 @@ export interface FileRouteTypes {
     | '/careers/'
     | '/services/'
     | '/admin/blogs/new'
+    | '/admin/careers/new'
     | '/admin/edit/$id'
     | '/admin/blogs/'
+    | '/admin/careers/'
     | '/admin/blogs/edit/$id'
+    | '/admin/careers/edit/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1358,6 +1394,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminLoginRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/careers/': {
+      id: '/admin/careers/'
+      path: '/careers'
+      fullPath: '/admin/careers/'
+      preLoaderRoute: typeof AdminCareersIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/blogs/': {
       id: '/admin/blogs/'
       path: '/blogs'
@@ -1372,11 +1415,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminEditIdRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/careers/new': {
+      id: '/admin/careers/new'
+      path: '/careers/new'
+      fullPath: '/admin/careers/new'
+      preLoaderRoute: typeof AdminCareersNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/blogs/new': {
       id: '/admin/blogs/new'
       path: '/blogs/new'
       fullPath: '/admin/blogs/new'
       preLoaderRoute: typeof AdminBlogsNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/careers/edit/$id': {
+      id: '/admin/careers/edit/$id'
+      path: '/careers/edit/$id'
+      fullPath: '/admin/careers/edit/$id'
+      preLoaderRoute: typeof AdminCareersEditIdRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/blogs/edit/$id': {
@@ -1394,9 +1451,12 @@ interface AdminRouteChildren {
   AdminNewRoute: typeof AdminNewRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminBlogsNewRoute: typeof AdminBlogsNewRoute
+  AdminCareersNewRoute: typeof AdminCareersNewRoute
   AdminEditIdRoute: typeof AdminEditIdRoute
   AdminBlogsIndexRoute: typeof AdminBlogsIndexRoute
+  AdminCareersIndexRoute: typeof AdminCareersIndexRoute
   AdminBlogsEditIdRoute: typeof AdminBlogsEditIdRoute
+  AdminCareersEditIdRoute: typeof AdminCareersEditIdRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -1404,9 +1464,12 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminNewRoute: AdminNewRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminBlogsNewRoute: AdminBlogsNewRoute,
+  AdminCareersNewRoute: AdminCareersNewRoute,
   AdminEditIdRoute: AdminEditIdRoute,
   AdminBlogsIndexRoute: AdminBlogsIndexRoute,
+  AdminCareersIndexRoute: AdminCareersIndexRoute,
   AdminBlogsEditIdRoute: AdminBlogsEditIdRoute,
+  AdminCareersEditIdRoute: AdminCareersEditIdRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)

@@ -1,4 +1,4 @@
-﻿import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   MapPin,
@@ -8,8 +8,10 @@ import {
   HeartHandshake,
   Target,
   Users,
+  Timer,
 } from "lucide-react";
 import { PageHero, SectionHeader, Stat } from "@/components/site/Primitives";
+import { getCareersAction } from "@/lib/admin-actions";
 
 export const Route = createFileRoute("/careers/")({
   head: () => ({
@@ -30,61 +32,13 @@ export const Route = createFileRoute("/careers/")({
       },
     ],
   }),
+  loader: async () => {
+    const careers = await getCareersAction({ data: { admin: false } });
+    return { careers };
+  },
   component: CareersPage,
 });
 
-type Role = {
-  title: string;
-  team: string;
-  location: string;
-  type: string;
-  tag: string;
-  blurb: string;
-  accent: string;
-};
-
-const roles: Role[] = [
-  // {
-  //   title: "Business Development Specialist",
-  //   team: "Business Development",
-  //   location: "Pune",
-  //   type: "Full-time",
-  //   tag: "IT Sector",
-  //   blurb:
-  //     "Drive new business across our IT services portfolio — from AI and product engineering to staff augmentation. You'll partner with leadership on pipeline, proposals, and client relationships.",
-  //   accent: "var(--brand-orange)",
-  // },
-  // {
-  //   title: "AI Developer / Engineer",
-  //   team: "AI Solutions",
-  //   location: "Pune",
-  //   type: "Full-time",
-  //   tag: "AI & Automation",
-  //   blurb:
-  //     "Build intelligent systems for startups and enterprises — LLM integrations, automation workflows, and production-ready AI features aligned to real client outcomes.",
-  //   accent: "var(--brand-blue)",
-  // },
-  // {
-  //   title: "Full Stack Developer",
-  //   team: "Product Engineering",
-  //   location: "Pune",
-  //   type: "Full-time",
-  //   tag: "Web & SaaS",
-  //   blurb:
-  //     "Ship end-to-end product work for global clients — modern frontends, APIs, and cloud-backed services with a team that cares about maintainability and delivery quality.",
-  //   accent: "var(--brand-green)",
-  // },
-  {
-    title: ".NET Fresher",
-    team: "Product Engineering",
-    location: "Pune",
-    type: "Full-time",
-    tag: ".NET Development",
-    blurb:
-      "Join our team as a .NET Fresher! Work alongside experienced mentors, build real-world applications, and kickstart your career delivering software solutions to global clients.",
-    accent: "var(--brand-blue)",
-  },
-];
 
 const principles = [
   {
@@ -106,11 +60,6 @@ const principles = [
     accent: "var(--brand-green)",
   },
 ];
-
-// ============================================================
-// CAREERS PAGE — EMPLOYEE TESTIMONIALS DATA
-// Update quotes, names, roles, and year here anytime
-// ============================================================
 
 const employeeTestimonials = [
   {
@@ -141,7 +90,42 @@ const employeeTestimonials = [
 
 const HR_EMAIL = "jobs@puretechnology.in";
 
+// ── Countdown badge shown on each role card ──────────────────────────────────
+function CountdownBadge({ expiresAt }: { expiresAt: string | null }) {
+  if (!expiresAt) return null;
+
+  const remainingMs = new Date(expiresAt).getTime() - Date.now();
+  const remainingDays = Math.ceil(remainingMs / (1000 * 60 * 60 * 24));
+
+  if (remainingDays <= 0) {
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-destructive/30 bg-destructive/10 px-3 py-1 text-xs font-bold text-destructive">
+        <Timer className="h-3.5 w-3.5" />
+        Position Closed
+      </span>
+    );
+  }
+
+  const colorClass =
+    remainingDays <= 3
+      ? "border-destructive/30 bg-destructive/10 text-destructive"
+      : remainingDays <= 7
+        ? "border-amber-500/30 bg-amber-500/10 text-amber-600"
+        : "border-emerald-500/30 bg-emerald-500/10 text-emerald-700";
+
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-bold ${colorClass}`}
+    >
+      <Clock className="h-3.5 w-3.5" />
+      Closes in {remainingDays} day{remainingDays !== 1 ? "s" : ""}
+    </span>
+  );
+}
+
 function CareersPage() {
+  const { careers } = Route.useLoaderData();
+
   return (
     <>
       <PageHero
@@ -166,8 +150,8 @@ function CareersPage() {
             href={`mailto:${HR_EMAIL}`}
             className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 backdrop-blur px-6 py-3 text-sm font-medium text-foreground hover:bg-secondary transition-colors"
           >
-Don't see your role? Write to us → {HR_EMAIL}
-</a>
+            Don't see your role? Write to us → {HR_EMAIL}
+          </a>
         </div>
 
         <div className="mt-14 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl">
@@ -210,6 +194,7 @@ Don't see your role? Write to us → {HR_EMAIL}
         </div>
       </section>
 
+      {/* ── Open Roles ── */}
       <section
         id="open-roles"
         className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border scroll-mt-24"
@@ -222,57 +207,93 @@ Don't see your role? Write to us → {HR_EMAIL}
           />
 
           <div className="mt-12 grid gap-4">
-            {roles.map((role) => (
-              <article
-                key={role.title}
-                className="group relative glass-card rounded-2xl p-6 sm:p-7 transition-transform hover:-translate-y-0.5 duration-300"
-              >
-                <div
-                  className="absolute -top-12 -right-12 h-40 w-40 rounded-full opacity-15 blur-3xl pointer-events-none"
-                  style={{ background: role.accent }}
-                />
-                <div className="relative flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-8">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-                      <span
-                        className="h-1.5 w-1.5 rounded-full"
-                        style={{ background: role.accent }}
-                      />
-                      {role.team}
-                    </div>
-                    <h3 className="mt-2 text-xl sm:text-2xl font-display font-semibold">
-                      {role.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-3xl">
-                      {role.blurb}
-                    </p>
-                    <div className="mt-4 flex flex-wrap gap-3 text-xs text-foreground/75">
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface/70 px-3 py-1">
-                        <MapPin className="h-3.5 w-3.5" />
-                        {role.location}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface/70 px-3 py-1">
-                        <Briefcase className="h-3.5 w-3.5" />
-                        {role.type}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface/70 px-3 py-1">
-                        <Clock className="h-3.5 w-3.5" />
-                        {role.tag}
-                      </span>
-                    </div>
-                  </div>
+            {careers.length === 0 ? (
+              <div className="rounded-2xl border border-border bg-surface p-12 text-center">
+                <Briefcase className="h-10 w-10 text-muted-foreground mx-auto mb-4 opacity-40" />
+                <p className="text-lg font-display font-semibold text-foreground">
+                  No open roles right now
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  We hire regularly — check back soon or write to us at{" "}
                   <a
-                   href={`https://mail.google.com/mail/?view=cm&to=${HR_EMAIL}&su=${encodeURIComponent(`Application — ${role.title}`)}`}
-                   target="_blank"
-                   rel="noopener noreferrer" 
-                    className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background hover:opacity-90 transition-opacity shadow-soft"
+                    href={`mailto:${HR_EMAIL}`}
+                    className="text-primary underline underline-offset-4"
                   >
-                    Apply now
-                    <ArrowRight className="h-4 w-4" />
+                    {HR_EMAIL}
                   </a>
-                </div>
-              </article>
-            ))}
+                </p>
+              </div>
+            ) : (
+              careers.map((role: any) => {
+                const remainingMs = role.expiresAt
+                  ? new Date(role.expiresAt).getTime() - Date.now()
+                  : Infinity;
+                const isExpired = remainingMs <= 0;
+
+                return (
+                  <article
+                    key={role._id}
+                    className={`group relative glass-card rounded-2xl p-6 sm:p-7 transition-transform hover:-translate-y-0.5 duration-300 ${isExpired ? "opacity-60" : ""}`}
+                  >
+                    <div
+                      className="absolute -top-12 -right-12 h-40 w-40 rounded-full opacity-15 blur-3xl pointer-events-none"
+                      style={{ background: role.accent || "var(--brand-blue)" }}
+                    />
+                    <div className="relative flex flex-col lg:flex-row lg:items-center gap-5 lg:gap-8">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                          <span
+                            className="h-1.5 w-1.5 rounded-full"
+                            style={{ background: role.accent || "var(--brand-blue)" }}
+                          />
+                          {role.team}
+                        </div>
+                        <h3 className="mt-2 text-xl sm:text-2xl font-display font-semibold">
+                          {role.title}
+                        </h3>
+                        <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-3xl">
+                          {role.blurb}
+                        </p>
+                        <div className="mt-4 flex flex-wrap gap-3 text-xs text-foreground/75">
+                          <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface/70 px-3 py-1">
+                            <MapPin className="h-3.5 w-3.5" />
+                            {role.location}
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface/70 px-3 py-1">
+                            <Briefcase className="h-3.5 w-3.5" />
+                            {role.type}
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface/70 px-3 py-1">
+                            <Clock className="h-3.5 w-3.5" />
+                            {role.tag}
+                          </span>
+                        </div>
+                        {/* Countdown badge */}
+                        <div className="mt-3">
+                          <CountdownBadge expiresAt={role.expiresAt} />
+                        </div>
+                      </div>
+
+                      {isExpired ? (
+                        <span className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-secondary border border-border px-5 py-2.5 text-sm font-medium text-muted-foreground cursor-not-allowed select-none">
+                          Position Closed
+                        </span>
+                      ) : (
+                        <a
+                          href={`https://mail.google.com/mail/?view=cm&to=${HR_EMAIL}&su=${encodeURIComponent(`Application — ${role.title}`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background hover:opacity-90 transition-opacity shadow-soft"
+                        >
+                          Apply now
+                          <ArrowRight className="h-4 w-4" />
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                );
+              })
+            )}
           </div>
         </div>
       </section>
@@ -321,10 +342,6 @@ Don't see your role? Write to us → {HR_EMAIL}
         </div>
       </section>
 
-      {/* // ============================================================
-// REPLACE the current [PLACEHOLDER] section with this:
-// ============================================================ */}
-
       <section className="px-5 lg:px-8 py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
@@ -332,19 +349,15 @@ Don't see your role? Write to us → {HR_EMAIL}
             title="What the team says when no one from HR is in the room."
           />
           <div className="mt-12 grid lg:grid-cols-3 gap-5">
-            {employeeTestimonials.map((t, i) => (
+            {employeeTestimonials.map((t) => (
               <div
                 key={t.name}
                 className="rounded-2xl border border-border bg-surface-muted/50 px-6 py-8 flex flex-col gap-4"
               >
-                {/* Quote */}
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                   "{t.quote}"
                 </p>
-
-                {/* Author */}
                 <div className="mt-auto flex items-center gap-3">
-                  {/* Avatar */}
                   <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm shrink-0">
                     {t.initials}
                   </div>

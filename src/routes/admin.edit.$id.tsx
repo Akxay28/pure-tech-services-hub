@@ -12,6 +12,8 @@ export const Route = createFileRoute("/admin/edit/$id")({
     }
     return { study, id: params.id };
   },
+  // Always re-fetch fresh data — never serve cached content
+  staleTime: 0,
   component: EditCaseStudyPage,
 });
 
@@ -26,7 +28,8 @@ function EditCaseStudyPage() {
       const res = await updateCaseStudyAction({ data: { id, study: data } });
       if (res?.success) {
         toast.success(`Updated case study for "${data.client}" successfully!`);
-        router.invalidate();
+        // Flush all cached loader data BEFORE navigating
+        await router.invalidate();
         router.navigate({ to: "/admin" as any });
       } else {
         toast.error("Could not update the case study.");
@@ -41,6 +44,7 @@ function EditCaseStudyPage() {
   return (
     <div className="max-w-4xl mx-auto">
       <CaseStudyForm
+        key={id}
         title={`Edit Case Study: ${study.client}`}
         initialData={study}
         onSubmit={handleEditCaseStudy}
