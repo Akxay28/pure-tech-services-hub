@@ -1200,3 +1200,300 @@ export const getCareerByIdAction = createServerFn()
       return null;
     }
   });
+
+// ─── TESTIMONIAL ACTIONS ───────────────────────────────────────────────────────
+
+const STATIC_TESTIMONIALS = [
+  {
+    quote: "The tire inspection and uniformity platform exceeded our expectations. The team understood our manufacturing requirements deeply and delivered a solution that integrated seamlessly into our production line.",
+    name: "Rajendra Patel",
+    role: "Engineering Lead",
+    company: "Bridgestone",
+    initials: "RP",
+    accent: "var(--brand-red)",
+    project: "Tire Inspection & Uniformity",
+    avatar: "",
+    order: 1,
+  },
+  {
+    quote: "The weapon management system built by Pure Technology brought much-needed precision and accountability to our depot operations. Reliable, secure, and built to defence-grade standards.",
+    name: "Capt Praveen Sab",
+    role: "Captain",
+    company: "29 Forward Ammunition Depot",
+    initials: "PS",
+    accent: "var(--brand-blue)",
+    project: "Weapon Management System",
+    avatar: "",
+    order: 2,
+  },
+  {
+    quote: "Pure Technology delivered the GED software and pulley concentricity solution with exceptional technical depth. Their team grasped our engineering requirements quickly and delivered a robust, production-ready system.",
+    name: "Ritesh Bhole",
+    role: "Deputy General Manager",
+    company: "Schindler",
+    initials: "RB",
+    accent: "var(--brand-orange)",
+    project: "GED Software & Pulley Concentricity",
+    avatar: "/testimonial/riteshbhole.jpg",
+    order: 3,
+  },
+  {
+    quote: "The web portal and cybersecurity solution delivered by Pure Technology gave us the reliability and security compliance we needed for government-grade operations. Highly professional team.",
+    name: "J N Tulekar",
+    role: "Officer",
+    company: "PCDA (O)",
+    initials: "JT",
+    accent: "var(--brand-green)",
+    project: "Web Portal & Cyber Security",
+    avatar: "",
+    order: 4,
+  },
+  {
+    quote: "Pure Technology built a robust vehicle management system that streamlined our fleet operations significantly. Their technical expertise and timely delivery made the entire engagement smooth.",
+    name: "Madhusudan Sadani",
+    role: "Manager",
+    company: "Sandvik",
+    initials: "MS",
+    accent: "var(--brand-blue)",
+    project: "Vehicle Management System",
+    avatar: "",
+    order: 5,
+  },
+  {
+    quote: "The AI calling solution integrated with Zoho transformed how we handle client outreach. Pure Technology understood our business needs precisely and delivered a seamless, intelligent workflow.",
+    name: "Prabin",
+    role: "Director",
+    company: "AA Consultancy",
+    initials: "PR",
+    accent: "var(--brand-orange)",
+    project: "AI Calling with Zoho Integration",
+    avatar: "",
+    order: 6,
+  },
+  {
+    quote: "The AI-based quotation paper generation and interview system has revolutionized our academic processes. Pure Technology brought innovation that we didn't think was possible in the education space.",
+    name: "Dr Sushant Patil",
+    role: "Director",
+    company: "DY Patil Educational Federation",
+    initials: "SP",
+    accent: "var(--brand-green)",
+    project: "AI Quotation Paper & Interview",
+    avatar: "/testimonial/sushantpatil.jpg",
+    order: 7,
+  },
+  {
+    quote: "The student portal and AI interview system built by Pure Technology has dramatically improved our student engagement and administrative efficiency. A truly future-ready solution.",
+    name: "Dr Sajid Alvi",
+    role: "Director",
+    company: "DIMR",
+    initials: "SA",
+    accent: "var(--brand-red)",
+    project: "Student Portal & AI Interview",
+    avatar: "",
+    order: 8,
+  },
+  {
+    quote: "Pure Technology delivered our emailer platform with great attention to detail and design quality. The solution was clean, scalable, and exactly what our media operations needed.",
+    name: "Mrunal Pawar",
+    role: "Manager",
+    company: "Sakal Media",
+    initials: "MP",
+    accent: "var(--brand-yellow)",
+    project: "Emailer Platform",
+    avatar: "",
+    order: 9,
+  },
+  {
+    quote: "The internal AI agent built by Pure Technology has streamlined our processes beyond expectations. It handles complex workflows intelligently and has saved our team countless hours.",
+    name: "Sagar Babar",
+    role: "Manager",
+    company: "Comsense Technologies",
+    initials: "SB",
+    accent: "var(--brand-blue)",
+    project: "AI Agent for Internal Process",
+    avatar: "/testimonial/sagarbabar.png",
+    order: 10,
+  },
+  {
+    quote: "Pure Technology delivered a payroll and expense management system that perfectly fits our organizational scale. Reliable, accurate, and easy for our HR team to operate.",
+    name: "Mr Khan Ahmed",
+    role: "Manager",
+    company: "Mahabeej",
+    initials: "KA",
+    accent: "var(--brand-green)",
+    project: "Payroll & Expense Management",
+    avatar: "",
+    order: 11,
+  },
+  {
+    quote: "The AI-based newsletter solution built for Reliance has elevated our internal communications. Pure Technology delivered a smart, automated system that saves significant editorial effort.",
+    name: "Mrs Kaval Bajwa",
+    role: "Manager",
+    company: "Reliance Industries",
+    initials: "KB",
+    accent: "var(--brand-orange)",
+    project: "AI Newsletter",
+    avatar: "",
+    order: 12,
+  },
+  {
+    quote: "The lead portal built by Pure Technology is intuitive, fast, and exactly what our sales team needed. It has improved our lead tracking and conversion workflows considerably.",
+    name: "Rajashree Gandhi",
+    role: "Director",
+    company: "Botonym",
+    initials: "RG",
+    accent: "var(--brand-red)",
+    project: "Lead Portal",
+    avatar: "/team/rajashreeGandhi.jpg",
+    order: 13,
+  },
+];
+
+async function seedTestimonialsIfEmpty(db: any) {
+  const count = await db.collection("testimonials").countDocuments();
+  if (count === 0) {
+    const now = new Date();
+    await db.collection("testimonials").insertMany(
+      STATIC_TESTIMONIALS.map((t) => ({ ...t, createdAt: now, updatedAt: now }))
+    );
+    console.info("[Seed] Inserted static testimonials into MongoDB.");
+  }
+}
+
+function toClientTestimonial(item: any) {
+  return {
+    ...item,
+    _id: item._id.toString(),
+    createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
+    updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
+  };
+}
+
+// 21. Get All Testimonials (public + admin)
+export const getTestimonialsAction = createServerFn()
+  .inputValidator((data: any) => data as { admin?: boolean } | undefined)
+  .handler(async ({ data }) => {
+    try {
+      const { db } = await connectToDatabase();
+      await seedTestimonialsIfEmpty(db);
+      const isAdmin = data?.admin || false;
+      // Admin: show all; Public: show only active ones
+      const query = isAdmin ? {} : { active: { $ne: false } };
+      const list = await db
+        .collection("testimonials")
+        .find(query)
+        .sort({ order: 1, createdAt: 1 })
+        .toArray();
+      return list.map(toClientTestimonial);
+    } catch (error) {
+      logFallbackWarning("[DB Fallback] Failed to get testimonials:", error);
+      // Return static data as fallback so the page never breaks
+      return STATIC_TESTIMONIALS.map((t, i) => ({
+        ...t,
+        _id: `static-${i}`,
+        active: true,
+        createdAt: null,
+        updatedAt: null,
+      }));
+    }
+  });
+
+// 22. Get Single Testimonial by ID
+export const getTestimonialByIdAction = createServerFn()
+  .inputValidator((id: string) => id)
+  .handler(async ({ data: id }) => {
+    await verifyAdminAuth();
+    if (!id) return null;
+    const ObjectId = await getObjectIdClass();
+    if (!ObjectId.isValid(id)) return null;
+    try {
+      const { db } = await connectToDatabase();
+      const item = await db.collection("testimonials").findOne({ _id: new ObjectId(id) });
+      if (!item) return null;
+      return toClientTestimonial(item);
+    } catch (error) {
+      logFallbackWarning(`[DB Fallback] Failed to get testimonial by ID "${id}":`, error);
+      return null;
+    }
+  });
+
+// 23. Create Testimonial
+export const createTestimonialAction = createServerFn()
+  .inputValidator((data: any) => data)
+  .handler(async ({ data }) => {
+    await verifyAdminAuth();
+    const { db } = await connectToDatabase();
+    await seedTestimonialsIfEmpty(db);
+    const now = new Date();
+    const maxOrder = await db
+      .collection("testimonials")
+      .find()
+      .sort({ order: -1 })
+      .limit(1)
+      .toArray();
+    const nextOrder = maxOrder.length > 0 ? (maxOrder[0].order ?? 0) + 1 : 1;
+    const newDoc = {
+      quote: String(data.quote || "").trim(),
+      name: String(data.name || "").trim(),
+      role: String(data.role || "").trim(),
+      company: String(data.company || "").trim(),
+      initials: String(data.initials || "").trim(),
+      accent: String(data.accent || "var(--brand-blue)").trim(),
+      project: String(data.project || "").trim(),
+      avatar: String(data.avatar || "").trim(),
+      active: data.active !== false,
+      order: Number(data.order) || nextOrder,
+      createdAt: now,
+      updatedAt: now,
+    };
+    if (!newDoc.quote) throw new Error("Quote is required.");
+    if (!newDoc.name) throw new Error("Person name is required.");
+    const result = await db.collection("testimonials").insertOne(newDoc);
+    return { success: true, id: result.insertedId.toString() };
+  });
+
+// 24. Update Testimonial
+export const updateTestimonialAction = createServerFn()
+  .inputValidator((data: any) => data as { id: string; testimonial: any })
+  .handler(async ({ data }) => {
+    await verifyAdminAuth();
+    const { id, testimonial } = data;
+    if (!id) throw new Error("Testimonial ID is required.");
+    const { db } = await connectToDatabase();
+    const ObjectId = await getObjectIdClass();
+    const now = new Date();
+    const { _id, createdAt, ...rest } = testimonial;
+    const result = await db.collection("testimonials").updateOne(
+      { _id: new ObjectId(id) },
+      {
+        $set: {
+          quote: String(rest.quote || "").trim(),
+          name: String(rest.name || "").trim(),
+          role: String(rest.role || "").trim(),
+          company: String(rest.company || "").trim(),
+          initials: String(rest.initials || "").trim(),
+          accent: String(rest.accent || "var(--brand-blue)").trim(),
+          project: String(rest.project || "").trim(),
+          avatar: String(rest.avatar || "").trim(),
+          active: rest.active !== false,
+          order: Number(rest.order) || 0,
+          updatedAt: now,
+        },
+      }
+    );
+    if (result.matchedCount === 0) throw new Error("Testimonial not found.");
+    return { success: true };
+  });
+
+// 25. Delete Testimonial
+export const deleteTestimonialAction = createServerFn()
+  .inputValidator((id: string) => id)
+  .handler(async ({ data: id }) => {
+    await verifyAdminAuth();
+    if (!id) throw new Error("Testimonial ID is required.");
+    const { db } = await connectToDatabase();
+    const ObjectId = await getObjectIdClass();
+    const result = await db.collection("testimonials").deleteOne({ _id: new ObjectId(id) });
+    if (result.deletedCount === 0) throw new Error("Testimonial not found.");
+    return { success: true };
+  });

@@ -30,7 +30,6 @@ const CONTACT_NUMBERS = [
     href: "tel:+917385455380",
     color: "var(--brand-green)",
   },
-
 ] as const;
 
 const OFFICE_LOCATIONS = [
@@ -41,6 +40,11 @@ const OFFICE_LOCATIONS = [
     label: "Head Office",
     address:
       "603, White Square, Hinjewadi-Wakad Road, Near Wakad Bridge, Phase 1, Hinjawadi, Pune, Maharashtra 411057",
+    phones: [
+      { number: "+91 99701 11283", href: "tel:+919970111283" },
+      { number: "+91 73854 55380", href: "tel:+917385455380" },
+    ],
+    email: "contact@puretechnology.in",
   },
   {
     city: "Dubai",
@@ -49,6 +53,8 @@ const OFFICE_LOCATIONS = [
     label: "Middle East Office",
     address:
       "PURE TECHNOLOGY - FZE, Premises Number: Office-C1-1F-SF5944, Ajman Free Zone C1 Building, Business District: Ajman Free Zone, Makani No. 4442612247",
+    phones: [{ number: "+971 56 380 7343", href: "tel:+971563807343" }],
+    email: "contact.dubai@puretechnology.in",
   },
   {
     city: "Weston, Florida",
@@ -56,6 +62,8 @@ const OFFICE_LOCATIONS = [
     flag: "usa",
     label: "USA Office",
     address: "286 Racquet Club Road, Apt 202, Weston, Florida 33326",
+    phones: [{ number: "+1 954 648 8162", href: "tel:+19546488162" }],
+    email: "contact.usa@puretechnology.in",
   },
 ] as const;
 
@@ -102,8 +110,7 @@ function Contact() {
         eyebrow="Contact"
         title={
           <>
-            Let's Build Something{" "}
-            <span className="text-gradient-brand">Great Together.</span>
+            Let's Build Something <span className="text-gradient-brand">Great Together.</span>
           </>
         }
         description="Tell us about your project, your team, or the challenge you're trying to solve. We'll get back to you within 24 hours — with a real response, not an automated reply."
@@ -140,6 +147,25 @@ function Contact() {
                 </div>
                 <div className="mt-4 text-sm text-muted-foreground leading-relaxed">
                   {office.address}
+                </div>
+                <div className="mt-5 space-y-3 border-t border-border pt-4 text-sm">
+                  {office.phones.map((phone) => (
+                    <a
+                      key={phone.number}
+                      href={phone.href}
+                      className="flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground"
+                    >
+                      <Phone className="h-4 w-4 shrink-0 text-primary" />
+                      <span>{phone.number}</span>
+                    </a>
+                  ))}
+                  <a
+                    href={`mailto:${office.email}`}
+                    className="flex items-center gap-2 text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    <Mail className="h-4 w-4 shrink-0 text-primary" />
+                    <span className="break-all">{office.email}</span>
+                  </a>
                 </div>
               </div>
             ))}
@@ -231,12 +257,9 @@ function ContactForm() {
         </span>
         <h2 className="text-2xl font-display font-bold">Thanks — we've got it.</h2>
         <p className="text-muted-foreground max-w-md">
-          A senior member of our team will get back to you within 24 hours, usually
-          faster. In the meantime, feel free to write to us at{" "}
-          <a
-            className="text-foreground underline"
-            href={`mailto:${CONTACT_EMAIL}`}
-          >
+          A senior member of our team will get back to you within 24 hours, usually faster. In the
+          meantime, feel free to write to us at{" "}
+          <a className="text-foreground underline" href={`mailto:${CONTACT_EMAIL}`}>
             {CONTACT_EMAIL}
           </a>
           .
@@ -315,8 +338,8 @@ function ContactForm() {
       </button>
       {error && <p className="text-sm text-destructive">{error}</p>}
       <p className="text-xs text-muted-foreground">
-        We respond to every enquiry within 24 hours. By submitting, you agree to
-        be contacted regarding your message.
+        We respond to every enquiry within 24 hours. By submitting, you agree to be contacted
+        regarding your message.
       </p>
     </form>
   );
@@ -350,13 +373,7 @@ function Field({
   );
 }
 
-function ContactIcon({
-  color,
-  children,
-}: {
-  color: string;
-  children: ReactNode;
-}) {
+function ContactIcon({ color, children }: { color: string; children: ReactNode }) {
   return (
     <span
       className="grid h-9 w-9 shrink-0 place-items-center rounded-xl text-white"
@@ -410,9 +427,8 @@ function ContactSidebar() {
       <div className="rounded-3xl border border-border bg-surface-muted/70 p-6 sm:p-7 space-y-3">
         <h3 className="font-display font-semibold text-lg">Working hours</h3>
         <p className="text-sm text-muted-foreground leading-relaxed">
-          Mon–Sat · 09:30 to 18:30 IST. We support client teams across India,
-          the Middle East, Europe, and North America with flexible overlap hours
-          on request.
+          Mon–Sat · 09:30 to 18:30 IST. We support client teams across India, the Middle East,
+          Europe, and North America with flexible overlap hours on request.
         </p>
       </div>
     </aside>
