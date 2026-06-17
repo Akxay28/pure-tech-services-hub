@@ -37,6 +37,10 @@ import {
   Compass,
   Heart,
   Gift,
+  Eye,
+  ClipboardCheck,
+  Leaf,
+  Activity,
   type LucideIcon,
 } from "lucide-react";
 import logo from "@/assets/pure-tech-logo.png";
@@ -197,6 +201,45 @@ const serviceItems: Record<TabKey, ServiceItem[]> = {
   ],
 };
 
+const solutionItems: ServiceItem[] = [
+  {
+    title: "AI Visual Inspection",
+    subtitle: "Computer vision for line quality and audit evidence",
+    icon: Eye,
+    to: "/solutions/ai-visual-inspection",
+  },
+  {
+    title: "Mobile AI Inspection",
+    subtitle: "Guided field checks with offline capture",
+    icon: ClipboardCheck,
+    to: "/solutions/mobile-ai-inspection",
+  },
+  {
+    title: "Workplace Safety",
+    subtitle: "AI monitoring for PPE, zones, and hazards",
+    icon: ShieldCheck,
+    to: "/solutions/workplace-safety",
+  },
+  {
+    title: "AI People Counting",
+    subtitle: "Occupancy, flow, and capacity intelligence",
+    icon: Users,
+    to: "/solutions/ai-people-counting",
+  },
+  {
+    title: "Operational Sustainability",
+    subtitle: "Energy, waste, and production data in one view",
+    icon: Leaf,
+    to: "/solutions/operational-sustainability",
+  },
+  {
+    title: "Predictive Maintenance",
+    subtitle: "Detect asset risk before downtime starts",
+    icon: Activity,
+    to: "/solutions/predictive-maintenance",
+  },
+];
+
 // ── Company mega menu ────────────────────────────────────────
 type CompanyTabKey = "about" | "careers" | "connect";
 type MegaMenuItem = { title: string; subtitle: string; icon: LucideIcon; to: string };
@@ -215,6 +258,12 @@ const companyItems: Record<"about" | "careers", MegaMenuItem[]> = {
       subtitle: "Outcomes from recent engagements.",
       icon: Layers,
       to: "/case-studies",
+    },
+    {
+      title: "Blog",
+      subtitle: "Insights, updates, and ideas from our team.",
+      icon: PenLine,
+      to: "/blog",
     },
     // { title: "Our Services", subtitle: "Explore the full service catalogue.", icon: Sparkles, to: "/services" },
     {
@@ -415,12 +464,16 @@ const hireItems: Record<HireTabKey, HireItem[]> = {
   ],
 };
 
-type NavItem = { label: string; to?: string; type: "mega" | "simple" | "hire" | "company" | "link" };
+type NavItem = {
+  label: string;
+  to?: string;
+  type: "mega" | "solutions" | "simple" | "hire" | "company" | "link";
+};
 const nav: NavItem[] = [
   { label: "Services", to: "/services", type: "mega" },
+  { label: "Solutions", to: "/solutions", type: "solutions" },
   { label: "Hire Developers", type: "hire" },
   { label: "Company", type: "company" },
-  { label: "Blog", to: "/blog", type: "link" },
 ];
 
 export function Header() {
@@ -567,6 +620,8 @@ export function Header() {
               <div className="mx-auto max-w-7xl">
                 {activeMenu === "Services" ? (
                   <ServicesMega activeTab={activeTab} setActiveTab={setActiveTab} />
+                ) : activeMenu === "Solutions" ? (
+                  <SolutionsMega />
                 ) : activeMenu === "Hire Developers" ? (
                   <HireDevelopersMega activeTab={activeHireTab} setActiveTab={setActiveHireTab} />
                 ) : activeMenu === "Company" ? (
@@ -602,6 +657,7 @@ export function Header() {
           >
             <div className="mx-auto max-w-7xl px-5 py-5 space-y-2 max-h-[80vh] overflow-y-auto">
               <MobileAccordion title="Services" items={serviceItems.team.concat(serviceItems.ai)} />
+              <MobileAccordion title="Solutions" items={solutionItems} />
               <MobileAccordion
                 title="Hire Developers"
                 items={[...hireItems.ai, ...hireItems.vibe, ...hireItems.role]}
@@ -610,12 +666,6 @@ export function Header() {
                 title="Company"
                 items={[...companyItems.about, ...companyItems.careers]}
               />
-              <Link
-                to="/blog"
-                className="block w-full px-4 py-3 text-sm font-semibold text-[color:var(--brand-purple)] rounded-2xl border border-border/60 hover:bg-[color:var(--brand-pink-soft)]/20 transition-colors"
-              >
-                Blog
-              </Link>
               <div className="rounded-2xl border border-border/60 overflow-hidden">
                 <div className="px-4 py-3 text-sm font-semibold text-[color:var(--brand-purple)]">
                   Connect with our team
@@ -741,6 +791,68 @@ function ServicesMega({
               ))}
             </motion.div>
           </AnimatePresence>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SolutionsMega() {
+  return (
+    <div className="rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(46,11,125,0.25)] overflow-hidden">
+      <div className="grid grid-cols-12 gap-0">
+        <div className="col-span-3 p-7 border-r border-border/60 bg-[color:var(--brand-pink-soft)]/30">
+          <h3 className="text-xl font-bold text-[color:var(--brand-purple)]">Solutions</h3>
+          <p className="mt-2 text-sm leading-relaxed text-[color:var(--brand-purple)]/70">
+            Discover our industrial AI solution catalogue for safer, smarter, measurable
+            operations.
+          </p>
+          <div className="mt-5 overflow-hidden rounded-2xl shadow-soft">
+            <img
+              src={megaVisual}
+              alt="Pure Technology solutions"
+              loading="lazy"
+              width={1024}
+              height={1024}
+              className="h-44 w-full object-cover"
+            />
+          </div>
+        </div>
+
+        <div className="col-span-3 p-5 border-r border-border/60 space-y-2">
+          <Link
+            to="/solutions"
+            className="group flex w-full items-center gap-3 rounded-2xl bg-[color:var(--brand-pink-soft)] px-4 py-3 text-left text-[15px] font-semibold text-[color:var(--brand-purple)] shadow-[0_14px_32px_-16px_rgba(255,77,141,0.5)] transition-all duration-300 hover:-translate-y-0.5"
+          >
+            <span className="grid h-9 w-9 place-items-center rounded-xl bg-white text-[color:var(--brand-pink)]">
+              <Brain className="h-4 w-4" />
+            </span>
+            Industrial AI Solutions
+          </Link>
+        </div>
+
+        <div className="col-span-6 p-6">
+          <div className="grid grid-cols-2 gap-x-8 gap-y-7">
+            {solutionItems.map(({ title, subtitle, icon: Icon, to }) => (
+              <Link
+                key={title}
+                to={to as never}
+                className="group flex items-start gap-3 rounded-2xl p-3 transition-all duration-300 hover:-translate-y-0.5 hover:bg-[color:var(--brand-pink-soft)]/35"
+              >
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-[color:var(--brand-pink-soft)] text-[color:var(--brand-pink)] transition-transform duration-300 group-hover:scale-105">
+                  <Icon className="h-5 w-5" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[14.5px] font-semibold leading-tight text-[color:var(--brand-purple)]">
+                    {title}
+                  </span>
+                  <span className="mt-1 block text-xs leading-relaxed text-[color:var(--brand-purple)]/65">
+                    {subtitle}
+                  </span>
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>

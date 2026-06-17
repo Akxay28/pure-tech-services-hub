@@ -16,6 +16,10 @@ import {
   Brain,
   Bot,
   Plug,
+  Eye,
+  ClipboardCheck,
+  Leaf,
+  Activity,
   type LucideIcon,
 } from "lucide-react";
 import type { SubServicePageProps } from "@/components/site/SubServicePage";
@@ -673,6 +677,306 @@ export const subServices: Record<string, Entry> = {
     ],
   },
 
+  "ai-visual-inspection": {
+    eyebrow: "AI Visual Inspection",
+    title: "Computer vision that catches defects before customers do.",
+    lede: "AI visual inspection systems for production lines, packaging, labels, components, and safety checks - built to run in real plant conditions with traceable evidence for every exception.",
+    accent: BRAND.blue,
+    Icon: Eye,
+    heroStats: [
+      { value: "24/7", label: "Inspection coverage" },
+      { value: "4-8 wks", label: "Pilot window" },
+      { value: "95%+", label: "Target accuracy for clear defects" },
+      { value: "Edge-ready", label: "Camera inference" },
+    ],
+    whoFor: [
+      "Manufacturers losing money to escapes, rework, scrap, or inconsistent manual checks.",
+      "Quality teams that need image evidence by shift, batch, serial number, or line.",
+      "Plants with high-volume repeatable inspection points where rules are hard to maintain.",
+      "Operations leaders who want to start with existing cameras before buying new hardware.",
+    ],
+    capabilities: [
+      { title: "Defect detection", body: "Surface scratches, dents, missing parts, wrong orientation, contamination, label errors, and packaging issues." },
+      { title: "Line-speed inference", body: "Edge or on-prem inference designed around cycle time, lighting, camera angle, and operator review flow." },
+      { title: "Model training workflow", body: "Dataset capture, annotation, acceptance criteria, false-reject tuning, and retraining loops as the line changes." },
+      { title: "Evidence capture", body: "Store the image, timestamp, batch, SKU, and decision so audits stop depending on memory." },
+      { title: "Human review queue", body: "Route uncertain cases to QA with simple pass, fail, and needs-review decisions." },
+      { title: "MES and ERP handoff", body: "Push inspection status, holds, rework instructions, and quality events into the systems your plant already uses." },
+    ],
+    outcomes: [
+      { metric: "42%", label: "Fewer escapes", context: "A repeatable camera inspection point helped isolate label and surface defects before dispatch." },
+      { metric: "28%", label: "Lower rework load", context: "Review queues were tuned to reduce false rejects while keeping true defects visible." },
+      { metric: "100%", label: "Traceable evidence", context: "Every flagged part carried image proof, timestamp, SKU, and operator decision." },
+    ],
+    process: [
+      { title: "Inspect the inspection", body: "We study the manual check, defect library, lighting, camera feasibility, and baseline escape rate." },
+      { title: "Pilot on one line", body: "A narrow pilot proves accuracy, cycle-time fit, operator workflow, and ROI before expanding." },
+      { title: "Integrate decisions", body: "Pass/fail/review events move into MES, ERP, ticketing, or quality dashboards." },
+      { title: "Scale and retrain", body: "We expand to more SKUs, lines, and defect types with ongoing model governance." },
+    ],
+    tech: ["OpenCV", "YOLO", "Detectron", "RTSP", "ONVIF", "NVIDIA Jetson", "Azure IoT", "AWS IoT"],
+    faqs: [
+      { q: "Do we need historical defect images?", a: "Not always. We can start with a small labelled set and collect more examples during the pilot, especially for repeatable visual defects." },
+      { q: "Can this use our current cameras?", a: "Often yes, if resolution, lighting, and viewing angle are good enough. We assess that before recommending any new hardware." },
+      { q: "How do you prevent too many false rejects?", a: "We tune thresholds against production data and add a review queue so operators can correct uncertain cases without stopping the line." },
+    ],
+    siblingLinks: [
+      { to: "/services/mobile-ai-inspection", label: "Mobile AI Inspection" },
+      { to: "/services/predictive-maintenance", label: "Predictive Maintenance" },
+      { to: "/services/ai-integration", label: "AI Integration" },
+    ],
+  },
+
+  "mobile-ai-inspection": {
+    eyebrow: "Mobile AI Inspection",
+    title: "Inspection workflows your field teams can carry.",
+    lede: "Mobile-first AI inspection apps for field engineers, QA teams, and plant supervisors who need guided capture, instant checks, offline resilience, and clean reporting from the shop floor or site.",
+    accent: BRAND.green,
+    Icon: Smartphone,
+    heroStats: [
+      { value: "Offline", label: "Field-ready capture" },
+      { value: "GPS", label: "Location evidence" },
+      { value: "1 app", label: "Photos, notes, tasks" },
+      { value: "API", label: "Work-order sync" },
+    ],
+    whoFor: [
+      "Inspection teams using WhatsApp photos, spreadsheets, and late-night report compilation.",
+      "Facilities and utilities teams that need consistent site checks across many locations.",
+      "Manufacturing teams that want supervisors to capture defects without ML expertise.",
+      "Service organizations needing structured evidence before closing a ticket or work order.",
+    ],
+    capabilities: [
+      { title: "Guided inspection forms", body: "Step-by-step checks with required photos, notes, severity, asset IDs, and completion rules." },
+      { title: "On-device assistance", body: "Blur checks, missing-photo prompts, basic visual classification, and field validation while the inspector is still on site." },
+      { title: "Offline sync", body: "Capture inspections without network access and sync safely once connectivity returns." },
+      { title: "Issue routing", body: "Turn failed checks into tickets, work orders, or escalation tasks with owners and SLA clocks." },
+      { title: "Geo and time evidence", body: "Attach GPS, timestamp, inspector identity, and asset context to every submission." },
+      { title: "Supervisor dashboards", body: "Track completion, defect trends, open risks, and repeated failure points by site or asset." },
+    ],
+    outcomes: [
+      { metric: "55%", label: "Faster reporting", context: "Automated inspection packs replaced manual report assembly after each site visit." },
+      { metric: "3x", label: "More complete evidence", context: "Mandatory capture rules improved photo and note quality across distributed teams." },
+      { metric: "<24 hrs", label: "Issue routing", context: "Critical findings moved to accountable teams the same day instead of waiting for weekly reviews." },
+    ],
+    process: [
+      { title: "Map current checks", body: "We convert existing checklists, reports, and escalation rules into a usable mobile workflow." },
+      { title: "Build the pilot app", body: "A small field group tests capture quality, offline sync, and supervisor review." },
+      { title: "Connect systems", body: "Findings sync with CMMS, ERP, CRM, ticketing, or custom operations portals." },
+      { title: "Roll out by role", body: "We tune permissions, dashboards, and training for inspectors, supervisors, and managers." },
+    ],
+    tech: ["React Native", "Flutter", "PWA", "OpenCV", "SQLite", "CMMS APIs", "Power BI", "Firebase"],
+    faqs: [
+      { q: "Can inspectors use it without internet?", a: "Yes. We design offline-first capture for sites where network quality is unreliable." },
+      { q: "Can the app generate reports automatically?", a: "Yes. Reports can be generated from structured findings, photos, timestamps, and approval history." },
+      { q: "Is this different from AI visual inspection?", a: "Yes. AI visual inspection is usually fixed-camera line automation; mobile AI inspection is a field workflow carried by people." },
+    ],
+    siblingLinks: [
+      { to: "/services/ai-visual-inspection", label: "AI Visual Inspection" },
+      { to: "/services/workplace-safety", label: "Workplace Safety" },
+      { to: "/services/web-application-development", label: "Web Apps" },
+    ],
+  },
+
+  "workplace-safety": {
+    eyebrow: "Workplace Safety",
+    title: "AI safety monitoring for high-risk work areas.",
+    lede: "Computer vision and sensor-backed workplace safety systems that detect unsafe conditions, create evidence, and route alerts before near-misses become incidents.",
+    accent: BRAND.orange,
+    Icon: ShieldCheck,
+    heroStats: [
+      { value: "Real-time", label: "Hazard alerts" },
+      { value: "PPE", label: "Compliance checks" },
+      { value: "Zones", label: "Breach detection" },
+      { value: "Audit", label: "Evidence logs" },
+    ],
+    whoFor: [
+      "Factories, warehouses, and yards where PPE, restricted zones, and vehicle movement create daily risk.",
+      "EHS teams that need proof of interventions, not just monthly incident summaries.",
+      "Operations teams balancing safety enforcement with production continuity.",
+      "Enterprises that want alerts inside existing dashboards, not another isolated screen.",
+    ],
+    capabilities: [
+      { title: "PPE detection", body: "Helmet, vest, gloves, mask, eyewear, and other role-specific compliance checks from camera feeds." },
+      { title: "Zone and proximity alerts", body: "Detect restricted-area breaches, forklift-pedestrian proximity, unsafe crowding, and blocked exits." },
+      { title: "Incident evidence", body: "Save snapshot, clip, timestamp, location, and event category for follow-up and audits." },
+      { title: "Escalation workflows", body: "Notify supervisors, open safety tickets, and track closure of repeated issues." },
+      { title: "Safety analytics", body: "Trend hot spots by shift, site, contractor, hazard type, and recurrence." },
+      { title: "Privacy-aware design", body: "Role-based access, retention controls, masking options, and clear policies around safety data." },
+    ],
+    outcomes: [
+      { metric: "35%", label: "Fewer repeat violations", context: "Frequent zone and PPE events became visible enough for targeted coaching." },
+      { metric: "Minutes", label: "Alert latency", context: "Supervisors received live alerts instead of waiting for manual walk-through reports." },
+      { metric: "Audit-ready", label: "Safety records", context: "Each event included visual evidence, response owner, and closure status." },
+    ],
+    process: [
+      { title: "Risk mapping", body: "We map hazards, camera positions, alert paths, privacy rules, and acceptable intervention levels." },
+      { title: "Pilot critical zones", body: "Start with a narrow safety use case such as PPE, forklifts, or restricted areas." },
+      { title: "Operationalize alerts", body: "Route events to the right team with severity, owner, and escalation logic." },
+      { title: "Review and improve", body: "Weekly event reviews tune thresholds and turn recurring signals into prevention work." },
+    ],
+    tech: ["Computer Vision", "RTSP", "ONVIF", "Edge AI", "MQTT", "Power BI", "ServiceNow", "Azure IoT"],
+    faqs: [
+      { q: "Can this work with existing CCTV?", a: "Usually yes if the view covers the safety rule clearly. We validate camera angle and lighting during discovery." },
+      { q: "Do alerts overwhelm supervisors?", a: "They can if designed badly. We use severity rules, cooldowns, and escalation paths so alerts stay actionable." },
+      { q: "Can we anonymize people?", a: "Yes. We can use masking, restricted access, and retention policies depending on your compliance requirements." },
+    ],
+    siblingLinks: [
+      { to: "/services/ai-people-counting", label: "AI People Counting" },
+      { to: "/services/mobile-ai-inspection", label: "Mobile AI Inspection" },
+      { to: "/services/cybersecurity", label: "Cybersecurity" },
+    ],
+  },
+
+  "ai-people-counting": {
+    eyebrow: "AI People Counting",
+    title: "Occupancy intelligence without guesswork.",
+    lede: "AI people-counting systems for factories, campuses, retail spaces, warehouses, and public facilities where real-time occupancy, flow, and zone utilization need to guide decisions.",
+    accent: BRAND.purple,
+    Icon: Users,
+    heroStats: [
+      { value: "Live", label: "Occupancy view" },
+      { value: "Zones", label: "Area-level insight" },
+      { value: "Heatmaps", label: "Movement trends" },
+      { value: "Privacy", label: "Configurable controls" },
+    ],
+    whoFor: [
+      "Facility teams managing crowding, queues, space utilization, and emergency readiness.",
+      "Retail and venue operators who need footfall trends without manual counters.",
+      "Manufacturers monitoring restricted-area presence and shift-level movement patterns.",
+      "Workplace leaders planning space, energy, and staffing based on real usage.",
+    ],
+    capabilities: [
+      { title: "Entry and exit counting", body: "Count movement across doors, gates, corridors, and lanes with time-window analytics." },
+      { title: "Zone occupancy", body: "Understand how many people are in critical zones and trigger alerts when thresholds are crossed." },
+      { title: "Queue and dwell analytics", body: "Measure waiting time, congestion, and repeated bottlenecks across operational areas." },
+      { title: "Dashboards and reports", body: "Show occupancy, utilization, peak hours, and exception trends for managers." },
+      { title: "Safety workflows", body: "Use people counts to support evacuation readiness, capacity limits, and restricted-area controls." },
+      { title: "System integration", body: "Feed occupancy data to BMS, dashboards, staffing tools, or custom applications." },
+    ],
+    outcomes: [
+      { metric: "18%", label: "Space optimization", context: "Occupancy data exposed underused areas and peak congestion windows." },
+      { metric: "Live", label: "Capacity alerts", context: "Managers received threshold alerts before areas became unsafe or overcrowded." },
+      { metric: "Daily", label: "Footfall reports", context: "Manual counting was replaced with consistent trend reporting by zone and hour." },
+    ],
+    process: [
+      { title: "Define zones", body: "Identify entrances, counting lines, occupancy thresholds, and privacy constraints." },
+      { title: "Validate accuracy", body: "Run a pilot against manual counts and tune for angle, lighting, and crowd density." },
+      { title: "Connect alerts", body: "Integrate thresholds into dashboards, notifications, or facility systems." },
+      { title: "Use the trends", body: "Turn utilization data into staffing, layout, safety, and energy decisions." },
+    ],
+    tech: ["Computer Vision", "Edge AI", "RTSP", "ONVIF", "MQTT", "Power BI", "BMS", "React"],
+    faqs: [
+      { q: "Is this facial recognition?", a: "No. People counting can be designed to count bodies or movement without identifying individuals." },
+      { q: "How accurate is it in crowded areas?", a: "Accuracy depends on camera placement and density. We validate against manual counts before rollout." },
+      { q: "Can it trigger safety alerts?", a: "Yes. Thresholds can trigger supervisor notifications, dashboard warnings, or workflow tickets." },
+    ],
+    siblingLinks: [
+      { to: "/services/workplace-safety", label: "Workplace Safety" },
+      { to: "/services/operational-sustainability", label: "Operational Sustainability" },
+      { to: "/services/ai-integration", label: "AI Integration" },
+    ],
+  },
+
+  "operational-sustainability": {
+    eyebrow: "Operational Sustainability",
+    title: "Sustainability metrics tied to operational decisions.",
+    lede: "Operational sustainability platforms that combine energy, production, asset, and facility data so teams can reduce waste without running a separate reporting exercise.",
+    accent: BRAND.green,
+    Icon: Leaf,
+    heroStats: [
+      { value: "Energy", label: "Usage intelligence" },
+      { value: "Carbon", label: "Operational footprint" },
+      { value: "OEE", label: "Production context" },
+      { value: "Dashboards", label: "Decision-ready" },
+    ],
+    whoFor: [
+      "Manufacturers trying to connect sustainability targets with daily production realities.",
+      "Facilities teams managing energy, water, compressed air, HVAC, and equipment utilization.",
+      "Leadership teams that need ESG reporting backed by operational data, not spreadsheet estimates.",
+      "Plants where downtime, scrap, rework, and energy waste are linked but reported separately.",
+    ],
+    capabilities: [
+      { title: "Energy and utility monitoring", body: "Track electricity, water, compressed air, fuel, HVAC, and process utilities by area or asset." },
+      { title: "Production-normalized KPIs", body: "Compare energy and emissions against output, shift, line, SKU, or operating mode." },
+      { title: "Waste and scrap insight", body: "Connect quality losses, rework, and downtime with resource waste and cost." },
+      { title: "Anomaly detection", body: "Flag abnormal consumption, idle running, leaks, and drift from expected operating profiles." },
+      { title: "Executive reporting", body: "Create plant, site, and portfolio-level dashboards for sustainability and operations leaders." },
+      { title: "Action workflows", body: "Route anomalies to maintenance, facilities, or operations teams with owner and closure tracking." },
+    ],
+    outcomes: [
+      { metric: "12%", label: "Energy reduction target", context: "Pilot dashboards surfaced idle loads and abnormal consumption windows." },
+      { metric: "1 view", label: "Ops and ESG data", context: "Production, energy, and downtime metrics were combined into a single operating picture." },
+      { metric: "Weekly", label: "Action reviews", context: "Sustainability became a recurring operational review instead of a quarterly report." },
+    ],
+    process: [
+      { title: "Baseline", body: "Map meters, assets, production KPIs, reporting needs, and current sustainability commitments." },
+      { title: "Instrument", body: "Connect available sensor, ERP, MES, BMS, and manual data sources." },
+      { title: "Analyze", body: "Build normalized KPIs, alerts, trend views, and action lists." },
+      { title: "Operate", body: "Run weekly improvement loops with measurable energy, waste, and downtime outcomes." },
+    ],
+    tech: ["IoT", "Power BI", "MQTT", "OPC UA", "BACnet", "Azure IoT", "AWS IoT", "Snowflake"],
+    faqs: [
+      { q: "Is this only for ESG reporting?", a: "No. The point is to connect sustainability to live operations so teams can act on waste, not only report it." },
+      { q: "Can it work without perfect metering?", a: "Yes. We start with available meters and systems, then identify where additional instrumentation has clear ROI." },
+      { q: "Can you normalize by production volume?", a: "Yes. Energy or carbon per unit, line, SKU, shift, or operating state is usually more useful than raw totals." },
+    ],
+    siblingLinks: [
+      { to: "/services/predictive-maintenance", label: "Predictive Maintenance" },
+      { to: "/services/ai-people-counting", label: "AI People Counting" },
+      { to: "/services/data-engineering", label: "Data Engineering" },
+    ],
+  },
+
+  "predictive-maintenance": {
+    eyebrow: "Predictive Maintenance",
+    title: "Maintenance signals before breakdowns interrupt production.",
+    lede: "Predictive maintenance systems that combine sensor data, machine history, inspections, and work-order context to detect risk early and move teams from reactive repair to planned intervention.",
+    accent: BRAND.red,
+    Icon: Activity,
+    heroStats: [
+      { value: "30-60 days", label: "Signal validation" },
+      { value: "RUL", label: "Remaining useful life" },
+      { value: "CMMS", label: "Work-order ready" },
+      { value: "24/7", label: "Condition monitoring" },
+    ],
+    whoFor: [
+      "Plants with critical motors, pumps, compressors, conveyors, boilers, presses, or CNC equipment.",
+      "Maintenance teams spending too much time on emergency repair and calendar-based over-maintenance.",
+      "Operations leaders who need risk-ranked actions instead of raw sensor dashboards.",
+      "Enterprises connecting maintenance, production, and reliability teams through one evidence trail.",
+    ],
+    capabilities: [
+      { title: "Condition monitoring", body: "Ingest vibration, temperature, current, pressure, runtime, alarms, and inspection history." },
+      { title: "Failure-risk models", body: "Detect anomalies, forecast deterioration, estimate remaining useful life, and rank intervention urgency." },
+      { title: "Work-order automation", body: "Create or recommend CMMS/EAM work orders with probable cause, evidence, and priority." },
+      { title: "Asset health dashboards", body: "Show risk by site, line, asset class, component, and failure mode." },
+      { title: "Maintenance optimization", body: "Balance planned work, spare availability, production windows, and risk." },
+      { title: "Reliability analytics", body: "Track MTBF, MTTR, recurring failure patterns, and model performance over time." },
+    ],
+    outcomes: [
+      { metric: "25%", label: "Less unplanned downtime", context: "Risk-ranked alerts helped maintenance intervene before repeated breakdown patterns." },
+      { metric: "19%", label: "Lower maintenance waste", context: "Calendar tasks were adjusted using condition signals and asset risk." },
+      { metric: "CMMS", label: "Closed-loop action", context: "Predictions generated traceable tasks instead of stopping at dashboard alerts." },
+    ],
+    process: [
+      { title: "Pick critical assets", body: "Start with equipment where downtime has a clear cost and sensor data is available or easy to add." },
+      { title: "Build the baseline", body: "Connect historian, PLC, SCADA, CMMS, inspections, and maintenance records." },
+      { title: "Validate signals", body: "Tune thresholds and models against known events, operator feedback, and maintenance history." },
+      { title: "Close the loop", body: "Route predictions into work orders, review outcomes, and improve models over time." },
+    ],
+    tech: ["OPC UA", "Modbus", "MQTT", "SCADA", "OSIsoft PI", "SAP PM", "Maximo", "Azure IoT"],
+    faqs: [
+      { q: "Which assets should we start with?", a: "Start with assets where downtime is expensive, failure modes are repeatable, and sensor or maintenance history exists." },
+      { q: "Is this the same as APM?", a: "No. Predictive maintenance is focused on failure prediction and maintenance action. APM is broader; we are not creating a separate APM page per your request." },
+      { q: "Can predictions create work orders?", a: "Yes. We can integrate with CMMS/EAM systems so risk signals become recommended or auto-created work orders." },
+    ],
+    siblingLinks: [
+      { to: "/services/operational-sustainability", label: "Operational Sustainability" },
+      { to: "/services/ai-visual-inspection", label: "AI Visual Inspection" },
+      { to: "/services/cloud-infrastructure", label: "Cloud & Infrastructure" },
+    ],
+  },
+
   "custom-ai-development": {
     eyebrow: "Custom AI Development",
     title: "Custom AI that fits your data — not the demo.",
@@ -925,6 +1229,19 @@ export const subServices: Record<string, Entry> = {
 };
 
 export const subServiceSlugs = Object.keys(subServices);
+
+export const solutionSlugs = [
+  "ai-visual-inspection",
+  "mobile-ai-inspection",
+  "workplace-safety",
+  "ai-people-counting",
+  "operational-sustainability",
+  "predictive-maintenance",
+] as const;
+
+export type SolutionSlug = (typeof solutionSlugs)[number];
+
+export const solutionSlugSet = new Set<string>(solutionSlugs);
 
 export const subServiceIcons: Record<string, LucideIcon> = Object.fromEntries(
   Object.entries(subServices).map(([k, v]) => [k, v.Icon]),

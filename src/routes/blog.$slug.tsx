@@ -242,23 +242,123 @@ function extractPlainText(content: string): string {
 // ── Text-to-Speech hook ───────────────────────────────────────────────────────
 type SpeechState = "idle" | "playing" | "paused";
 
+function splitSpeechText(text: string) {
+  const normalized = text.replace(/\s+/g, " ").trim();
+  if (!normalized) return [];
+
+  const sentences = normalized.match(/[^.!?]+[.!?]+|[^.!?]+$/g) ?? [normalized];
+  const chunks: string[] = [];
+  let current = "";
+
+  for (const sentence of sentences) {
+    const trimmed = sentence.trim();
+    if (!trimmed) continue;
+
+    if ((current + " " + trimmed).trim().length > 1800) {
+      if (current) chunks.push(current);
+      current = trimmed;
+    } else {
+      current = (current + " " + trimmed).trim();
+    }
+  }
+
+  if (current) chunks.push(current);
+  return chunks;
+}
+
+function getPreferredVoice() {
+  if (typeof window === "undefined" || !window.speechSynthesis) return null;
+
+  const voices = window.speechSynthesis.getVoices();
+  return (
+    voices.find((voice) => voice.lang?.toLowerCase().startsWith("en") && voice.localService) ??
+    voices.find((voice) => voice.lang?.toLowerCase().startsWith("en")) ??
+    voices[0] ??
+    null
+  );
+}
+
 function useSpeech(text: string) {
   const [state, setState] = useState<SpeechState>("idle");
   const [supported, setSupported] = useState(false);
+  const chunksRef = useRef<string[]>([]);
+  const chunkIndexRef = useRef(0);
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const stateRef = useRef<SpeechState>("idle");
 
   useEffect(() => {
-    setSupported(typeof window !== "undefined" && "speechSynthesis" in window);
-    // Cancel speech when component unmounts or route changes
+    stateRef.current = state;
+  }, [state]);
+
+  useEffect(() => {
+    if (
+      typeof window === "undefined" ||
+      !("speechSynthesis" in window) ||
+      typeof window.SpeechSynthesisUtterance === "undefined"
+    ) {
+      setSupported(false);
+      return;
+    }
+
+    setSupported(true);
+
+    const loadVoices = () => window.speechSynthesis.getVoices();
+    loadVoices();
+    window.speechSynthesis.addEventListener?.("voiceschanged", loadVoices);
+
     return () => {
-      if (typeof window !== "undefined" && window.speechSynthesis) {
-        window.speechSynthesis.cancel();
-      }
+      window.speechSynthesis.removeEventListener?.("voiceschanged", loadVoices);
+      window.speechSynthesis.cancel();
     };
   }, []);
 
+  const speakChunk = useCallback((index: number) => {
+    if (
+      typeof window === "undefined" ||
+      !window.speechSynthesis ||
+      typeof window.SpeechSynthesisUtterance === "undefined"
+    ) {
+      return;
+    }
+
+    const chunk = chunksRef.current[index];
+    if (!chunk) {
+      setState("idle");
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(chunk);
+    const voice = getPreferredVoice();
+    if (voice) utterance.voice = voice;
+    utterance.lang = voice?.lang || "en-US";
+    utterance.rate = 0.95;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+
+    utterance.onstart = () => setState("playing");
+    utterance.onend = () => {
+      if (stateRef.current === "paused") return;
+
+      const nextIndex = index + 1;
+      chunkIndexRef.current = nextIndex;
+
+      if (nextIndex < chunksRef.current.length) {
+        window.setTimeout(() => speakChunk(nextIndex), 60);
+      } else {
+        setState("idle");
+      }
+    };
+    utterance.onerror = () => setState("idle");
+    utterance.onpause = () => setState("paused");
+    utterance.onresume = () => setState("playing");
+
+    utteranceRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
+    setState("playing");
+  }, []);
+
   const speak = useCallback(() => {
-    if (!supported || !text) return;
+    if (!supported || !text || typeof window === "undefined" || !window.speechSynthesis) return;
 
     // Already paused — resume
     if (state === "paused") {
@@ -269,32 +369,22 @@ function useSpeech(text: string) {
 
     // Cancel any previous utterance
     window.speechSynthesis.cancel();
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 0.95;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-
-    utterance.onstart = () => setState("playing");
-    utterance.onend = () => setState("idle");
-    utterance.onerror = () => setState("idle");
-    utterance.onpause = () => setState("paused");
-    utterance.onresume = () => setState("playing");
-
-    utteranceRef.current = utterance;
-    window.speechSynthesis.speak(utterance);
-    setState("playing");
-  }, [supported, state, text]);
+    chunksRef.current = splitSpeechText(text);
+    chunkIndexRef.current = 0;
+    window.setTimeout(() => speakChunk(0), 50);
+  }, [supported, state, text, speakChunk]);
 
   const pause = useCallback(() => {
-    if (!supported) return;
+    if (!supported || typeof window === "undefined" || !window.speechSynthesis) return;
     window.speechSynthesis.pause();
     setState("paused");
   }, [supported]);
 
   const stop = useCallback(() => {
-    if (!supported) return;
+    if (!supported || typeof window === "undefined" || !window.speechSynthesis) return;
     window.speechSynthesis.cancel();
+    chunksRef.current = [];
+    chunkIndexRef.current = 0;
     setState("idle");
   }, [supported]);
 

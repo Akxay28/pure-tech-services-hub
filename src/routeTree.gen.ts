@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TeamRouteImport } from './routes/team'
+import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as MissionVisionRouteImport } from './routes/mission-vision'
@@ -22,10 +23,12 @@ import { Route as AwardsAchievementsRouteImport } from './routes/awards-achievem
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SolutionsIndexRouteImport } from './routes/solutions.index'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as CareersIndexRouteImport } from './routes/careers.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
 import { Route as ServicesWebApplicationDevelopmentRouteImport } from './routes/services.web-application-development'
 import { Route as ServicesSoftwareDevelopmentRouteImport } from './routes/services.software-development'
 import { Route as ServicesProductEngineeringRouteImport } from './routes/services.product-engineering'
@@ -91,6 +94,11 @@ const TeamRoute = TeamRouteImport.update({
   path: '/team',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SolutionsRoute = SolutionsRouteImport.update({
+  id: '/solutions',
+  path: '/solutions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -151,6 +159,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SolutionsIndexRoute = SolutionsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => SolutionsRoute,
+} as any)
 const ServicesIndexRoute = ServicesIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -170,6 +183,11 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AdminRoute,
+} as any)
+const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => SolutionsRoute,
 } as any)
 const ServicesWebApplicationDevelopmentRoute =
   ServicesWebApplicationDevelopmentRouteImport.update({
@@ -497,6 +515,7 @@ export interface FileRoutesByFullPath {
   '/mission-vision': typeof MissionVisionRoute
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/solutions': typeof SolutionsRouteWithChildren
   '/team': typeof TeamRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/new': typeof AdminNewRoute
@@ -546,10 +565,12 @@ export interface FileRoutesByFullPath {
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
+  '/solutions/$slug': typeof SolutionsSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/careers/': typeof CareersIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/solutions/': typeof SolutionsIndexRoute
   '/admin/blogs/new': typeof AdminBlogsNewRoute
   '/admin/careers/new': typeof AdminCareersNewRoute
   '/admin/edit/$id': typeof AdminEditIdRoute
@@ -620,10 +641,12 @@ export interface FileRoutesByTo {
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
+  '/solutions/$slug': typeof SolutionsSlugRoute
   '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
   '/careers': typeof CareersIndexRoute
   '/services': typeof ServicesIndexRoute
+  '/solutions': typeof SolutionsIndexRoute
   '/admin/blogs/new': typeof AdminBlogsNewRoute
   '/admin/careers/new': typeof AdminCareersNewRoute
   '/admin/edit/$id': typeof AdminEditIdRoute
@@ -650,6 +673,7 @@ export interface FileRoutesById {
   '/mission-vision': typeof MissionVisionRoute
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/solutions': typeof SolutionsRouteWithChildren
   '/team': typeof TeamRoute
   '/admin/login': typeof AdminLoginRoute
   '/admin/new': typeof AdminNewRoute
@@ -699,10 +723,12 @@ export interface FileRoutesById {
   '/services/product-engineering': typeof ServicesProductEngineeringRoute
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
+  '/solutions/$slug': typeof SolutionsSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/careers/': typeof CareersIndexRoute
   '/services/': typeof ServicesIndexRoute
+  '/solutions/': typeof SolutionsIndexRoute
   '/admin/blogs/new': typeof AdminBlogsNewRoute
   '/admin/careers/new': typeof AdminCareersNewRoute
   '/admin/edit/$id': typeof AdminEditIdRoute
@@ -730,6 +756,7 @@ export interface FileRouteTypes {
     | '/mission-vision'
     | '/services'
     | '/sitemap.xml'
+    | '/solutions'
     | '/team'
     | '/admin/login'
     | '/admin/new'
@@ -779,10 +806,12 @@ export interface FileRouteTypes {
     | '/services/product-engineering'
     | '/services/software-development'
     | '/services/web-application-development'
+    | '/solutions/$slug'
     | '/admin/'
     | '/blog/'
     | '/careers/'
     | '/services/'
+    | '/solutions/'
     | '/admin/blogs/new'
     | '/admin/careers/new'
     | '/admin/edit/$id'
@@ -853,10 +882,12 @@ export interface FileRouteTypes {
     | '/services/product-engineering'
     | '/services/software-development'
     | '/services/web-application-development'
+    | '/solutions/$slug'
     | '/admin'
     | '/blog'
     | '/careers'
     | '/services'
+    | '/solutions'
     | '/admin/blogs/new'
     | '/admin/careers/new'
     | '/admin/edit/$id'
@@ -882,6 +913,7 @@ export interface FileRouteTypes {
     | '/mission-vision'
     | '/services'
     | '/sitemap.xml'
+    | '/solutions'
     | '/team'
     | '/admin/login'
     | '/admin/new'
@@ -931,10 +963,12 @@ export interface FileRouteTypes {
     | '/services/product-engineering'
     | '/services/software-development'
     | '/services/web-application-development'
+    | '/solutions/$slug'
     | '/admin/'
     | '/blog/'
     | '/careers/'
     | '/services/'
+    | '/solutions/'
     | '/admin/blogs/new'
     | '/admin/careers/new'
     | '/admin/edit/$id'
@@ -961,6 +995,7 @@ export interface RootRouteChildren {
   MissionVisionRoute: typeof MissionVisionRoute
   ServicesRoute: typeof ServicesRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  SolutionsRoute: typeof SolutionsRouteWithChildren
   TeamRoute: typeof TeamRoute
   HireSlugRoute: typeof HireSlugRoute
   HireAiDevelopersRoute: typeof HireAiDevelopersRoute
@@ -993,6 +1028,13 @@ declare module '@tanstack/react-router' {
       path: '/team'
       fullPath: '/team'
       preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/solutions': {
+      id: '/solutions'
+      path: '/solutions'
+      fullPath: '/solutions'
+      preLoaderRoute: typeof SolutionsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -1079,6 +1121,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/solutions/': {
+      id: '/solutions/'
+      path: '/'
+      fullPath: '/solutions/'
+      preLoaderRoute: typeof SolutionsIndexRouteImport
+      parentRoute: typeof SolutionsRoute
+    }
     '/services/': {
       id: '/services/'
       path: '/'
@@ -1106,6 +1155,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/solutions/$slug': {
+      id: '/solutions/$slug'
+      path: '/$slug'
+      fullPath: '/solutions/$slug'
+      preLoaderRoute: typeof SolutionsSlugRouteImport
+      parentRoute: typeof SolutionsRoute
     }
     '/services/web-application-development': {
       id: '/services/web-application-development'
@@ -1651,6 +1707,20 @@ const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
   ServicesRouteChildren,
 )
 
+interface SolutionsRouteChildren {
+  SolutionsSlugRoute: typeof SolutionsSlugRoute
+  SolutionsIndexRoute: typeof SolutionsIndexRoute
+}
+
+const SolutionsRouteChildren: SolutionsRouteChildren = {
+  SolutionsSlugRoute: SolutionsSlugRoute,
+  SolutionsIndexRoute: SolutionsIndexRoute,
+}
+
+const SolutionsRouteWithChildren = SolutionsRoute._addFileChildren(
+  SolutionsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
@@ -1664,6 +1734,7 @@ const rootRouteChildren: RootRouteChildren = {
   MissionVisionRoute: MissionVisionRoute,
   ServicesRoute: ServicesRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  SolutionsRoute: SolutionsRouteWithChildren,
   TeamRoute: TeamRoute,
   HireSlugRoute: HireSlugRoute,
   HireAiDevelopersRoute: HireAiDevelopersRoute,
