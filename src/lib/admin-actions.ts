@@ -1201,6 +1201,142 @@ export const getCareerByIdAction = createServerFn()
     }
   });
 
+type CareerApplicationInput = {
+  careerId?: unknown;
+  fullName?: unknown;
+  email?: unknown;
+  phone?: unknown;
+  currentCompany?: unknown;
+  experience?: unknown;
+  location?: unknown;
+  linkedin?: unknown;
+  portfolio?: unknown;
+  noticePeriod?: unknown;
+  message?: unknown;
+};
+
+type MongoIdLike = {
+  toString(): string;
+};
+
+type CareerApplicationDocument = Record<string, unknown> & {
+  _id: MongoIdLike;
+  careerId?: MongoIdLike | string;
+  createdAt?: Date | string | null;
+  updatedAt?: Date | string | null;
+};
+
+function toClientCareerApplication(item: CareerApplicationDocument) {
+  return {
+    ...item,
+    _id: item._id.toString(),
+    careerId: item.careerId?.toString?.() || String(item.careerId || ""),
+    createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
+    updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
+  };
+}
+
+function cleanText(value: unknown, maxLength = 2000) {
+  return String(value || "")
+    .trim()
+    .slice(0, maxLength);
+}
+
+function assertRequired(value: string, message: string) {
+  if (!value) throw new Error(message);
+  return value;
+}
+
+// 20a. Submit Career Application (public)
+export const submitCareerApplicationAction = createServerFn()
+  .inputValidator((data: unknown) => data as CareerApplicationInput)
+  .handler(async ({ data }) => {
+    const { db } = await connectToDatabase();
+    const ObjectId = await getObjectIdClass();
+    const careerId = cleanText(data.careerId, 64);
+
+    if (!careerId || !ObjectId.isValid(careerId)) {
+      throw new Error("Please select a valid role before applying.");
+    }
+
+    const career = await db.collection("careers").findOne({
+      _id: new ObjectId(careerId),
+      expiresAt: { $gt: new Date() },
+    });
+
+    if (!career) {
+      throw new Error("This role is no longer accepting applications.");
+    }
+
+    const email = cleanText(data.email, 160).toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      throw new Error("Please enter a valid email address.");
+    }
+
+    const now = new Date();
+    const application = {
+      careerId: career._id,
+      roleTitle: cleanText(career.title, 180),
+      team: cleanText(career.team, 120),
+      fullName: assertRequired(cleanText(data.fullName, 140), "Full name is required."),
+      email,
+      phone: assertRequired(cleanText(data.phone, 60), "Phone number is required."),
+      currentCompany: cleanText(data.currentCompany, 140),
+      experience: assertRequired(cleanText(data.experience, 80), "Experience is required."),
+      location: assertRequired(cleanText(data.location, 140), "Current location is required."),
+      linkedin: assertRequired(cleanText(data.linkedin, 240), "LinkedIn profile is required."),
+      portfolio: cleanText(data.portfolio, 240),
+      noticePeriod: cleanText(data.noticePeriod, 100),
+      message: assertRequired(cleanText(data.message, 2500), "Please add a short note."),
+      status: "new",
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const result = await db.collection("career_applications").insertOne(application);
+    return { success: true, id: result.insertedId.toString() };
+  });
+
+// 20b. Get Career Applications (admin)
+export const getCareerApplicationsAction = createServerFn()
+  .inputValidator((data: unknown) => data as { careerId?: string } | undefined)
+  .handler(async ({ data }) => {
+    await verifyAdminAuth();
+    const { db } = await connectToDatabase();
+    const ObjectId = await getObjectIdClass();
+    const query: Record<string, unknown> = {};
+
+    if (data?.careerId) {
+      if (!ObjectId.isValid(data.careerId)) return [];
+      query.careerId = new ObjectId(data.careerId);
+    }
+
+    const list = await db
+      .collection("career_applications")
+      .find(query)
+      .sort({ createdAt: -1 })
+      .toArray();
+
+    return list.map(toClientCareerApplication);
+  });
+
+// 20c. Delete Career Application (admin)
+export const deleteCareerApplicationAction = createServerFn()
+  .inputValidator((id: string) => id)
+  .handler(async ({ data: id }) => {
+    await verifyAdminAuth();
+    if (!id) throw new Error("Application ID is required.");
+
+    const ObjectId = await getObjectIdClass();
+    if (!ObjectId.isValid(id)) throw new Error("Invalid application ID.");
+
+    const { db } = await connectToDatabase();
+    const result = await db.collection("career_applications").deleteOne({ _id: new ObjectId(id) });
+
+    if (result.deletedCount === 0) throw new Error("Application not found.");
+    return { success: true };
+  });
+
 // ─── TESTIMONIAL ACTIONS ───────────────────────────────────────────────────────
 
 const STATIC_TESTIMONIALS = [

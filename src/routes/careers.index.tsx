@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState, type FormEvent } from "react";
 import {
   ArrowRight,
   MapPin,
@@ -9,9 +10,21 @@ import {
   Target,
   Users,
   Timer,
+  Loader2,
+  CheckCircle2,
 } from "lucide-react";
 import { PageHero, SectionHeader, Stat } from "@/components/site/Primitives";
-import { getCareersAction } from "@/lib/admin-actions";
+import { getCareersAction, submitCareerApplicationAction } from "@/lib/admin-actions";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 
 export const Route = createFileRoute("/careers/")({
   head: () => ({
@@ -38,7 +51,6 @@ export const Route = createFileRoute("/careers/")({
   },
   component: CareersPage,
 });
-
 
 const principles = [
   {
@@ -123,11 +135,213 @@ function CountdownBadge({ expiresAt }: { expiresAt: string | null }) {
   );
 }
 
+type CareerRole = {
+  _id: string;
+  title: string;
+  team: string;
+};
+
+type CareerListing = CareerRole & {
+  expiresAt: string | null;
+  accent?: string;
+  blurb: string;
+  location: string;
+  type: string;
+  tag: string;
+};
+
+function CareerApplicationDialog({
+  role,
+  open,
+  onOpenChange,
+}: {
+  role: CareerRole | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!open) {
+      setSubmitting(false);
+      setSubmitted(false);
+      setError("");
+    }
+  }, [open]);
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!role) return;
+
+    setSubmitting(true);
+    setError("");
+
+    const formData = new FormData(event.currentTarget);
+    const payload = {
+      careerId: role._id,
+      fullName: formData.get("fullName"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      currentCompany: formData.get("currentCompany"),
+      experience: formData.get("experience"),
+      location: formData.get("location"),
+      linkedin: formData.get("linkedin"),
+      portfolio: formData.get("portfolio"),
+      noticePeriod: formData.get("noticePeriod"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const result = await submitCareerApplicationAction({ data: payload });
+      if (result?.success) {
+        setSubmitted(true);
+        event.currentTarget.reset();
+      } else {
+        setError("We could not submit your application. Please try again.");
+      }
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error
+          ? err.message
+          : "We could not submit your application. Please try again.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-3xl rounded-2xl border-border p-0">
+        <div className="border-b border-border bg-surface-muted/50 px-6 py-5">
+          <DialogHeader>
+            <DialogTitle className="font-display text-2xl">
+              Apply for {role?.title || "this role"}
+            </DialogTitle>
+            <DialogDescription>
+              Fill in your details below. LinkedIn is mandatory for every application.
+            </DialogDescription>
+          </DialogHeader>
+        </div>
+
+        {submitted ? (
+          <div className="px-6 py-10 text-center">
+            <CheckCircle2 className="mx-auto h-12 w-12 text-emerald-600" />
+            <h3 className="mt-4 text-xl font-display font-semibold">Application received</h3>
+            <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+              Thanks for applying. Our team will review your profile and get back to you soon.
+            </p>
+            <button
+              type="button"
+              onClick={() => onOpenChange(false)}
+              className="mt-6 inline-flex items-center justify-center rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background hover:opacity-90"
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-5 px-6 py-6">
+            {error ? (
+              <div className="rounded-xl border border-destructive/20 bg-destructive/10 px-4 py-3 text-sm font-medium text-destructive">
+                {error}
+              </div>
+            ) : null}
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="career-full-name">Full name</Label>
+                <Input id="career-full-name" name="fullName" required autoComplete="name" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="career-email">Email</Label>
+                <Input id="career-email" name="email" type="email" required autoComplete="email" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="career-phone">Phone number</Label>
+                <Input id="career-phone" name="phone" required autoComplete="tel" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="career-location">Current location</Label>
+                <Input id="career-location" name="location" required />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="career-experience">Experience</Label>
+                <Input id="career-experience" name="experience" required placeholder="3 years" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="career-notice">Notice period</Label>
+                <Input id="career-notice" name="noticePeriod" placeholder="Immediate / 30 days" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="career-company">Current company</Label>
+                <Input id="career-company" name="currentCompany" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="career-linkedin">LinkedIn profile / ID</Label>
+                <Input
+                  id="career-linkedin"
+                  name="linkedin"
+                  required
+                  placeholder="linkedin.com/in/..."
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="career-portfolio">Resume or portfolio link</Label>
+              <Input id="career-portfolio" name="portfolio" type="url" placeholder="https://..." />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="career-message">Short note</Label>
+              <Textarea
+                id="career-message"
+                name="message"
+                required
+                rows={5}
+                placeholder="Tell us about your strongest work and why this role fits you."
+              />
+            </div>
+
+            <div className="flex flex-col-reverse gap-3 border-t border-border pt-5 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                onClick={() => onOpenChange(false)}
+                className="inline-flex items-center justify-center rounded-full border border-border bg-background px-5 py-2.5 text-sm font-medium text-foreground hover:bg-secondary"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={submitting}
+                className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
+                Submit application
+              </button>
+            </div>
+          </form>
+        )}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 function CareersPage() {
   const { careers } = Route.useLoaderData();
+  const [selectedRole, setSelectedRole] = useState<CareerRole | null>(null);
 
   return (
     <>
+      <CareerApplicationDialog
+        role={selectedRole}
+        open={Boolean(selectedRole)}
+        onOpenChange={(open) => {
+          if (!open) setSelectedRole(null);
+        }}
+      />
       <PageHero
         eyebrow="Careers · Pune, Maharashtra · Remote India"
         title={
@@ -158,10 +372,7 @@ function CareersPage() {
           <Stat value="175-200" label="Team members" />
           <Stat value="2013" label="Founded in Pune" />
           <Stat value="20+" label="Services offered" />
-          <Stat
-            value="4"
-            label="Global delivery expertise at 4 major regions."
-          />
+          <Stat value="4" label="Global delivery expertise at 4 major regions." />
         </div>
       </PageHero>
 
@@ -224,7 +435,7 @@ function CareersPage() {
                 </p>
               </div>
             ) : (
-              careers.map((role: any) => {
+              careers.map((role: CareerListing) => {
                 const remainingMs = role.expiresAt
                   ? new Date(role.expiresAt).getTime() - Date.now()
                   : Infinity;
@@ -279,15 +490,20 @@ function CareersPage() {
                           Position Closed
                         </span>
                       ) : (
-                        <a
-                          href={`https://mail.google.com/mail/?view=cm&to=${HR_EMAIL}&su=${encodeURIComponent(`Application — ${role.title}`)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setSelectedRole({
+                              _id: role._id,
+                              title: role.title,
+                              team: role.team,
+                            })
+                          }
                           className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background hover:opacity-90 transition-opacity shadow-soft"
                         >
                           Apply now
                           <ArrowRight className="h-4 w-4" />
-                        </a>
+                        </button>
                       )}
                     </div>
                   </article>
