@@ -3,7 +3,7 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const SLIDE_DURATION = 5000; // milliseconds
+const SLIDE_DURATION = 7500; // milliseconds
 
 type StatCard = { value: string; label: string; color: string };
 
@@ -22,6 +22,7 @@ type Slide = {
   image?: string;
   imageAlt?: string;
   demoVideo?: string;
+  demoDevice?: "tablet";
   bg: string;
   accent: string;
   dotColor: string;
@@ -92,6 +93,8 @@ const slides: Slide[] = [
     // accent: "bg-orange-600 hover:bg-orange-700",
     // dotColor: "bg-orange-500",
     // progressColor: "bg-orange-500",
+    demoVideo: "hero/tablet-ui-carousel.mp4",
+    demoDevice: "tablet",
     bg: "from-violet-50/60 via-white to-blue-50/40",
     accent: "bg-gray-900 hover:bg-gray-700",
     dotColor: "bg-gray-900",
@@ -321,12 +324,21 @@ export function HeroCarousel() {
               )}
             >
               {slide.demoVideo ? (
-                <HeroVideoShowcase
-                  src={slide.demoVideo}
-                  topRightCard={slide.topRightCard}
-                  leftCard={slide.leftCard}
-                  bottomRightCard={slide.bottomRightCard}
-                />
+                slide.demoDevice === "tablet" ? (
+                  <TabletVideoShowcase
+                    src={slide.demoVideo}
+                    topRightCard={slide.topRightCard}
+                    leftCard={slide.leftCard}
+                    bottomRightCard={slide.bottomRightCard}
+                  />
+                ) : (
+                  <HeroVideoShowcase
+                    src={slide.demoVideo}
+                    topRightCard={slide.topRightCard}
+                    leftCard={slide.leftCard}
+                    bottomRightCard={slide.bottomRightCard}
+                  />
+                )
               ) : (
                 <img
                   key={slide.id}
@@ -438,6 +450,57 @@ export function HeroCarousel() {
         </button>
       </div>
     </section>
+  );
+}
+
+function TabletVideoShowcase({
+  src,
+  topRightCard,
+  leftCard,
+  bottomRightCard,
+}: {
+  src: string;
+  topRightCard: StatCard;
+  leftCard: StatCard;
+  bottomRightCard: StatCard;
+}) {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center overflow-visible pb-8 pt-8">
+      <FloatingMetric card={topRightCard} className="right-2 top-24 px-8 py-4" />
+      <FloatingMetric card={leftCard} className="left-0 top-[40%] px-6 py-3.5" />
+      <FloatingMetric card={bottomRightCard} className="bottom-20 right-10 px-6 py-3.5" />
+
+      <div className="relative w-[600px] -translate-y-2 rotate-[2deg]">
+        <div className="absolute inset-x-8 bottom-[-34px] h-14 rounded-full bg-slate-900/16 blur-2xl" />
+
+        <div className="relative rounded-[2.4rem] border border-white/60 bg-gradient-to-br from-zinc-100 via-zinc-400 to-zinc-800 p-[9px] shadow-[0_34px_88px_rgba(15,23,42,0.3)] ring-1 ring-black/10">
+          <div className="rounded-[1.95rem] bg-gradient-to-br from-zinc-950 via-zinc-900 to-black p-4">
+            <div className="relative aspect-video overflow-hidden rounded-[1.35rem] bg-black">
+              <video
+                src={src}
+                aria-label="Pure Technology showcase video playing on tablet"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="h-full w-full object-cover object-center saturate-125 contrast-110"
+              />
+              <div className="pointer-events-none absolute bottom-[1.1rem] right-[1rem] z-10 flex h-11 w-24 items-center justify-center rounded-xl bg-white/92 px-2.5 shadow-[0_10px_22px_rgba(2,6,23,0.3)] ring-1 ring-white/75 backdrop-blur-sm">
+                <img
+                  src="/logos/pure-logo-black-text-transparent.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="h-7 w-full object-contain drop-shadow-[0_2px_5px_rgba(0,0,0,0.16)]"
+                />
+              </div>
+              <div className="pointer-events-none absolute left-1/2 top-2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-black/80 ring-1 ring-white/25" />
+              <div className="pointer-events-none absolute inset-0 rounded-[1.35rem] ring-1 ring-white/15" />
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.18),transparent_28%,transparent_66%,rgba(255,255,255,0.08))]" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
