@@ -354,6 +354,52 @@
   .animate-blob-5 {
     animation: blob-5 8.75s ease-in-out infinite;
   }
+
+  /* Premium Anti-gravity & 3D Floating Animations */
+  .perspective-1200 {
+    perspective: 1800px;
+    transform-style: preserve-3d;
+  }
+  .animate-float-device-monitor {
+    animation: floatDeviceMonitor 10s ease-in-out infinite;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .animate-float-device-tablet {
+    animation: floatDeviceTablet 9s ease-in-out infinite;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .animate-shadow-monitor {
+    animation: shadowMonitor 8.5s ease-in-out infinite;
+    will-change: transform, opacity;
+  }
+  .animate-shadow-tablet {
+    animation: shadowTablet 7.5s ease-in-out infinite;
+    will-change: transform, opacity;
+  }
+
+  /* Independent Floating Animations for Badges/Stats to create depth */
+  .animate-float-slow-1 {
+    animation: floatSlow1 9.5s ease-in-out infinite;
+    will-change: transform;
+  }
+  .animate-float-slow-2 {
+    animation: floatSlow2 8.5s ease-in-out infinite;
+    will-change: transform;
+  }
+  .animate-float-slow-3 {
+    animation: floatSlow3 10.5s ease-in-out infinite;
+    will-change: transform;
+  }
+  .animate-float-slow-4 {
+    animation: floatSlow4 7.8s ease-in-out infinite;
+    will-change: transform;
+  }
+  .animate-float-slow-5 {
+    animation: floatSlow5 11s ease-in-out infinite;
+    will-change: transform;
+  }
 }
 
 @keyframes float {
@@ -365,6 +411,90 @@
     transform: translateY(-12px);
   }
 }
+
+@keyframes floatDeviceMonitor {
+  0% {
+    transform: translateY(-6px) rotateY(18deg) rotateX(-2deg);
+  }
+  25% {
+    transform: translateY(-2px) rotateY(6deg) rotateX(2deg);
+  }
+  50% {
+    transform: translateY(6px) rotateY(-18deg) rotateX(2deg);
+  }
+  75% {
+    transform: translateY(2px) rotateY(-6deg) rotateX(-2deg);
+  }
+  100% {
+    transform: translateY(-6px) rotateY(18deg) rotateX(-2deg);
+  }
+}
+
+@keyframes floatDeviceTablet {
+  0% {
+    transform: translateY(6px) rotateY(-15deg) rotateX(2deg);
+  }
+  25% {
+    transform: translateY(2px) rotateY(-4deg) rotateX(-2deg);
+  }
+  50% {
+    transform: translateY(-6px) rotateY(15deg) rotateX(-2deg);
+  }
+  75% {
+    transform: translateY(-2px) rotateY(4deg) rotateX(2deg);
+  }
+  100% {
+    transform: translateY(6px) rotateY(-15deg) rotateX(2deg);
+  }
+}
+
+@keyframes shadowMonitor {
+  0%, 100% {
+    transform: scale(1.05);
+    opacity: 0.65;
+  }
+  50% {
+    transform: scale(0.95);
+    opacity: 0.95;
+  }
+}
+
+@keyframes shadowTablet {
+  0%, 100% {
+    transform: scale(0.95);
+    opacity: 0.95;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.65;
+  }
+}
+
+@keyframes floatSlow1 {
+  0%, 100% { transform: translateY(-8px) translateX(2px) rotate(-0.5deg); }
+  50% { transform: translateY(8px) translateX(-2px) rotate(0.5deg); }
+}
+
+@keyframes floatSlow2 {
+  0%, 100% { transform: translateY(6px) translateX(-3px) rotate(1deg); }
+  50% { transform: translateY(-6px) translateX(3px) rotate(-1deg); }
+}
+
+@keyframes floatSlow3 {
+  0%, 100% { transform: translateY(-10px) translateX(-1px) rotate(-1.5deg); }
+  50% { transform: translateY(10px) translateX(1px) rotate(1.5deg); }
+}
+
+@keyframes floatSlow4 {
+  0%, 100% { transform: translateY(5px) translateX(3px) rotate(0.8deg); }
+  50% { transform: translateY(-5px) translateX(-3px) rotate(-0.8deg); }
+}
+
+@keyframes floatSlow5 {
+  0%, 100% { transform: translateY(-7px) translateX(-2px) rotate(-1.2deg); }
+  50% { transform: translateY(7px) translateX(2px) rotate(1.2deg); }
+}
+
 @keyframes orbit {
   from {
     transform: rotate(0deg);
