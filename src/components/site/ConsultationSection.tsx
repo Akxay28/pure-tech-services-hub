@@ -1,8 +1,10 @@
 import { useState, type ReactNode } from "react";
-import { Check, Linkedin, Phone } from "lucide-react";
+import { CalendarDays, Check, Linkedin, Phone } from "lucide-react";
 import { BRAND } from "@/lib/brand-colors";
 import { NAV_TEAM_CONTACTS } from "@/lib/team-contacts";
 import { submitContactForm } from "@/lib/contact-submit";
+
+const CALENDLY_URL = "https://calendly.com/puretechcx/introduction";
 
 const CONTACT_NUMBERS = [
   { label: "For HR & Carrers", number: "+91 73875 81577", href: "tel:+917387581577" },
@@ -144,7 +146,16 @@ export function ConsultationSection({
                   className="mt-3 w-full resize-y border-0 border-b border-foreground/80 bg-transparent px-0 py-3 text-sm outline-none transition-colors focus:border-primary"
                 />
               </div>
-              <div className="mt-7 flex justify-end">
+              <div className="mt-7 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <a
+                  href={CALENDLY_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-background px-5 py-3 text-sm font-medium text-foreground shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/25 hover:text-primary hover:shadow-soft"
+                >
+                  <CalendarDays className="h-4 w-4" />
+                  Schedule a call
+                </a>
                 <button
                   type="submit"
                   disabled={submitting}

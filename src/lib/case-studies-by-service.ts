@@ -44,6 +44,15 @@ function realCaseStudiesForClients(clients: string[]) {
     .map(toServiceCaseStudy);
 }
 
+const realCaseStudyClientsByMainService: Partial<
+  Record<keyof typeof mainServiceCaseStudies, string[]>
+> = {
+  "ai-solutions": [
+    "Global Recruitment & Talent Development Organization",
+    "Local GPT for Secure Financial Operations",
+  ],
+};
+
 const realCaseStudyClientsByService: Partial<Record<SubServiceSlug, string[]>> = {
   "software-development": [
     "Warehouse Management System",
@@ -770,5 +779,11 @@ export function getCaseStudiesForService(slug: SubServiceSlug): CaseStudy[] {
 export function getCaseStudiesForMainService(
   slug: keyof typeof mainServiceCaseStudies,
 ): CaseStudy[] {
+  const realClients = realCaseStudyClientsByMainService[slug];
+  if (realClients) {
+    const realStudies = realCaseStudiesForClients(realClients);
+    if (realStudies.length > 0) return realStudies;
+  }
+
   return mainServiceCaseStudies[slug];
 }

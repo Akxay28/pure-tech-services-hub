@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+﻿import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import {
   ArrowRight,
@@ -413,7 +413,7 @@ function CareersPage() {
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Open roles"
-            title="Currently hiring — and yes, a human reads every application."
+            title="Currently hiring - yes, a human reads every application."
             description="Apply with a quick note about what you've shipped and why it mattered. We respond within 7 days, always."
           />
 
@@ -540,7 +540,7 @@ function CareersPage() {
               {
                 step: "04",
                 title: "Final Decision",
-                body: "A culture and leadership conversation. We always tell you the outcome — yes or no — within 7 days.",
+                body: "A culture and leadership conversation. We always tell you the outcome - yes or no - within 7 days.",
               },
             ].map((s) => (
               <div

@@ -308,6 +308,8 @@ type CaseStudy = {
   techStack?: { category: string; items: string; icon: string }[];
   conclusion?: string;
   slug?: string;
+  /** If set, "Read More" links here instead of /case-studies/$slug */
+  linkTo?: string;
 };
 
 // ─── CASE STUDY CARD ──────────────────────────────────────────────────────────
@@ -325,6 +327,7 @@ export function CaseStudyCard({
   accent = "var(--brand-blue)",
   image,
   slug: providedSlug,
+  linkTo,
 }: CaseStudy) {
   const router = useRouter();
 
@@ -334,6 +337,11 @@ export function CaseStudyCard({
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/(^-|-$)/g, "");
+
+  // Resolve the final href for the Read More button
+  const readMoreHref = linkTo ?? `/case-studies/${slug}`;
+  const readMoreTo = linkTo ?? "/case-studies/$slug";
+  const readMoreParams = linkTo ? undefined : { slug };
 
   return (
     <article
@@ -432,11 +440,11 @@ export function CaseStudyCard({
         {/* Button */}
         <div className="mt-10 flex justify-center">
           <Link
-            to="/case-studies/$slug"
-            params={{ slug }}
+            to={readMoreTo as never}
+            params={readMoreParams as never}
             className="group flex items-center cursor-pointer gap-2 rounded-full border border-border bg-surface/60 px-6 py-2.5 text-sm font-medium text-foreground/80 backdrop-blur-sm transition-all duration-300 hover:border-white/20 hover:bg-surface hover:text-foreground"
           >
-            Read More
+            {linkTo ? "Talk to Us" : "Read More"}
             <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
           </Link>
         </div>

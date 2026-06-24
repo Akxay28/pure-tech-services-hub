@@ -1,0 +1,76 @@
+# Pure Technology — AI Product Development & IT Staffing Services in India
+
+> Pure Technology is a Bengaluru-based technology company specialising in enterprise AI product development, IT staffing and staff augmentation, product engineering, SaaS development, and Global Capability Center (GCC) setup. Founded in 2012, the company serves enterprise and growth-stage clients across 18+ countries.
+
+## Company
+
+- **Full Name:** Pure Technology Pvt. Ltd.
+- **Website:** https://puretechnology.in
+- **Founded:** 2012
+- **Headquarters:** Pune, Maharashtra, India (with teams in Bengaluru, Hyderabad, Chennai)
+- **International Offices:** Ajman, UAE | Weston, Florida, USA
+- **LinkedIn:** https://www.linkedin.com/company/pure-technology
+- **Contact:** contact@puretechnology.in
+- **Phone (Sales):** +91 99701 11283
+- **Phone (HR/Careers):** +91 73875 81577
+
+## Core Services
+
+- **AI Product Development:** Custom LLM development, RAG systems, AI agents, GenAI applications, AI chatbots, voice AI, agentic AI workflows
+- **IT Staffing & Staff Augmentation:** Vetted Indian engineers for hire — frontend, backend, fullstack, AI/ML, DevOps, mobile
+- **Product Engineering:** End-to-end SaaS and enterprise product squads — from discovery to production
+- **Global Capability Center (GCC):** Setting up dedicated offshore engineering centres for global enterprises in India
+- **Cloud & Infrastructure:** AWS, GCP, Azure, DevOps, cloud migration, cybersecurity
+- **Data Engineering:** Data pipelines, warehousing, analytics, ML pipelines
+
+## Key Capabilities
+
+- Generative AI and LLM integration (OpenAI, Gemini, Claude, LLaMA, Mistral)
+- LangChain, LangGraph, RAG (Retrieval-Augmented Generation), Vector Databases
+- AI agent orchestration and multi-agent systems
+- On-premises AI deployment for regulated industries (BFSI, healthcare, government)
+- Full-stack product engineering (React, Next.js, Node.js, Python, Django, FastAPI)
+- Mobile app development (React Native, Android, iOS)
+
+## Client Industries
+
+Financial Services & Banking, Healthcare & Life Sciences, Real Estate & PropTech, Human Resources & Recruitment Technology, SaaS & Enterprise Software, Retail & E-commerce, Education Technology, Manufacturing & Industrial
+
+## Notable Case Studies
+
+1. **Local GPT for Secure Financial Operations** — On-premises AI platform for a BFSI client: 85% faster document processing, 300%+ ROI, zero-breach security
+2. **Questa AI Interviewer** — AI-powered interview simulation platform: 78% higher interview success rates, 60% reduction in preparation time
+3. **AI Calling Bot for Sales Automation** — Voice AI for real estate & B2B sales: 90% reduction in manual calling, 65% increase in conversion rates, 10x outreach capacity
+
+## Why Pure Technology
+
+- 13+ years of engineering delivery experience
+- 80+ enterprise clients across 18+ countries
+- Top 3% vetted talent pool (4-stage vetting process)
+- Average engineer experience: 9+ years
+- 30-day replacement guarantee on all staffing placements
+- SOC 2 Type II aligned process, ISO 27001 controls, DPDP-ready data handling
+- Two-week sprint cycles with demoable progress milestones
+
+## Technology Expertise
+
+**Languages:** Python, JavaScript, TypeScript, Go, Java, Kotlin, Swift
+**Frameworks:** React, Next.js, Node.js, Django, FastAPI, Flutter
+**AI/ML:** LangChain, LangGraph, OpenAI API, Gemini API, Hugging Face, PyTorch, TensorFlow
+**Databases:** PostgreSQL, MongoDB, Redis, Pinecone, Weaviate, Chroma
+**Cloud:** AWS, GCP, Azure, Cloudflare, Vercel
+**DevOps:** Docker, Kubernetes, Terraform, GitHub Actions, CI/CD pipelines
+
+## Pages
+
+- Home: https://puretechnology.in/
+- Services: https://puretechnology.in/services
+- AI Solutions: https://puretechnology.in/services/ai-solutions
+- IT Staffing: https://puretechnology.in/services/it-staffing
+- Product Engineering: https://puretechnology.in/services/product-engineering
+- GCC Setup: https://puretechnology.in/services/global-capability-center
+- Case Studies: https://puretechnology.in/case-studies
+- About: https://puretechnology.in/about
+- Careers: https://puretechnology.in/careers
+- Contact: https://puretechnology.in/contact
+- Blog: https://puretechnology.in/blog

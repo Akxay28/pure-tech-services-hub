@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
-import { Mail, Phone, ArrowRight, Check } from "lucide-react";
+import { Mail, Phone, ArrowRight, CalendarDays, Check } from "lucide-react";
 import { PageHero, SectionHeader } from "@/components/site/Primitives";
 import { submitContactForm } from "@/lib/contact-submit";
 
 const CONTACT_EMAIL = "contact@puretechnology.in";
+const CALENDLY_URL = "https://calendly.com/puretechcx/introduction";
 const CONTACT_NUMBERS = [
   {
     label: "For HR & Carrers",
@@ -328,14 +329,25 @@ function ContactForm() {
           placeholder="Where you are, where you'd like to be, and the constraints in between."
         />
       </div>
-      <button
-        type="submit"
-        disabled={submitting}
-        className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3.5 text-sm font-medium text-background hover:opacity-90 transition-opacity shadow-soft"
-      >
-        {submitting ? "Sending..." : "Send Message"}
-        <ArrowRight className="h-4 w-4" />
-      </button>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <button
+          type="submit"
+          disabled={submitting}
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-6 py-3.5 text-sm font-medium text-background hover:opacity-90 transition-opacity shadow-soft"
+        >
+          {submitting ? "Sending..." : "Send Message"}
+          <ArrowRight className="h-4 w-4" />
+        </button>
+        <a
+          href={CALENDLY_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center gap-2 rounded-full border border-border bg-surface px-6 py-3.5 text-sm font-medium text-foreground transition-all hover:-translate-y-0.5 hover:border-primary/25 hover:text-primary hover:shadow-soft"
+        >
+          <CalendarDays className="h-4 w-4" />
+          Schedule a call
+        </a>
+      </div>
       {error && <p className="text-sm text-destructive">{error}</p>}
       <p className="text-xs text-muted-foreground">
         We respond to every enquiry within 24 hours. By submitting, you agree to be contacted
@@ -402,6 +414,20 @@ function ContactSidebar() {
               {CONTACT_EMAIL}
             </span>
           </a>
+          <a
+            className="flex items-start gap-3 text-foreground/85 hover:text-foreground"
+            href={CALENDLY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ContactIcon color="var(--brand-green)">
+              <CalendarDays className="h-4 w-4" />
+            </ContactIcon>
+            <span>
+              <span className="block text-xs text-muted-foreground">Calendly</span>
+              Schedule an introduction call
+            </span>
+          </a>
           {CONTACT_NUMBERS.map((contact) => (
             <a
               key={contact.label}
@@ -427,8 +453,8 @@ function ContactSidebar() {
       <div className="rounded-3xl border border-border bg-surface-muted/70 p-6 sm:p-7 space-y-3">
         <h3 className="font-display font-semibold text-lg">Working hours</h3>
         <p className="text-sm text-muted-foreground leading-relaxed">
-          Mon–Sat · 09:30 to 18:30 IST. We support client teams across India, the Middle East,
-          Europe, and North America with flexible overlap hours on request.
+          Mon–Sat · 09:30 to 18:30 IST. We support client teams across India, Middle East,
+          Europe, & America with flexible hours on request.
         </p>
       </div>
     </aside>

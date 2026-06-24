@@ -19,8 +19,9 @@ type Slide = {
   topRightCard: StatCard;
   leftCard: StatCard;
   bottomRightCard: StatCard;
-  image: string;
-  imageAlt: string;
+  image?: string;
+  imageAlt?: string;
+  demoVideo?: string;
   bg: string;
   accent: string;
   dotColor: string;
@@ -34,12 +35,12 @@ const slides: Slide[] = [
     eyebrowStyle: "bg-blue-50 border-blue-200 text-blue-700",
     title: (
       <>
-    Engineering The Next Chapter of Your Business {" "}
-        <span className="text-gradient-brand">With India's Finest Minds.</span>
+        AI Product Development &amp;{" "}
+        <span className="text-gradient-brand">IT Staffing Services in India.</span>
       </>
     ),
     description:
-      "Pure Technology partners with enterprise and growth-stage teams to deliver production-grade AI, vetted engineering talent, and full-stack product squads — under one roof, with one accountable team.",
+      "Engineering the next chapter of your business with India's finest minds. Pure Technology partners with enterprise and growth-stage teams to deliver production-grade AI, vetted engineering talent, and full-stack product squads — under one roof, with one accountable team.",
     primaryCta: { label: "Start Project", to: "/contact" },
     secondaryCta: { label: "See What We Build", to: "/services" },
     stats: [
@@ -47,11 +48,10 @@ const slides: Slide[] = [
       { value: "80+", label: "Happy clients", color: "text-orange-500" },
       { value: "18+", label: "Countries delivered", color: "text-green-600" },
     ],
-    topRightCard:    { value: "80+",  label: "Happy clients",       color: "text-orange-500" },
-    leftCard:        { value: "20+",  label: "Projects delivered",   color: "text-violet-500" },
-    bottomRightCard: { value: "13+",  label: "Years of experience",  color: "text-blue-600"   },
-    image: "hero/slide-1.jpg",
-    imageAlt: "Indian professional woman smiling confidently",
+    topRightCard: { value: "80+", label: "Happy clients", color: "text-orange-500" },
+    leftCard: { value: "20+", label: "Projects delivered", color: "text-violet-500" },
+    bottomRightCard: { value: "13+", label: "Years of experience", color: "text-blue-600" },
+    demoVideo: "hero/smartphone-ui-carousel.mp4",
     bg: "from-violet-50/60 via-white to-blue-50/40",
     accent: "bg-gray-900 hover:bg-gray-700",
     dotColor: "bg-gray-900",
@@ -64,9 +64,7 @@ const slides: Slide[] = [
     title: (
       <>
         Transform Operations With AI Systems Built For Business.{" "}
-        <span className="text-gradient-brand">
-        Powered By India's Finest Minds.
-        </span>
+        <span className="text-gradient-brand">Powered By India's Finest Minds.</span>
       </>
     ),
     description:
@@ -74,13 +72,17 @@ const slides: Slide[] = [
     primaryCta: { label: "Hire Engineers", to: "/services/it-staffing" },
     secondaryCta: { label: "View Profiles", to: "/contact" },
     stats: [
-      { value: "40+", label: "AI workflows automated",       color: "text-orange-500" },
-      { value: "15+",  label: "Dedicated AI engineers",  color: "text-amber-500"  },
-      { value: "100%", label: "Reliable deployment support",        color: "text-orange-600" },
+      { value: "40+", label: "AI workflows automated", color: "text-orange-500" },
+      { value: "15+", label: "Dedicated AI engineers", color: "text-amber-500" },
+      { value: "100%", label: "Reliable deployment support", color: "text-orange-600" },
     ],
-    topRightCard:    { value: "40+",   label: "AI workflows automated",      color: "text-orange-500" },
-    leftCard:        { value: "15+", label: "Dedicated AI engineers", color: "text-violet-500"  },
-    bottomRightCard: { value: "100%", label: "Reliable deployment support",     color: "text-blue-600" },
+    topRightCard: { value: "40+", label: "AI workflows automated", color: "text-orange-500" },
+    leftCard: { value: "15+", label: "Dedicated AI engineers", color: "text-violet-500" },
+    bottomRightCard: {
+      value: "100%",
+      label: "Reliable deployment support",
+      color: "text-blue-600",
+    },
     // topRightCard:    { value: "150+",   label: "Engineers placed",      color: "text-orange-500" },
     // leftCard:        { value: "30 days", label: "Replacement guarantee", color: "text-amber-500"  },
     // bottomRightCard: { value: "Top 3%", label: "Vetted talent pool",     color: "text-orange-600" },
@@ -101,10 +103,8 @@ const slides: Slide[] = [
     eyebrowStyle: "bg-green-50 border-green-200 text-green-700",
     title: (
       <>
-      Your Extended Technology Team For {" "}
-        <span className="text-gradient-brand">
-        Building Faster & Scaling Smarter.
-        </span>
+        Your Extended Technology Team For{" "}
+        <span className="text-gradient-brand">Building Faster & Scaling Smarter.</span>
       </>
     ),
     description:
@@ -112,12 +112,12 @@ const slides: Slide[] = [
     primaryCta: { label: "Start Building", to: "/services/product-engineering" },
     secondaryCta: { label: "See Case Studies", to: "/case-studies" },
     stats: [
-      { value: "25+",    label: "Worldwide Partners",  color: "text-green-600" },
-      { value: "100K+",  label: "Hours of development delivered",  color: "text-teal-600"  },
-      { value: "24/7",  label: "Collaboration & support",  color: "text-green-700" },
+      { value: "25+", label: "Worldwide Partners", color: "text-green-600" },
+      { value: "100K+", label: "Hours of development delivered", color: "text-teal-600" },
+      { value: "24/7", label: "Collaboration & support", color: "text-green-700" },
     ],
-    topRightCard:    { value: "25+",   label: "Worldwide Partners", color: "text-orange-600" },
-    leftCard:        { value: "100K+", label: "Hours of development delivered", color: "text-violet-600"  },
+    topRightCard: { value: "25+", label: "Worldwide Partners", color: "text-orange-600" },
+    leftCard: { value: "100K+", label: "Hours of development delivered", color: "text-violet-600" },
     bottomRightCard: { value: "24/7", label: "Collaboration & support", color: "text-blue-700" },
     // image: "hero/slide-1.jpg",
     // topRightCard:    { value: "40+",   label: "Products shipped", color: "text-green-600" },
@@ -171,7 +171,7 @@ export function HeroCarousel() {
 
       setTimeout(() => {
         setCurrent(next);
-        currentRef.current = next;          // keep ref in sync
+        currentRef.current = next; // keep ref in sync
 
         setTimeout(() => {
           setTextVisible(true);
@@ -186,7 +186,7 @@ export function HeroCarousel() {
         }, 60);
       }, 380);
     },
-    [startProgress] // ← no longer depends on `current` or `transitioning`
+    [startProgress], // ← no longer depends on `current` or `transitioning`
   );
 
   useEffect(() => {
@@ -207,14 +207,11 @@ export function HeroCarousel() {
     <section
       className={cn(
         "relative w-full overflow-hidden transition-colors duration-700 bg-gradient-to-br",
-        slide.bg
+        slide.bg,
       )}
     >
       {/* Full-width ambient background — avoids a seam at the column split */}
-      <div
-        className="pointer-events-none absolute inset-0 overflow-hidden"
-        aria-hidden
-      >
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         <div
           className="absolute inset-0"
           style={{
@@ -251,22 +248,19 @@ export function HeroCarousel() {
 
       <div className="relative z-10 mx-auto max-w-7xl px-5 lg:px-8">
         <div className="grid lg:grid-cols-2 min-h-[520px] items-center gap-0">
-
           {/* Left — text */}
           <div className="py-16 lg:py-20 pr-0 lg:pr-12">
             <div
               className={cn(
                 "transition-all duration-500",
-                textVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-5"
+                textVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-5",
               )}
             >
               <span
                 className={cn(
                   "inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] px-3 py-1.5 rounded-full border mb-6",
-                  slide.eyebrowStyle
-                // "bg-blue-50 border-blue-200 text-blue-700"
+                  slide.eyebrowStyle,
+                  // "bg-blue-50 border-blue-200 text-blue-700"
                 )}
               >
                 <span className="h-1.5 w-1.5 rounded-full bg-current opacity-70" />
@@ -286,7 +280,7 @@ export function HeroCarousel() {
                   to={slide.primaryCta.to}
                   className={cn(
                     "inline-flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold text-white transition-all",
-                    slide.accent
+                    slide.accent,
                   )}
                 >
                   {slide.primaryCta.label}
@@ -314,34 +308,58 @@ export function HeroCarousel() {
           </div>
 
           {/* Right — image */}
-          <div className="relative hidden lg:flex items-end justify-center h-full min-h-[520px]">
+          <div
+            className={cn("relative hidden h-full min-h-[520px] items-end justify-center lg:flex")}
+          >
             {/* Image + floating cards — animate together on slide change */}
             <div
               className={cn(
                 "absolute inset-0 transition-all duration-500",
                 imgVisible
                   ? "opacity-100 scale-100 translate-x-0"
-                  : "opacity-0 scale-105 translate-x-8"
+                  : "opacity-0 scale-105 translate-x-8",
               )}
             >
-              {/* Woman image */}
-              <img
-                key={slide.id}
-                src={slide.image}
-                alt={slide.imageAlt}
-                className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[92%] w-auto object-contain object-bottom"
-              />
+              {slide.demoVideo ? (
+                <HeroVideoShowcase
+                  src={slide.demoVideo}
+                  topRightCard={slide.topRightCard}
+                  leftCard={slide.leftCard}
+                  bottomRightCard={slide.bottomRightCard}
+                />
+              ) : (
+                <img
+                  key={slide.id}
+                  src={slide.image ?? ""}
+                  alt={slide.imageAlt ?? ""}
+                  className="absolute bottom-0 left-1/2 h-[92%] w-auto -translate-x-1/2 object-contain object-bottom"
+                />
+              )}
 
               {/* Card — top right */}
-              <div className="absolute top-35 right-10 rounded-2xl px-10 py-3.5 border border-white/30" style={{ background: "rgba(255,255,255,0.45)" }}>
-                <div className={cn("text-[1.6rem] font-bold leading-none", slide.topRightCard.color)}>
+              <div
+                className={cn(
+                  "absolute top-35 right-10 rounded-2xl px-10 py-3.5 border border-white/30",
+                  slide.demoVideo && "hidden",
+                )}
+                style={{ background: "rgba(255,255,255,0.45)" }}
+              >
+                <div
+                  className={cn("text-[1.6rem] font-bold leading-none", slide.topRightCard.color)}
+                >
                   {slide.topRightCard.value}
                 </div>
                 <div className="text-xs text-muted-foreground mt-1">{slide.topRightCard.label}</div>
               </div>
 
               {/* Card — left middle */}
-              <div className="absolute top-[42%] left-2 rounded-2xl px-5 py-3.5 backdrop-blur-md border border-white/30" style={{ background: "rgba(255,255,255,0.45)" }}>
+              <div
+                className={cn(
+                  "absolute top-[42%] left-2 rounded-2xl px-5 py-3.5 backdrop-blur-md border border-white/30",
+                  slide.demoVideo && "hidden",
+                )}
+                style={{ background: "rgba(255,255,255,0.45)" }}
+              >
                 <div className={cn("text-[1.6rem] font-bold leading-none", slide.leftCard.color)}>
                   {slide.leftCard.value}
                 </div>
@@ -349,8 +367,19 @@ export function HeroCarousel() {
               </div>
 
               {/* Card — bottom right */}
-              <div className="absolute bottom-14 right-8 rounded-2xl px-5 py-3.5 backdrop-blur-md border border-white/30" style={{ background: "rgba(255,255,255,0.45)" }}>
-                <div className={cn("text-[1.6rem] font-bold leading-none", slide.bottomRightCard.color)}>
+              <div
+                className={cn(
+                  "absolute bottom-14 right-8 rounded-2xl px-5 py-3.5 backdrop-blur-md border border-white/30",
+                  slide.demoVideo && "hidden",
+                )}
+                style={{ background: "rgba(255,255,255,0.45)" }}
+              >
+                <div
+                  className={cn(
+                    "text-[1.6rem] font-bold leading-none",
+                    slide.bottomRightCard.color,
+                  )}
+                >
                   {slide.bottomRightCard.value}
                 </div>
                 <div className="text-xs text-muted-foreground mt-1">
@@ -359,7 +388,6 @@ export function HeroCarousel() {
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -367,8 +395,12 @@ export function HeroCarousel() {
       <div className="absolute bottom-0 left-0 z-20 h-[3px] bg-border w-full">
         <div
           className={cn("h-full transition-none", slide.progressColor)}
-          style={{ width: `${progress}%`, background: "linear-gradient(to right, var(--brand-blue), var(--brand-orange), var(--brand-green))" }}
-        //   style={{ width: `${progress}%` }}
+          style={{
+            width: `${progress}%`,
+            background:
+              "linear-gradient(to right, var(--brand-blue), var(--brand-orange), var(--brand-green))",
+          }}
+          //   style={{ width: `${progress}%` }}
         />
       </div>
 
@@ -383,7 +415,7 @@ export function HeroCarousel() {
               "h-2 rounded-full transition-all duration-300",
               i === current
                 ? cn("w-6", slide.dotColor)
-                : "w-2 bg-foreground/20 hover:bg-foreground/40"
+                : "w-2 bg-foreground/20 hover:bg-foreground/40",
             )}
           />
         ))}
@@ -406,5 +438,72 @@ export function HeroCarousel() {
         </button>
       </div>
     </section>
+  );
+}
+
+function HeroVideoShowcase({
+  src,
+  topRightCard,
+  leftCard,
+  bottomRightCard,
+}: {
+  src: string;
+  topRightCard: StatCard;
+  leftCard: StatCard;
+  bottomRightCard: StatCard;
+}) {
+  return (
+    <div className="absolute inset-0 flex items-center justify-center overflow-visible pb-2 pt-8">
+      <FloatingMetric card={topRightCard} className="right-0 top-20 px-9 py-4" />
+      <FloatingMetric card={leftCard} className="left-0 top-[36%] px-6 py-3.5" />
+      <FloatingMetric card={bottomRightCard} className="bottom-24 right-6 px-6 py-3.5" />
+      <div className="relative w-[620px] -translate-y-6 rotate-[-2deg]">
+        <div className="absolute inset-x-10 bottom-[-58px] h-20 rounded-full bg-slate-900/14 blur-2xl" />
+
+        <div className="relative rounded-[1.65rem] border border-white/55 bg-gradient-to-br from-zinc-200 via-zinc-400 to-zinc-700 p-[8px] shadow-[0_32px_90px_rgba(15,23,42,0.3)] ring-1 ring-black/10">
+          <div className="rounded-[1.3rem] bg-gradient-to-br from-zinc-950 via-zinc-900 to-black p-3">
+            <div className="relative aspect-video overflow-hidden rounded-[0.9rem] bg-black">
+              <video
+                src={src}
+                aria-label="Pure Technology showcase video playing on desktop monitor"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="h-full w-full scale-[1.08] object-cover object-center saturate-125 contrast-110"
+              />
+              <div className="pointer-events-none absolute bottom-[1.45rem] right-[1rem] z-10 flex h-12 w-28 items-center justify-center rounded-2xl bg-white/92 px-3 shadow-[0_10px_24px_rgba(2,6,23,0.32)] ring-1 ring-white/75 backdrop-blur-sm">
+                <img
+                  src="/logos/pure-logo-black-text-transparent.png"
+                  alt=""
+                  aria-hidden="true"
+                  className="h-8 w-full object-contain drop-shadow-[0_2px_5px_rgba(0,0,0,0.16)]"
+                />
+              </div>
+              <div className="pointer-events-none absolute left-1/2 top-2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-black/80 ring-1 ring-white/25" />
+              <div className="pointer-events-none absolute inset-0 rounded-[0.9rem] ring-1 ring-white/15" />
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(118deg,rgba(255,255,255,0.16),transparent_30%,transparent_68%,rgba(255,255,255,0.07))]" />
+            </div>
+          </div>
+        </div>
+
+        <div className="relative mx-auto h-16 w-24 bg-gradient-to-b from-zinc-600 via-zinc-500 to-zinc-300 shadow-[0_18px_34px_rgba(15,23,42,0.18)]" />
+        <div className="relative mx-auto h-4 w-60 rounded-[999px] bg-gradient-to-r from-zinc-300 via-zinc-100 to-zinc-500 shadow-[0_16px_36px_rgba(15,23,42,0.2)]" />
+      </div>
+    </div>
+  );
+}
+
+function FloatingMetric({ card, className }: { card: StatCard; className: string }) {
+  return (
+    <div
+      className={cn(
+        "absolute z-10 rounded-3xl border border-white/45 bg-white/50 shadow-[0_18px_42px_rgba(15,23,42,0.1)] backdrop-blur-xl",
+        className,
+      )}
+    >
+      <div className={cn("text-[1.55rem] font-bold leading-none", card.color)}>{card.value}</div>
+      <div className="mt-1 text-xs text-slate-600">{card.label}</div>
+    </div>
   );
 }

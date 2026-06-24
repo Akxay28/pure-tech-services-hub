@@ -1,8 +1,9 @@
 import { createFileRoute, notFound, Link } from "@tanstack/react-router";
-import { ArrowLeft, Calendar, User, Share2, Volume2, VolumeX, Pause, Play, Square } from "lucide-react";
+import { ArrowLeft, Calendar, User, Share2, Volume2, Pause, Square, X, ZoomIn } from "lucide-react";
 import { getBlogBySlugAction } from "@/lib/admin-actions";
 import { CTASection } from "@/components/site/Primitives";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 type BlogContentBlock =
   | { type: "heading"; text: string; level: 2 | 3 }
@@ -471,6 +472,67 @@ function SpeakButton({ text }: { text: string }) {
   );
 }
 
+// ── Image Lightbox ────────────────────────────────────────────────────────────
+function ImageLightbox({
+  src,
+  alt,
+  onClose,
+}: {
+  src: string;
+  alt: string;
+  onClose: () => void;
+}) {
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [onClose]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2 }}
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-8"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Image viewer"
+    >
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/85 backdrop-blur-sm" />
+
+      {/* Close button */}
+      <button
+        onClick={onClose}
+        className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white hover:bg-white/25 transition-colors"
+        aria-label="Close image viewer"
+      >
+        <X className="h-5 w-5" />
+      </button>
+
+      {/* Image */}
+      <motion.img
+        src={src}
+        alt={alt}
+        initial={{ scale: 0.88, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.88, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 300, damping: 28 }}
+        className="relative z-10 max-h-[90vh] max-w-full rounded-2xl object-contain shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      />
+    </motion.div>
+  );
+}
+
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
     const post = await getBlogBySlugAction({ data: params.slug });
@@ -526,6 +588,7 @@ export const Route = createFileRoute("/blog/$slug")({
 function BlogPostPage() {
   const { post } = Route.useLoaderData();
   const accentColor = post.accent;
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   // Build the full text for TTS: title + author + both content sections
   const speechText = [
@@ -538,7 +601,18 @@ function BlogPostPage() {
     .join(". ");
 
   return (
-    <div className="min-h-screen bg-background pb-20">
+    <>
+      <AnimatePresence>
+        {lightboxSrc && (
+          <ImageLightbox
+            src={lightboxSrc}
+            alt={post.title}
+            onClose={() => setLightboxSrc(null)}
+          />
+        )}
+      </AnimatePresence>
+
+      <div className="min-h-screen bg-background pb-20">
       <div className="mx-auto max-w-4xl px-5 lg:px-8 pt-8 flex items-center justify-between border-b border-border/40 pb-6">
         <Link
           to="/blog"
@@ -601,23 +675,47 @@ function BlogPostPage() {
           </div>
         </header>
 
-        <div className="mt-10 rounded-[32px] overflow-hidden h-[250px] sm:h-[380px] lg:h-[450px] shadow-glass border border-white/10 relative">
-          <img src={post.imageTop} alt={post.title} className="h-full w-full object-cover" />
+        <div
+          className="mt-10 rounded-[32px] overflow-hidden h-[250px] sm:h-[380px] lg:h-[450px] shadow-glass border border-white/10 relative cursor-zoom-in group"
+          onClick={() => setLightboxSrc(post.imageTop)}
+          role="button"
+          aria-label="View image fullscreen"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setLightboxSrc(post.imageTop)}
+        >
+          <img src={post.imageTop} alt={post.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+          {/* Zoom hint */}
+          <div className="absolute bottom-4 right-4 flex items-center gap-1.5 rounded-full bg-black/40 backdrop-blur px-3 py-1.5 text-white text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            <ZoomIn className="h-3.5 w-3.5" />
+            Click to expand
+          </div>
         </div>
 
         <div className="mt-12 text-base sm:text-lg leading-relaxed text-foreground/80 font-sans space-y-6">
           <BlogContent content={post.descriptionTop} />
         </div>
 
-        <div className="my-14 max-w-2xl mx-auto rounded-2xl overflow-hidden shadow-glass border border-white/20 hover:scale-[1.01] transition-transform duration-500">
+        <div
+          className="my-14 rounded-[32px] overflow-hidden shadow-glass border border-white/10 bg-surface-muted/40 cursor-zoom-in group relative"
+          onClick={() => setLightboxSrc(post.imageMiddle)}
+          role="button"
+          aria-label="View image fullscreen"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && setLightboxSrc(post.imageMiddle)}
+        >
           <img
             src={post.imageMiddle}
             alt="Supporting illustration"
-            className="w-full h-auto object-cover max-h-[350px]"
+            className="w-full h-auto object-contain block transition-transform duration-500 group-hover:scale-[1.02]"
           />
+          {/* Zoom hint */}
+          <div className="absolute bottom-14 right-4 flex items-center gap-1.5 rounded-full bg-black/40 backdrop-blur px-3 py-1.5 text-white text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+            <ZoomIn className="h-3.5 w-3.5" />
+            Click to expand
+          </div>
           <div className="bg-surface/90 px-6 py-4 border-t border-border/50 text-center text-xs text-muted-foreground font-medium italic">
-            Visualizing the integration of advanced technologic systems & workflows.
+            Visualizing the integration of advanced technologic systems &amp; workflows.
           </div>
         </div>
 
@@ -644,5 +742,6 @@ function BlogPostPage() {
         />
       </div>
     </div>
+    </>
   );
 }

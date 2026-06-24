@@ -74,6 +74,9 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+const SITE_URL = "https://puretechnology.in";
+const OG_IMAGE = `${SITE_URL}/og-image.png`;
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
@@ -87,27 +90,49 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         name: "google-site-verification",
         content: "FNJE8ALEdzCZyVLbsSlQpSmWLmavQAytOA4Ppx-d6wg",
       },
-      { title: "Pure Technology — AI, Engineering & Tech Talent from India" },
+      { title: "Pure Technology — AI Product Development & IT Staffing Services in India" },
       {
         name: "description",
         content:
-          "Pure Technology is an India-based engineering partner delivering AI solutions, IT staffing, and product engineering for enterprises across the world.",
+          "Pure Technology is a Bengaluru-based engineering partner specialising in enterprise AI development, IT staffing, and product engineering. Hire vetted Indian engineers and ship AI products that scale.",
       },
       { name: "author", content: "Pure Technology" },
+      // Open Graph
+      {
+        property: "og:site_name",
+        content: "Pure Technology",
+      },
       {
         property: "og:title",
-        content: "Pure Technology — AI, Engineering & Tech Talent from India",
+        content: "Pure Technology — AI Product Development & IT Staffing Services in India",
       },
       {
         property: "og:description",
         content:
-          "India-headquartered engineering partner for AI, staffing, and product engineering.",
+          "Bengaluru-headquartered engineering partner for enterprise AI development, IT staffing, and product engineering. Globally trusted.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: SITE_URL },
+      { property: "og:image", content: OG_IMAGE },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "Pure Technology — AI & IT Staffing from India" },
+      // Twitter / X Card
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@puretechnology" },
+      {
+        name: "twitter:title",
+        content: "Pure Technology — AI Product Development & IT Staffing Services in India",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Bengaluru-headquartered engineering partner for enterprise AI development, IT staffing, and product engineering.",
+      },
+      { name: "twitter:image", content: OG_IMAGE },
     ],
     links: [
+      { rel: "canonical", href: SITE_URL },
       { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
       { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
       { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" },
@@ -126,6 +151,68 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   errorComponent: ErrorComponent,
 });
 
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": ["Organization", "LocalBusiness"],
+  name: "Pure Technology",
+  alternateName: "Pure Technology Pvt. Ltd.",
+  url: "https://puretechnology.in",
+  logo: "https://puretechnology.in/favicon-32x32.png",
+  description:
+    "Pure Technology is a Bengaluru-based AI product development and IT staffing company helping enterprises build scalable AI solutions, hire vetted Indian engineers, and ship SaaS products globally.",
+  foundingDate: "2012",
+  areaServed: ["IN", "US", "AE", "GB", "AU", "SG"],
+  sameAs: [
+    "https://www.linkedin.com/company/pure-technology",
+  ],
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      telephone: "+91-99701-11283",
+      contactType: "sales",
+      areaServed: "Worldwide",
+      availableLanguage: ["English", "Hindi"],
+    },
+    {
+      "@type": "ContactPoint",
+      telephone: "+91-73875-81577",
+      contactType: "customer support",
+      areaServed: "IN",
+      availableLanguage: ["English", "Hindi"],
+    },
+  ],
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "603, White Square, Hinjewadi-Wakad Road, Near Wakad Bridge, Phase 1, Hinjawadi",
+    addressLocality: "Pune",
+    addressRegion: "Maharashtra",
+    postalCode: "411057",
+    addressCountry: "IN",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: "18.5912",
+    longitude: "73.7389",
+  },
+  openingHoursSpecification: {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+    opens: "09:00",
+    closes: "18:00",
+  },
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "AI & IT Services",
+    itemListElement: [
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "AI Product Development" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "IT Staffing & Staff Augmentation" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Product Engineering" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Generative AI Development" } },
+      { "@type": "Offer", itemOffered: { "@type": "Service", name: "Global Capability Center" } },
+    ],
+  },
+};
+
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -139,6 +226,11 @@ function RootShell({ children }: { children: React.ReactNode }) {
               };
             `,
           }}
+        />
+        {/* Organization + LocalBusiness JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
         <script

@@ -808,6 +808,17 @@ export const createBlogAction = createServerFn()
         ? formatDateToString(publishDateVal)
         : formatDateToString(now);
 
+    // ── Content size guard ─────────────────────────────────────────────────
+    const contentStr = String(blogData.content || "");
+    const contentSizeKB = Math.round(Buffer.byteLength(contentStr, "utf8") / 1024);
+    if (contentSizeKB > 900) {
+      throw new Error(
+        `Blog content is too large (${contentSizeKB} KB). Please reduce it to under 900 KB. ` +
+        `Consider splitting very long articles into a series of posts.`,
+      );
+    }
+    // ─────────────────────────────────────────────────────────────────────
+
     const newBlog = {
       ...blogData,
       status,
@@ -844,6 +855,17 @@ export const updateBlogAction = createServerFn()
       status === "scheduled" && publishDateVal
         ? formatDateToString(publishDateVal)
         : blogData.date || formatDateToString(new Date());
+
+    // ── Content size guard ─────────────────────────────────────────────────
+    const contentStr = String(blogData.content || "");
+    const contentSizeKB = Math.round(Buffer.byteLength(contentStr, "utf8") / 1024);
+    if (contentSizeKB > 900) {
+      throw new Error(
+        `Blog content is too large (${contentSizeKB} KB). Please reduce it to under 900 KB. ` +
+        `Consider splitting very long articles into a series of posts.`,
+      );
+    }
+    // ─────────────────────────────────────────────────────────────────────
 
     const finalUpdateData = {
       ...updateData,
@@ -942,10 +964,22 @@ export const getBlogsAction = createServerFn()
       await seedBlogsIfEmpty(db);
 
       const isAdmin = data?.admin || false;
-      let query = {};
 
+      // ── Auto-promote scheduled posts whose publishDate has passed ──────────
+      // This runs on every admin load so the panel reflects the real status.
+      const now = new Date();
+      try {
+        await db.collection("blogs").updateMany(
+          { status: "scheduled", publishDate: { $lte: now } },
+          { $set: { status: "published", updatedAt: now } },
+        );
+      } catch {
+        // Non-fatal: if this update fails, we still return the list
+      }
+      // ─────────────────────────────────────────────────────────────────────
+
+      let query = {};
       if (!isAdmin) {
-        const now = new Date();
         query = {
           $or: [
             { status: "published" },

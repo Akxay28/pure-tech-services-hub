@@ -1,13 +1,10 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Phone, Linkedin, Facebook } from "lucide-react";
+import { CalendarDays, Mail, Phone, Linkedin } from "lucide-react";
 import logo from "@/assets/pure-tech-logo.png";
 
+const CALENDLY_URL = "https://calendly.com/puretechcx/introduction";
+
 const SOCIAL_LINKS = [
-  // {
-  //   label: "Pure Technology on Facebook",
-  //   href: "https://www.facebook.com/puretechnologypune",
-  //   Icon: Facebook,
-  // },
   {
     label: "Pure Technology on LinkedIn",
     href: "https://www.linkedin.com/company/pure-technology",
@@ -57,6 +54,15 @@ export function Footer() {
               SaaS product engineering, enterprise application development, cloud infrastructure,
               cybersecurity, and IT staff augmentation.
             </p>
+            <address className="not-italic text-sm text-muted-foreground leading-relaxed max-w-sm">
+              <strong className="text-foreground">Pure Technology Pvt. Ltd.</strong>
+              <br />
+              603, White Square, Hinjewadi-Wakad Road,
+              <br />
+              Near Wakad Bridge, Phase 1, Hinjawadi,
+              <br />
+              Pune, Maharashtra 411057, India
+            </address>
             <div className="flex items-center gap-3">
               {SOCIAL_LINKS.map(({ label, href, Icon }) => (
                 <a
@@ -115,6 +121,15 @@ export function Footer() {
               >
                 <Mail className="h-4 w-4 mt-0.5 shrink-0" />
                 contact@puretechnology.in
+              </a>
+              <a
+                href={CALENDLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-2 text-muted-foreground hover:text-foreground"
+              >
+                <CalendarDays className="h-4 w-4 mt-0.5 shrink-0" />
+                Schedule an introduction call
               </a>
               {CONTACT_NUMBERS.map((contact) => (
                 <a
@@ -228,6 +243,7 @@ function FlagIcon({ flag }: { flag: (typeof FOOTER_FLAGS)[number]["flag"] }) {
       {Array.from({ length: 30 }).map((_, index) => {
         const row = Math.floor(index / 6);
         const col = index % 6;
+
         return (
           <circle
             key={index}

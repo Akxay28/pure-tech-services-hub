@@ -27,17 +27,21 @@ import { getTestimonialsAction } from "@/lib/admin-actions";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Pure Technology — AI, IT Staffing & Product Engineering in India" },
+      { title: "Pure Technology — AI Product Development & IT Staffing Services in India" },
       {
         name: "description",
         content:
-          "Pure Technology helps enterprises ship AI products, hire vetted Indian engineers, and build SaaS that scales. Bengaluru-headquartered. Globally trusted.",
+          "Pure Technology is a Bengaluru-based AI product development & IT staffing company. Hire vetted Indian engineers, build enterprise AI solutions, and ship SaaS that scales. 13+ years, 80+ clients, 18+ countries.",
       },
-      { property: "og:title", content: "Pure Technology — Engineering partner from India" },
+      { property: "og:title", content: "Pure Technology — AI Product Development & IT Staffing in India" },
       {
         property: "og:description",
-        content: "AI solutions, IT staffing, and product engineering for ambitious enterprises.",
+        content: "Bengaluru-based AI product development, IT staffing & product engineering. Hire vetted Indian engineers for enterprise AI solutions.",
       },
+      { property: "og:url", content: "https://puretechnology.in/" },
+    ],
+    links: [
+      { rel: "canonical", href: "https://puretechnology.in/" },
     ],
   }),
   loader: async () => ({
@@ -439,6 +443,61 @@ function Home() {
                 <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{body}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Location & India Advantage */}
+      <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader
+            eyebrow="India-rooted. Globally delivered."
+            title={
+              <>
+                Why Enterprises Choose{" "}
+                <span className="text-gradient-brand">Pune-Based Engineering Teams.</span>
+              </>
+            }
+            description="India's technology capital is home to over 1.5 million software engineers. Pure Technology taps the top 3% of this talent pool to deliver enterprise-grade AI and product engineering worldwide."
+          />
+
+          <div className="mt-12 grid md:grid-cols-2 gap-6 items-stretch">
+              <div className="glass-card rounded-2xl p-6 flex flex-col">
+                <h3 className="text-lg font-display font-semibold">Pune HQ — India's Emerging Tech Capital</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">
+                  Our headquarters is in Pune, Maharashtra one of India's fastest-growing AI and software engineering hubs. With active delivery teams and access to senior engineers with domain expertise in fintech, healthtech, SaaS, and enterprise AI, we bring Silicon Valley-grade talent at India-scale efficiency.
+                </p>
+              </div>
+              <div className="glass-card rounded-2xl p-6 flex flex-col">
+                <h3 className="text-lg font-display font-semibold">GenAI &amp; LLM Expertise at Scale</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">
+                  India is producing the world's largest number of AI-certified engineers. Our teams hold certifications in AWS, GCP, Azure, LangChain, LangGraph, and OpenAI. We've shipped custom LLM development, RAG systems, AI agents, and GenAI applications for clients in 18+ countries.
+                </p>
+              </div>
+              <div className="glass-card rounded-2xl p-6 flex flex-col">
+                <h3 className="text-lg font-display font-semibold">Cost-Effective Without Compromising Quality</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">
+                  Hiring a senior AI engineer through Pure Technology costs 60–70% less than a US or UK equivalent without sacrificing experience or output quality. Our engineers average 9+ years of real-world delivery experience and work directly in your timezone under our follow-the-sun model.
+                </p>
+              </div>
+              <div className="glass-card rounded-2xl p-6 flex flex-col">
+                <h3 className="text-lg font-display font-semibold">Enterprise AI Solutions for India &amp; Global Clients</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">
+                  From Indian enterprises in BFSI, healthcare, and manufacturing to global SaaS companies in the US and UAE, Pure Technology delivers AI solutions that are production-ready, compliant, and built to scale. Our Pune-based search presence and Google Business Profile consistently rank us for location-specific AI development searches.
+                </p>
+              </div>
+              <div className="glass-card rounded-2xl p-6 flex flex-col">
+                <h3 className="text-lg font-display font-semibold">Google Business Verified Partner in India</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">
+                  Pure Technology Pvt. Ltd. is a registered company in India, headquartered in Pune (Maharashtra), with offices in Ajman (UAE) and Weston, Florida (USA). We operate across IST, EST, and GST time zones, making collaboration seamless for global enterprise clients.
+                </p>
+              </div>
+              <div className="glass-card rounded-2xl p-6 flex flex-col">
+                <h3 className="text-lg font-display font-semibold">Vetted Talent. Zero Surprises.</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">
+                  Every engineer placed through our IT staffing model undergoes a 4-stage technical vetting process — coding assessments, system design reviews, communication evaluations, and domain-specific knowledge checks. You get the same engineer who interviewed, guaranteed for 30 days or replaced at no charge.
+                </p>
+              </div>
           </div>
         </div>
       </section>
