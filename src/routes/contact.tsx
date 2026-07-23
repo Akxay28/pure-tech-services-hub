@@ -299,7 +299,16 @@ function ContactForm() {
         <Field label="Work email" name="email" type="email" required />
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
+        <Field
+          label="Contact number"
+          name="phone"
+          type="tel"
+          autoComplete="tel"
+          required
+        />
         <Field label="Company" name="company" />
+      </div>
+      <div className="grid gap-4">
         <Field label="Role" name="role" />
       </div>
       <div className="grid gap-2">
@@ -362,11 +371,15 @@ function Field({
   name,
   type = "text",
   required,
+  autoComplete,
+  placeholder,
 }: {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
+  autoComplete?: string;
+  placeholder?: string;
 }) {
   return (
     <div className="grid gap-2">
@@ -379,6 +392,8 @@ function Field({
         name={name}
         type={type}
         required={required}
+        autoComplete={autoComplete}
+        placeholder={placeholder}
         className="rounded-xl border border-input bg-surface px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/50"
       />
     </div>
