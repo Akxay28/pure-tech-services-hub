@@ -74,3 +74,11 @@ Financial Services & Banking, Healthcare & Life Sciences, Real Estate & PropTech
 - Careers: https://puretechnology.in/careers
 - Contact: https://puretechnology.in/contact
 - Blog: https://puretechnology.in/blog
+
+## AI Agent Integration
+
+- Agent skills index: https://puretechnology.in/skills.md
+- Public company-information skill: https://puretechnology.in/agent-skills/pure-technology/SKILL.md
+- MCP server card: https://puretechnology.in/.well-known/mcp/server-card.json
+- MCP endpoint: https://puretechnology.in/mcp
+- API catalog: https://puretechnology.in/.well-known/api-catalog

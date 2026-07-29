@@ -16,6 +16,10 @@ const CONTACT_RECIPIENTS = [
   },
 ];
 const DEFAULT_RESEND_FROM = "Pure Technology <anuj@puretechnology.in>";
+const MCP_PROTOCOL_VERSION = "2025-06-18";
+const MCP_SERVER_PATH = "/mcp";
+const MCP_CARD_PATH = "/.well-known/mcp/server-card.json";
+const API_CATALOG_PATH = "/.well-known/api-catalog";
 
 let serverEntryPromise: Promise<ServerEntry> | undefined;
 
@@ -44,6 +48,176 @@ function jsonResponse(body: unknown, init?: ResponseInit): Response {
       "content-type": "application/json; charset=utf-8",
       ...init?.headers,
     },
+  });
+}
+
+function publicOrigin(request: Request) {
+  const url = new URL(request.url);
+  // Use the request origin locally, but publish the canonical public host in production.
+  return url.hostname === "localhost" || url.hostname === "127.0.0.1"
+    ? url.origin
+    : "https://puretechnology.in";
+}
+
+function machineReadableHeaders(contentType: string, extra: HeadersInit = {}) {
+  return {
+    "content-type": contentType,
+    "access-control-allow-origin": "*",
+    "access-control-allow-methods": "GET, POST, HEAD, OPTIONS",
+    "access-control-allow-headers": "content-type, mcp-protocol-version, mcp-session-id",
+    "cache-control": "public, max-age=3600",
+    ...extra,
+  };
+}
+
+function mcpCard(origin: string) {
+  return {
+    $schema: "https://static.modelcontextprotocol.io/schemas/mcp-server-card/v1.json",
+    version: "1.0",
+    protocolVersion: MCP_PROTOCOL_VERSION,
+    serverInfo: {
+      name: "pure-technology",
+      title: "Pure Technology",
+      version: "1.0.0",
+    },
+    description:
+      "Read-only public information about Pure Technology's services, capabilities, and contact options.",
+    iconUrl: `${origin}/favicon-32x32.png`,
+    documentationUrl: `${origin}/skills.md`,
+    transport: { type: "streamable-http", endpoint: MCP_SERVER_PATH },
+    capabilities: { tools: { listChanged: false } },
+    authentication: { required: false },
+    instructions:
+      "Use this server only for public company information. It cannot submit forms, access private data, or make changes.",
+  };
+}
+
+const mcpTools = [
+  {
+    name: "get_company_profile",
+    description:
+      "Get a concise public profile of Pure Technology, including its focus and locations.",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
+    name: "get_services",
+    description: "Get Pure Technology's public service categories and service-page URLs.",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
+    name: "get_contact_options",
+    description: "Get the public sales contact details and enquiry page URL for Pure Technology.",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
+];
+
+function mcpResult(id: unknown, result: unknown) {
+  return jsonResponse(
+    { jsonrpc: "2.0", id: id ?? null, result },
+    { headers: machineReadableHeaders("application/json") },
+  );
+}
+
+function mcpError(id: unknown, code: number, message: string) {
+  return jsonResponse(
+    { jsonrpc: "2.0", id: id ?? null, error: { code, message } },
+    { status: 400, headers: machineReadableHeaders("application/json") },
+  );
+}
+
+async function handleMcpRequest(request: Request): Promise<Response> {
+  if (request.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: machineReadableHeaders("text/plain") });
+  }
+  if (request.method !== "POST") {
+    return new Response("MCP requests must use POST.", {
+      status: 405,
+      headers: machineReadableHeaders("text/plain", { allow: "POST, OPTIONS" }),
+    });
+  }
+
+  let body: { id?: unknown; method?: string; params?: { name?: string } };
+  try {
+    body = (await request.json()) as typeof body;
+  } catch {
+    return mcpError(null, -32700, "Invalid JSON-RPC request.");
+  }
+
+  if (!body || typeof body.method !== "string")
+    return mcpError(body?.id, -32600, "Invalid request.");
+  const origin = publicOrigin(request);
+  if (body.method === "initialize") {
+    return mcpResult(body.id, {
+      protocolVersion: MCP_PROTOCOL_VERSION,
+      capabilities: { tools: { listChanged: false } },
+      serverInfo: mcpCard(origin).serverInfo,
+      instructions: mcpCard(origin).instructions,
+    });
+  }
+  if (body.method === "notifications/initialized") return new Response(null, { status: 202 });
+  if (body.method === "tools/list") return mcpResult(body.id, { tools: mcpTools });
+  if (body.method === "tools/call") {
+    const name = body.params?.name;
+    const data =
+      name === "get_company_profile"
+        ? {
+            name: "Pure Technology Pvt. Ltd.",
+            website: origin,
+            description:
+              "AI product development, product engineering, IT staffing, and GCC setup partner.",
+            founded: 2012,
+            headquarters: "Pune, Maharashtra, India",
+          }
+        : name === "get_services"
+          ? {
+              services: [
+                { name: "AI solutions", url: `${origin}/services/ai-solutions` },
+                { name: "Product engineering", url: `${origin}/services/product-engineering` },
+                { name: "IT staffing", url: `${origin}/services/it-staffing` },
+                {
+                  name: "Global Capability Center",
+                  url: `${origin}/services/global-capability-center`,
+                },
+                { name: "All services", url: `${origin}/services` },
+              ],
+            }
+          : name === "get_contact_options"
+            ? {
+                email: "contact@puretechnology.in",
+                phone: "+91 99701 11283",
+                enquiryPage: `${origin}/contact`,
+              }
+            : undefined;
+    if (!data) return mcpError(body.id, -32602, "Unknown tool.");
+    return mcpResult(body.id, {
+      content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
+      structuredContent: data,
+    });
+  }
+  return mcpError(body.id, -32601, "Method not found.");
+}
+
+function handleApiCatalog(request: Request): Response {
+  const origin = publicOrigin(request);
+  const body = {
+    linkset: [
+      {
+        anchor: `${origin}${API_CATALOG_PATH}`,
+        item: [
+          {
+            href: `${origin}${MCP_SERVER_PATH}`,
+            type: "application/json",
+            title: "Pure Technology public information MCP server",
+          },
+        ],
+      },
+    ],
+  };
+  return new Response(request.method === "HEAD" ? null : JSON.stringify(body, null, 2), {
+    headers: machineReadableHeaders(
+      'application/linkset+json; profile="https://www.rfc-editor.org/info/rfc9727"',
+      { link: `<${API_CATALOG_PATH}>; rel="api-catalog"` },
+    ),
   });
 }
 
@@ -316,6 +490,37 @@ export default {
     }
     try {
       const url = new URL(request.url);
+      if (url.pathname === MCP_SERVER_PATH) {
+        return await handleMcpRequest(request);
+      }
+      if (url.pathname === MCP_CARD_PATH) {
+        if (request.method === "OPTIONS") {
+          return new Response(null, { status: 204, headers: machineReadableHeaders("text/plain") });
+        }
+        if (request.method !== "GET" && request.method !== "HEAD") {
+          return new Response("Method not allowed", {
+            status: 405,
+            headers: { allow: "GET, HEAD, OPTIONS" },
+          });
+        }
+        return new Response(
+          request.method === "HEAD"
+            ? null
+            : JSON.stringify(mcpCard(publicOrigin(request)), null, 2),
+          {
+            headers: machineReadableHeaders("application/json"),
+          },
+        );
+      }
+      if (url.pathname === API_CATALOG_PATH) {
+        if (request.method !== "GET" && request.method !== "HEAD") {
+          return new Response("Method not allowed", {
+            status: 405,
+            headers: { allow: "GET, HEAD" },
+          });
+        }
+        return handleApiCatalog(request);
+      }
       if (url.pathname === "/api/contact") {
         return await handleContactRequest(request, env);
       }

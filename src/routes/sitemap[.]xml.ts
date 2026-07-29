@@ -3,6 +3,7 @@ import type {} from "@tanstack/react-start";
 
 import { HIRE_ROLE_SLUGS } from "@/lib/hire-roles";
 import { subServiceSlugs } from "@/lib/sub-services";
+import { staticBlogs } from "@/lib/static-blogs";
 
 interface SitemapEntry {
   path: string;
@@ -81,6 +82,11 @@ export const Route = createFileRoute("/sitemap.xml")({
             path: `/hire/${slug}`,
             changefreq: "monthly" as const,
             priority: "0.8",
+          })),
+          ...staticBlogs.map((post) => ({
+            path: `/blog/${post.slug}`,
+            changefreq: "monthly" as const,
+            priority: "0.7",
           })),
         ]);
 
