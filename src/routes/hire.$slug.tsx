@@ -7,11 +7,12 @@ export const Route = createFileRoute("/hire/$slug")({
     if (!isHireRoleSlug(params.slug)) throw notFound();
     const entry = getHireRole(params.slug);
     if (!entry) throw notFound();
-    return { entry };
+    return { slug: params.slug };
   },
   head: ({ loaderData }) => {
     if (!loaderData) return {};
-    const { entry } = loaderData;
+    const entry = getHireRole(loaderData.slug);
+    if (!entry) return {};
     const title = `Hire ${entry.roleTitle} — Pure Technology`;
     return {
       meta: [
@@ -34,6 +35,8 @@ export const Route = createFileRoute("/hire/$slug")({
 });
 
 function HireSlugRoute() {
-  const { entry } = Route.useLoaderData();
+  const { slug } = Route.useLoaderData();
+  const entry = getHireRole(slug);
+  if (!entry) throw notFound();
   return <HireRolePage {...entry} />;
 }

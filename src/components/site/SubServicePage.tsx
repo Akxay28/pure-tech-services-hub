@@ -14,6 +14,10 @@ import { CaseStudiesSection } from "./CaseStudiesSection";
 import type { CaseStudy } from "@/lib/case-study";
 import { accentAt, brandIconGradient, outcomeCardThemeAt } from "@/lib/brand-colors";
 import { BrandIconBox } from "@/components/site/Primitives";
+import {
+  TechnologyExpertiseSection,
+  type TechTab,
+} from "@/components/site/TechnologyExpertiseSectionForAiSolutionsPage";
 
 export type CaseStudiesCopy = {
   eyebrow?: string;
@@ -30,9 +34,16 @@ export type SubServicePageProps = {
   heroStats: { value: string; label: string }[];
   whoFor: string[];
   capabilities: { title: string; body: string }[];
+  contentSections?: {
+    eyebrow: string;
+    title: string;
+    description: string;
+    items: { title: string; body: string }[];
+  }[];
   outcomes: { metric: string; label: string; context: string }[];
   process: { title: string; body: string }[];
   tech?: string[];
+  techExpertise?: TechTab[];
   faqs: { q: string; a: string }[];
   siblingLinks: { to: string; label: string }[];
   /** Per-page case study cards — same layout, content from route or getSubServicePageProps() */
@@ -52,7 +63,7 @@ export function SubServicePage(p: SubServicePageProps) {
           <PrimaryButton to="/contact">Talk to a senior engineer</PrimaryButton>
           <GhostButton to="/services">All services</GhostButton>
         </div>
-        <div className="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-3xl">
+        <div className="mt-12 grid max-w-5xl grid-cols-2 gap-4 lg:grid-cols-4">
           {p.heroStats.map((s) => (
             <Stat key={s.label} value={s.value} label={s.label} />
           ))}
@@ -95,10 +106,39 @@ export function SubServicePage(p: SubServicePageProps) {
         </div>
       </section>
 
+      {p.contentSections?.map((section, sectionIndex) => (
+        <section
+          key={section.title}
+          className={sectionIndex % 2 === 0 ? "px-5 lg:px-8 py-20" : "px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border"}
+        >
+          <div className="mx-auto max-w-7xl">
+            <SectionHeader
+              eyebrow={section.eyebrow}
+              title={section.title}
+              description={section.description}
+            />
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {section.items.map((item, index) => (
+                <div key={item.title} className="rounded-2xl border border-border bg-surface p-5 shadow-sm">
+                  <span
+                    className="grid h-8 w-8 place-items-center rounded-full text-sm font-bold text-white"
+                    style={{ background: brandIconGradient(accentAt(index)) }}
+                  >
+                    {index + 1}
+                  </span>
+                  <h3 className="mt-4 font-display text-base font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.body}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      ))}
+
       {p.extraSection}
 
       {/* Capabilities */}
-      <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
+      {!p.contentSections && <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="What we deliver"
@@ -122,7 +162,7 @@ export function SubServicePage(p: SubServicePageProps) {
             ))}
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* Outcomes */}
       <section className="px-5 lg:px-8 py-20">
@@ -169,7 +209,7 @@ export function SubServicePage(p: SubServicePageProps) {
       )}
 
       {/* Process */}
-      {/* <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
+      <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
         <div className="mx-auto max-w-7xl">
           <SectionHeader eyebrow="How we work" title="A repeatable path, every time." />
           <div className="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -189,27 +229,30 @@ export function SubServicePage(p: SubServicePageProps) {
             ))}
           </div>
         </div>
-      </section> */}
+      </section>
 
-      {/* Tech */}
-      {/* {p.tech && p.tech.length > 0 && (
+      {/* Technology expertise */}
+      {p.techExpertise ? (
+        <TechnologyExpertiseSection
+          accent={p.accent}
+          heading={<>Industrial technology your operation can <span className="text-gradient-brand">rely on.</span></>}
+          subheading="We combine industrial data, connected workflows, and secure integrations to make this solution practical for real plant operations."
+          tabs={p.techExpertise}
+        />
+      ) : p.tech && p.tech.length > 0 ? (
         <section className="px-5 lg:px-8 py-16">
           <div className="mx-auto max-w-7xl">
             <SectionHeader eyebrow="Stack" title="Tools we reach for first." />
             <div className="mt-8 flex flex-wrap gap-2.5">
               {p.tech.map((t) => (
-                <span
-                  key={t}
-                  className="rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium"
-                  style={{ color: p.accent }}
-                >
+                <span key={t} className="rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium" style={{ color: p.accent }}>
                   {t}
                 </span>
               ))}
             </div>
           </div>
         </section>
-      )} */}
+      ) : null}
 
       {/* FAQs */}
       <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">

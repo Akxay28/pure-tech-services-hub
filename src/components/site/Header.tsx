@@ -41,6 +41,15 @@ import {
   ClipboardCheck,
   Leaf,
   Activity,
+  BarChart3,
+  FileSearch,
+  Gauge,
+  Lightbulb,
+  PackageSearch,
+  Settings,
+  SlidersHorizontal,
+  TestTube2,
+  Wrench,
   type LucideIcon,
 } from "lucide-react";
 import logo from "@/assets/pure-tech-logo.png";
@@ -238,6 +247,29 @@ const solutionItems: ServiceItem[] = [
     icon: Activity,
     to: "/solutions/predictive-maintenance",
   },
+];
+
+type SolutionTabKey = "ai" | "industrial";
+
+const solutionTabs: { key: SolutionTabKey; label: string; icon: LucideIcon; to: string }[] = [
+  { key: "ai", label: "Industrial AI Solutions", icon: Brain, to: "/solutions" },
+  { key: "industrial", label: "Industrial", icon: Building2, to: "/solutions#industrial" },
+];
+
+const industrialItems: ServiceItem[] = [
+  { title: "Statistical AI", subtitle: "Process intelligence from operational data", icon: BarChart3, to: "/solutions/statistical-ai" },
+  { title: "In-Process Quality & SPC", subtitle: "Catch process drift before defects", icon: SlidersHorizontal, to: "/solutions/in-process-quality-spc" },
+  { title: "CPV & APQR", subtitle: "Continuous process verification and quality review", icon: ClipboardCheck, to: "/solutions/cpv-apqr" },
+  { title: "Gauge & MSA", subtitle: "Trusted measurement and calibration control", icon: Gauge, to: "/solutions/gauge-msa" },
+  { title: "Inspection Management", subtitle: "Incoming, in-process, and outgoing checks", icon: PackageSearch, to: "/solutions/inspection-management" },
+  { title: "Continuous Improvement", subtitle: "Move improvement ideas into measured action", icon: Lightbulb, to: "/solutions/continuous-improvement" },
+  { title: "Maintenance Management", subtitle: "Plan work and improve asset reliability", icon: Wrench, to: "/solutions/maintenance-management" },
+  { title: "DOE & Experiments", subtitle: "Structured process learning and optimisation", icon: TestTube2, to: "/solutions/doe-experiments-management" },
+  { title: "Live Dashboards", subtitle: "Current plant performance in one view", icon: BarChart3, to: "/solutions/live-dashboards" },
+  { title: "Production Management", subtitle: "Track output, downtime, and execution", icon: Settings, to: "/solutions/production-management" },
+  { title: "Data Extractor", subtitle: "Turn files and forms into usable data", icon: FileSearch, to: "/solutions/data-extractor" },
+  { title: "Inventory Management", subtitle: "Control material movements and availability", icon: Boxes, to: "/solutions/inventory-management" },
+  { title: "Vision AI Edge", subtitle: "Line-side visual inspection decisions", icon: Eye, to: "/solutions/vision-ai-edge" },
 ];
 
 // ── Company mega menu ────────────────────────────────────────
@@ -483,6 +515,7 @@ export function Header() {
   const [activeTab, setActiveTab] = useState<TabKey>("team");
   const [activeHireTab, setActiveHireTab] = useState<HireTabKey>("ai");
   const [activeCompanyTab, setActiveCompanyTab] = useState<CompanyTabKey>("about");
+  const [activeSolutionTab, setActiveSolutionTab] = useState<SolutionTabKey>("ai");
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
 
@@ -621,7 +654,7 @@ export function Header() {
                 {activeMenu === "Services" ? (
                   <ServicesMega activeTab={activeTab} setActiveTab={setActiveTab} />
                 ) : activeMenu === "Solutions" ? (
-                  <SolutionsMega />
+                  <SolutionsMega activeTab={activeSolutionTab} setActiveTab={setActiveSolutionTab} />
                 ) : activeMenu === "Hire Developers" ? (
                   <HireDevelopersMega activeTab={activeHireTab} setActiveTab={setActiveHireTab} />
                 ) : activeMenu === "Company" ? (
@@ -797,7 +830,14 @@ function ServicesMega({
   );
 }
 
-function SolutionsMega() {
+function SolutionsMega({
+  activeTab,
+  setActiveTab,
+}: {
+  activeTab: SolutionTabKey;
+  setActiveTab: (tab: SolutionTabKey) => void;
+}) {
+  const items = activeTab === "ai" ? solutionItems : industrialItems;
   return (
     <div className="rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(46,11,125,0.25)] overflow-hidden">
       <div className="grid grid-cols-12 gap-0">
@@ -820,20 +860,32 @@ function SolutionsMega() {
         </div>
 
         <div className="col-span-3 p-5 border-r border-border/60 space-y-2">
-          <Link
-            to="/solutions"
-            className="group flex w-full items-center gap-3 rounded-2xl bg-[color:var(--brand-pink-soft)] px-4 py-3 text-left text-[15px] font-semibold text-[color:var(--brand-purple)] shadow-[0_14px_32px_-16px_rgba(255,77,141,0.5)] transition-all duration-300 hover:-translate-y-0.5"
-          >
-            <span className="grid h-9 w-9 place-items-center rounded-xl bg-white text-[color:var(--brand-pink)]">
-              <Brain className="h-4 w-4" />
-            </span>
-            Industrial AI Solutions
-          </Link>
+          {solutionTabs.map(({ key, label, icon: Icon, to }) => {
+            const isActive = key === activeTab;
+            return (
+              <Link
+                key={key}
+                to={to as never}
+                onMouseEnter={() => setActiveTab(key)}
+                onFocus={() => setActiveTab(key)}
+                className={`group flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-[15px] font-semibold transition-all duration-300 ${
+                  isActive
+                    ? "bg-[color:var(--brand-pink-soft)] text-[color:var(--brand-purple)] shadow-[0_14px_32px_-16px_rgba(255,77,141,0.5)]"
+                    : "text-[color:var(--brand-purple)]/80 hover:bg-[color:var(--brand-pink-soft)]/50"
+                }`}
+              >
+                <span className={`grid h-9 w-9 place-items-center rounded-xl ${isActive ? "bg-white text-[color:var(--brand-pink)]" : "bg-white/70 text-[color:var(--brand-purple)]"}`}>
+                  <Icon className="h-4 w-4" />
+                </span>
+                {label}
+              </Link>
+            );
+          })}
         </div>
 
         <div className="col-span-6 p-6">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-7">
-            {solutionItems.map(({ title, subtitle, icon: Icon, to }) => (
+          <div className="grid max-h-[530px] grid-cols-2 gap-x-8 gap-y-5 overflow-y-auto pr-1">
+            {items.map(({ title, subtitle, icon: Icon, to }) => (
               <Link
                 key={title}
                 to={to as never}

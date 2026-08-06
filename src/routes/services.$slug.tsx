@@ -10,11 +10,12 @@ export const Route = createFileRoute("/services/$slug")({
     }
     const entry = subServices[params.slug];
     if (!entry) throw notFound();
-    return { entry, slug: params.slug };
+    return { slug: params.slug };
   },
   head: ({ loaderData }) => {
     if (!loaderData) return {};
-    const { entry } = loaderData;
+    const entry = subServices[loaderData.slug];
+    if (!entry) return {};
     const title = `${entry.eyebrow} — Pure Technology`;
     return {
       meta: [

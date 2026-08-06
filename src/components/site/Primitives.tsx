@@ -140,8 +140,8 @@ export function SectionHeader({
 
 export function Stat({ value, label }: { value: string; label: string }) {
   return (
-    <div className="glass-card rounded-2xl px-5 py-6">
-      <div className="text-3xl sm:text-4xl font-display font-bold text-gradient-brand">{value}</div>
+    <div className="glass-card min-w-0 rounded-2xl px-4 py-5 sm:px-5 sm:py-6">
+      <div className="break-words text-2xl font-display font-bold leading-[1.08] text-gradient-brand sm:text-3xl lg:text-[2rem]">{value}</div>
       <div className="mt-1 text-sm text-muted-foreground">{label}</div>
     </div>
   );

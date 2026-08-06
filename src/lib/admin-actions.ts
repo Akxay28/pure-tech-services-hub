@@ -147,6 +147,44 @@ function normalizeCaseStudyImage<T extends { client?: string; image?: string }>(
   return image ? { ...item, image } : item;
 }
 
+function toClientCaseStudy(item: any) {
+  const slug = item.slug || (item.client
+    ? item.client
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "")
+    : "");
+
+  return normalizeCaseStudyImage({
+    _id: item._id.toString(),
+    client: String(item.client || ""),
+    sector: String(item.sector || ""),
+    accent: String(item.accent || ""),
+    image: String(item.image || ""),
+    headline: String(item.headline || ""),
+    body: String(item.body || ""),
+    metrics: Array.isArray(item.metrics)
+      ? item.metrics.map((m: any) => ({ v: String(m?.v || ""), l: String(m?.l || "") }))
+      : [],
+    related: String(item.related || ""),
+    projectName: String(item.projectName || ""),
+    objective: String(item.objective || ""),
+    solutions: Array.isArray(item.solutions) ? item.solutions.map(String) : [],
+    challenges: Array.isArray(item.challenges) ? item.challenges.map(String) : [],
+    keyBenefits: Array.isArray(item.keyBenefits)
+      ? item.keyBenefits.map((kb: any) => ({ value: String(kb?.value || ""), label: String(kb?.label || "") }))
+      : [],
+    results: Array.isArray(item.results) ? item.results.map(String) : [],
+    techStack: Array.isArray(item.techStack)
+      ? item.techStack.map((ts: any) => ({ category: String(ts?.category || ""), items: String(ts?.items || ""), icon: String(ts?.icon || "") }))
+      : [],
+    conclusion: String(item.conclusion || ""),
+    slug,
+    createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
+    updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
+  });
+}
+
 type CaptchaProvider = keyof typeof CAPTCHA_VERIFY_URLS;
 type CaptchaConfig = {
   enabled: boolean;
@@ -187,19 +225,31 @@ function formatDateToString(dateInput: Date | string) {
 }
 
 function toClientBlog(item: any) {
-  const fallbackTitle = item.metaTitle || item.title;
-  const fallbackDescription = item.metaDescription || item.excerpt;
+  const fallbackTitle = item.metaTitle || item.title || "";
+  const fallbackDescription = item.metaDescription || item.excerpt || "";
 
   return {
-    ...item,
     _id: item._id.toString(),
+    slug: String(item.slug || ""),
     metaTitle: fallbackTitle,
     metaDescription: fallbackDescription,
-    metaKeywords: item.metaKeywords || "",
+    metaKeywords: String(item.metaKeywords || ""),
+    title: String(item.title || ""),
+    excerpt: String(item.excerpt || ""),
+    author: String(item.author || ""),
+    readTime: String(item.readTime || ""),
+    category: String(item.category || ""),
+    imageTop: String(item.imageTop || ""),
+    imageMiddle: String(item.imageMiddle || ""),
+    descriptionTop: String(item.descriptionTop || ""),
+    descriptionBottom: String(item.descriptionBottom || ""),
+    accent: String(item.accent || ""),
     views: Number(item.views || 0),
-    status: item.status || "published",
+    status: String(item.status || "published"),
     publishDate: item.publishDate ? new Date(item.publishDate).toISOString() : undefined,
     date: item.date || formatDateToString(item.createdAt || new Date()),
+    createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
+    updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
   };
 }
 
@@ -668,12 +718,7 @@ export const getCaseStudiesAction = createServerFn().handler(async () => {
     const { db } = await connectToDatabase();
     const list = await db.collection("case_studies").find({}).sort({ createdAt: -1 }).toArray();
     // Map ObjectId to string to support clean JSON serialization
-    return list.map((item) =>
-      normalizeCaseStudyImage({
-        ...item,
-        _id: item._id.toString(),
-      }),
-    );
+    return list.map(toClientCaseStudy);
   } catch (error) {
     logFallbackWarning(
       "[DB Fallback] Failed to get case studies, falling back to static data:",
@@ -684,7 +729,7 @@ export const getCaseStudiesAction = createServerFn().handler(async () => {
         .toLowerCase()
         .replace(/[^a-z0-9]+/g, "-")
         .replace(/(^-|-$)/g, "");
-      return normalizeCaseStudyImage({
+      return toClientCaseStudy({
         ...item,
         slug,
         _id: `static-${index}`,
@@ -706,7 +751,7 @@ export const getCaseStudyBySlugAction = createServerFn()
             .replace(/(^-|-$)/g, "") === slug,
       );
       if (!item) return null;
-      return normalizeCaseStudyImage({
+      return toClientCaseStudy({
         ...item,
         slug,
         _id: `static-${studies.indexOf(item)}`,
@@ -717,10 +762,7 @@ export const getCaseStudyBySlugAction = createServerFn()
       const { db } = await connectToDatabase();
       const item = await db.collection("case_studies").findOne({ slug });
       if (!item) return getStaticStudy();
-      return normalizeCaseStudyImage({
-        ...item,
-        _id: item._id.toString(),
-      });
+      return toClientCaseStudy(item);
     } catch (error) {
       logFallbackWarning(
         `[DB Fallback] Failed to get case study by slug "${slug}", falling back to static data:`,
@@ -741,10 +783,7 @@ export const getCaseStudyByIdAction = createServerFn()
       const ObjectId = await getObjectIdClass();
       const item = await db.collection("case_studies").findOne({ _id: new ObjectId(id) });
       if (!item) return null;
-      return normalizeCaseStudyImage({
-        ...item,
-        _id: item._id.toString(),
-      });
+      return toClientCaseStudy(item);
     } catch (error) {
       logFallbackWarning(
         `[DB Fallback] Failed to get case study by ID "${id}", falling back to static data:`,
@@ -758,11 +797,11 @@ export const getCaseStudyByIdAction = createServerFn()
             .toLowerCase()
             .replace(/[^a-z0-9]+/g, "-")
             .replace(/(^-|-$)/g, "");
-          return {
+          return toClientCaseStudy({
             ...item,
             slug,
             _id: id,
-          };
+          });
         }
       }
       const index = parseInt(id, 10);
@@ -772,11 +811,11 @@ export const getCaseStudyByIdAction = createServerFn()
           .toLowerCase()
           .replace(/[^a-z0-9]+/g, "-")
           .replace(/(^-|-$)/g, "");
-        return {
+        return toClientCaseStudy({
           ...item,
           slug,
           _id: `static-${index}`,
-        };
+        });
       }
       return null;
     }
@@ -1095,8 +1134,19 @@ export const getBlogByIdAction = createServerFn()
 
 function toClientCareer(item: any) {
   return {
-    ...item,
     _id: item._id.toString(),
+    title: String(item.title || ""),
+    team: String(item.team || ""),
+    location: String(item.location || ""),
+    type: String(item.type || ""),
+    tag: String(item.tag || ""),
+    blurb: String(item.blurb || ""),
+    accent: String(item.accent || "var(--brand-blue)"),
+    description: String(item.description || ""),
+    requirements: Array.isArray(item.requirements) ? item.requirements.map(String) : [],
+    responsibilities: Array.isArray(item.responsibilities) ? item.responsibilities.map(String) : [],
+    benefits: Array.isArray(item.benefits) ? item.benefits.map(String) : [],
+    active: item.active !== false,
     expiresAt: item.expiresAt ? new Date(item.expiresAt).toISOString() : null,
     createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
     updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
@@ -1262,9 +1312,19 @@ type CareerApplicationDocument = Record<string, unknown> & {
 
 function toClientCareerApplication(item: CareerApplicationDocument) {
   return {
-    ...item,
     _id: item._id.toString(),
     careerId: item.careerId?.toString?.() || String(item.careerId || ""),
+    fullName: String(item.fullName || ""),
+    email: String(item.email || ""),
+    phone: String(item.phone || ""),
+    currentCompany: String(item.currentCompany || ""),
+    experience: String(item.experience || ""),
+    location: String(item.location || ""),
+    linkedin: String(item.linkedin || ""),
+    portfolio: String(item.portfolio || ""),
+    noticePeriod: String(item.noticePeriod || ""),
+    message: String(item.message || ""),
+    resumeUrl: String(item.resumeUrl || ""),
     createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
     updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
   };
@@ -1532,8 +1592,17 @@ async function seedTestimonialsIfEmpty(db: any) {
 
 function toClientTestimonial(item: any) {
   return {
-    ...item,
     _id: item._id.toString(),
+    quote: String(item.quote || ""),
+    name: String(item.name || ""),
+    role: String(item.role || ""),
+    company: String(item.company || ""),
+    initials: String(item.initials || ""),
+    accent: String(item.accent || ""),
+    project: String(item.project || ""),
+    avatar: String(item.avatar || ""),
+    order: Number(item.order || 0),
+    active: item.active !== false,
     createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
     updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
   };
