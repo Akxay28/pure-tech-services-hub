@@ -848,7 +848,7 @@ export const createBlogAction = createServerFn()
         : formatDateToString(now);
 
     // ── Content size guard ─────────────────────────────────────────────────
-    const contentStr = String(blogData.content || "");
+    const contentStr = String(blogData.descriptionTop || "") + String(blogData.descriptionBottom || "");
     const contentSizeKB = Math.round(Buffer.byteLength(contentStr, "utf8") / 1024);
     if (contentSizeKB > 900) {
       throw new Error(
@@ -896,7 +896,7 @@ export const updateBlogAction = createServerFn()
         : blogData.date || formatDateToString(new Date());
 
     // ── Content size guard ─────────────────────────────────────────────────
-    const contentStr = String(blogData.content || "");
+    const contentStr = String(blogData.descriptionTop || "") + String(blogData.descriptionBottom || "");
     const contentSizeKB = Math.round(Buffer.byteLength(contentStr, "utf8") / 1024);
     if (contentSizeKB > 900) {
       throw new Error(

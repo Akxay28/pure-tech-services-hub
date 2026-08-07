@@ -435,6 +435,17 @@ export function BlogForm({
     publishDate: initialData?.publishDate ? formatToDatetimeLocal(initialData.publishDate) : "",
   });
 
+  const plainTextTop = htmlToPlainText(formData.descriptionTop);
+  const plainTextBottom = htmlToPlainText(formData.descriptionBottom);
+  const contentCombined = plainTextTop + plainTextBottom;
+  const totalContentBytes = typeof Blob !== "undefined"
+    ? new Blob([contentCombined]).size
+    : typeof Buffer !== "undefined"
+    ? Buffer.byteLength(contentCombined, "utf8")
+    : contentCombined.length;
+  const totalContentKB = Math.round((totalContentBytes / 1024) * 10) / 10;
+  const isOverLimit = totalContentKB > 900;
+
   function formatSlug(value: string) {
     return value
       .toLowerCase()
@@ -736,6 +747,40 @@ export function BlogForm({
           </div>
         </div>
 
+        {/* Content Size Limit Indicator */}
+        <div className={`p-5 rounded-2xl border transition-all ${
+          isOverLimit
+            ? "border-red-500/30 bg-red-500/5 text-red-500"
+            : totalContentKB > 750
+            ? "border-amber-500/30 bg-amber-500/5 text-amber-500"
+            : "border-border bg-background/30 text-muted-foreground"
+        }`}>
+          <div className="flex justify-between items-center text-xs font-semibold mb-2">
+            <span className="flex items-center gap-1.5">
+              Blog Content Size Limit
+              {isOverLimit && <span className="text-red-500">(Exceeded)</span>}
+            </span>
+            <span>{totalContentKB} KB / 900 KB</span>
+          </div>
+          <div className="h-2 w-full bg-border/40 rounded-full overflow-hidden">
+            <div
+              className={`h-full transition-all duration-300 ${
+                isOverLimit ? "bg-red-500" : totalContentKB > 750 ? "bg-amber-500" : "bg-foreground"
+              }`}
+              style={{ width: `${Math.min((totalContentKB / 900) * 100, 100)}%` }}
+            />
+          </div>
+          <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+            {isOverLimit ? (
+              <span className="text-red-500 font-medium">
+                ⚠️ Your content is too large by {(totalContentKB - 900).toFixed(1)} KB. Please shorten the post or split it into multiple parts.
+              </span>
+            ) : (
+              "Keep your content size under 900 KB to avoid save failures."
+            )}
+          </p>
+        </div>
+
         {/* Submit Actions */}
         <div className="flex items-center justify-end gap-3">
           <Link
@@ -746,7 +791,7 @@ export function BlogForm({
           </Link>
           <button
             type="submit"
-            disabled={loading}
+            disabled={loading || isOverLimit}
             className="px-6 py-3.5 bg-foreground text-background rounded-2xl text-sm font-semibold hover:opacity-90 shadow-soft transition-all disabled:opacity-50 cursor-pointer"
           >
             {loading ? "Saving..." : "Save Blog Post"}
