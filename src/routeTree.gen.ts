@@ -28,6 +28,7 @@ import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as CareersIndexRouteImport } from './routes/careers.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as SolutionsAiVideoSurveillanceRouteImport } from './routes/solutions.ai-video-surveillance'
 import { Route as SolutionsSlugRouteImport } from './routes/solutions.$slug'
 import { Route as ServicesWebApplicationDevelopmentRouteImport } from './routes/services.web-application-development'
 import { Route as ServicesSoftwareDevelopmentRouteImport } from './routes/services.software-development'
@@ -184,6 +185,12 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const SolutionsAiVideoSurveillanceRoute =
+  SolutionsAiVideoSurveillanceRouteImport.update({
+    id: '/ai-video-surveillance',
+    path: '/ai-video-surveillance',
+    getParentRoute: () => SolutionsRoute,
+  } as any)
 const SolutionsSlugRoute = SolutionsSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -566,6 +573,7 @@ export interface FileRoutesByFullPath {
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/solutions/ai-video-surveillance': typeof SolutionsAiVideoSurveillanceRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/careers/': typeof CareersIndexRoute
@@ -642,6 +650,7 @@ export interface FileRoutesByTo {
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/solutions/ai-video-surveillance': typeof SolutionsAiVideoSurveillanceRoute
   '/admin': typeof AdminIndexRoute
   '/blog': typeof BlogIndexRoute
   '/careers': typeof CareersIndexRoute
@@ -724,6 +733,7 @@ export interface FileRoutesById {
   '/services/software-development': typeof ServicesSoftwareDevelopmentRoute
   '/services/web-application-development': typeof ServicesWebApplicationDevelopmentRoute
   '/solutions/$slug': typeof SolutionsSlugRoute
+  '/solutions/ai-video-surveillance': typeof SolutionsAiVideoSurveillanceRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/': typeof BlogIndexRoute
   '/careers/': typeof CareersIndexRoute
@@ -807,6 +817,7 @@ export interface FileRouteTypes {
     | '/services/software-development'
     | '/services/web-application-development'
     | '/solutions/$slug'
+    | '/solutions/ai-video-surveillance'
     | '/admin/'
     | '/blog/'
     | '/careers/'
@@ -883,6 +894,7 @@ export interface FileRouteTypes {
     | '/services/software-development'
     | '/services/web-application-development'
     | '/solutions/$slug'
+    | '/solutions/ai-video-surveillance'
     | '/admin'
     | '/blog'
     | '/careers'
@@ -964,6 +976,7 @@ export interface FileRouteTypes {
     | '/services/software-development'
     | '/services/web-application-development'
     | '/solutions/$slug'
+    | '/solutions/ai-video-surveillance'
     | '/admin/'
     | '/blog/'
     | '/careers/'
@@ -1155,6 +1168,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/solutions/ai-video-surveillance': {
+      id: '/solutions/ai-video-surveillance'
+      path: '/ai-video-surveillance'
+      fullPath: '/solutions/ai-video-surveillance'
+      preLoaderRoute: typeof SolutionsAiVideoSurveillanceRouteImport
+      parentRoute: typeof SolutionsRoute
     }
     '/solutions/$slug': {
       id: '/solutions/$slug'
@@ -1709,11 +1729,13 @@ const ServicesRouteWithChildren = ServicesRoute._addFileChildren(
 
 interface SolutionsRouteChildren {
   SolutionsSlugRoute: typeof SolutionsSlugRoute
+  SolutionsAiVideoSurveillanceRoute: typeof SolutionsAiVideoSurveillanceRoute
   SolutionsIndexRoute: typeof SolutionsIndexRoute
 }
 
 const SolutionsRouteChildren: SolutionsRouteChildren = {
   SolutionsSlugRoute: SolutionsSlugRoute,
+  SolutionsAiVideoSurveillanceRoute: SolutionsAiVideoSurveillanceRoute,
   SolutionsIndexRoute: SolutionsIndexRoute,
 }
 

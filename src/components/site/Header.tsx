@@ -255,7 +255,7 @@ type SolutionTabKey = "ai" | "industrial" | "surveillance";
 const solutionTabs: { key: SolutionTabKey; label: string; icon: LucideIcon; to: string }[] = [
   { key: "ai", label: "Industrial AI Solutions", icon: Brain, to: "/solutions" },
   { key: "industrial", label: "Industrial", icon: Building2, to: "/solutions#industrial" },
-  { key: "surveillance", label: "AI Video Surveillance", icon: Eye, to: "/solutions#surveillance" },
+  { key: "surveillance", label: "AI Video Surveillance", icon: Eye, to: "/solutions/ai-video-surveillance" },
 ];
 
 const industrialItems: ServiceItem[] = [
