@@ -81,7 +81,7 @@ function SolutionRoute() {
       {...entry} 
       extraSection={ExtraSection ? <ExtraSection imageSrc={entry.extraSectionImage} /> : undefined}
       caseStudies={caseStudies.length > 0 ? caseStudies : (entry.caseStudies || [])}
-      showCaseStudies={caseStudies.length > 0 || !!entry.showCaseStudies}
+      showCaseStudies={surveillanceSlugs.includes(slug) ? false : (caseStudies.length > 0 || !!entry.showCaseStudies)}
     />
   );
 }
