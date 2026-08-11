@@ -1,3 +1,4 @@
+import React from "react";
 import { ShieldCheck, Activity, Users, Eye, Flame, type LucideIcon } from "lucide-react";
 import type { SubServicePageProps } from "@/components/site/SubServicePage";
 import { BRAND } from "@/lib/brand-colors";
@@ -29,6 +30,92 @@ export const surveillanceTechExpertise = [
     ],
   },
 ];
+
+// Safety Section Component
+const SafetySection = (
+  <section className="px-5 lg:px-8 py-20 bg-surface border-y border-border">
+    <div className="mx-auto max-w-7xl">
+      <div className="grid lg:grid-cols-12 gap-12 items-center">
+        <div className="lg:col-span-6 space-y-6">
+          <div className="flex items-center gap-3">
+            <span className="px-3.5 py-1 bg-brand-pink-soft text-brand-pink text-xs font-semibold rounded-full uppercase">Safety</span>
+            <h3 className="text-2xl font-display font-bold">Proactive Risk Mitigation</h3>
+          </div>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            Transform standard cameras into an active safety net, verifying compliance and protecting lives.
+          </p>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              { title: "PPE Compliance Detection", desc: "Automatically monitor for helmets, vests, and safety glasses.", imp: "Near-100% policy adherence." },
+              { title: "Fall & Man-Down Detection", desc: "Instant alert if an employee falls or remains immobile in hazards.", imp: "Drastically cut response time." },
+              { title: "Fire & Smoke Detection", desc: "Visual fire indicators from cameras in high-ceiling facilities.", imp: "Visual alert within 3 seconds." },
+              { title: "Pedestrian-Vehicle Proximity", desc: "Detects proximity events between workers and moving machinery.", imp: "Eliminate blind-spot collisions." },
+            ].map((c) => (
+              <div key={c.title} className="rounded-2xl border border-border bg-surface-muted/40 p-5 space-y-2">
+                <h4 className="text-sm font-semibold">{c.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{c.desc}</p>
+                <p className="text-xs text-primary font-medium">Improvement: {c.imp}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="lg:col-span-6">
+          <div className="rounded-3xl border border-border overflow-hidden bg-surface-muted/30 p-3 shadow-lg">
+            <img
+              src="/homeCaseStudy/surveillance-safety.png"
+              alt="Workplace Safety AI Analytics"
+              className="w-full h-auto rounded-2xl object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+// Security Section Component
+const SecuritySection = (
+  <section className="px-5 lg:px-8 py-20 bg-surface border-y border-border">
+    <div className="mx-auto max-w-7xl">
+      <div className="grid lg:grid-cols-12 gap-12 items-center">
+        <div className="lg:col-span-6 lg:order-2 space-y-6">
+          <div className="flex items-center gap-3">
+            <span className="px-3.5 py-1 bg-brand-blue-soft text-brand-blue text-xs font-semibold rounded-full uppercase">Security</span>
+            <h3 className="text-2xl font-display font-bold">Intelligent Perimeter & Asset Defense</h3>
+          </div>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            Move beyond static recording to active threat identification, lockdown triggers, and access control audit.
+          </p>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            {[
+              { title: "Intrusion Detection", desc: "Alerts for unauthorized entry into restricted zones or outer fences.", imp: "Replaces manual security patrols." },
+              { title: "Weapon Detection", desc: "AI detection of firearms in public or sensitive workplace zones.", imp: "Buys critical response seconds." },
+              { title: "Tailgating Detection", desc: "Identify when unauthorized persons follow employees through badges.", imp: "Closes physical access gaps." },
+              { title: "Unauthorized Person Detection", desc: "Flag individuals in no-go administrative areas or plant zones.", imp: "Automatic access compliance." },
+            ].map((c) => (
+              <div key={c.title} className="rounded-2xl border border-border bg-surface-muted/40 p-5 space-y-2">
+                <h4 className="text-sm font-semibold">{c.title}</h4>
+                <p className="text-xs text-muted-foreground leading-relaxed">{c.desc}</p>
+                <p className="text-xs text-primary font-medium">Improvement: {c.imp}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="lg:col-span-6 lg:order-1">
+          <div className="rounded-3xl border border-border overflow-hidden bg-surface-muted/30 p-3 shadow-lg">
+            <img
+              src="/homeCaseStudy/surveillance-security.png"
+              alt="Security & Perimeter Defense AI"
+              className="w-full h-auto rounded-2xl object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+);
 
 export const surveillanceSolutions: Record<string, SubServicePageProps & { title: string }> = {
   "intrusion-detection": {
@@ -65,6 +152,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     ],
     tech: ["YOLOv8", "RTSP Streams", "Zone Masking", "NVIDIA Edge", "SMS/WhatsApp Alerts"],
     techExpertise: surveillanceTechExpertise,
+    extraSection: SecuritySection,
     faqs: [
       { q: "Does this require special cameras?", a: "No. It works with standard IP cameras supporting RTSP/ONVIF." },
       { q: "How are false alarms handled?", a: "The AI filters out small animals, wind-blown vegetation, and shadow shifts." },
@@ -109,6 +197,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     ],
     tech: ["Object Detection", "CUDA", "Low-latency streaming", "Emergency Alert System (EAS) Integration"],
     techExpertise: surveillanceTechExpertise,
+    extraSection: SecuritySection,
     faqs: [
       { q: "Can it detect concealed weapons?", a: "No, this is visual-based AI. It detects weapons once they are brandished or visible on camera." },
       { q: "How does it handle holstered firearms?", a: "The AI can be configured to ignore holstered weapons on authorized security personnel." },
@@ -153,6 +242,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     ],
     tech: ["Flame Detection ML", "Smoke Detection models", "Relay Controllers", "ONVIF Streams"],
     techExpertise: surveillanceTechExpertise,
+    extraSection: SafetySection,
     faqs: [
       { q: "Will steam or dust trigger false alarms?", a: "No. The model is delayed on heat movement and visual textures to filter out steam, dust, and vehicle exhaust." },
       { q: "Does it replace standard fire alarms?", a: "No. It serves as an early visual warning system, supplementing your primary fire alarm compliance hardware." },
@@ -197,6 +287,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     ],
     tech: ["Tailgating Detection", "Access Control API", "ONVIF cameras", "Edge AI"],
     techExpertise: surveillanceTechExpertise,
+    extraSection: SecuritySection,
     faqs: [
       { q: "Can it run on-premises?", a: "Yes. All access control data stays local for maximum security." },
       { q: "Does it support facial recognition?", a: "Optionally, yes, or it can operate strictly on person counting and tailgating shapes to maintain privacy." },
@@ -241,6 +332,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     ],
     tech: ["PTZ Auto-Tracking", "Thermal Camera Analytics", "Boundary tripwires"],
     techExpertise: surveillanceTechExpertise,
+    extraSection: SecuritySection,
     faqs: [
       { q: "Does it work in complete darkness?", a: "Yes, when integrated with infrared or thermal cameras." },
       { q: "How long is the fence line range?", a: "Depending on camera optics, the system can detect human shapes up to 300 meters away." },
