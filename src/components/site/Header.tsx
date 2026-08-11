@@ -247,6 +247,12 @@ const solutionItems: ServiceItem[] = [
     icon: Activity,
     to: "/solutions/predictive-maintenance",
   },
+  {
+    title: "AI Video Surveillance",
+    subtitle: "Real-time perimeter, intrusion, and threat detection",
+    icon: Eye,
+    to: "/solutions/ai-video-surveillance",
+  },
 ];
 
 type SolutionTabKey = "ai" | "industrial";

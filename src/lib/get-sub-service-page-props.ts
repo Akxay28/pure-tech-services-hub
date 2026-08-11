@@ -19,6 +19,7 @@ const CASE_STUDY_SERVICE_SLUGS = new Set<SubServiceSlug>([
   "generative-ai-development",
   "ai-agents-development",
   "ai-integration",
+  "ai-video-surveillance",
 ]);
 
 export function getSubServicePageProps(slug: SubServiceSlug): SubServicePageProps & {

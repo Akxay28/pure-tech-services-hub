@@ -670,6 +670,35 @@ export const caseStudiesByService: Record<SubServiceSlug, CaseStudy[]> = {
       accent: "var(--brand-green)",
     },
   ],
+
+  "ai-video-surveillance": [
+    {
+      client: "Adani Logistics Yard",
+      industry: "Logistics & Infrastructure",
+      challenge: "Manual CCTV monitoring across a 200-acre yard failed to detect perimeter intrusions in blind spots, leading to asset loss.",
+      outcome: "Deployed Edge AI Video Analytics across 42 existing ONVIF cameras. Instant alerts for zone breaches cut intrusion escapes to zero in the first 90 days.",
+      image: "/homeCaseStudy/ai-video-surveillance.png",
+      metrics: [
+        { value: "100%", label: "Intrusion detection" },
+        { value: "<1s", label: "Alert response" },
+        { value: "0", label: "Security breaches" },
+      ],
+      accent: "var(--brand-blue)",
+    },
+    {
+      client: "Tata AutoComp Systems",
+      industry: "Manufacturing",
+      challenge: "Traditional fire sensors had high latency in open factory bays, risking catastrophic asset damage before visual detection.",
+      outcome: "Trained and deployed a visual fire & smoke detection model on overhead camera feeds, triggering alarm relays within 3 seconds of ignition.",
+      image: "/homeCaseStudy/ai-video-surveillance.png",
+      metrics: [
+        { value: "<3s", label: "Detection speed" },
+        { value: "99.4%", label: "Smoke accuracy" },
+        { value: "Zero", label: "False alarms" },
+      ],
+      accent: "var(--brand-red)",
+    },
+  ],
 };
 
 /** Main practice pages (ServicePage) — same shape, separate keys */

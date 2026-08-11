@@ -1226,6 +1226,55 @@ export const subServices: Record<string, Entry> = {
       { to: "/services/cloud-infrastructure", label: "Cloud & Infrastructure" },
     ],
   },
+
+  "ai-video-surveillance": {
+    eyebrow: "AI Video Surveillance",
+    title: "AI video analytics that turn feeds into proactive security.",
+    lede: "Deploy advanced computer vision models to monitor perimeters, detect intrusions, recognize weapons, and identify early fire or smoke hazards in real-time.",
+    accent: BRAND.blue,
+    Icon: Eye,
+    heroStats: [
+      { value: "24/7", label: "Automated vigilance" },
+      { value: "<1s", label: "Alert latency" },
+      { value: "98%+", label: "Target accuracy" },
+      { value: "Edge-first", label: "Inference ready" },
+    ],
+    whoFor: [
+      "Security and operations teams wanting to replace manual video-wall monitoring.",
+      "Industrial sites, campus facilities, and warehouses needing active perimeter guard.",
+      "EHS managers implementing early threat, fire, and safety breach detection.",
+      "Critical infrastructure sites requiring automated boundary alerts.",
+    ],
+    capabilities: [
+      { title: "Intrusion Detection", body: "Real-time alerts for unauthorized entry into restricted zones or perimeters, removing manual monitoring fatigue." },
+      { title: "Weapon Detection", body: "AI identification of firearms or dangerous objects in public or sensitive spaces to provide critical seconds for response." },
+      { title: "Fire & Smoke Detection", body: "Early visual fire and smoke alerts from camera feeds in areas where traditional sensors fail." },
+      { title: "Unauthorized Access Alerts", body: "Flags unauthorized people in no-go areas and spots tailgating at access points." },
+      { title: "Perimeter Monitoring", body: "Continuous boundary and fence-line watch with high-precision threat detection that minimizes false alarms." },
+    ],
+    outcomes: [
+      { metric: "98%+", label: "Detection accuracy", context: "High-precision model minimizes false triggers from weather, shadows, and animals." },
+      { metric: "<1s", label: "Alert response", context: "Instant alert routing to security teams with location and video evidence." },
+      { metric: "24/7", label: "Fence-line watch", context: "Replaces manual video wall monitoring with reliable, automated active defense." },
+    ],
+    process: [
+      { title: "Map target zones", body: "We audit existing camera positions, lighting conditions, and define target alert zones." },
+      { title: "Tune models", body: "Configure detection models (intrusion, weapon, fire) for your specific environments and lighting." },
+      { title: "Integrate alerts", body: "Connect alerts to local security desks, mobile notifications, and alarm systems." },
+      { title: "Continuous guard", body: "Go live with continuous surveillance, performance reviews, and threshold tuning." },
+    ],
+    tech: ["Computer Vision", "YOLOv8", "RTSP", "ONVIF", "Edge Inference", "Smart Alerts", "CMMS/Ticketing"],
+    faqs: [
+      { q: "Can this work with our existing CCTV cameras?", a: "Yes. As long as your cameras support standard RTSP/ONVIF streams and provide a clear view of the target zones, our system can process their feeds without requiring hardware replacement." },
+      { q: "How does it handle false alarms (e.g. animals or shadows)?", a: "Our models are trained to differentiate human/vehicle activity from shadows, wind, and animals, drastically reducing false alarms compared to traditional motion sensors." },
+      { q: "Where does the video processing happen?", a: "Processing can be deployed on-premises using local edge servers (NVIDIA Jetson / server rigs) for low latency and zero bandwidth usage, or in your secure private cloud." },
+    ],
+    siblingLinks: [
+      { to: "/solutions/ai-visual-inspection", label: "AI Visual Inspection" },
+      { to: "/solutions/workplace-safety", label: "Workplace Safety" },
+      { to: "/solutions/ai-people-counting", label: "AI People Counting" },
+    ],
+  },
 };
 
 export const subServiceSlugs = Object.keys(subServices);
@@ -1237,6 +1286,7 @@ export const solutionSlugs = [
   "ai-people-counting",
   "operational-sustainability",
   "predictive-maintenance",
+  "ai-video-surveillance",
 ] as const;
 
 export type SolutionSlug = (typeof solutionSlugs)[number];
