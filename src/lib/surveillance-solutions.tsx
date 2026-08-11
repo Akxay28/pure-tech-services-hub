@@ -31,8 +31,8 @@ export const surveillanceTechExpertise = [
   },
 ];
 
-// Safety Section Component (Functional)
-export const SafetySection: React.FC = () => (
+// Safety Section Component (Functional with imageSrc prop)
+export const SafetySection: React.FC<{ imageSrc?: string }> = ({ imageSrc }) => (
   <section className="px-5 lg:px-8 py-20 bg-surface border-y border-border">
     <div className="mx-auto max-w-7xl">
       <div className="grid lg:grid-cols-12 gap-12 items-center">
@@ -63,7 +63,7 @@ export const SafetySection: React.FC = () => (
         <div className="lg:col-span-6">
           <div className="rounded-3xl border border-border overflow-hidden bg-surface-muted/30 p-3 shadow-lg">
             <img
-              src="/homeCaseStudy/surveillance-safety.png"
+              src={imageSrc || "/homeCaseStudy/surveillance-safety.png"}
               alt="Workplace Safety AI Analytics"
               className="w-full h-auto rounded-2xl object-cover"
             />
@@ -74,8 +74,8 @@ export const SafetySection: React.FC = () => (
   </section>
 );
 
-// Security Section Component (Functional)
-export const SecuritySection: React.FC = () => (
+// Security Section Component (Functional with imageSrc prop)
+export const SecuritySection: React.FC<{ imageSrc?: string }> = ({ imageSrc }) => (
   <section className="px-5 lg:px-8 py-20 bg-surface border-y border-border">
     <div className="mx-auto max-w-7xl">
       <div className="grid lg:grid-cols-12 gap-12 items-center">
@@ -106,7 +106,7 @@ export const SecuritySection: React.FC = () => (
         <div className="lg:col-span-6 lg:order-1">
           <div className="rounded-3xl border border-border overflow-hidden bg-surface-muted/30 p-3 shadow-lg">
             <img
-              src="/homeCaseStudy/surveillance-security.png"
+              src={imageSrc || "/homeCaseStudy/surveillance-security.png"}
               alt="Security & Perimeter Defense AI"
               className="w-full h-auto rounded-2xl object-cover"
             />
@@ -117,7 +117,7 @@ export const SecuritySection: React.FC = () => (
   </section>
 );
 
-export const surveillanceSolutions: Record<string, SubServicePageProps & { title: string }> = {
+export const surveillanceSolutions: Record<string, SubServicePageProps & { title: string, extraSectionImage?: string }> = {
   "intrusion-detection": {
     eyebrow: "AI Video Surveillance",
     title: "Intrusion Detection",
@@ -153,6 +153,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     tech: ["YOLOv8", "RTSP Streams", "Zone Masking", "NVIDIA Edge", "SMS/WhatsApp Alerts"],
     techExpertise: surveillanceTechExpertise,
     extraSection: SecuritySection,
+    extraSectionImage: "/homeCaseStudy/surveillance-security.png",
     faqs: [
       { q: "Does this require special cameras?", a: "No. It works with standard IP cameras supporting RTSP/ONVIF." },
       { q: "How are false alarms handled?", a: "The AI filters out small animals, wind-blown vegetation, and shadow shifts." },
@@ -198,6 +199,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     tech: ["Object Detection", "CUDA", "Low-latency streaming", "Emergency Alert System (EAS) Integration"],
     techExpertise: surveillanceTechExpertise,
     extraSection: SecuritySection,
+    extraSectionImage: "/homeCaseStudy/surveillance-weapon.png",
     faqs: [
       { q: "Can it detect concealed weapons?", a: "No, this is visual-based AI. It detects weapons once they are brandished or visible on camera." },
       { q: "How does it handle holstered firearms?", a: "The AI can be configured to ignore holstered weapons on authorized security personnel." },
@@ -231,7 +233,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
       { title: "Automated Relays", body: "Send signals directly to fire alarm control panels or local sprinkler solenoids." },
     ],
     outcomes: [
-      { metric: "<3s", label: "Detection speed", context: "Flags flames visual triggers immediately upon ignition." },
+      { metric: "<3s", label: "Detection speed", context: "Flags visual triggers immediately upon ignition." },
       { metric: "99.4%", label: "Accuracy rate", context: "Avoids false positives from steam, dust, or welding arcs." },
       { metric: "Zero", label: "Escapes", context: "Provides visual safety net over critical materials." },
     ],
@@ -243,8 +245,9 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     tech: ["Flame Detection ML", "Smoke Detection models", "Relay Controllers", "ONVIF Streams"],
     techExpertise: surveillanceTechExpertise,
     extraSection: SafetySection,
+    extraSectionImage: "/homeCaseStudy/surveillance-fire.png",
     faqs: [
-      { q: "Will steam or dust trigger false alarms?", a: "No. The model is delayed on heat movement and visual textures to filter out steam, dust, and vehicle exhaust." },
+      { q: "Will steam or dust trigger false alarms?", a: "No. The model is trained on heat movement and visual textures to filter out steam, dust, and vehicle exhaust." },
       { q: "Does it replace standard fire alarms?", a: "No. It serves as an early visual warning system, supplementing your primary fire alarm compliance hardware." },
     ],
     siblingLinks: [
@@ -288,6 +291,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     tech: ["Tailgating Detection", "Access Control API", "ONVIF cameras", "Edge AI"],
     techExpertise: surveillanceTechExpertise,
     extraSection: SecuritySection,
+    extraSectionImage: "/homeCaseStudy/surveillance-access.png",
     faqs: [
       { q: "Can it run on-premises?", a: "Yes. All access control data stays local for maximum security." },
       { q: "Does it support facial recognition?", a: "Optionally, yes, or it can operate strictly on person counting and tailgating shapes to maintain privacy." },
@@ -333,6 +337,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     tech: ["PTZ Auto-Tracking", "Thermal Camera Analytics", "Boundary tripwires"],
     techExpertise: surveillanceTechExpertise,
     extraSection: SecuritySection,
+    extraSectionImage: "/homeCaseStudy/surveillance-security.png",
     faqs: [
       { q: "Does it work in complete darkness?", a: "Yes, when integrated with infrared or thermal cameras." },
       { q: "How long is the fence line range?", a: "Depending on camera optics, the system can detect human shapes up to 300 meters away." },
