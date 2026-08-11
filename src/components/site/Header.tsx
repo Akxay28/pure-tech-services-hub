@@ -50,6 +50,7 @@ import {
   SlidersHorizontal,
   TestTube2,
   Wrench,
+  Flame,
   type LucideIcon,
 } from "lucide-react";
 import logo from "@/assets/pure-tech-logo.png";
@@ -247,19 +248,14 @@ const solutionItems: ServiceItem[] = [
     icon: Activity,
     to: "/solutions/predictive-maintenance",
   },
-  {
-    title: "AI Video Surveillance",
-    subtitle: "Real-time perimeter, intrusion, and threat detection",
-    icon: Eye,
-    to: "/solutions/ai-video-surveillance",
-  },
 ];
 
-type SolutionTabKey = "ai" | "industrial";
+type SolutionTabKey = "ai" | "industrial" | "surveillance";
 
 const solutionTabs: { key: SolutionTabKey; label: string; icon: LucideIcon; to: string }[] = [
   { key: "ai", label: "Industrial AI Solutions", icon: Brain, to: "/solutions" },
   { key: "industrial", label: "Industrial", icon: Building2, to: "/solutions#industrial" },
+  { key: "surveillance", label: "AI Video Surveillance", icon: Eye, to: "/solutions#surveillance" },
 ];
 
 const industrialItems: ServiceItem[] = [
@@ -275,6 +271,14 @@ const industrialItems: ServiceItem[] = [
   { title: "Production Management", subtitle: "Track output, downtime, and execution", icon: Settings, to: "/solutions/production-management" },
   { title: "Data Extractor", subtitle: "Turn files and forms into usable data", icon: FileSearch, to: "/solutions/data-extractor" },
   { title: "Inventory Management", subtitle: "Control material movements and availability", icon: Boxes, to: "/solutions/inventory-management" },
+];
+
+const surveillanceItems: ServiceItem[] = [
+  { title: "Intrusion Detection", subtitle: "Alerts for unauthorized entry", icon: ShieldCheck, to: "/solutions/intrusion-detection" },
+  { title: "Weapon Detection", subtitle: "Identifies firearms or dangerous objects", icon: ShieldCheck, to: "/solutions/weapon-detection" },
+  { title: "Fire & Smoke Detection", subtitle: "Early visual fire alerts from camera feeds", icon: Flame, to: "/solutions/fire-smoke-detection" },
+  { title: "Unauthorized Access Alerts", subtitle: "Flags people in no-go areas", icon: Users, to: "/solutions/unauthorized-access-alerts" },
+  { title: "Perimeter Monitoring", subtitle: "24/7 boundary/fence-line watch", icon: Eye, to: "/solutions/perimeter-monitoring" },
 ];
 
 // ── Company mega menu ────────────────────────────────────────
@@ -842,7 +846,12 @@ function SolutionsMega({
   activeTab: SolutionTabKey;
   setActiveTab: (tab: SolutionTabKey) => void;
 }) {
-  const items = activeTab === "ai" ? solutionItems : industrialItems;
+  const items =
+    activeTab === "ai"
+      ? solutionItems
+      : activeTab === "industrial"
+      ? industrialItems
+      : surveillanceItems;
   return (
     <div className="rounded-[24px] border border-white/60 bg-white/85 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(46,11,125,0.25)] overflow-hidden">
       <div className="grid grid-cols-12 gap-0">

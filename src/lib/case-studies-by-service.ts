@@ -1,8 +1,9 @@
 import type { CaseStudy } from "@/lib/case-study";
 import { subServices } from "@/lib/sub-services";
 import { studies as staticCaseStudies } from "@/lib/static-case-studies";
+import { surveillanceSlugs } from "@/lib/surveillance-solutions";
 
-export type SubServiceSlug = keyof typeof subServices;
+export type SubServiceSlug = keyof typeof subServices | (typeof surveillanceSlugs)[number];
 
 type StaticCaseStudy = (typeof staticCaseStudies)[number];
 
@@ -671,7 +672,7 @@ export const caseStudiesByService: Record<SubServiceSlug, CaseStudy[]> = {
     },
   ],
 
-  "ai-video-surveillance": [
+  "intrusion-detection": [
     {
       client: "Adani Logistics Yard",
       industry: "Logistics & Infrastructure",
@@ -685,6 +686,25 @@ export const caseStudiesByService: Record<SubServiceSlug, CaseStudy[]> = {
       ],
       accent: "var(--brand-blue)",
     },
+  ],
+
+  "weapon-detection": [
+    {
+      client: "GMR Hyderabad Airport",
+      industry: "Aviation & Public Safety",
+      challenge: "Monitoring public departures for early signs of threats or weapon brandishing requires immediate, millisecond-level alert routing.",
+      outcome: "Integrated visual weapon detection into 120 airport CCTV streams, delivering a verified dispatcher notification in under 2 seconds.",
+      image: "/homeCaseStudy/ai-video-surveillance.png",
+      metrics: [
+        { value: "<2s", label: "Alert time" },
+        { value: "98.8%", label: "Model recall" },
+        { value: "Instant", label: "Threat notification" },
+      ],
+      accent: "var(--brand-red)",
+    },
+  ],
+
+  "fire-smoke-detection": [
     {
       client: "Tata AutoComp Systems",
       industry: "Manufacturing",
@@ -697,6 +717,38 @@ export const caseStudiesByService: Record<SubServiceSlug, CaseStudy[]> = {
         { value: "Zero", label: "False alarms" },
       ],
       accent: "var(--brand-red)",
+    },
+  ],
+
+  "unauthorized-access-alerts": [
+    {
+      client: "Adani Datacenter",
+      industry: "Critical Infrastructure",
+      challenge: "Datacenter halls had high risk of physical tailgating at badge access locks, bypassing security compliance checks.",
+      outcome: "Deployed anti-tailgating AI modules on overhead corridor cameras, generating real-time alarms for unauthorized followers.",
+      image: "/homeCaseStudy/ai-video-surveillance.png",
+      metrics: [
+        { value: "100%", label: "Tailgate audit" },
+        { value: "Zero", label: "Undetected entries" },
+        { value: "Real-time", label: "Supervisor alerts" },
+      ],
+      accent: "var(--brand-blue)",
+    },
+  ],
+
+  "perimeter-monitoring": [
+    {
+      client: "ReNew Power Solar Farms",
+      industry: "Renewable Energy",
+      challenge: "Long remote boundary lines suffered theft and vandalism, while standard motion sensors triggered hundreds of false alerts daily due to wind and animals.",
+      outcome: "Implemented PTZ tracking and threat classification, reducing false alarms by 95% while keeping continuous boundary vigilance.",
+      image: "/homeCaseStudy/ai-video-surveillance.png",
+      metrics: [
+        { value: "95%", label: "Fewer false alarms" },
+        { value: "24/7", label: "Active guard" },
+        { value: "PTZ zoom", label: "Detailed evidence" },
+      ],
+      accent: "var(--brand-green)",
     },
   ],
 };

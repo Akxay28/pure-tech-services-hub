@@ -3,19 +3,21 @@ import { SubServicePage } from "@/components/site/SubServicePage";
 import { getSubServicePageProps } from "@/lib/get-sub-service-page-props";
 import { solutionSlugSet, subServices } from "@/lib/sub-services";
 import { industrialSlugs, industrialSolutions } from "@/lib/industrial-solutions";
+import { surveillanceSlugs, surveillanceSolutions } from "@/lib/surveillance-solutions";
+import { getCaseStudiesForService } from "@/lib/case-studies-by-service";
 
-const allSolutionSlugs = new Set([...solutionSlugSet, ...industrialSlugs]);
+const allSolutionSlugs = new Set([...solutionSlugSet, ...industrialSlugs, ...surveillanceSlugs]);
 
 export const Route = createFileRoute("/solutions/$slug")({
   loader: ({ params }) => {
     if (!allSolutionSlugs.has(params.slug)) throw notFound();
-    const entry = subServices[params.slug] ?? industrialSolutions[params.slug];
+    const entry = subServices[params.slug] ?? industrialSolutions[params.slug] ?? surveillanceSolutions[params.slug];
     if (!entry) throw notFound();
     return { slug: params.slug };
   },
   head: ({ loaderData }) => {
     if (!loaderData) return {};
-    const entry = subServices[loaderData.slug] ?? industrialSolutions[loaderData.slug];
+    const entry = subServices[loaderData.slug] ?? industrialSolutions[loaderData.slug] ?? surveillanceSolutions[loaderData.slug];
     if (!entry) return {};
     const title = `${entry.eyebrow}: ${entry.title} | Pure Technology`;
     return {
@@ -69,7 +71,15 @@ function SolutionRoute() {
   if (solutionSlugSet.has(slug)) {
     return <SubServicePage {...getSubServicePageProps(slug as keyof typeof subServices)} />;
   }
-  const entry = industrialSolutions[slug];
+  const entry = industrialSolutions[slug] ?? surveillanceSolutions[slug];
   if (!entry) throw notFound();
-  return <SubServicePage {...entry} />;
+  
+  const caseStudies = getCaseStudiesForService(slug as any);
+  return (
+    <SubServicePage 
+      {...entry} 
+      caseStudies={caseStudies.length > 0 ? caseStudies : entry.caseStudies}
+      showCaseStudies={caseStudies.length > 0 || entry.showCaseStudies}
+    />
+  );
 }

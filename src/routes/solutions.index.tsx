@@ -12,6 +12,7 @@ import { BrandIconBox } from "@/components/site/Primitives";
 import { brandIconGradient, accentAt } from "@/lib/brand-colors";
 import { solutionSlugs, subServices } from "@/lib/sub-services";
 import { industrialSlugs, industrialSolutions } from "@/lib/industrial-solutions";
+import { surveillanceSlugs, surveillanceSolutions } from "@/lib/surveillance-solutions";
 
 export const Route = createFileRoute("/solutions/")({
   head: () => ({
@@ -41,6 +42,11 @@ const solutionCards = solutionSlugs.map((slug) => ({
 const industrialCards = industrialSlugs.map((slug) => ({
   slug,
   ...industrialSolutions[slug],
+}));
+
+const surveillanceCards = surveillanceSlugs.map((slug) => ({
+  slug,
+  ...surveillanceSolutions[slug],
 }));
 
 function SolutionsIndex() {
@@ -118,6 +124,43 @@ function SolutionsIndex() {
           <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {industrialCards.map(({ slug, eyebrow, title, lede, Icon }, index) => {
               const accent = accentAt(index + solutionCards.length);
+              return (
+                <Link
+                  key={slug}
+                  to="/solutions/$slug"
+                  params={{ slug }}
+                  className="group rounded-2xl border border-border bg-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-soft"
+                >
+                  <BrandIconBox color={accent} size="md">
+                    <Icon className="h-5 w-5" />
+                  </BrandIconBox>
+                  <p className="mt-5 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+                    {eyebrow}
+                  </p>
+                  <h3 className="mt-2 text-xl font-display font-bold leading-tight">{title}</h3>
+                  <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{lede}</p>
+                  <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-primary">
+                    View solution
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section id="surveillance" className="px-5 lg:px-8 py-20 bg-surface border-b border-border">
+        <div className="mx-auto max-w-7xl">
+          <SectionHeader
+            eyebrow="Subcategory"
+            title="AI Video Surveillance"
+            description="Turn standard video streams into proactive safety networks. Enforce boundaries, identify fire anomalies, detect threats, and monitor zones automatically."
+          />
+
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {surveillanceCards.map(({ slug, eyebrow, title, lede, Icon }, index) => {
+              const accent = accentAt(index + solutionCards.length + industrialCards.length);
               return (
                 <Link
                   key={slug}
