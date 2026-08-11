@@ -79,7 +79,7 @@ function SolutionRoute() {
   return (
     <SubServicePage 
       {...entry} 
-      extraSection={ExtraSection ? <ExtraSection /> : undefined}
+      extraSection={ExtraSection ? <ExtraSection imageSrc={entry.extraSectionImage} /> : undefined}
       caseStudies={caseStudies.length > 0 ? caseStudies : (entry.caseStudies || [])}
       showCaseStudies={caseStudies.length > 0 || !!entry.showCaseStudies}
     />
