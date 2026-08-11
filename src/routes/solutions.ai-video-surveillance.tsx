@@ -81,16 +81,41 @@ function AIVideoSurveillancePage() {
           <GhostButton to="/solutions">All Solutions</GhostButton>
         </div>
 
-        {/* TV Mockup Dashboard */}
-        <div className="mt-12 max-w-5xl mx-auto rounded-3xl border border-white/20 bg-surface/30 backdrop-blur-md p-3 shadow-2xl relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-transparent opacity-60 pointer-events-none" />
-          <img
-            src="/homeCaseStudy/ai-video-surveillance.png"
-            alt="AI Surveillance Dashboard"
-            className="w-full h-auto rounded-2xl border border-border object-cover"
-          />
-        </div>
       </PageHero>
+
+      {/* Side-by-Side Intro Section */}
+      <section className="px-5 lg:px-8 pb-20">
+        <div className="mx-auto max-w-7xl grid lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-6">
+            <div className="rounded-3xl border border-white/20 bg-surface/30 backdrop-blur-md p-3 shadow-2xl relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-transparent opacity-60 pointer-events-none" />
+              <img
+                src="/homeCaseStudy/ai-video-surveillance.png"
+                alt="AI Surveillance Dashboard"
+                className="w-full h-auto rounded-2xl border border-border object-cover"
+              />
+            </div>
+          </div>
+          <div className="lg:col-span-6 space-y-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">Operational Intelligence</p>
+            <h2 className="text-3xl font-display font-bold leading-tight lg:text-4xl">
+              Real-time, edge-to-cloud security analytics
+            </h2>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              A complete visual intelligence platform that integrates with your existing camera feeds. Deploy custom ML models to automate perimeter patrols, safety audits, and operational counting.
+            </p>
+            <div>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline"
+              >
+                Explore docs
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* 2. Video Overview Section */}
       <section className="px-5 lg:px-8 py-20 bg-surface-muted/30 border-y border-border">
