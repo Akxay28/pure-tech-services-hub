@@ -337,7 +337,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     tech: ["PTZ Auto-Tracking", "Thermal Camera Analytics", "Boundary tripwires"],
     techExpertise: surveillanceTechExpertise,
     extraSection: SecuritySection,
-    extraSectionImage: "/homeCaseStudy/surveillance-intrusion.png",
+    extraSectionImage: "/homeCaseStudy/surveillance-perimeter.png",
     faqs: [
       { q: "Does it work in complete darkness?", a: "Yes, when integrated with infrared or thermal cameras." },
       { q: "How long is the fence line range?", a: "Depending on camera optics, the system can detect human shapes up to 300 meters away." },
