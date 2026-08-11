@@ -65,7 +65,7 @@ export function CaseStudyCard({
         <div className="relative h-[200px] overflow-hidden">
           <img
             src={image}
-            alt={client}
+            alt={client || "Pure Technology Case Study"}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />

@@ -376,7 +376,7 @@ export function CaseStudyCard({
         <div className="relative h-[200px] overflow-hidden">
           <img
             src={image}
-            alt={client}
+            alt={client || "Pure Technology Case Study"}
             className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
             onError={(event) => {
               const fallback = legacyCaseStudyImages[image];

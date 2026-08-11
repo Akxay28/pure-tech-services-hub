@@ -370,7 +370,7 @@ function CategoryLightbox({
                     </span>
                   </>
                 ) : (
-                  <img src={img.src} alt="" className="h-full w-full object-cover" />
+                  <img src={img.src} alt={img.alt || "Pure Technology gallery thumbnail"} className="h-full w-full object-cover" />
                 )}
               </button>
             ))}

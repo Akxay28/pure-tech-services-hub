@@ -29,6 +29,7 @@ export const Route = createFileRoute("/about")({
           "Our story, leadership, and values — consulting-led IT solutions from Pune since 2013.",
       },
     ],
+    links: [{ rel: "canonical", href: "https://puretechnology.in/about" }],
   }),
   component: About,
 });

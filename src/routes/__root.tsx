@@ -96,6 +96,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         content:
           "Pure Technology is a Bengaluru-based engineering partner specialising in enterprise AI development, IT staffing, and product engineering. Hire vetted Indian engineers and ship AI products that scale.",
       },
+      {
+        name: "keywords",
+        content:
+          "AI development, IT staffing, product engineering, software developers India, hire Indian developers, pure technology, artificial intelligence, software development company",
+      },
       { name: "author", content: "Pure Technology" },
       // Open Graph
       {

@@ -544,7 +544,7 @@ export const Route = createFileRoute("/blog/$slug")({
     const { post } = loaderData;
     const title = post.metaTitle || `${post.title} - Pure Technology`;
     const description = post.metaDescription || post.excerpt;
-    const canonicalPath = `/blog/${post.slug}`;
+    const canonicalUrl = `https://puretechnology.in/blog/${post.slug}`;
 
     return {
       meta: [
@@ -556,7 +556,7 @@ export const Route = createFileRoute("/blog/$slug")({
         { property: "og:description", content: description },
         { property: "og:image", content: post.imageTop },
         { property: "og:type", content: "article" },
-        { property: "og:url", content: canonicalPath },
+        { property: "og:url", content: canonicalUrl },
         { property: "article:published_time", content: post.date },
         { property: "article:section", content: post.category },
         { name: "twitter:card", content: "summary_large_image" },
@@ -564,7 +564,7 @@ export const Route = createFileRoute("/blog/$slug")({
         { name: "twitter:description", content: description },
         { name: "twitter:image", content: post.imageTop },
       ],
-      links: [{ rel: "canonical", href: canonicalPath }],
+      links: [{ rel: "canonical", href: canonicalUrl }],
     };
   },
   notFoundComponent: () => (

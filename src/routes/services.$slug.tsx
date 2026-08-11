@@ -24,6 +24,7 @@ export const Route = createFileRoute("/services/$slug")({
         { property: "og:title", content: title },
         { property: "og:description", content: entry.lede },
       ],
+      links: [{ rel: "canonical", href: `https://puretechnology.in/services/${loaderData.slug}` }],
     };
   },
   notFoundComponent: () => (

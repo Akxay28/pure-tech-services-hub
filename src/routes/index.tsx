@@ -33,6 +33,11 @@ export const Route = createFileRoute("/")({
         content:
           "Pure Technology is a Bengaluru-based AI product development & IT staffing company. Hire vetted Indian engineers, build enterprise AI solutions, and ship SaaS that scales. 13+ years, 80+ clients, 18+ countries.",
       },
+      {
+        name: "keywords",
+        content:
+          "AI development company, IT staffing India, hire dedicated engineers, product engineering services, software developers, build AI agents, Bengaluru tech partner",
+      },
       { property: "og:title", content: "Pure Technology — AI Product Development & IT Staffing in India" },
       {
         property: "og:description",
