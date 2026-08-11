@@ -191,92 +191,218 @@ function AiSolutions() {
         { to: "/services/product-engineering", label: "Product Engineering" },
       ]}
       extraSection={
-        <TechnologyExpertiseSection
-          accent="var(--brand-blue)"
-          tabs={[
-            {
-              label: "GenAI & LLMs",
-              cards: [
-                {
-                  role: "LLM Engineers",
-                  level: "L6",
-                  category: "GenAI & RAG",
-                  tech: ["LangChain", "OpenAI", "Anthropic"],
-                },
-                {
-                  role: "RAG Specialists",
-                  level: "L5",
-                  category: "Retrieval",
-                  tech: ["Pinecone", "Weaviate", "pgvector"],
-                },
-                {
-                  role: "Prompt Engineers",
-                  level: "L4",
-                  category: "Prompt Design",
-                  tech: ["DSPy", "Guidance", "LMQL"],
-                },
-                {
-                  role: "AI Safety Eng.",
-                  level: "L6",
-                  category: "Guardrails",
-                  tech: ["Evals", "Presidio", "Rebuff"],
-                },
-              ],
-            },
-            {
-              label: "ML & Data",
-              cards: [
-                {
-                  role: "ML Engineers",
-                  level: "L5",
-                  category: "Modelling",
-                  tech: ["PyTorch", "TensorFlow", "Keras"],
-                },
-                {
-                  role: "Data Engineers",
-                  level: "L5",
-                  category: "Pipelines",
-                  tech: ["Spark", "Airflow", "dbt"],
-                },
-                {
-                  role: "MLOps Eng.",
-                  level: "L6",
-                  category: "Ops & Infra",
-                  tech: ["MLflow", "Ray", "BentoML"],
-                },
-                {
-                  role: "Data Scientists",
-                  level: "L4",
-                  category: "Analytics",
-                  tech: ["Pandas", "Scikit-learn", "SQL"],
-                },
-              ],
-            },
-            {
-              label: "Vision & Docs",
-              cards: [
-                {
-                  role: "CV Engineers",
-                  level: "L5",
-                  category: "Computer Vision",
-                  tech: ["OpenCV", "YOLO", "Detectron2"],
-                },
-                {
-                  role: "Document AI Eng.",
-                  level: "L5",
-                  category: "Document AI",
-                  tech: ["Tesseract", "LayoutLM", "AWS Textract"],
-                },
-                {
-                  role: "Multimodal Eng.",
-                  level: "L6",
-                  category: "Multimodal AI",
-                  tech: ["CLIP", "LLaVA", "Gemini Vision"],
-                },
-              ],
-            },
-          ]}
-        />
+        <>
+          {/* Intelligence for Every Department */}
+          <section className="px-5 lg:px-8 py-24 bg-surface border-y border-border">
+            <div className="mx-auto max-w-7xl space-y-32">
+              
+              {/* Section Header */}
+              <div className="text-center">
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Intelligence for Every Department</p>
+                <h2 className="mt-3 text-3xl font-display font-bold lg:text-4xl">Proactive, automated visual operations</h2>
+              </div>
+
+              {/* Section 1: Safety */}
+              <div className="grid lg:grid-cols-12 gap-12 items-center">
+                <div className="lg:col-span-6 space-y-6">
+                  <div className="flex items-center gap-3">
+                    <span className="px-3.5 py-1 bg-brand-pink-soft text-brand-pink text-xs font-semibold rounded-full uppercase">Safety</span>
+                    <h3 className="text-2xl font-display font-bold">Proactive Risk Mitigation</h3>
+                  </div>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    Transform standard cameras into an active safety net, verifying compliance and protecting lives.
+                  </p>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {[
+                      { title: "PPE Compliance Detection", desc: "Automatically monitor for helmets, vests, and safety glasses.", imp: "Near-100% policy adherence." },
+                      { title: "Fall & Man-Down Detection", desc: "Instant alert if an employee falls or remains immobile in hazards.", imp: "Drastically cut response time." },
+                      { title: "Fire & Smoke Detection", desc: "Visual fire indicators from cameras in high-ceiling facilities.", imp: "Visual alert within 3 seconds." },
+                      { title: "Pedestrian-Vehicle Proximity", desc: "Detects proximity events between workers and moving machinery.", imp: "Eliminate blind-spot collisions." },
+                    ].map((c) => (
+                      <div key={c.title} className="rounded-2xl border border-border bg-surface-muted/40 p-5 space-y-2">
+                        <h4 className="text-sm font-semibold">{c.title}</h4>
+                        <p className="text-xs text-muted-foreground leading-relaxed">{c.desc}</p>
+                        <p className="text-xs text-primary font-medium">Improvement: {c.imp}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="lg:col-span-6">
+                  <div className="rounded-3xl border border-border overflow-hidden bg-surface-muted/30 p-3 shadow-lg">
+                    <img
+                      src="/homeCaseStudy/surveillance-safety.png"
+                      alt="Workplace Safety AI Analytics"
+                      className="w-full h-auto rounded-2xl object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 2: Security */}
+              <div className="grid lg:grid-cols-12 gap-12 items-center">
+                <div className="lg:col-span-6 lg:order-2 space-y-6">
+                  <div className="flex items-center gap-3">
+                    <span className="px-3.5 py-1 bg-brand-blue-soft text-brand-blue text-xs font-semibold rounded-full uppercase">Security</span>
+                    <h3 className="text-2xl font-display font-bold">Intelligent Perimeter & Asset Defense</h3>
+                  </div>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    Move beyond static recording to active threat identification, lockdown triggers, and access control audit.
+                  </p>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {[
+                      { title: "Intrusion Detection", desc: "Alerts for unauthorized entry into restricted zones or outer fences.", imp: "Replaces manual security patrols." },
+                      { title: "Weapon Detection", desc: "AI detection of firearms in public or sensitive workplace zones.", imp: "Buys critical response seconds." },
+                      { title: "Tailgating Detection", desc: "Identify when unauthorized persons follow employees through badges.", imp: "Closes physical access gaps." },
+                      { title: "Unauthorized Person Detection", desc: "Flag individuals in no-go administrative areas or plant zones.", imp: "Automatic access compliance." },
+                    ].map((c) => (
+                      <div key={c.title} className="rounded-2xl border border-border bg-surface-muted/40 p-5 space-y-2">
+                        <h4 className="text-sm font-semibold">{c.title}</h4>
+                        <p className="text-xs text-muted-foreground leading-relaxed">{c.desc}</p>
+                        <p className="text-xs text-primary font-medium">Improvement: {c.imp}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="lg:col-span-6 lg:order-1">
+                  <div className="rounded-3xl border border-border overflow-hidden bg-surface-muted/30 p-3 shadow-lg">
+                    <img
+                      src="/homeCaseStudy/surveillance-security.png"
+                      alt="Security & Perimeter Defense AI"
+                      className="w-full h-auto rounded-2xl object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 3: Productivity */}
+              <div className="grid lg:grid-cols-12 gap-12 items-center">
+                <div className="lg:col-span-6 space-y-6">
+                  <div className="flex items-center gap-3">
+                    <span className="px-3.5 py-1 bg-brand-green-soft text-brand-green text-xs font-semibold rounded-full uppercase">Productivity</span>
+                    <h3 className="text-2xl font-display font-bold">Data-Driven Operational Excellence</h3>
+                  </div>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    Turn camera feeds into operational indicators, optimizing staffing, queues, and floor throughput.
+                  </p>
+
+                  <div className="grid gap-4 sm:grid-cols-2">
+                    {[
+                      { title: "Touchless Attendance", desc: "Face matching for seamless, ticketless check-ins.", imp: "Zero queue entry time." },
+                      { title: "Idle Worker Detection", desc: "Identify line-side bottlenecks or equipment inoperation.", imp: "Optimize workforce distribution." },
+                      { title: "Crowd Density Monitoring", desc: "Analyze footfall, peaks, and capacity utilization of campus spaces.", imp: "Smart ventilation/cooling." },
+                      { title: "Queue Length Analysis", desc: "Monitor wait times at counters or desks in real-time.", imp: "Automatic staff triggers." },
+                    ].map((c) => (
+                      <div key={c.title} className="rounded-2xl border border-border bg-surface-muted/40 p-5 space-y-2">
+                        <h4 className="text-sm font-semibold">{c.title}</h4>
+                        <p className="text-xs text-muted-foreground leading-relaxed">{c.desc}</p>
+                        <p className="text-xs text-primary font-medium">Improvement: {c.imp}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                <div className="lg:col-span-6">
+                  <div className="rounded-3xl border border-border overflow-hidden bg-surface-muted/30 p-3 shadow-lg">
+                    <img
+                      src="/homeCaseStudy/surveillance-productivity.png"
+                      alt="Productivity & Analytics AI"
+                      className="w-full h-auto rounded-2xl object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <TechnologyExpertiseSection
+            accent="var(--brand-blue)"
+            tabs={[
+              {
+                label: "GenAI & LLMs",
+                cards: [
+                  {
+                    role: "LLM Engineers",
+                    level: "L6",
+                    category: "GenAI & RAG",
+                    tech: ["LangChain", "OpenAI", "Anthropic"],
+                  },
+                  {
+                    role: "RAG Specialists",
+                    level: "L5",
+                    category: "Retrieval",
+                    tech: ["Pinecone", "Weaviate", "pgvector"],
+                  },
+                  {
+                    role: "Prompt Engineers",
+                    level: "L4",
+                    category: "Prompt Design",
+                    tech: ["DSPy", "Guidance", "LMQL"],
+                  },
+                  {
+                    role: "AI Safety Eng.",
+                    level: "L6",
+                    category: "Guardrails",
+                    tech: ["Evals", "Presidio", "Rebuff"],
+                  },
+                ],
+              },
+              {
+                label: "ML & Data",
+                cards: [
+                  {
+                    role: "ML Engineers",
+                    level: "L5",
+                    category: "Modelling",
+                    tech: ["PyTorch", "TensorFlow", "Keras"],
+                  },
+                  {
+                    role: "Data Engineers",
+                    level: "L5",
+                    category: "Pipelines",
+                    tech: ["Spark", "Airflow", "dbt"],
+                  },
+                  {
+                    role: "MLOps Eng.",
+                    level: "L6",
+                    category: "Ops & Infra",
+                    tech: ["MLflow", "Ray", "BentoML"],
+                  },
+                  {
+                    role: "Data Scientists",
+                    level: "L4",
+                    category: "Analytics",
+                    tech: ["Pandas", "Scikit-learn", "SQL"],
+                  },
+                ],
+              },
+              {
+                label: "Vision & Docs",
+                cards: [
+                  {
+                    role: "CV Engineers",
+                    level: "L5",
+                    category: "Computer Vision",
+                    tech: ["OpenCV", "YOLO", "Detectron2"],
+                  },
+                  {
+                    role: "Document AI Eng.",
+                    level: "L5",
+                    category: "Document AI",
+                    tech: ["Tesseract", "LayoutLM", "AWS Textract"],
+                  },
+                  {
+                    role: "Multimodal Eng.",
+                    level: "L6",
+                    category: "Multimodal AI",
+                    tech: ["CLIP", "LLaVA", "Gemini Vision"],
+                  },
+                ],
+              },
+            ]}
+          />
+        </>
       }
     />
   );
