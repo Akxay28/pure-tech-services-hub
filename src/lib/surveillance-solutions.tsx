@@ -31,8 +31,8 @@ export const surveillanceTechExpertise = [
   },
 ];
 
-// Safety Section Component
-const SafetySection = (
+// Safety Section Component (Functional)
+export const SafetySection: React.FC = () => (
   <section className="px-5 lg:px-8 py-20 bg-surface border-y border-border">
     <div className="mx-auto max-w-7xl">
       <div className="grid lg:grid-cols-12 gap-12 items-center">
@@ -74,8 +74,8 @@ const SafetySection = (
   </section>
 );
 
-// Security Section Component
-const SecuritySection = (
+// Security Section Component (Functional)
+export const SecuritySection: React.FC = () => (
   <section className="px-5 lg:px-8 py-20 bg-surface border-y border-border">
     <div className="mx-auto max-w-7xl">
       <div className="grid lg:grid-cols-12 gap-12 items-center">

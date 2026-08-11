@@ -75,9 +75,11 @@ function SolutionRoute() {
   if (!entry) throw notFound();
   
   const caseStudies = getCaseStudiesForService(slug as any) || [];
+  const ExtraSection = entry.extraSection as React.ComponentType | undefined;
   return (
     <SubServicePage 
       {...entry} 
+      extraSection={ExtraSection ? <ExtraSection /> : undefined}
       caseStudies={caseStudies.length > 0 ? caseStudies : (entry.caseStudies || [])}
       showCaseStudies={caseStudies.length > 0 || !!entry.showCaseStudies}
     />
