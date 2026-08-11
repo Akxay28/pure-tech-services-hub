@@ -74,12 +74,12 @@ function SolutionRoute() {
   const entry = industrialSolutions[slug] ?? surveillanceSolutions[slug];
   if (!entry) throw notFound();
   
-  const caseStudies = getCaseStudiesForService(slug as any);
+  const caseStudies = getCaseStudiesForService(slug as any) || [];
   return (
     <SubServicePage 
       {...entry} 
-      caseStudies={caseStudies.length > 0 ? caseStudies : entry.caseStudies}
-      showCaseStudies={caseStudies.length > 0 || entry.showCaseStudies}
+      caseStudies={caseStudies.length > 0 ? caseStudies : (entry.caseStudies || [])}
+      showCaseStudies={caseStudies.length > 0 || !!entry.showCaseStudies}
     />
   );
 }
