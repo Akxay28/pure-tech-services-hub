@@ -11,7 +11,7 @@ export const studies = [
     body: "Built a comprehensive Warehouse Management System for Schindler digitizing material verification and production data management. Features machine integration, Bar/QR code automation, dual-portal architecture, and production linkage — bridging the gap between physical measurements and digital records to ensure every production order is backed by accurate, real-time data.",
     metrics: [
       { v: "91%", l: "High Accuracy Verification" },
-      { v: "100%", l: " " },
+      { v: "100%", l: "Seamless Data Traceability" },
       { v: "70%", l: "Optimized Rework Tracking" },
     ],
     related: "/services/schindler-warehouse-management-system",

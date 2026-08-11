@@ -45,26 +45,30 @@ export async function seedDatabase() {
       console.log(`[DB Seed] Updated admin password hash for: ${username}`);
     }
 
-    // 2. Seed case studies
+    // 2. Seed/Sync case studies
     const caseStudiesCol = db.collection("case_studies");
-    const caseStudiesCount = await caseStudiesCol.countDocuments();
-    if (caseStudiesCount === 0 && Array.isArray(studies)) {
-      const formattedStudies = studies.map((study) => {
-        // Generate slug from client name if not present
+    if (Array.isArray(studies)) {
+      for (const study of studies) {
         const slug = study.client
           .toLowerCase()
           .replace(/[^a-z0-9]+/g, "-")
           .replace(/(^-|-$)/g, "");
 
-        return {
-          ...study,
-          slug,
-          createdAt: new Date(),
-        };
-      });
-
-      await caseStudiesCol.insertMany(formattedStudies);
-      console.log(`[DB Seed] Seeded ${formattedStudies.length} case studies successfully.`);
+        await caseStudiesCol.updateOne(
+          { slug },
+          {
+            $set: {
+              ...study,
+              updatedAt: new Date(),
+            },
+            $setOnInsert: {
+              createdAt: new Date(),
+            },
+          },
+          { upsert: true }
+        );
+      }
+      console.log(`[DB Seed] Synchronized ${studies.length} case studies successfully.`);
     }
 
     // 3. Seed blog posts

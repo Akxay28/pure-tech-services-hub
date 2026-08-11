@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { toast } from "sonner";
 import {
   ArrowLeft,
   Bold,
@@ -483,8 +484,23 @@ export function BlogForm({
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    // Check for base64 images in image URLs
+    const base64Regex = /^data:image\/[a-zA-Z+-]+;base64,/;
+    if (base64Regex.test(formData.imageTop || "") || base64Regex.test(formData.imageMiddle || "")) {
+      toast.error("Please use a hosted image URL (e.g., Cloudinary, Imgur, or website path) instead of pasting a raw base64 image string.");
+      return;
+    }
+
     const descriptionTop = syncDescriptionTopRef.current?.() ?? formData.descriptionTop;
     const descriptionBottom = syncDescriptionBottomRef.current?.() ?? formData.descriptionBottom;
+
+    // Check if the HTML content itself has embedded base64 images
+    if (descriptionTop.includes("data:image/") || descriptionBottom.includes("data:image/")) {
+      toast.error("Pasted content contains embedded base64 images. Please remove them and upload/link them separately.");
+      return;
+    }
+
     await onSubmit({
       ...formData,
       descriptionTop: htmlToPlainText(descriptionTop),

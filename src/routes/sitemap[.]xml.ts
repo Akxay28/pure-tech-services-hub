@@ -2,8 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 
 import { HIRE_ROLE_SLUGS } from "@/lib/hire-roles";
-import { subServiceSlugs } from "@/lib/sub-services";
+import { subServiceSlugs, solutionSlugs } from "@/lib/sub-services";
 import { staticBlogs } from "@/lib/static-blogs";
+import { industrialSlugs } from "@/lib/industrial-solutions";
 
 interface SitemapEntry {
   path: string;
@@ -23,6 +24,7 @@ const staticEntries: SitemapEntry[] = [
   { path: "/gallery", changefreq: "monthly", priority: "0.6" },
   { path: "/mission-vision", changefreq: "monthly", priority: "0.7" },
   { path: "/services", changefreq: "monthly", priority: "0.9" },
+  { path: "/solutions", changefreq: "weekly", priority: "0.9" },
   { path: "/team", changefreq: "monthly", priority: "0.7" },
 ];
 
@@ -75,6 +77,16 @@ export const Route = createFileRoute("/sitemap.xml")({
           ...mainServiceEntries,
           ...subServiceSlugs.map((slug) => ({
             path: `/services/${slug}`,
+            changefreq: "monthly" as const,
+            priority: "0.8",
+          })),
+          ...solutionSlugs.map((slug) => ({
+            path: `/solutions/${slug}`,
+            changefreq: "monthly" as const,
+            priority: "0.8",
+          })),
+          ...industrialSlugs.map((slug) => ({
+            path: `/solutions/${slug}`,
             changefreq: "monthly" as const,
             priority: "0.8",
           })),

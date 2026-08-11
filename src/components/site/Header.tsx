@@ -269,7 +269,6 @@ const industrialItems: ServiceItem[] = [
   { title: "Production Management", subtitle: "Track output, downtime, and execution", icon: Settings, to: "/solutions/production-management" },
   { title: "Data Extractor", subtitle: "Turn files and forms into usable data", icon: FileSearch, to: "/solutions/data-extractor" },
   { title: "Inventory Management", subtitle: "Control material movements and availability", icon: Boxes, to: "/solutions/inventory-management" },
-  { title: "Vision AI Edge", subtitle: "Line-side visual inspection decisions", icon: Eye, to: "/solutions/vision-ai-edge" },
 ];
 
 // ── Company mega menu ────────────────────────────────────────

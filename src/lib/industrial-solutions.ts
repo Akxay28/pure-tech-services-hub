@@ -226,15 +226,7 @@ const definitions: IndustrialDefinition[] = [
     capabilities: [{ title: "Movement tracking", body: "Record every receipt, issue, return, transfer, and adjustment against the right material and location." }, { title: "Stock visibility", body: "Make current stock, reservations, and replenishment needs visible to authorised teams." }, { title: "Material traceability", body: "Connect material movements with lots, jobs, inspection status, and downstream consumption." }],
     outcomes: [{ metric: "Clearer", label: "Stock position", context: "Give teams one view of what is on hand and where it is." }, { metric: "Fewer", label: "Material surprises", context: "Make shortages and replenishment needs visible earlier." }, { metric: "Traceable", label: "Movements", context: "Maintain an accountable history from receipt through issue or return." }],
   },
-  {
-    slug: "vision-ai-edge",
-    eyebrow: "Edge Vision AI",
-    title: "Vision AI at the line for rapid, local inspection decisions.",
-    lede: "Deploy computer-vision models near production equipment to detect defects, anomalies, missing components, and quality conditions in real time.",
-    Icon: Settings,
-    capabilities: [{ title: "Line-side inference", body: "Run visual detection close to the process for responsive inspection without depending on continuous cloud streaming." }, { title: "Defect detection", body: "Train and tune models around the visual conditions, defect types, and acceptance criteria that matter to your line." }, { title: "Evidence and alerts", body: "Store inspection results and images, then send exceptions to the people and systems responsible for action." }],
-    outcomes: [{ metric: "Earlier", label: "Defect detection", context: "Find visual issues closer to the moment they occur." }, { metric: "Consistent", label: "Inspection checks", context: "Apply the same visual criteria throughout shifts and operating conditions." }, { metric: "Connected", label: "Quality evidence", context: "Link inspection events to operational records and corrective workflows." }],
-  },
+
 ];
 
 export const industrialSolutions = Object.fromEntries(
