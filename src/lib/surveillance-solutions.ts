@@ -2,6 +2,34 @@ import { ShieldCheck, Activity, Users, Eye, Flame, type LucideIcon } from "lucid
 import type { SubServicePageProps } from "@/components/site/SubServicePage";
 import { BRAND } from "@/lib/brand-colors";
 
+export const surveillanceTechExpertise = [
+  {
+    label: "AI & Inference",
+    cards: [
+      { role: "Edge Inference", level: "Core", category: "Local model execution", tech: ["YOLOv8", "NVIDIA DeepStream", "TensorRT"] },
+      { role: "Object Tracking", level: "Core", category: "Spatiotemporal tracking", tech: ["ByteTrack", "DeepSORT"] },
+      { role: "Stream Management", level: "Advanced", category: "Low-latency ingestion", tech: ["RTSP", "ONVIF", "WebRTC"] },
+      { role: "Model Training", level: "Custom", category: "Proprietary datasets", tech: ["PyTorch", "Transfer Learning"] },
+    ],
+  },
+  {
+    label: "Integration & Actions",
+    cards: [
+      { role: "Alerting Pipeline", level: "Core", category: "Instant notification routing", tech: ["Webhooks", "SMS", "WhatsApp API"] },
+      { role: "Access Control Sync", level: "Advanced", category: "Badge database integration", tech: ["RFID API", "Wiegand protocol"] },
+      { role: "Physical Relays", level: "Core", category: "Hardware trigger relays", tech: ["GPIO", "Modbus TCP", "IP Relays"] },
+    ],
+  },
+  {
+    label: "Governance & Privacy",
+    cards: [
+      { role: "Identity Protection", level: "Core", category: "PII shielding", tech: ["Face Blur", "License Plate Masking"] },
+      { role: "Audit Trail", level: "Advanced", category: "Compliant event logging", tech: ["Encrypted Video", "Immutable Logs"] },
+      { role: "Device Management", level: "Enterprise", category: "Fleet health monitoring", tech: ["Balena", "Prometheus", "Grafana"] },
+    ],
+  },
+];
+
 export const surveillanceSolutions: Record<string, SubServicePageProps & { title: string }> = {
   "intrusion-detection": {
     eyebrow: "AI Video Surveillance",
@@ -36,6 +64,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
       { title: "Alert Routing", body: "Integrate alerts with local sirens, security dashboards, or WhatsApp/Telegram notifications." },
     ],
     tech: ["YOLOv8", "RTSP Streams", "Zone Masking", "NVIDIA Edge", "SMS/WhatsApp Alerts"],
+    techExpertise: surveillanceTechExpertise,
     faqs: [
       { q: "Does this require special cameras?", a: "No. It works with standard IP cameras supporting RTSP/ONVIF." },
       { q: "How are false alarms handled?", a: "The AI filters out small animals, wind-blown vegetation, and shadow shifts." },
@@ -79,6 +108,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
       { title: "Hardware Check", body: "Ensure camera resolution and frame rates meet detection guidelines." },
     ],
     tech: ["Object Detection", "CUDA", "Low-latency streaming", "Emergency Alert System (EAS) Integration"],
+    techExpertise: surveillanceTechExpertise,
     faqs: [
       { q: "Can it detect concealed weapons?", a: "No, this is visual-based AI. It detects weapons once they are brandished or visible on camera." },
       { q: "How does it handle holstered firearms?", a: "The AI can be configured to ignore holstered weapons on authorized security personnel." },
@@ -122,8 +152,9 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
       { title: "Calibration", body: "Run test burns or simulation tests to tune parameters." },
     ],
     tech: ["Flame Detection ML", "Smoke Detection models", "Relay Controllers", "ONVIF Streams"],
+    techExpertise: surveillanceTechExpertise,
     faqs: [
-      { q: "Will steam or dust trigger false alarms?", a: "No. The model is trained on heat movement and visual textures to filter out steam, dust, and vehicle exhaust." },
+      { q: "Will steam or dust trigger false alarms?", a: "No. The model is delayed on heat movement and visual textures to filter out steam, dust, and vehicle exhaust." },
       { q: "Does it replace standard fire alarms?", a: "No. It serves as an early visual warning system, supplementing your primary fire alarm compliance hardware." },
     ],
     siblingLinks: [
@@ -165,6 +196,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
       { title: "Verify Actions", body: "Audit detection rate and calibrate door status sensors." },
     ],
     tech: ["Tailgating Detection", "Access Control API", "ONVIF cameras", "Edge AI"],
+    techExpertise: surveillanceTechExpertise,
     faqs: [
       { q: "Can it run on-premises?", a: "Yes. All access control data stays local for maximum security." },
       { q: "Does it support facial recognition?", a: "Optionally, yes, or it can operate strictly on person counting and tailgating shapes to maintain privacy." },
@@ -208,6 +240,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
       { title: "Go Live", body: "Initiate active monitoring with alert filtering." },
     ],
     tech: ["PTZ Auto-Tracking", "Thermal Camera Analytics", "Boundary tripwires"],
+    techExpertise: surveillanceTechExpertise,
     faqs: [
       { q: "Does it work in complete darkness?", a: "Yes, when integrated with infrared or thermal cameras." },
       { q: "How long is the fence line range?", a: "Depending on camera optics, the system can detect human shapes up to 300 meters away." },
