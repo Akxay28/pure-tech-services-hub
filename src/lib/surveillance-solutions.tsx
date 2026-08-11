@@ -153,7 +153,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     tech: ["YOLOv8", "RTSP Streams", "Zone Masking", "NVIDIA Edge", "SMS/WhatsApp Alerts"],
     techExpertise: surveillanceTechExpertise,
     extraSection: SecuritySection,
-    extraSectionImage: "/homeCaseStudy/surveillance-security.png",
+    extraSectionImage: "/homeCaseStudy/surveillance-intrusion.png",
     faqs: [
       { q: "Does this require special cameras?", a: "No. It works with standard IP cameras supporting RTSP/ONVIF." },
       { q: "How are false alarms handled?", a: "The AI filters out small animals, wind-blown vegetation, and shadow shifts." },
