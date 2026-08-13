@@ -20,6 +20,33 @@ export const Route = createFileRoute("/hire/$slug")({
         { name: "description", content: entry.lede },
         { property: "og:title", content: title },
         { property: "og:description", content: entry.lede },
+        {
+          "script:ld+json": {
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "Service",
+                "name": `Hire ${entry.roleTitle}`,
+                "description": entry.lede,
+                "provider": {
+                  "@type": "Organization",
+                  "name": "Pure Technology",
+                  "url": "https://puretechnology.in"
+                },
+                "areaServed": ["India", "Worldwide"],
+                "serviceType": "IT Staffing & Staff Augmentation"
+              },
+              {
+                "@type": "FAQPage",
+                "mainEntity": entry.faqs.map((faq) => ({
+                  "@type": "Question",
+                  "name": faq.q,
+                  "acceptedAnswer": { "@type": "Answer", text: faq.a }
+                }))
+              }
+            ]
+          }
+        }
       ],
       links: [{ rel: "canonical", href: `https://puretechnology.in/hire/${loaderData.slug}` }],
     };

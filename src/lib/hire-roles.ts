@@ -9,7 +9,7 @@ export const HIRE_ROLE_SLUGS = [
   "openai-developers",
   "generative-ai-developers",
   "gemini-developers",
-  "prompt-engineer",
+  "prompt-engineers",
   "chatgpt-developers",
   "lovable-ai-developers",
   "replit-ai-developers",
@@ -17,15 +17,18 @@ export const HIRE_ROLE_SLUGS = [
   "google-antigravity-developers",
   "cursor-ai-developers",
   "windsurf-ai-developers",
-  "software-developer",
-  "mobile-app-developer",
+  "software-developers",
+  "mobile-app-developers",
   "backend-developers",
   "ai-developers",
   "devops-developers",
-  "web-app-developer",
+  "web-app-developers",
   "frontend-developers",
   "fullstack-developers",
   "android-developers",
+  "java-developers",
+  "spring-boot-developers",
+  "ai-engineers-india",
 ] as const;
 
 export type HireRoleSlug = (typeof HIRE_ROLE_SLUGS)[number];
@@ -267,7 +270,7 @@ const configs: RoleConfig[] = [
       },
     ],
     relatedHire: [
-      { to: "/hire/prompt-engineer", label: "Prompt Engineers" },
+      { to: "/hire/prompt-engineers", label: "Prompt Engineers" },
       { to: "/hire/openai-developers", label: "OpenAI Developers" },
       { to: "/hire/ai-developers", label: "AI Developers" },
     ],
@@ -341,7 +344,7 @@ const configs: RoleConfig[] = [
     ],
     relatedHire: [
       { to: "/hire/generative-ai-developers", label: "Generative AI Developers" },
-      { to: "/hire/prompt-engineer", label: "Prompt Engineers" },
+      { to: "/hire/prompt-engineers", label: "Prompt Engineers" },
       { to: "/hire/chatbot-developers", label: "Chatbot Developers" },
     ],
     relatedService: { to: "/services/ai-solutions", label: "AI Solutions practice" },
@@ -493,7 +496,7 @@ const configs: RoleConfig[] = [
     relatedService: { to: "/services/ai-solutions", label: "AI Solutions practice" },
   },
   {
-    slug: "prompt-engineer",
+    slug: "prompt-engineers",
     category: "ai",
     title: "Prompt Engineers",
     lede: "Hire prompt engineers who treat prompts as versioned software — with evals, datasets, and rollback, not one-off magic strings.",
@@ -789,7 +792,7 @@ const vibeConfigs: RoleConfig[] = [
     relatedHire: [
       { to: "/hire/chatgpt-developers", label: "ChatGPT Developers" },
       { to: "/hire/fullstack-developers", label: "Fullstack Developers" },
-      { to: "/hire/software-developer", label: "Software Developers" },
+      { to: "/hire/software-developers", label: "Software Developers" },
     ],
     relatedService: { to: "/services/software-development", label: "Software Development" },
   },
@@ -850,7 +853,7 @@ const vibeConfigs: RoleConfig[] = [
     relatedHire: [
       { to: "/hire/lovable-ai-developers", label: "Lovable AI Developers" },
       { to: "/hire/frontend-developers", label: "Frontend Developers" },
-      { to: "/hire/web-app-developer", label: "Web App Developers" },
+      { to: "/hire/web-app-developers", label: "Web App Developers" },
     ],
     relatedService: {
       to: "/services/web-application-development",
@@ -975,7 +978,7 @@ const vibeConfigs: RoleConfig[] = [
     relatedHire: [
       { to: "/hire/windsurf-ai-developers", label: "Windsurf AI Developers" },
       { to: "/hire/fullstack-developers", label: "Fullstack Developers" },
-      { to: "/hire/software-developer", label: "Software Developers" },
+      { to: "/hire/software-developers", label: "Software Developers" },
     ],
     relatedService: { to: "/services/software-development", label: "Software Development" },
   },
@@ -1048,7 +1051,7 @@ const ROLE_SHARED_WHO = [
 
 const roleConfigs: RoleConfig[] = [
   {
-    slug: "software-developer",
+    slug: "software-developers",
     category: "role",
     title: "Software Developers",
     lede: "Hire senior software developers who own features end-to-end — clear communication, tested code, and respect for your existing conventions.",
@@ -1106,7 +1109,7 @@ const roleConfigs: RoleConfig[] = [
     relatedService: { to: "/services/software-development", label: "Software Development" },
   },
   {
-    slug: "mobile-app-developer",
+    slug: "mobile-app-developers",
     category: "role",
     title: "Mobile App Developers",
     lede: "Hire mobile developers for iOS, Android, and React Native — store-ready releases, offline UX, and performance you can measure.",
@@ -1334,7 +1337,7 @@ const roleConfigs: RoleConfig[] = [
     relatedService: { to: "/services/cloud-infrastructure", label: "Cloud & Infrastructure" },
   },
   {
-    slug: "web-app-developer",
+    slug: "web-app-developers",
     category: "role",
     title: "Web App Developers",
     lede: "Hire web application developers for SPAs, SSR, and full product surfaces — performance, accessibility, and API integration included.",
@@ -1535,11 +1538,194 @@ const roleConfigs: RoleConfig[] = [
       { q: "Wear OS / TV?", a: "Available — specify form factor in brief." },
     ],
     relatedHire: [
-      { to: "/hire/mobile-app-developer", label: "Mobile App Developers" },
+      { to: "/hire/mobile-app-developers", label: "Mobile App Developers" },
       { to: "/hire/frontend-developers", label: "Frontend Developers" },
       { to: "/hire/fullstack-developers", label: "Fullstack Developers" },
     ],
     relatedService: { to: "/services/mobile-app-development", label: "Mobile App Development" },
+  },
+  {
+    slug: "java-developers",
+    category: "role",
+    title: "Java Developers",
+    lede: "Hire senior Java developers specializing in Spring, Hibernate, and microservices architectures to build enterprise-grade, high-performance backends.",
+    introHeading: "Robust, enterprise Java built for scale.",
+    introParagraphs: [
+      "Our Java developers bring deep experience in constructing low-latency, thread-safe, and highly distributed backend architectures. They are fluent in core Java patterns, JVM tuning, and enterprise integration patterns.",
+      "Whether you are modernizing a legacy system or building a fresh microservices fabric, our developers ensure clean, secure, and production-tested code."
+    ],
+    skills: [
+      "Java",
+      "Spring Boot",
+      "Spring Cloud",
+      "Hibernate",
+      "Microservices",
+      "RESTful APIs",
+      "PostgreSQL",
+      "Docker",
+      "AWS",
+      "JUnit",
+      "Kubernetes",
+      "Maven/Gradle"
+    ],
+    whoFor: ROLE_SHARED_WHO,
+    capabilities: ROLE_CAPS("Java developers"),
+    outcomes: [
+      {
+        metric: "99.99%",
+        label: "System uptime achieved",
+        context: "After re-architecting a monolithic backend to Spring microservices."
+      },
+      {
+        metric: "40%",
+        label: "Response time reduction",
+        context: "Through JPA query optimizations and custom Hibernate caching layers."
+      },
+      {
+        metric: "5 days",
+        label: "Avg. shortlist delivery",
+        context: "Time to introduce senior Java engineers ready for final technical rounds."
+      }
+    ],
+    faqs: [
+      {
+        q: "Do your Java developers have experience with cloud environments?",
+        a: "Yes. They are highly experienced with AWS, GCP, and Azure deployments, including container orchestration via Kubernetes."
+      },
+      {
+        q: "How do you test Java developer skills?",
+        a: "Our vetting process includes live coding, database/ORM design challenges, concurrency testing, and system design evaluations by our senior backend panel."
+      },
+      {
+        q: "Can they work with legacy Spring architectures?",
+        a: "Absolutely. Our engineers are proficient in legacy Spring MVC, JDBC, and XML configurations, as well as modern Spring Boot and reactive programming."
+      }
+    ],
+    relatedHire: [
+      { to: "/hire/spring-boot-developers", label: "Spring Boot Developers" },
+      { to: "/hire/backend-developers", label: "Backend Developers" },
+      { to: "/hire/software-developers", label: "Software Developers" }
+    ],
+    relatedService: { to: "/services/software-development", label: "Software Development practice" }
+  },
+  {
+    slug: "spring-boot-developers",
+    category: "role",
+    title: "Spring Boot Developers",
+    lede: "Hire Spring Boot developers to accelerate backend feature delivery, streamline configuration, and implement secure, cloud-native microservices.",
+    introHeading: "Rapid, production-ready microservices.",
+    introParagraphs: [
+      "Our Spring Boot specialists deliver secure, containerized, and auto-configured services that slot directly into your cloud infrastructure. They focus on clean API designs and solid dependency management.",
+      "We screen for experts who know when to use Spring WebFlux, Spring Data, and Spring Security to keep your systems fast and compliant."
+    ],
+    skills: [
+      "Spring Boot",
+      "Spring MVC",
+      "Spring Security",
+      "Spring Data JPA",
+      "Hibernate",
+      "Java",
+      "Docker",
+      "PostgreSQL",
+      "Redis",
+      "RabbitMQ/Kafka",
+      "JUnit",
+      "Gradle"
+    ],
+    whoFor: ROLE_SHARED_WHO,
+    capabilities: ROLE_CAPS("Spring Boot developers"),
+    outcomes: [
+      {
+        metric: "60%",
+        label: "Faster time-to-market",
+        context: "For new microservices launch using starter dependencies and standard templates."
+      },
+      {
+        metric: "0",
+        label: "Security vulnerabilities",
+        context: "Achieved via rigid Spring Security configuration and OAuth2 authentication audits."
+      },
+      {
+        metric: "8 days",
+        label: "Avg. onboarding time",
+        context: "To first merged pull request on a mature Spring Boot codebase."
+      }
+    ],
+    faqs: [
+      {
+        q: "Do you offer Spring Boot developers on a contract basis?",
+        a: "Yes. We offer flexible month-to-month contracts, contract-to-hire, and direct placement options."
+      },
+      {
+        q: "Do developers understand OAuth2 and token security?",
+        a: "Yes, our senior developers are fully capable of implementing OAuth2, JWT, Okta, and Keycloak integrations."
+      }
+    ],
+    relatedHire: [
+      { to: "/hire/java-developers", label: "Java Developers" },
+      { to: "/hire/backend-developers", label: "Backend Developers" },
+      { to: "/hire/fullstack-developers", label: "Fullstack Developers" }
+    ],
+    relatedService: { to: "/services/software-development", label: "Software Development practice" }
+  },
+  {
+    slug: "ai-engineers-india",
+    category: "role",
+    title: "AI Engineers in India",
+    lede: "Hire senior, pre-vetted AI engineers from India to build production LLM systems, Agentic RAG, computer vision, and MLOps pipelines.",
+    introHeading: "Globally competitive AI talent from India's tech hubs.",
+    introParagraphs: [
+      "Our AI engineers represent the top 3% of talent in Bengaluru, Pune, and Hyderabad. They have hands-on experience building, evaluating, and scaling production-grade GenAI pipelines.",
+      "From fine-tuning open-source models to configuring vector search and guardrails, they bring high velocity and clean engineering discipline directly to your time zone."
+    ],
+    skills: [
+      "Python",
+      "PyTorch",
+      "LangChain",
+      "LlamaIndex",
+      "OpenAI API",
+      "Vector Databases",
+      "RAG",
+      "FastAPI",
+      "MLOps",
+      "Docker",
+      "AWS/GCP"
+    ],
+    whoFor: ROLE_SHARED_WHO,
+    capabilities: AI_CAPS("AI engineers"),
+    outcomes: [
+      {
+        metric: "40%",
+        label: "Token cost reduction",
+        context: "Through prompt compilation, model distillation, and response caching."
+      },
+      {
+        metric: "98.6%",
+        label: "Eval pass rate",
+        context: "For complex agentic workflows with custom guardrails in production."
+      },
+      {
+        metric: "5 days",
+        label: "Avg. shortlist delivery",
+        context: "For vetted AI talent ready to pair-program with your tech leads."
+      }
+    ],
+    faqs: [
+      {
+        q: "What timezone overlap do your developers offer?",
+        a: "We guarantee at least 4 hours of daily overlap with US, EU, or APAC business hours, adjusted based on your squad's needs."
+      },
+      {
+        q: "How do you screen AI engineers?",
+        a: "They undergo a FAANG-style system design screening, a live coding RAG/LLM assessment, and a communication and work-ethics evaluation."
+      }
+    ],
+    relatedHire: [
+      { to: "/hire/ai-developers", label: "AI Developers" },
+      { to: "/hire/generative-ai-developers", label: "Generative AI Developers" },
+      { to: "/hire/prompt-engineers", label: "Prompt Engineers" }
+    ],
+    relatedService: { to: "/services/ai-solutions", label: "AI Solutions practice" }
   },
 ];
 

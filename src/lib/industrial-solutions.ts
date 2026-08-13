@@ -10,10 +10,33 @@ import {
   SlidersHorizontal,
   TestTube2,
   Wrench,
+  Smartphone,
+  Activity,
+  Eye,
+  FileSearch as FileSearchIcon,
   type LucideIcon,
 } from "lucide-react";
 import type { SubServicePageProps } from "@/components/site/SubServicePage";
 import { BRAND } from "@/lib/brand-colors";
+import { 
+  InspectionManagementExtraSection, 
+  MobileAiExtraSection, 
+  OeeAnalyticsExtraSection, 
+  ScrapsInventoryExtraSection, 
+  StatisticalQualityControlExtraSection,
+  AiVisualInspectionExtraSection,
+  StatisticalAiExtraSection,
+  InProcessQualitySpcExtraSection,
+  CpvApqrExtraSection,
+  GaugeMsaExtraSection,
+  ContinuousImprovementExtraSection,
+  MaintenanceManagementExtraSection,
+  DoeExperimentsManagementExtraSection,
+  LiveDashboardsExtraSection,
+  ProductionManagementExtraSection,
+  DataExtractorExtraSection,
+  InventoryManagementExtraSection
+} from "@/components/site/IndustrialExtraSections";
 
 type IndustrialDefinition = {
   slug: string;
@@ -23,6 +46,7 @@ type IndustrialDefinition = {
   Icon: LucideIcon;
   capabilities: { title: string; body: string }[];
   outcomes: { metric: string; label: string; context: string }[];
+  extraSection?: React.ComponentType;
 };
 
 const relatedLinks = [
@@ -34,6 +58,7 @@ const relatedLinks = [
 function makeIndustrialPage(definition: IndustrialDefinition): SubServicePageProps {
   return {
     ...definition,
+    extraSection: definition.extraSection as any,
     accent: BRAND.blue,
     heroStats: [
       { value: "Real-time", label: "Operational visibility" },
@@ -115,6 +140,24 @@ function makeIndustrialPage(definition: IndustrialDefinition): SubServicePagePro
 
 const definitions: IndustrialDefinition[] = [
   {
+    slug: "ai-visual-inspection",
+    eyebrow: "AI Visual Inspection",
+    title: "Computer vision that catches defects before customers do.",
+    lede: "AI visual inspection systems for production lines, packaging, labels, components, and safety checks - built to run in real plant conditions with traceable evidence for every exception.",
+    Icon: Eye,
+    capabilities: [
+      { title: "Defect detection", body: "Surface scratches, dents, missing parts, wrong orientation, contamination, label errors, and packaging issues." },
+      { title: "Line-speed inference", body: "Edge or on-prem inference designed around cycle time, lighting, camera angle, and operator review flow." },
+      { title: "Model training workflow", body: "Dataset capture, annotation, acceptance criteria, false-reject tuning, and retraining loops as the line changes." },
+    ],
+    outcomes: [
+      { metric: "42%", label: "Fewer escapes", context: "A repeatable camera inspection point helped isolate label and surface defects before dispatch." },
+      { metric: "28%", label: "Lower rework load", context: "Review queues were tuned to reduce false rejects while keeping true defects visible." },
+      { metric: "100%", label: "Traceable evidence", context: "Every flagged part carried image proof, timestamp, SKU, and operator decision." },
+    ],
+    extraSection: AiVisualInspectionExtraSection,
+  },
+  {
     slug: "statistical-ai",
     eyebrow: "Industrial Analytics",
     title: "Statistical AI for faster, evidence-based process decisions.",
@@ -126,6 +169,7 @@ const definitions: IndustrialDefinition[] = [
       { title: "Root-cause support", body: "Compare variables and production conditions to focus investigations on the factors most likely to affect performance." },
     ],
     outcomes: [{ metric: "Earlier", label: "Process insight", context: "Spot meaningful shifts before they become costly production or quality issues." }, { metric: "Clearer", label: "Decision support", context: "Give teams a shared, evidence-based view of what the data is saying." }, { metric: "Repeatable", label: "Analysis", context: "Use consistent methods across products, lines, and plants." }],
+    extraSection: StatisticalAiExtraSection,
   },
   {
     slug: "in-process-quality-spc",
@@ -135,6 +179,7 @@ const definitions: IndustrialDefinition[] = [
     Icon: SlidersHorizontal,
     capabilities: [{ title: "Digital control plans", body: "Guide operators through the right checks, frequencies, and acceptance criteria for every process." }, { title: "Live control charts", body: "Track variation and control-limit breaches as data is captured on the shop floor." }, { title: "Escalation workflows", body: "Route out-of-control signals to the right owners with context and a record of response." }],
     outcomes: [{ metric: "Less", label: "Process variation", context: "Identify unstable conditions earlier in the production cycle." }, { metric: "Faster", label: "Corrective action", context: "Replace delayed spreadsheet reviews with visible, timely signals." }, { metric: "Stronger", label: "Quality evidence", context: "Maintain a traceable record of in-process control." }],
+    extraSection: InProcessQualitySpcExtraSection,
   },
   {
     slug: "cpv-apqr",
@@ -144,6 +189,7 @@ const definitions: IndustrialDefinition[] = [
     Icon: ClipboardCheck,
     capabilities: [{ title: "Verification plans", body: "Define critical process and quality parameters with consistent monitoring rules." }, { title: "Review-ready records", body: "Organise product and process evidence for periodic quality review without chasing files." }, { title: "Trend management", body: "Surface recurring deviations, investigations, and actions across batches and products." }],
     outcomes: [{ metric: "Ready", label: "For review", context: "Keep the evidence needed for periodic quality conversations in one place." }, { metric: "Better", label: "Traceability", context: "Connect observations, exceptions, and follow-up actions." }, { metric: "Lower", label: "Manual effort", context: "Reduce time spent assembling recurring process-quality reports." }],
+    extraSection: CpvApqrExtraSection,
   },
   {
     slug: "gauge-msa",
@@ -153,15 +199,26 @@ const definitions: IndustrialDefinition[] = [
     Icon: Gauge,
     capabilities: [{ title: "Gauge register", body: "Keep instruments, owners, locations, and calibration status in a single digital register." }, { title: "Calibration scheduling", body: "Plan due dates, reminders, certificates, and exceptions before an instrument becomes a risk." }, { title: "MSA studies", body: "Support repeatability, reproducibility, bias, and stability studies with structured data capture." }],
     outcomes: [{ metric: "Trusted", label: "Measurements", context: "Support confidence that inspection decisions use fit-for-purpose gauges." }, { metric: "Visible", label: "Calibration status", context: "Know what is due, overdue, quarantined, or ready to use." }, { metric: "Consistent", label: "MSA practice", context: "Standardise measurement studies across teams and locations." }],
+    extraSection: GaugeMsaExtraSection,
   },
   {
     slug: "inspection-management",
     eyebrow: "Inspection Management",
-    title: "Incoming, in-process, and outgoing inspection in one workflow.",
-    lede: "Replace paper inspection records with guided, traceable checks for materials, work-in-progress, and finished goods.",
+    title: "AI-Powered Inspection Management & Digital Compliance",
+    lede: "Automate asset checks, enforce EHS standardisation, and generate audit-ready documentation 50% faster with mobile-first checklists.",
     Icon: PackageSearch,
-    capabilities: [{ title: "Configurable inspections", body: "Build plans for incoming, process, and final inspections with sampling and acceptance rules." }, { title: "Non-conformance capture", body: "Record defects, photos, dispositions, and corrective actions where the inspection happens." }, { title: "Lot traceability", body: "Connect inspection evidence to suppliers, batches, jobs, and release decisions." }],
-    outcomes: [{ metric: "Paperless", label: "Inspection records", context: "Give teams a structured digital alternative to forms and folders." }, { metric: "Faster", label: "Release decisions", context: "Make inspection status and exceptions visible to the people who need them." }, { metric: "Complete", label: "Quality history", context: "Preserve traceable evidence across the material and product journey." }],
+    capabilities: [
+      { title: "Smart Digital Checklists", body: "Build dynamic, structured checklists with Pass/Fail controls, numeric thresholds, and mandatory photo evidence." },
+      { title: "EHS Safety Compliance", body: "Standardise incident reporting, track EHS regulatory compliance, and route alerts based on safety thresholds." },
+      { title: "Automated Reminders & SLA", body: "Schedule inspections around shift timings and send automated reminders to ensure 100% schedule adherence." },
+      { title: "Root Cause Analysis (RCA)", body: "Convert inspection failures into investigations using built-in DMAIC templates and correction logs." },
+    ],
+    outcomes: [
+      { metric: "35% Less", label: "Incident Rate", context: "Catch safety and compliance anomalies before they manifest on the shop floor." },
+      { metric: "50% Faster", label: "Documentation", context: "Generate audit-ready records instantly instead of spending hours compiling files." },
+      { metric: "100%", label: "SLA Adherence", context: "Trigger real-time notifications for missed or failed inspections." },
+    ],
+    extraSection: InspectionManagementExtraSection,
   },
   {
     slug: "continuous-improvement",
@@ -171,6 +228,7 @@ const definitions: IndustrialDefinition[] = [
     Icon: Lightbulb,
     capabilities: [{ title: "Improvement pipeline", body: "Capture ideas, kaizens, and improvement projects with owners, priorities, and status." }, { title: "Structured problem solving", body: "Support root-cause analysis, corrective actions, and approvals in one repeatable workflow." }, { title: "Benefit tracking", body: "Link completed actions to the quality, cost, delivery, safety, or throughput metric they improve." }],
     outcomes: [{ metric: "Visible", label: "Improvement portfolio", context: "See what is being worked on, who owns it, and what is blocked." }, { metric: "Accountable", label: "Actions", context: "Keep follow-ups from slipping between shifts and functional teams." }, { metric: "Measured", label: "Benefits", context: "Track whether an improvement delivered the intended operational result." }],
+    extraSection: ContinuousImprovementExtraSection,
   },
   {
     slug: "maintenance-management",
@@ -180,6 +238,7 @@ const definitions: IndustrialDefinition[] = [
     Icon: Wrench,
     capabilities: [{ title: "Work order management", body: "Create, assign, prioritise, and close maintenance work with the right asset and fault context." }, { title: "Preventive maintenance", body: "Schedule recurring tasks, inspections, and reminders around equipment criticality." }, { title: "Reliability analytics", body: "Review downtime, recurring faults, MTBF, and MTTR trends to focus improvement work." }],
     outcomes: [{ metric: "More", label: "Planned work", context: "Give teams a dependable rhythm for preventive and condition-based maintenance." }, { metric: "Less", label: "Repeat downtime", context: "Use asset history and fault patterns to address recurring issues." }, { metric: "Clearer", label: "Asset accountability", context: "Keep ownership, work, and service records connected to each asset." }],
+    extraSection: MaintenanceManagementExtraSection,
   },
   {
     slug: "doe-experiments-management",
@@ -189,6 +248,7 @@ const definitions: IndustrialDefinition[] = [
     Icon: TestTube2,
     capabilities: [{ title: "Experiment planning", body: "Define factors, responses, constraints, trial plans, and owners before a production experiment starts." }, { title: "Execution records", body: "Capture observations and results against the approved experimental conditions." }, { title: "Knowledge library", body: "Retain experiment history, findings, and validated settings for future engineering work." }],
     outcomes: [{ metric: "Faster", label: "Learning cycles", context: "Bring structure to test-and-learn work on products and processes." }, { metric: "Repeatable", label: "Experiments", context: "Preserve how trials were run rather than relying on individual memory." }, { metric: "Stronger", label: "Process knowledge", context: "Turn results into controlled, usable guidance for the next team." }],
+    extraSection: DoeExperimentsManagementExtraSection,
   },
   {
     slug: "live-dashboards",
@@ -198,6 +258,7 @@ const definitions: IndustrialDefinition[] = [
     Icon: BarChart3,
     capabilities: [{ title: "Role-based views", body: "Present the right operational measures for operators, supervisors, and plant leadership." }, { title: "Connected data", body: "Bring together machine, quality, maintenance, and manual workflow signals in one view." }, { title: "Actionable alerts", body: "Highlight exceptions and thresholds that call for a response, not just reporting." }],
     outcomes: [{ metric: "Shared", label: "Operational picture", context: "Align teams around current performance instead of separate reports." }, { metric: "Quicker", label: "Escalation", context: "Surface exceptions while a supervisor can still intervene." }, { metric: "Focused", label: "Daily management", context: "Keep the measures that matter visible in meetings and on the floor." }],
+    extraSection: LiveDashboardsExtraSection,
   },
   {
     slug: "production-management",
@@ -207,15 +268,17 @@ const definitions: IndustrialDefinition[] = [
     Icon: Settings,
     capabilities: [{ title: "Production logging", body: "Record jobs, output, rejects, shifts, and operating conditions digitally." }, { title: "Downtime tracking", body: "Capture duration, causes, ownership, and recurring patterns at the point of occurrence." }, { title: "Plan versus actual", body: "Compare expected output and schedule against what happened, with context for variance." }],
     outcomes: [{ metric: "Better", label: "Schedule visibility", context: "See how actual output is tracking against the day’s plan." }, { metric: "Clearer", label: "Downtime causes", context: "Replace vague downtime records with timely, structured reason capture." }, { metric: "Stronger", label: "Daily control", context: "Give production teams the information to recover performance during the shift." }],
+    extraSection: ProductionManagementExtraSection,
   },
   {
     slug: "data-extractor",
     eyebrow: "Industrial Data",
     title: "Extract operational data from the files you already receive.",
     lede: "Turn structured and semi-structured data in spreadsheets, PDFs, CSVs, and forms into usable information for industrial workflows.",
-    Icon: FileSearch,
+    Icon: FileSearchIcon,
     capabilities: [{ title: "Document extraction", body: "Identify needed values from common operational documents and place them in structured fields." }, { title: "Template matching", body: "Apply repeatable templates and validation rules to recurring supplier and plant documents." }, { title: "Workflow handoff", body: "Route validated data into dashboards, quality records, inventory workflows, or connected systems." }],
     outcomes: [{ metric: "Less", label: "Manual entry", context: "Reduce repetitive copy-and-paste work around operational documents." }, { metric: "Faster", label: "Data availability", context: "Make useful information available to workflows sooner." }, { metric: "More", label: "Consistent records", context: "Apply the same validation and structure each time a known document arrives." }],
+    extraSection: DataExtractorExtraSection,
   },
   {
     slug: "inventory-management",
@@ -225,8 +288,84 @@ const definitions: IndustrialDefinition[] = [
     Icon: Boxes,
     capabilities: [{ title: "Movement tracking", body: "Record every receipt, issue, return, transfer, and adjustment against the right material and location." }, { title: "Stock visibility", body: "Make current stock, reservations, and replenishment needs visible to authorised teams." }, { title: "Material traceability", body: "Connect material movements with lots, jobs, inspection status, and downstream consumption." }],
     outcomes: [{ metric: "Clearer", label: "Stock position", context: "Give teams one view of what is on hand and where it is." }, { metric: "Fewer", label: "Material surprises", context: "Make shortages and replenishment needs visible earlier." }, { metric: "Traceable", label: "Movements", context: "Maintain an accountable history from receipt through issue or return." }],
+    extraSection: InventoryManagementExtraSection,
   },
-
+  {
+    slug: "mobile-ai-inspection",
+    eyebrow: "Mobile AI Inspection",
+    title: "Next-Gen Mobile AI Inspection & Guided Field Capture",
+    lede: "Transform frontline tablets and smartphones into intelligent defect detectors. Use on-site computer vision and OCR to capture audit-ready evidence under any field conditions.",
+    Icon: Smartphone,
+    capabilities: [
+      { title: "Computer Vision Defect Detection", body: "Analyze on-site photos and videos automatically to detect visible cracks, surface corrosion, leaks, or wear." },
+      { title: "OCR Gauge & Meter Reading", body: "Extract readings from analog dial gauges, digital meters, and manufacturer nameplates instantly with high-accuracy OCR." },
+      { title: "Guided Inspection Workflows", body: "Provide inspectors with standard reference images and precise step-by-step overlays to remove evaluation bias." },
+      { title: "Fully Offline Synchronization", body: "Run checklists and stationery runs in remote locations without network, then sync once connected." },
+    ],
+    outcomes: [
+      { metric: "Near-Zero", label: "Data Entry Errors", context: "Automate meter logs and photo attachment matching straight to the asset ID." },
+      { metric: "Real-time", label: "Field Intelligence", context: "Route severity flags and trigger CMMS work orders while the inspector is still on site." },
+      { metric: "Consistent", label: "Visual Evidence", context: "Ensure every inspector records condition details against the exact same visual guidelines." },
+    ],
+    extraSection: MobileAiExtraSection,
+  },
+  {
+    slug: "oee-analytics",
+    eyebrow: "OEE Analytics",
+    title: "Real-time OEE Analytics & Industrial Efficiency Tracking",
+    lede: "Measure Overall Equipment Effectiveness (OEE) dynamically across lines and shifts. Track Availability, Performance, and Quality to eliminate the Six Big Losses.",
+    Icon: Activity,
+    capabilities: [
+      { title: "The Six Big Losses Monitor", body: "Deconstruct downtime into setup delays, minor stops, speed loss, startups, and production defects." },
+      { title: "Availability, Performance, Quality (APQ)", body: "Calculate key OEE pillars live and compare plant-wide indicators to world-class 85% benchmarks." },
+      { title: "Dynamic Shift & Line Dashboards", body: "Give supervisors and plant managers visual trends to spot performance decay before the shift ends." },
+      { title: "CMMS Integrated Root-Cause", body: "Connect downtime events directly to maintenance logs to analyze repeat equipment failure roots." },
+    ],
+    outcomes: [
+      { metric: "25% Up", label: "Productivity", context: "Drive immediate output gains by identifying and recovering hidden capacity bottlenecks." },
+      { metric: "Reduced", label: "Minor Stops", context: "Highlight and address short, recurring speed losses that slip under the radar." },
+      { metric: "Actionable", label: "Loss Analytics", context: "Pivot data by shift, product, batch, or machine to pinpoint performance issues." },
+    ],
+    extraSection: OeeAnalyticsExtraSection,
+  },
+  {
+    slug: "scraps-inventory",
+    eyebrow: "Scraps Inventory",
+    title: "Scraps Inventory Management & Industrial Waste Tracking",
+    lede: "Enforce accountability around material yield loss. Track scrapped materials, manage disposal manifests, and ensure strict EHS compliance.",
+    Icon: Boxes,
+    capabilities: [
+      { title: "Yield Loss & Scrap Tracking", body: "Log material waste, reject reasons, and disposition codes directly on the manufacturing floor." },
+      { title: "Hazardous Waste Manifests", body: "Generate and store certified manifests for toxic, chemical, or electronic waste disposal streams." },
+      { title: "Multi-level Approval Workflows", body: "Log and route disposal authorizations through EHS managers to verify regulatory alignment." },
+      { title: "Disposal & Recovery Analytics", body: "Measure scrap recovery rates, recycling efficiency, and calculate direct landfill diversion metrics." },
+    ],
+    outcomes: [
+      { metric: "35% Down", label: "Waste Costs", context: "Audit scrap patterns and disposal routes to uncover and eliminate material waste." },
+      { metric: "100%", label: "EHS Audit Readiness", context: "Maintain permanent, traceable records for municipal, state, and global safety regulators." },
+      { metric: "Optimised", label: "Material Yield", context: "Pinpoint process stages where raw materials are lost to optimize batch ratios." },
+    ],
+    extraSection: ScrapsInventoryExtraSection,
+  },
+  {
+    slug: "statistical-quality-control",
+    eyebrow: "Quality Analytics",
+    title: "Statistical Quality Control (SQC) & Process Capability",
+    lede: "Deploy automated control charts, process capability analysis (Cp, Cpk), and acceptance sampling to reduce defects by 40%.",
+    Icon: SlidersHorizontal,
+    capabilities: [
+      { title: "Process Capability Index (Cp, Cpk)", body: "Calculate process limits and capability scores dynamically to confirm production stays in spec." },
+      { title: "Real-time Control Charts", body: "Plot X-bar R, P, NP, and C charts automatically with instant alarms for out-of-control trends." },
+      { title: "Acceptance Sampling Plans", body: "Implement standardized MIL-STD sampling rules to inspect incoming parts with statistical confidence." },
+      { title: "Six Sigma DMAIC Tools", body: "Integrate analysis, pareto defect charts, and scatter plots for structured process optimization." },
+    ],
+    outcomes: [
+      { metric: "40% Less", label: "Production Defects", context: "Prevent defects by adjusting process settings the moment drift is detected." },
+      { metric: "Lower", label: "Inspection Costs", context: "Transition from expensive 100% inspection to statistical sampling." },
+      { metric: "Guaranteed", label: "Quality Compliance", context: "Deliver reliable process validation data to customers and certification bodies." },
+    ],
+    extraSection: StatisticalQualityControlExtraSection,
+  },
 ];
 
 export const industrialSolutions = Object.fromEntries(

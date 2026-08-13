@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import { Mail, Phone, ArrowRight, CalendarDays, Check } from "lucide-react";
 import { PageHero, SectionHeader } from "@/components/site/Primitives";
@@ -469,7 +469,7 @@ function ContactSidebar() {
         <h3 className="font-display font-semibold text-lg">Working hours</h3>
         <p className="text-sm text-muted-foreground leading-relaxed">
           Mon–Sat · 09:30 to 18:30 IST. We support client teams across India, Middle East,
-          Europe, & America with flexible hours on request.
+          Europe, & America with flexible hours on request. Looking to expand your engineering capabilities? Explore our <Link to="/services/it-staffing" className="text-gradient-brand hover:underline font-semibold">IT Staffing</Link> and <Link to="/services/ai-solutions" className="text-gradient-brand hover:underline font-semibold">AI Solutions</Link> or hire dedicated <Link to="/hire/java-developers" className="text-gradient-brand hover:underline font-semibold">Java Developers</Link>.
         </p>
       </div>
     </aside>

@@ -1,4 +1,4 @@
-﻿import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState, type FormEvent } from "react";
 import {
   ArrowRight,
@@ -56,13 +56,24 @@ const principles = [
   {
     Icon: Target,
     title: "Outcome Over Output",
-    body: "We measure success by business impact — not lines of code or hours billed. Every team member is aligned to client KPIs, not just task lists.",
+    body: (
+      <>
+        We measure success by business impact — not lines of code or hours billed. Every team member is aligned to client KPIs, whether they are working in our{" "}
+        <Link to="/services/software-development" className="text-gradient-brand hover:underline font-semibold">software development</Link> or{" "}
+        <Link to="/services/it-staffing" className="text-gradient-brand hover:underline font-semibold">IT staffing</Link> vertical.
+      </>
+    ),
     accent: "var(--brand-blue)",
   },
   {
     Icon: Sparkles,
     title: "AI-First Mindset",
-    body: "We're building for the future. Our teams actively work with AI, automation, and intelligent systems — learning and applying new technologies every day.",
+    body: (
+      <>
+        We're building for the future. Our teams actively build production-grade systems in our{" "}
+        <Link to="/services/ai-solutions" className="text-gradient-brand hover:underline font-semibold">AI Solutions practice</Link> — learning and applying new agentic technologies every day.
+      </>
+    ),
     accent: "var(--brand-orange)",
   },
   {

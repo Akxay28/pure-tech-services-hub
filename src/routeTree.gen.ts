@@ -14,6 +14,7 @@ import { Route as SolutionsRouteImport } from './routes/solutions'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as MissionVisionRouteImport } from './routes/mission-vision'
+import { Route as HireAiMlDeveloperRouteImport } from './routes/hire-ai-ml-developer'
 import { Route as GalleryRouteImport } from './routes/gallery'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CaseStudiesRouteImport } from './routes/case-studies'
@@ -51,13 +52,19 @@ import { Route as ServicesAiChatbotDevelopmentRouteImport } from './routes/servi
 import { Route as ServicesAiAgentsDevelopmentRouteImport } from './routes/services.ai-agents-development'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as HireWindsurfAiDevelopersRouteImport } from './routes/hire.windsurf-ai-developers'
+import { Route as HireWebAppDevelopersRouteImport } from './routes/hire.web-app-developers'
 import { Route as HireWebAppDeveloperRouteImport } from './routes/hire.web-app-developer'
+import { Route as HireSpringBootDevelopersRouteImport } from './routes/hire.spring-boot-developers'
+import { Route as HireSoftwareDevelopersRouteImport } from './routes/hire.software-developers'
 import { Route as HireSoftwareDeveloperRouteImport } from './routes/hire.software-developer'
 import { Route as HireReplitAiDevelopersRouteImport } from './routes/hire.replit-ai-developers'
+import { Route as HirePromptEngineersRouteImport } from './routes/hire.prompt-engineers'
 import { Route as HirePromptEngineerRouteImport } from './routes/hire.prompt-engineer'
 import { Route as HireOpenaiDevelopersRouteImport } from './routes/hire.openai-developers'
+import { Route as HireMobileAppDevelopersRouteImport } from './routes/hire.mobile-app-developers'
 import { Route as HireMobileAppDeveloperRouteImport } from './routes/hire.mobile-app-developer'
 import { Route as HireLovableAiDevelopersRouteImport } from './routes/hire.lovable-ai-developers'
+import { Route as HireJavaDevelopersRouteImport } from './routes/hire.java-developers'
 import { Route as HireGoogleAntigravityDevelopersRouteImport } from './routes/hire.google-antigravity-developers'
 import { Route as HireGenerativeAiDevelopersRouteImport } from './routes/hire.generative-ai-developers'
 import { Route as HireGeminiDevelopersRouteImport } from './routes/hire.gemini-developers'
@@ -70,6 +77,7 @@ import { Route as HireChatbotDevelopersRouteImport } from './routes/hire.chatbot
 import { Route as HireBoltNewAiDevelopersRouteImport } from './routes/hire.bolt-new-ai-developers'
 import { Route as HireBackendDevelopersRouteImport } from './routes/hire.backend-developers'
 import { Route as HireAndroidDevelopersRouteImport } from './routes/hire.android-developers'
+import { Route as HireAiEngineersIndiaRouteImport } from './routes/hire.ai-engineers-india'
 import { Route as HireAiDevelopersRouteImport } from './routes/hire.ai-developers'
 import { Route as HireSlugRouteImport } from './routes/hire.$slug'
 import { Route as CaseStudiesSlugRouteImport } from './routes/case-studies/$slug'
@@ -113,6 +121,11 @@ const ServicesRoute = ServicesRouteImport.update({
 const MissionVisionRoute = MissionVisionRouteImport.update({
   id: '/mission-vision',
   path: '/mission-vision',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HireAiMlDeveloperRoute = HireAiMlDeveloperRouteImport.update({
+  id: '/hire-ai-ml-developer',
+  path: '/hire-ai-ml-developer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalleryRoute = GalleryRouteImport.update({
@@ -314,9 +327,25 @@ const HireWindsurfAiDevelopersRoute =
     path: '/hire/windsurf-ai-developers',
     getParentRoute: () => rootRouteImport,
   } as any)
+const HireWebAppDevelopersRoute = HireWebAppDevelopersRouteImport.update({
+  id: '/hire/web-app-developers',
+  path: '/hire/web-app-developers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HireWebAppDeveloperRoute = HireWebAppDeveloperRouteImport.update({
   id: '/hire/web-app-developer',
   path: '/hire/web-app-developer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HireSpringBootDevelopersRoute =
+  HireSpringBootDevelopersRouteImport.update({
+    id: '/hire/spring-boot-developers',
+    path: '/hire/spring-boot-developers',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const HireSoftwareDevelopersRoute = HireSoftwareDevelopersRouteImport.update({
+  id: '/hire/software-developers',
+  path: '/hire/software-developers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HireSoftwareDeveloperRoute = HireSoftwareDeveloperRouteImport.update({
@@ -329,6 +358,11 @@ const HireReplitAiDevelopersRoute = HireReplitAiDevelopersRouteImport.update({
   path: '/hire/replit-ai-developers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HirePromptEngineersRoute = HirePromptEngineersRouteImport.update({
+  id: '/hire/prompt-engineers',
+  path: '/hire/prompt-engineers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HirePromptEngineerRoute = HirePromptEngineerRouteImport.update({
   id: '/hire/prompt-engineer',
   path: '/hire/prompt-engineer',
@@ -339,6 +373,11 @@ const HireOpenaiDevelopersRoute = HireOpenaiDevelopersRouteImport.update({
   path: '/hire/openai-developers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HireMobileAppDevelopersRoute = HireMobileAppDevelopersRouteImport.update({
+  id: '/hire/mobile-app-developers',
+  path: '/hire/mobile-app-developers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const HireMobileAppDeveloperRoute = HireMobileAppDeveloperRouteImport.update({
   id: '/hire/mobile-app-developer',
   path: '/hire/mobile-app-developer',
@@ -347,6 +386,11 @@ const HireMobileAppDeveloperRoute = HireMobileAppDeveloperRouteImport.update({
 const HireLovableAiDevelopersRoute = HireLovableAiDevelopersRouteImport.update({
   id: '/hire/lovable-ai-developers',
   path: '/hire/lovable-ai-developers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HireJavaDevelopersRoute = HireJavaDevelopersRouteImport.update({
+  id: '/hire/java-developers',
+  path: '/hire/java-developers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HireGoogleAntigravityDevelopersRoute =
@@ -409,6 +453,11 @@ const HireBackendDevelopersRoute = HireBackendDevelopersRouteImport.update({
 const HireAndroidDevelopersRoute = HireAndroidDevelopersRouteImport.update({
   id: '/hire/android-developers',
   path: '/hire/android-developers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HireAiEngineersIndiaRoute = HireAiEngineersIndiaRouteImport.update({
+  id: '/hire/ai-engineers-india',
+  path: '/hire/ai-engineers-india',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HireAiDevelopersRoute = HireAiDevelopersRouteImport.update({
@@ -519,6 +568,7 @@ export interface FileRoutesByFullPath {
   '/case-studies': typeof CaseStudiesRouteWithChildren
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
+  '/hire-ai-ml-developer': typeof HireAiMlDeveloperRoute
   '/mission-vision': typeof MissionVisionRoute
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -532,6 +582,7 @@ export interface FileRoutesByFullPath {
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
   '/hire/$slug': typeof HireSlugRoute
   '/hire/ai-developers': typeof HireAiDevelopersRoute
+  '/hire/ai-engineers-india': typeof HireAiEngineersIndiaRoute
   '/hire/android-developers': typeof HireAndroidDevelopersRoute
   '/hire/backend-developers': typeof HireBackendDevelopersRoute
   '/hire/bolt-new-ai-developers': typeof HireBoltNewAiDevelopersRoute
@@ -544,13 +595,19 @@ export interface FileRoutesByFullPath {
   '/hire/gemini-developers': typeof HireGeminiDevelopersRoute
   '/hire/generative-ai-developers': typeof HireGenerativeAiDevelopersRoute
   '/hire/google-antigravity-developers': typeof HireGoogleAntigravityDevelopersRoute
+  '/hire/java-developers': typeof HireJavaDevelopersRoute
   '/hire/lovable-ai-developers': typeof HireLovableAiDevelopersRoute
   '/hire/mobile-app-developer': typeof HireMobileAppDeveloperRoute
+  '/hire/mobile-app-developers': typeof HireMobileAppDevelopersRoute
   '/hire/openai-developers': typeof HireOpenaiDevelopersRoute
   '/hire/prompt-engineer': typeof HirePromptEngineerRoute
+  '/hire/prompt-engineers': typeof HirePromptEngineersRoute
   '/hire/replit-ai-developers': typeof HireReplitAiDevelopersRoute
   '/hire/software-developer': typeof HireSoftwareDeveloperRoute
+  '/hire/software-developers': typeof HireSoftwareDevelopersRoute
+  '/hire/spring-boot-developers': typeof HireSpringBootDevelopersRoute
   '/hire/web-app-developer': typeof HireWebAppDeveloperRoute
+  '/hire/web-app-developers': typeof HireWebAppDevelopersRoute
   '/hire/windsurf-ai-developers': typeof HireWindsurfAiDevelopersRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/services/ai-agents-development': typeof ServicesAiAgentsDevelopmentRoute
@@ -598,6 +655,7 @@ export interface FileRoutesByTo {
   '/case-studies': typeof CaseStudiesRouteWithChildren
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
+  '/hire-ai-ml-developer': typeof HireAiMlDeveloperRoute
   '/mission-vision': typeof MissionVisionRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/team': typeof TeamRoute
@@ -609,6 +667,7 @@ export interface FileRoutesByTo {
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
   '/hire/$slug': typeof HireSlugRoute
   '/hire/ai-developers': typeof HireAiDevelopersRoute
+  '/hire/ai-engineers-india': typeof HireAiEngineersIndiaRoute
   '/hire/android-developers': typeof HireAndroidDevelopersRoute
   '/hire/backend-developers': typeof HireBackendDevelopersRoute
   '/hire/bolt-new-ai-developers': typeof HireBoltNewAiDevelopersRoute
@@ -621,13 +680,19 @@ export interface FileRoutesByTo {
   '/hire/gemini-developers': typeof HireGeminiDevelopersRoute
   '/hire/generative-ai-developers': typeof HireGenerativeAiDevelopersRoute
   '/hire/google-antigravity-developers': typeof HireGoogleAntigravityDevelopersRoute
+  '/hire/java-developers': typeof HireJavaDevelopersRoute
   '/hire/lovable-ai-developers': typeof HireLovableAiDevelopersRoute
   '/hire/mobile-app-developer': typeof HireMobileAppDeveloperRoute
+  '/hire/mobile-app-developers': typeof HireMobileAppDevelopersRoute
   '/hire/openai-developers': typeof HireOpenaiDevelopersRoute
   '/hire/prompt-engineer': typeof HirePromptEngineerRoute
+  '/hire/prompt-engineers': typeof HirePromptEngineersRoute
   '/hire/replit-ai-developers': typeof HireReplitAiDevelopersRoute
   '/hire/software-developer': typeof HireSoftwareDeveloperRoute
+  '/hire/software-developers': typeof HireSoftwareDevelopersRoute
+  '/hire/spring-boot-developers': typeof HireSpringBootDevelopersRoute
   '/hire/web-app-developer': typeof HireWebAppDeveloperRoute
+  '/hire/web-app-developers': typeof HireWebAppDevelopersRoute
   '/hire/windsurf-ai-developers': typeof HireWindsurfAiDevelopersRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/services/ai-agents-development': typeof ServicesAiAgentsDevelopmentRoute
@@ -679,6 +744,7 @@ export interface FileRoutesById {
   '/case-studies': typeof CaseStudiesRouteWithChildren
   '/contact': typeof ContactRoute
   '/gallery': typeof GalleryRoute
+  '/hire-ai-ml-developer': typeof HireAiMlDeveloperRoute
   '/mission-vision': typeof MissionVisionRoute
   '/services': typeof ServicesRouteWithChildren
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -692,6 +758,7 @@ export interface FileRoutesById {
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
   '/hire/$slug': typeof HireSlugRoute
   '/hire/ai-developers': typeof HireAiDevelopersRoute
+  '/hire/ai-engineers-india': typeof HireAiEngineersIndiaRoute
   '/hire/android-developers': typeof HireAndroidDevelopersRoute
   '/hire/backend-developers': typeof HireBackendDevelopersRoute
   '/hire/bolt-new-ai-developers': typeof HireBoltNewAiDevelopersRoute
@@ -704,13 +771,19 @@ export interface FileRoutesById {
   '/hire/gemini-developers': typeof HireGeminiDevelopersRoute
   '/hire/generative-ai-developers': typeof HireGenerativeAiDevelopersRoute
   '/hire/google-antigravity-developers': typeof HireGoogleAntigravityDevelopersRoute
+  '/hire/java-developers': typeof HireJavaDevelopersRoute
   '/hire/lovable-ai-developers': typeof HireLovableAiDevelopersRoute
   '/hire/mobile-app-developer': typeof HireMobileAppDeveloperRoute
+  '/hire/mobile-app-developers': typeof HireMobileAppDevelopersRoute
   '/hire/openai-developers': typeof HireOpenaiDevelopersRoute
   '/hire/prompt-engineer': typeof HirePromptEngineerRoute
+  '/hire/prompt-engineers': typeof HirePromptEngineersRoute
   '/hire/replit-ai-developers': typeof HireReplitAiDevelopersRoute
   '/hire/software-developer': typeof HireSoftwareDeveloperRoute
+  '/hire/software-developers': typeof HireSoftwareDevelopersRoute
+  '/hire/spring-boot-developers': typeof HireSpringBootDevelopersRoute
   '/hire/web-app-developer': typeof HireWebAppDeveloperRoute
+  '/hire/web-app-developers': typeof HireWebAppDevelopersRoute
   '/hire/windsurf-ai-developers': typeof HireWindsurfAiDevelopersRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/services/ai-agents-development': typeof ServicesAiAgentsDevelopmentRoute
@@ -763,6 +836,7 @@ export interface FileRouteTypes {
     | '/case-studies'
     | '/contact'
     | '/gallery'
+    | '/hire-ai-ml-developer'
     | '/mission-vision'
     | '/services'
     | '/sitemap.xml'
@@ -776,6 +850,7 @@ export interface FileRouteTypes {
     | '/case-studies/$slug'
     | '/hire/$slug'
     | '/hire/ai-developers'
+    | '/hire/ai-engineers-india'
     | '/hire/android-developers'
     | '/hire/backend-developers'
     | '/hire/bolt-new-ai-developers'
@@ -788,13 +863,19 @@ export interface FileRouteTypes {
     | '/hire/gemini-developers'
     | '/hire/generative-ai-developers'
     | '/hire/google-antigravity-developers'
+    | '/hire/java-developers'
     | '/hire/lovable-ai-developers'
     | '/hire/mobile-app-developer'
+    | '/hire/mobile-app-developers'
     | '/hire/openai-developers'
     | '/hire/prompt-engineer'
+    | '/hire/prompt-engineers'
     | '/hire/replit-ai-developers'
     | '/hire/software-developer'
+    | '/hire/software-developers'
+    | '/hire/spring-boot-developers'
     | '/hire/web-app-developer'
+    | '/hire/web-app-developers'
     | '/hire/windsurf-ai-developers'
     | '/services/$slug'
     | '/services/ai-agents-development'
@@ -842,6 +923,7 @@ export interface FileRouteTypes {
     | '/case-studies'
     | '/contact'
     | '/gallery'
+    | '/hire-ai-ml-developer'
     | '/mission-vision'
     | '/sitemap.xml'
     | '/team'
@@ -853,6 +935,7 @@ export interface FileRouteTypes {
     | '/case-studies/$slug'
     | '/hire/$slug'
     | '/hire/ai-developers'
+    | '/hire/ai-engineers-india'
     | '/hire/android-developers'
     | '/hire/backend-developers'
     | '/hire/bolt-new-ai-developers'
@@ -865,13 +948,19 @@ export interface FileRouteTypes {
     | '/hire/gemini-developers'
     | '/hire/generative-ai-developers'
     | '/hire/google-antigravity-developers'
+    | '/hire/java-developers'
     | '/hire/lovable-ai-developers'
     | '/hire/mobile-app-developer'
+    | '/hire/mobile-app-developers'
     | '/hire/openai-developers'
     | '/hire/prompt-engineer'
+    | '/hire/prompt-engineers'
     | '/hire/replit-ai-developers'
     | '/hire/software-developer'
+    | '/hire/software-developers'
+    | '/hire/spring-boot-developers'
     | '/hire/web-app-developer'
+    | '/hire/web-app-developers'
     | '/hire/windsurf-ai-developers'
     | '/services/$slug'
     | '/services/ai-agents-development'
@@ -922,6 +1011,7 @@ export interface FileRouteTypes {
     | '/case-studies'
     | '/contact'
     | '/gallery'
+    | '/hire-ai-ml-developer'
     | '/mission-vision'
     | '/services'
     | '/sitemap.xml'
@@ -935,6 +1025,7 @@ export interface FileRouteTypes {
     | '/case-studies/$slug'
     | '/hire/$slug'
     | '/hire/ai-developers'
+    | '/hire/ai-engineers-india'
     | '/hire/android-developers'
     | '/hire/backend-developers'
     | '/hire/bolt-new-ai-developers'
@@ -947,13 +1038,19 @@ export interface FileRouteTypes {
     | '/hire/gemini-developers'
     | '/hire/generative-ai-developers'
     | '/hire/google-antigravity-developers'
+    | '/hire/java-developers'
     | '/hire/lovable-ai-developers'
     | '/hire/mobile-app-developer'
+    | '/hire/mobile-app-developers'
     | '/hire/openai-developers'
     | '/hire/prompt-engineer'
+    | '/hire/prompt-engineers'
     | '/hire/replit-ai-developers'
     | '/hire/software-developer'
+    | '/hire/software-developers'
+    | '/hire/spring-boot-developers'
     | '/hire/web-app-developer'
+    | '/hire/web-app-developers'
     | '/hire/windsurf-ai-developers'
     | '/services/$slug'
     | '/services/ai-agents-development'
@@ -1005,6 +1102,7 @@ export interface RootRouteChildren {
   CaseStudiesRoute: typeof CaseStudiesRouteWithChildren
   ContactRoute: typeof ContactRoute
   GalleryRoute: typeof GalleryRoute
+  HireAiMlDeveloperRoute: typeof HireAiMlDeveloperRoute
   MissionVisionRoute: typeof MissionVisionRoute
   ServicesRoute: typeof ServicesRouteWithChildren
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -1012,6 +1110,7 @@ export interface RootRouteChildren {
   TeamRoute: typeof TeamRoute
   HireSlugRoute: typeof HireSlugRoute
   HireAiDevelopersRoute: typeof HireAiDevelopersRoute
+  HireAiEngineersIndiaRoute: typeof HireAiEngineersIndiaRoute
   HireAndroidDevelopersRoute: typeof HireAndroidDevelopersRoute
   HireBackendDevelopersRoute: typeof HireBackendDevelopersRoute
   HireBoltNewAiDevelopersRoute: typeof HireBoltNewAiDevelopersRoute
@@ -1024,13 +1123,19 @@ export interface RootRouteChildren {
   HireGeminiDevelopersRoute: typeof HireGeminiDevelopersRoute
   HireGenerativeAiDevelopersRoute: typeof HireGenerativeAiDevelopersRoute
   HireGoogleAntigravityDevelopersRoute: typeof HireGoogleAntigravityDevelopersRoute
+  HireJavaDevelopersRoute: typeof HireJavaDevelopersRoute
   HireLovableAiDevelopersRoute: typeof HireLovableAiDevelopersRoute
   HireMobileAppDeveloperRoute: typeof HireMobileAppDeveloperRoute
+  HireMobileAppDevelopersRoute: typeof HireMobileAppDevelopersRoute
   HireOpenaiDevelopersRoute: typeof HireOpenaiDevelopersRoute
   HirePromptEngineerRoute: typeof HirePromptEngineerRoute
+  HirePromptEngineersRoute: typeof HirePromptEngineersRoute
   HireReplitAiDevelopersRoute: typeof HireReplitAiDevelopersRoute
   HireSoftwareDeveloperRoute: typeof HireSoftwareDeveloperRoute
+  HireSoftwareDevelopersRoute: typeof HireSoftwareDevelopersRoute
+  HireSpringBootDevelopersRoute: typeof HireSpringBootDevelopersRoute
   HireWebAppDeveloperRoute: typeof HireWebAppDeveloperRoute
+  HireWebAppDevelopersRoute: typeof HireWebAppDevelopersRoute
   HireWindsurfAiDevelopersRoute: typeof HireWindsurfAiDevelopersRoute
 }
 
@@ -1069,6 +1174,13 @@ declare module '@tanstack/react-router' {
       path: '/mission-vision'
       fullPath: '/mission-vision'
       preLoaderRoute: typeof MissionVisionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hire-ai-ml-developer': {
+      id: '/hire-ai-ml-developer'
+      path: '/hire-ai-ml-developer'
+      fullPath: '/hire-ai-ml-developer'
+      preLoaderRoute: typeof HireAiMlDeveloperRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gallery': {
@@ -1330,11 +1442,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HireWindsurfAiDevelopersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hire/web-app-developers': {
+      id: '/hire/web-app-developers'
+      path: '/hire/web-app-developers'
+      fullPath: '/hire/web-app-developers'
+      preLoaderRoute: typeof HireWebAppDevelopersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hire/web-app-developer': {
       id: '/hire/web-app-developer'
       path: '/hire/web-app-developer'
       fullPath: '/hire/web-app-developer'
       preLoaderRoute: typeof HireWebAppDeveloperRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hire/spring-boot-developers': {
+      id: '/hire/spring-boot-developers'
+      path: '/hire/spring-boot-developers'
+      fullPath: '/hire/spring-boot-developers'
+      preLoaderRoute: typeof HireSpringBootDevelopersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hire/software-developers': {
+      id: '/hire/software-developers'
+      path: '/hire/software-developers'
+      fullPath: '/hire/software-developers'
+      preLoaderRoute: typeof HireSoftwareDevelopersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hire/software-developer': {
@@ -1351,6 +1484,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HireReplitAiDevelopersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hire/prompt-engineers': {
+      id: '/hire/prompt-engineers'
+      path: '/hire/prompt-engineers'
+      fullPath: '/hire/prompt-engineers'
+      preLoaderRoute: typeof HirePromptEngineersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hire/prompt-engineer': {
       id: '/hire/prompt-engineer'
       path: '/hire/prompt-engineer'
@@ -1365,6 +1505,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HireOpenaiDevelopersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hire/mobile-app-developers': {
+      id: '/hire/mobile-app-developers'
+      path: '/hire/mobile-app-developers'
+      fullPath: '/hire/mobile-app-developers'
+      preLoaderRoute: typeof HireMobileAppDevelopersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/hire/mobile-app-developer': {
       id: '/hire/mobile-app-developer'
       path: '/hire/mobile-app-developer'
@@ -1377,6 +1524,13 @@ declare module '@tanstack/react-router' {
       path: '/hire/lovable-ai-developers'
       fullPath: '/hire/lovable-ai-developers'
       preLoaderRoute: typeof HireLovableAiDevelopersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hire/java-developers': {
+      id: '/hire/java-developers'
+      path: '/hire/java-developers'
+      fullPath: '/hire/java-developers'
+      preLoaderRoute: typeof HireJavaDevelopersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hire/google-antigravity-developers': {
@@ -1461,6 +1615,13 @@ declare module '@tanstack/react-router' {
       path: '/hire/android-developers'
       fullPath: '/hire/android-developers'
       preLoaderRoute: typeof HireAndroidDevelopersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hire/ai-engineers-india': {
+      id: '/hire/ai-engineers-india'
+      path: '/hire/ai-engineers-india'
+      fullPath: '/hire/ai-engineers-india'
+      preLoaderRoute: typeof HireAiEngineersIndiaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hire/ai-developers': {
@@ -1753,6 +1914,7 @@ const rootRouteChildren: RootRouteChildren = {
   CaseStudiesRoute: CaseStudiesRouteWithChildren,
   ContactRoute: ContactRoute,
   GalleryRoute: GalleryRoute,
+  HireAiMlDeveloperRoute: HireAiMlDeveloperRoute,
   MissionVisionRoute: MissionVisionRoute,
   ServicesRoute: ServicesRouteWithChildren,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
@@ -1760,6 +1922,7 @@ const rootRouteChildren: RootRouteChildren = {
   TeamRoute: TeamRoute,
   HireSlugRoute: HireSlugRoute,
   HireAiDevelopersRoute: HireAiDevelopersRoute,
+  HireAiEngineersIndiaRoute: HireAiEngineersIndiaRoute,
   HireAndroidDevelopersRoute: HireAndroidDevelopersRoute,
   HireBackendDevelopersRoute: HireBackendDevelopersRoute,
   HireBoltNewAiDevelopersRoute: HireBoltNewAiDevelopersRoute,
@@ -1772,13 +1935,19 @@ const rootRouteChildren: RootRouteChildren = {
   HireGeminiDevelopersRoute: HireGeminiDevelopersRoute,
   HireGenerativeAiDevelopersRoute: HireGenerativeAiDevelopersRoute,
   HireGoogleAntigravityDevelopersRoute: HireGoogleAntigravityDevelopersRoute,
+  HireJavaDevelopersRoute: HireJavaDevelopersRoute,
   HireLovableAiDevelopersRoute: HireLovableAiDevelopersRoute,
   HireMobileAppDeveloperRoute: HireMobileAppDeveloperRoute,
+  HireMobileAppDevelopersRoute: HireMobileAppDevelopersRoute,
   HireOpenaiDevelopersRoute: HireOpenaiDevelopersRoute,
   HirePromptEngineerRoute: HirePromptEngineerRoute,
+  HirePromptEngineersRoute: HirePromptEngineersRoute,
   HireReplitAiDevelopersRoute: HireReplitAiDevelopersRoute,
   HireSoftwareDeveloperRoute: HireSoftwareDeveloperRoute,
+  HireSoftwareDevelopersRoute: HireSoftwareDevelopersRoute,
+  HireSpringBootDevelopersRoute: HireSpringBootDevelopersRoute,
   HireWebAppDeveloperRoute: HireWebAppDeveloperRoute,
+  HireWebAppDevelopersRoute: HireWebAppDevelopersRoute,
   HireWindsurfAiDevelopersRoute: HireWindsurfAiDevelopersRoute,
 }
 export const routeTree = rootRouteImport

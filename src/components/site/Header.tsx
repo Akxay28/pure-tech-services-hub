@@ -211,7 +211,14 @@ const serviceItems: Record<TabKey, ServiceItem[]> = {
   ],
 };
 
-const solutionItems: ServiceItem[] = [
+type SolutionTabKey = "industrial" | "surveillance";
+
+const solutionTabs: { key: SolutionTabKey; label: string; icon: LucideIcon; to: string }[] = [
+  { key: "industrial", label: "Industrial AI Solutions", icon: Building2, to: "/solutions" },
+  { key: "surveillance", label: "AI Video Surveillance", icon: Eye, to: "/solutions/ai-video-surveillance" },
+];
+
+const industrialItems: ServiceItem[] = [
   {
     title: "AI Visual Inspection",
     subtitle: "Computer vision for line quality and audit evidence",
@@ -220,57 +227,25 @@ const solutionItems: ServiceItem[] = [
   },
   {
     title: "Mobile AI Inspection",
-    subtitle: "Guided field checks with offline capture",
-    icon: ClipboardCheck,
+    subtitle: "Next-gen field app and computer vision defect capture",
+    icon: Smartphone,
     to: "/solutions/mobile-ai-inspection",
   },
-  {
-    title: "Workplace Safety",
-    subtitle: "AI monitoring for PPE, zones, and hazards",
-    icon: ShieldCheck,
-    to: "/solutions/workplace-safety",
-  },
-  {
-    title: "AI People Counting",
-    subtitle: "Occupancy, flow, and capacity intelligence",
-    icon: Users,
-    to: "/solutions/ai-people-counting",
-  },
-  {
-    title: "Operational Sustainability",
-    subtitle: "Energy, waste, and production data in one view",
-    icon: Leaf,
-    to: "/solutions/operational-sustainability",
-  },
-  {
-    title: "Predictive Maintenance",
-    subtitle: "Detect asset risk before downtime starts",
-    icon: Activity,
-    to: "/solutions/predictive-maintenance",
-  },
-];
-
-type SolutionTabKey = "ai" | "industrial" | "surveillance";
-
-const solutionTabs: { key: SolutionTabKey; label: string; icon: LucideIcon; to: string }[] = [
-  { key: "ai", label: "Industrial AI Solutions", icon: Brain, to: "/solutions" },
-  { key: "industrial", label: "Industrial", icon: Building2, to: "/solutions#industrial" },
-  { key: "surveillance", label: "AI Video Surveillance", icon: Eye, to: "/solutions/ai-video-surveillance" },
-];
-
-const industrialItems: ServiceItem[] = [
   { title: "Statistical AI", subtitle: "Process intelligence from operational data", icon: BarChart3, to: "/solutions/statistical-ai" },
   { title: "In-Process Quality & SPC", subtitle: "Catch process drift before defects", icon: SlidersHorizontal, to: "/solutions/in-process-quality-spc" },
+  { title: "Statistical Quality Control", subtitle: "Cp, Cpk indexes and sampling plans", icon: SlidersHorizontal, to: "/solutions/statistical-quality-control" },
   { title: "CPV & APQR", subtitle: "Continuous process verification and quality review", icon: ClipboardCheck, to: "/solutions/cpv-apqr" },
   { title: "Gauge & MSA", subtitle: "Trusted measurement and calibration control", icon: Gauge, to: "/solutions/gauge-msa" },
-  { title: "Inspection Management", subtitle: "Incoming, in-process, and outgoing checks", icon: PackageSearch, to: "/solutions/inspection-management" },
+  { title: "Inspection Management", subtitle: "AI-powered checklists and safety compliance", icon: PackageSearch, to: "/solutions/inspection-management" },
   { title: "Continuous Improvement", subtitle: "Move improvement ideas into measured action", icon: Lightbulb, to: "/solutions/continuous-improvement" },
   { title: "Maintenance Management", subtitle: "Plan work and improve asset reliability", icon: Wrench, to: "/solutions/maintenance-management" },
+  { title: "OEE Analytics", subtitle: "Track Six Big Losses and performance pillars live", icon: Activity, to: "/solutions/oee-analytics" },
   { title: "DOE & Experiments", subtitle: "Structured process learning and optimisation", icon: TestTube2, to: "/solutions/doe-experiments-management" },
   { title: "Live Dashboards", subtitle: "Current plant performance in one view", icon: BarChart3, to: "/solutions/live-dashboards" },
   { title: "Production Management", subtitle: "Track output, downtime, and execution", icon: Settings, to: "/solutions/production-management" },
   { title: "Data Extractor", subtitle: "Turn files and forms into usable data", icon: FileSearch, to: "/solutions/data-extractor" },
   { title: "Inventory Management", subtitle: "Control material movements and availability", icon: Boxes, to: "/solutions/inventory-management" },
+  { title: "Scraps Inventory", subtitle: "Audit yield loss and hazardous EHS disposal", icon: Boxes, to: "/solutions/scraps-inventory" },
 ];
 
 const surveillanceItems: ServiceItem[] = [
@@ -397,10 +372,10 @@ const hireItems: Record<HireTabKey, HireItem[]> = {
       to: "/hire/gemini-developers",
     },
     {
-      title: "Hire Prompt Engineer",
+      title: "Hire Prompt Engineers",
       subtitle: "Prompt design & eval workflows",
       icon: PenLine,
-      to: "/hire/prompt-engineer",
+      to: "/hire/prompt-engineers",
     },
   ],
   vibe: [
@@ -449,16 +424,16 @@ const hireItems: Record<HireTabKey, HireItem[]> = {
   ],
   role: [
     {
-      title: "Hire Software Developer",
+      title: "Hire Software Developers",
       subtitle: "End-to-end product engineers",
       icon: Code2,
-      to: "/hire/software-developer",
+      to: "/hire/software-developers",
     },
     {
-      title: "Hire Mobile App Developer",
+      title: "Hire Mobile App Developers",
       subtitle: "iOS, Android & cross-platform",
       icon: Smartphone,
-      to: "/hire/mobile-app-developer",
+      to: "/hire/mobile-app-developers",
     },
     {
       title: "Hire Backend Developers",
@@ -479,10 +454,10 @@ const hireItems: Record<HireTabKey, HireItem[]> = {
       to: "/hire/devops-developers",
     },
     {
-      title: "Hire Web App Developer",
+      title: "Hire Web App Developers",
       subtitle: "SPAs, SSR & web platforms",
       icon: Layers,
-      to: "/hire/web-app-developer",
+      to: "/hire/web-app-developers",
     },
     {
       title: "Hire Frontend Developers",
@@ -501,6 +476,24 @@ const hireItems: Record<HireTabKey, HireItem[]> = {
       subtitle: "Kotlin, Compose & Play Store",
       icon: Smartphone,
       to: "/hire/android-developers",
+    },
+    {
+      title: "Hire Java Developers",
+      subtitle: "Enterprise backends, Spring & Hibernate",
+      icon: Code2,
+      to: "/hire/java-developers",
+    },
+    {
+      title: "Hire Spring Boot Developers",
+      subtitle: "Cloud-native services & microservices",
+      icon: Layers,
+      to: "/hire/spring-boot-developers",
+    },
+    {
+      title: "Hire AI Engineers India",
+      subtitle: "Pre-vetted GenAI & LLM engineering",
+      icon: Brain,
+      to: "/hire/ai-engineers-india",
     },
   ],
 };
@@ -524,7 +517,7 @@ export function Header() {
   const [activeTab, setActiveTab] = useState<TabKey>("team");
   const [activeHireTab, setActiveHireTab] = useState<HireTabKey>("ai");
   const [activeCompanyTab, setActiveCompanyTab] = useState<CompanyTabKey>("about");
-  const [activeSolutionTab, setActiveSolutionTab] = useState<SolutionTabKey>("ai");
+  const [activeSolutionTab, setActiveSolutionTab] = useState<SolutionTabKey>("industrial");
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const location = useLocation();
 
@@ -699,7 +692,7 @@ export function Header() {
           >
             <div className="mx-auto max-w-7xl px-5 py-5 space-y-2 max-h-[80vh] overflow-y-auto">
               <MobileAccordion title="Services" items={serviceItems.team.concat(serviceItems.ai)} />
-              <MobileAccordion title="Solutions" items={solutionItems} />
+              <MobileAccordion title="Solutions" items={industrialItems.concat(surveillanceItems)} />
               <MobileAccordion
                 title="Hire Developers"
                 items={[...hireItems.ai, ...hireItems.vibe, ...hireItems.role]}
@@ -847,9 +840,7 @@ function SolutionsMega({
   setActiveTab: (tab: SolutionTabKey) => void;
 }) {
   const items =
-    activeTab === "ai"
-      ? solutionItems
-      : activeTab === "industrial"
+    activeTab === "industrial"
       ? industrialItems
       : surveillanceItems;
   return (

@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { ArrowLeft, ArrowRight, Target, Cog, Sparkles } from "lucide-react";
 import {
@@ -250,8 +250,8 @@ const testimonials = [
             <button
               key={i}
               onClick={() => setActive(i)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                i === active ? "w-6 bg-foreground" : "w-2 bg-foreground/20"
+              className={`h-1.5 transition-all duration-300 rounded-full ${
+                active === i ? "w-6 bg-foreground" : "w-1.5 bg-border hover:bg-muted-foreground"
               }`}
             />
           ))}
@@ -273,10 +273,10 @@ function About() {
   return (
     <>
       <PageHero
-        eyebrow="About Pure Technology"
+        eyebrow="Our Company"
         title={
           <>
-            Leading IT Consulting & Software Development Company{" "}
+            Outcome-First Engineering Services.{" "}
             <span className="text-gradient-brand">Driving Digital Transformation</span>
           </>
         }
@@ -313,7 +313,7 @@ function About() {
               Today, we're a growing team based in Pune, serving startups, SMEs, and global
               enterprises across India, the Middle East, Europe, and North America. Our
               cross-functional teams combine deep industry expertise with advanced technologies —
-              from AI and cloud to product engineering and IT staffing — to deliver impactful
+              from <Link to="/services/ai-solutions" className="text-gradient-brand hover:underline font-semibold">AI solutions</Link> and cloud to <Link to="/services/product-engineering" className="text-gradient-brand hover:underline font-semibold">product engineering</Link> and <Link to="/services/it-staffing" className="text-gradient-brand hover:underline font-semibold">IT staffing</Link> — to deliver impactful
               digital solutions at scale.
             </p>
           </div>

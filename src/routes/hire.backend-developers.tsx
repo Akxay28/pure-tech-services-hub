@@ -8,10 +8,39 @@ const role = getHireRoleProps("backend-developers");
 export const Route = createFileRoute("/hire/backend-developers")({
   head: () => ({
     meta: [
+
       { title: `Hire ${role.roleTitle} — Pure Technology` },
       { name: "description", content: role.lede },
       { property: "og:title", content: `Hire ${role.roleTitle} — Pure Technology` },
       { property: "og:description", content: role.lede },
+    
+      {
+        "script:ld+json": {
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Service",
+              "name": `Hire ${role.roleTitle}`,
+              "description": role.lede,
+              "provider": {
+                "@type": "Organization",
+                "name": "Pure Technology",
+                "url": "https://puretechnology.in"
+              },
+              "areaServed": ["India", "Worldwide"],
+              "serviceType": "IT Staffing & Staff Augmentation"
+            },
+            {
+              "@type": "FAQPage",
+              "mainEntity": role.faqs.map((faq) => ({
+                "@type": "Question",
+                "name": faq.q,
+                "acceptedAnswer": { "@type": "Answer", text: faq.a }
+              }))
+            }
+          ]
+        }
+      }
     ],
   }),
   component: function HireBackendDevelopersPage() {

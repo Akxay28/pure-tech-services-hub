@@ -5,6 +5,7 @@ import { solutionSlugSet, subServices } from "@/lib/sub-services";
 import { industrialSlugs, industrialSolutions } from "@/lib/industrial-solutions";
 import { surveillanceSlugs, surveillanceSolutions } from "@/lib/surveillance-solutions";
 import { getCaseStudiesForService } from "@/lib/case-studies-by-service";
+import { GenericIndustrialExtraSection } from "@/components/site/IndustrialExtraSections";
 
 const allSolutionSlugs = new Set([...solutionSlugSet, ...industrialSlugs, ...surveillanceSlugs]);
 
@@ -68,20 +69,40 @@ export const Route = createFileRoute("/solutions/$slug")({
 function SolutionRoute() {
   const { slug } = Route.useLoaderData();
   if (!allSolutionSlugs.has(slug)) throw notFound();
-  if (solutionSlugSet.has(slug)) {
-    return <SubServicePage {...getSubServicePageProps(slug as keyof typeof subServices)} />;
-  }
-  const entry = industrialSolutions[slug] ?? surveillanceSolutions[slug];
-  if (!entry) throw notFound();
   
-  const caseStudies = getCaseStudiesForService(slug as any) || [];
-  const ExtraSection = entry.extraSection as React.ComponentType | undefined;
-  return (
-    <SubServicePage 
-      {...entry} 
-      extraSection={ExtraSection ? <ExtraSection imageSrc={entry.extraSectionImage} /> : undefined}
-      caseStudies={caseStudies.length > 0 ? caseStudies : (entry.caseStudies || [])}
-      showCaseStudies={surveillanceSlugs.includes(slug) ? false : (caseStudies.length > 0 || !!entry.showCaseStudies)}
-    />
-  );
+  const isIndustrial = industrialSlugs.includes(slug);
+  const isSurveillance = surveillanceSlugs.includes(slug);
+  
+  if (isIndustrial || isSurveillance) {
+    const entry = industrialSolutions[slug] ?? surveillanceSolutions[slug];
+    if (entry) {
+      const caseStudies = getCaseStudiesForService(slug as any) || [];
+      const ExtraSection = entry.extraSection as React.ComponentType<{ imageSrc?: string }> | undefined;
+      return (
+        <SubServicePage 
+          {...entry} 
+          extraSection={
+            <>
+              {ExtraSection ? <ExtraSection imageSrc={entry.extraSectionImage} /> : undefined}
+              <GenericIndustrialExtraSection slug={slug} />
+            </>
+          }
+          caseStudies={caseStudies.length > 0 ? caseStudies : (entry.caseStudies || [])}
+          showCaseStudies={isSurveillance ? false : (caseStudies.length > 0 || !!entry.showCaseStudies)}
+        />
+      );
+    }
+  }
+  
+  if (slug in subServices) {
+    const props = getSubServicePageProps(slug as keyof typeof subServices);
+    return (
+      <SubServicePage 
+        {...props} 
+        extraSection={<GenericIndustrialExtraSection slug={slug} />}
+      />
+    );
+  }
+  
+  throw notFound();
 }
