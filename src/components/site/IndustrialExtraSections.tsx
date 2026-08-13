@@ -20,7 +20,13 @@ import {
   Database,
   Package,
   Clock,
-  Gauge
+  Gauge,
+  Brain,
+  TrendingUp,
+  Sparkles,
+  Lightbulb,
+  Award,
+  Plus
 } from "lucide-react";
 import { brandIconGradient, accentAt } from "@/lib/brand-colors";
 import { getIndustrialExtraContent } from "@/lib/industrial-extra-content";
@@ -1781,6 +1787,383 @@ function InteractiveMobileInspectionWidget() {
   );
 }
 
+export function StatisticalAiVisual() {
+  const [dataPoints, setDataPoints] = useState<number[]>([45, 52, 49, 48, 55, 50, 47, 53, 51, 56]);
+  const [isAlertActive, setIsAlertActive] = useState(false);
+  const [anomalyScore, setAnomalyScore] = useState(0.12);
+  const [recommendation, setRecommendation] = useState("Process parameters stable. Running baseline models.");
+
+  useEffect(() => {
+    let tickCount = 0;
+    const interval = setInterval(() => {
+      tickCount++;
+      setDataPoints((prev) => {
+        const nextPoints = [...prev.slice(1)];
+        let newPoint = 50 + (Math.random() - 0.5) * 15; // default stable fluctuation around 50
+
+        // Every 8-12 ticks, simulate a process drift/anomaly
+        if (tickCount % 10 === 0 || tickCount % 10 === 1 || tickCount % 10 === 2) {
+          newPoint = 78 + (Math.random() - 0.5) * 10; // drift upward
+        }
+
+        nextPoints.push(Math.round(newPoint));
+        
+        // Analyze if the last point is an anomaly (> 72)
+        const lastVal = nextPoints[nextPoints.length - 1];
+        if (lastVal > 72) {
+          setIsAlertActive(true);
+          setAnomalyScore(parseFloat((0.80 + Math.random() * 0.15).toFixed(2)));
+          setRecommendation("Anomaly detected: Core temperature spike correlates with feed rate. Recommendation: Adjust cooling valve by +5%.");
+        } else {
+          setIsAlertActive(false);
+          setAnomalyScore(parseFloat((0.08 + Math.random() * 0.08).toFixed(2)));
+          setRecommendation("Process parameters stable. Running baseline models.");
+        }
+
+        return nextPoints;
+      });
+    }, 1800);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // SVG grid dimensions
+  const width = 400;
+  const height = 180;
+  const padding = 20;
+
+  // Map points to SVG coordinates
+  const coords = dataPoints.map((val, index) => {
+    const x = padding + (index * (width - 2 * padding)) / (dataPoints.length - 1);
+    // Map 0-100 to height-padding down to padding
+    const y = height - padding - (val / 100) * (height - 2 * padding);
+    return { x, y, val };
+  });
+
+  // Build SVG path
+  const linePath = coords.reduce((acc, c, i) => {
+    return i === 0 ? `M ${c.x} ${c.y}` : `${acc} L ${c.x} ${c.y}`;
+  }, "");
+
+  // UCL (Upper Control Limit) is 72, Target is 50, LCL is 28
+  const uclY = height - padding - (72 / 100) * (height - 2 * padding);
+  const targetY = height - padding - (50 / 100) * (height - 2 * padding);
+  const lclY = height - padding - (28 / 100) * (height - 2 * padding);
+
+  return (
+    <div className="w-full h-full bg-slate-950 text-slate-100 p-4 font-sans flex flex-col justify-between overflow-hidden rounded-2xl relative select-none">
+      {/* Background radial glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(14,165,233,0.12),transparent_70%)] pointer-events-none" />
+      
+      {/* Header */}
+      <div className="flex items-center justify-between border-b border-slate-800 pb-2 z-10">
+        <div className="flex items-center gap-2">
+          <Brain className={`h-4 w-4 text-sky-400 ${isAlertActive ? "animate-pulse" : ""}`} />
+          <span className="text-[10px] font-semibold tracking-wider uppercase text-slate-300">Statistical Process AI</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className={`h-1.5 w-1.5 rounded-full ${isAlertActive ? "bg-red-500 animate-ping" : "bg-emerald-500"}`} />
+          <span className={`text-[9px] font-medium tracking-wide uppercase ${isAlertActive ? "text-red-400" : "text-emerald-400"}`}>
+            {isAlertActive ? "Alert: Process Drift" : "Model Status: Active"}
+          </span>
+        </div>
+      </div>
+
+      {/* Main visualization grid */}
+      <div className="relative flex-1 my-2 flex items-center justify-center">
+        <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-full overflow-visible">
+          {/* Grid lines */}
+          <line x1={padding} y1={uclY} x2={width - padding} y2={uclY} stroke="#f43f5e" strokeWidth="1" strokeDasharray="3,3" opacity="0.6" />
+          <line x1={padding} y1={targetY} x2={width - padding} y2={targetY} stroke="#94a3b8" strokeWidth="1" strokeDasharray="2,2" opacity="0.4" />
+          <line x1={padding} y1={lclY} x2={width - padding} y2={lclY} stroke="#f43f5e" strokeWidth="1" strokeDasharray="3,3" opacity="0.4" />
+
+          {/* Grid labels */}
+          <text x={width - padding + 4} y={uclY + 3} fill="#f43f5e" fontSize="7" fontWeight="bold" opacity="0.8">UCL (72)</text>
+          <text x={width - padding + 4} y={targetY + 3} fill="#94a3b8" fontSize="7" opacity="0.8">Target (50)</text>
+          <text x={width - padding + 4} y={lclY + 3} fill="#f43f5e" fontSize="7" opacity="0.6">LCL (28)</text>
+
+          {/* Anomaly Highlight Zone (gradient overlay under path) */}
+          <path
+            d={`${linePath} L ${coords[coords.length - 1].x} ${height - padding} L ${coords[0].x} ${height - padding} Z`}
+            fill="url(#chart-gradient)"
+            opacity="0.15"
+          />
+
+          <defs>
+            <linearGradient id="chart-gradient" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={isAlertActive ? "#f43f5e" : "#38bdf8"} />
+              <stop offset="100%" stopColor="#38bdf8" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+
+          {/* The Main Line */}
+          <path
+            d={linePath}
+            fill="none"
+            stroke={isAlertActive ? "#f43f5e" : "#38bdf8"}
+            strokeWidth="2.5"
+            className="transition-all duration-500 ease-in-out"
+          />
+
+          {/* Data Points */}
+          {coords.map((c, i) => {
+            const isAnomaly = c.val > 72;
+            const isLast = i === coords.length - 1;
+            return (
+              <g key={i}>
+                <circle
+                  cx={c.x}
+                  cy={c.y}
+                  r={isLast ? (isAnomaly ? 5.5 : 4.5) : 2.5}
+                  fill={isAnomaly ? "#ef4444" : isLast ? "#38bdf8" : "#0284c7"}
+                  className="transition-all duration-500 ease-in-out"
+                />
+                {isLast && (
+                  <circle
+                    cx={c.x}
+                    cy={c.y}
+                    r={isAnomaly ? 10 : 8}
+                    fill="none"
+                    stroke={isAnomaly ? "#ef4444" : "#38bdf8"}
+                    strokeWidth="1.5"
+                    className="animate-ping"
+                  />
+                )}
+              </g>
+            );
+          })}
+        </svg>
+
+        {/* Floating Mini Panel */}
+        <div className="absolute top-2 left-2 bg-slate-900/80 backdrop-blur-md border border-slate-800 rounded-lg p-1.5 flex flex-col gap-0.5 z-10 shadow-lg">
+          <span className="text-[7px] text-slate-400 font-medium uppercase tracking-wider">Anomaly Index</span>
+          <div className="flex items-center gap-1">
+            <span className={`text-[10px] font-bold ${isAlertActive ? "text-red-400" : "text-sky-400"}`}>{anomalyScore}</span>
+            <TrendingUp className={`h-2.5 w-2.5 ${isAlertActive ? "text-red-400 rotate-45" : "text-sky-400"} transition-transform`} />
+          </div>
+        </div>
+      </div>
+
+      {/* Operator Plain Language Recommendation */}
+      <div className={`mt-1 p-2 rounded-xl border transition-all duration-500 z-10 flex gap-2 items-start ${
+        isAlertActive 
+          ? "bg-red-950/40 border-red-500/30 text-red-200" 
+          : "bg-slate-900/60 border-slate-800/80 text-slate-300"
+      }`}>
+        <Sparkles className={`h-4 w-4 mt-0.5 shrink-0 ${isAlertActive ? "text-red-400 animate-bounce" : "text-sky-400"}`} />
+        <div className="flex-1 space-y-0.5">
+          <p className="text-[8px] uppercase font-bold tracking-wider text-slate-400">AI Operator Assistant</p>
+          <p className="text-[9px] leading-normal font-medium transition-all duration-300">
+            {recommendation}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function StatisticalQualityControlVisual() {
+  const [inspectedCount, setInspectedCount] = useState(14842);
+  const [defectsCount, setDefectsCount] = useState(3);
+  const [dataPoints, setDataPoints] = useState<number[]>([42, 45, 48, 52, 49, 53, 51, 46, 50, 52, 48, 47]);
+  const [liveMeasure, setLiveMeasure] = useState(12.04);
+  const [cpIndex, setCpIndex] = useState(1.42);
+  const [cpkIndex, setCpkIndex] = useState(1.38);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Increment inspected parts
+      setInspectedCount((prev) => prev + 1);
+
+      // Randomly trigger a defect (very rarely)
+      if (Math.random() > 0.985) {
+        setDefectsCount((prev) => prev + 1);
+      }
+
+      // Update control chart points
+      setDataPoints((prev) => {
+        const nextPoints = [...prev.slice(1)];
+        // Normal range: 35 to 65
+        const newPoint = 50 + (Math.random() - 0.5) * 20;
+        nextPoints.push(Math.round(newPoint));
+        return nextPoints;
+      });
+
+      // Update live dimension measure (e.g. around 12.00 mm)
+      setLiveMeasure(parseFloat((12.00 + (Math.random() - 0.5) * 0.12).toFixed(2)));
+
+      // Slight updates to Cp/Cpk to simulate live computation
+      setCpIndex(parseFloat((1.40 + Math.random() * 0.05).toFixed(2)));
+      setCpkIndex(parseFloat((1.35 + Math.random() * 0.05).toFixed(2)));
+
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const yieldRate = inspectedCount > 0 ? (((inspectedCount - defectsCount) / inspectedCount) * 100).toFixed(3) : "100.000";
+
+  // SVG parameters
+  const width = 400;
+  const height = 180;
+  const padding = 20;
+
+  // UCL is 75, Target is 50, LCL is 25
+  const uclY = height - padding - (75 / 100) * (height - 2 * padding);
+  const targetY = height - padding - (50 / 100) * (height - 2 * padding);
+  const lclY = height - padding - (25 / 100) * (height - 2 * padding);
+
+  const coords = dataPoints.map((val, index) => {
+    const x = padding + (index * (width - 2 * padding - 40)) / (dataPoints.length - 1);
+    const y = height - padding - (val / 100) * (height - 2 * padding);
+    return { x, y, val };
+  });
+
+  const linePath = coords.reduce((acc, c, i) => {
+    return i === 0 ? `M ${c.x} ${c.y}` : `${acc} L ${c.x} ${c.y}`;
+  }, "");
+
+  return (
+    <div className="w-full h-full bg-slate-950 text-slate-100 p-4 font-sans flex flex-col justify-between overflow-hidden rounded-2xl relative select-none">
+      {/* Subtle India Flag Gradient Background */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 via-white to-emerald-500 opacity-60 z-20" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(249,115,22,0.03),transparent_60%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(16,185,129,0.03),transparent_60%)] pointer-events-none" />
+      
+      {/* Header Info */}
+      <div className="flex items-center justify-between border-b border-slate-800 pb-2 z-10">
+        <div className="flex flex-col">
+          <div className="flex items-center gap-1.5">
+            <span className="text-[9px] font-bold text-orange-400 tracking-wider">PURE TECH INDIA</span>
+            <span className="text-[8px] bg-slate-900 px-1 py-0.5 rounded border border-slate-850 text-slate-400">PUNE PLANT-02</span>
+          </div>
+          <span className="text-[11px] font-semibold text-slate-200">Statistical Process Control</span>
+        </div>
+        <div className="text-right">
+          <p className="text-[7px] text-slate-500 uppercase tracking-wider">Quality Inspector</p>
+          <p className="text-[9px] font-medium text-slate-300">R. Sharma (ID: #4092)</p>
+        </div>
+      </div>
+
+      {/* Main Grid: Control Chart & Gauges */}
+      <div className="flex gap-3 items-center flex-1 my-2">
+        
+        {/* Left: Live Control Chart */}
+        <div className="flex-1 h-full relative flex items-center">
+          <svg viewBox={`0 0 ${width} ${height}`} className="w-full h-full overflow-visible">
+            {/* Grid lines */}
+            <line x1={padding} y1={uclY} x2={width - padding - 40} y2={uclY} stroke="#ef4444" strokeWidth="1" strokeDasharray="3,3" opacity="0.6" />
+            <line x1={padding} y1={targetY} x2={width - padding - 40} y2={targetY} stroke="#94a3b8" strokeWidth="0.75" strokeDasharray="2,2" opacity="0.4" />
+            <line x1={padding} y1={lclY} x2={width - padding - 40} y2={lclY} stroke="#ef4444" strokeWidth="1" strokeDasharray="3,3" opacity="0.6" />
+
+            {/* Labels */}
+            <text x={width - padding - 36} y={uclY + 2} fill="#ef4444" fontSize="6.5" fontWeight="semibold">UCL</text>
+            <text x={width - padding - 36} y={targetY + 2} fill="#94a3b8" fontSize="6.5">CL</text>
+            <text x={width - padding - 36} y={lclY + 2} fill="#ef4444" fontSize="6.5" fontWeight="semibold">LCL</text>
+
+            {/* Area Fill */}
+            <path
+              d={`${linePath} L ${coords[coords.length - 1].x} ${height - padding} L ${coords[0].x} ${height - padding} Z`}
+              fill="url(#spc-gradient)"
+              opacity="0.1"
+            />
+
+            <defs>
+              <linearGradient id="spc-gradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor="#f59e0b" />
+                <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+
+            {/* Control Chart Path */}
+            <path
+              d={linePath}
+              fill="none"
+              stroke="#f59e0b"
+              strokeWidth="2"
+              className="transition-all duration-500"
+            />
+
+            {/* Points */}
+            {coords.map((c, i) => {
+              const isLast = i === coords.length - 1;
+              return (
+                <g key={i}>
+                  <circle
+                    cx={c.x}
+                    cy={c.y}
+                    r={isLast ? 4 : 2}
+                    fill={isLast ? "#f59e0b" : "#d97706"}
+                  />
+                  {isLast && (
+                    <circle
+                      cx={c.x}
+                      cy={c.y}
+                      r={7}
+                      fill="none"
+                      stroke="#f59e0b"
+                      strokeWidth="1"
+                      className="animate-ping"
+                    />
+                  )}
+                </g>
+              );
+            })}
+          </svg>
+
+          {/* Floating Live Dimension Value */}
+          <div className="absolute bottom-1 left-2 bg-slate-900/90 border border-slate-800/80 rounded px-1.5 py-0.5 flex flex-col">
+            <span className="text-[6px] text-slate-500 uppercase tracking-wider">Live Laser Mic</span>
+            <span className="text-[9px] font-bold text-amber-400 font-mono">{liveMeasure} mm</span>
+          </div>
+        </div>
+
+        {/* Right: Key Performance Gauges */}
+        <div className="w-[100px] flex flex-col gap-2 shrink-0">
+          {/* Cp Indicator */}
+          <div className="bg-slate-900/60 border border-slate-800 p-1.5 rounded-xl flex items-center justify-between">
+            <div className="flex flex-col">
+              <span className="text-[6.5px] text-slate-500 font-bold tracking-wider">PROCESS CAPABILITY</span>
+              <span className="text-[10px] font-bold text-slate-200">Cp Index</span>
+            </div>
+            <span className="text-xs font-bold text-emerald-400 font-mono">{cpIndex}</span>
+          </div>
+
+          {/* Cpk Indicator */}
+          <div className="bg-slate-900/60 border border-slate-800 p-1.5 rounded-xl flex items-center justify-between">
+            <div className="flex flex-col">
+              <span className="text-[6.5px] text-slate-500 font-bold tracking-wider">DRIFT OFFSET</span>
+              <span className="text-[10px] font-bold text-slate-200">Cpk Index</span>
+            </div>
+            <span className="text-xs font-bold text-emerald-400 font-mono">{cpkIndex}</span>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Footer Metrics (Batch info) */}
+      <div className="grid grid-cols-4 gap-2 bg-slate-900/40 border border-slate-800 p-2 rounded-xl z-10 text-center">
+        <div className="flex flex-col border-r border-slate-800">
+          <span className="text-[7px] text-slate-500 uppercase tracking-wider">Lot Inspected</span>
+          <span className="text-[10px] font-bold text-slate-200 font-mono">{inspectedCount}</span>
+        </div>
+        <div className="flex flex-col border-r border-slate-800">
+          <span className="text-[7px] text-slate-500 uppercase tracking-wider">Defect Limit</span>
+          <span className="text-[10px] font-bold text-slate-200 font-mono">Ac: 0 / Re: 1</span>
+        </div>
+        <div className="flex flex-col border-r border-slate-800">
+          <span className="text-[7px] text-slate-500 uppercase tracking-wider">Real Defects</span>
+          <span className="text-[10px] font-bold text-emerald-400 font-mono">{defectsCount}</span>
+        </div>
+        <div className="flex flex-col">
+          <span className="text-[7px] text-slate-500 uppercase tracking-wider">Batch Yield</span>
+          <span className="text-[10px] font-bold text-emerald-400 font-mono">{yieldRate}%</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── 15. REUSABLE IMAGE AND DATA GRID SECTION ───
 export function IndustrialImageGridSection({ slug }: { slug: string }) {
   const configs: Record<string, {
@@ -1865,7 +2248,7 @@ export function IndustrialImageGridSection({ slug }: { slug: string }) {
     "continuous-improvement": {
       title: "Idea Pipeline & Kaizen Management",
       lede: "Link shop floor improvement suggestions to concrete quality, delivery, and cost outcomes.",
-      imageSrc: "/homeCaseStudy/industrial-statistical-ai.png",
+      imageSrc: "/homeCaseStudy/industrial-ci-ideas.png",
       accent: "bg-red-500/10 text-red-400 border-red-500/30",
       cards: [
         { title: "Central Idea Capture", desc: "Empower shop floor teams to submit kaizens and efficiency suggestions.", imp: "Boosts operator engagement." },
@@ -2000,6 +2383,12 @@ export function IndustrialImageGridSection({ slug }: { slug: string }) {
   if (!current) return null;
 
   const renderVisual = () => {
+    if (slug === "statistical-ai") {
+      return <StatisticalAiVisual />;
+    }
+    if (slug === "statistical-quality-control") {
+      return <StatisticalQualityControlVisual />;
+    }
     return (
       <div className="w-full h-full overflow-hidden rounded-2xl relative">
         <img
