@@ -252,6 +252,22 @@ function RootShell({ children }: { children: React.ReactNode }) {
       <body>
         {children}
         <Scripts />
+        {/* Global glass-card mouse-follow glow tracker */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                document.addEventListener('mousemove', function(e) {
+                  var el = e.target.closest('.glass-card');
+                  if (!el) return;
+                  var rect = el.getBoundingClientRect();
+                  el.style.setProperty('--x', (e.clientX - rect.left) + 'px');
+                  el.style.setProperty('--y', (e.clientY - rect.top) + 'px');
+                }, { passive: true });
+              })();
+            `,
+          }}
+        />
       </body>
     </html>
   );

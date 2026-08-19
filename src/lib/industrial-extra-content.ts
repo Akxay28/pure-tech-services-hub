@@ -118,7 +118,7 @@ export interface IndustrialPageExtraContent {
     card: Spotlight1Card;
     buttonText: string;
   };
-  aiSpotlight: AISpotlightData;
+  aiSpotlight?: AISpotlightData;
   startWorkflow: StartWorkflowData;
   reminders: RemindersData;
   incidents: IncidentsData;
@@ -196,45 +196,28 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
         }
       }
     },
-    aiSpotlight: {
-      eyebrow: "SYNAPSE AI ENGINE",
-      title: "AI Synthetic Defect Generator",
-      desc: "Train models instantly without waiting for real failures. Generate photorealistic defect shapes based on your metal or plastic profiles.",
-      prompt: "Synthesize scratch defect dataset on brushed steel cylinder casings with varying light reflections",
-      generatedTitle: "Vision Dataset Generated",
-      sections: [
-        { title: "Synthetic Defect Models", items: ["3,000 Generated scratch variations", "Synthetic surface crack textures"], bgClass: "bg-purple-500/20", textClass: "text-purple-300" },
-        { title: "Lighting Simulations", items: ["Dynamic direct sunlight gloss", "Strobe refraction filters"], bgClass: "bg-emerald-500/20", textClass: "text-emerald-300" }
-      ],
-      features: [
-        { title: "Zero-Data Bootstrap", desc: "Boot vision models from CAD geometries and synthetic anomaly layers." },
-        { title: "Automatic Labels", desc: "All synthetic images are created with pre-mapped pixel-accurate segmentations." },
-        { title: "Drift Prevention", desc: "Inject ambient noise factors to simulate dirty camera lenses or light shifts." },
-        { title: "Fast Convergence", desc: "Train visual classifiers 5x faster by blending real production photos with generated ones." }
-      ]
-    },
     startWorkflow: {
       eyebrow: "FIELD CONTROLS",
       title: "Calibrate Vision Inspection",
-      desc: "Quickly align camera focus parameters, strobe intensities, and distance boundaries at the line side.",
+      desc: "Operators can adjust camera settings right at the line to keep pictures clear, without needing a specialized technician for standard checks.",
       cardTitle: "Vision Calibration Flow",
       steps: [
-        { step: "1", title: "Select Line Camera", desc: "Line 4 - Defect Camera #CV-082" },
-        { step: "2", title: "Verify Focus Target", desc: "Verify USAF resolution target visibility" },
-        { step: "3", title: "Trigger Strobe Test", desc: "Sync strobe pulse width to 120 microseconds" }
+        { step: "1", title: "Select Line Camera", desc: "Select Camera #CV-082 on Line 4." },
+        { step: "2", title: "Verify Focus", desc: "Check that the live picture on the screen is sharp and clear." },
+        { step: "3", title: "Test Lighting", desc: "Verify that the light flashes at the exact moment a product passes." }
       ],
-      buttonText: "Commit Calibration Settings",
+      buttonText: "Save Calibration Settings",
       features: [
-        { title: "QR Quick Target", desc: "Scan camera housing to load line-speed baseline configurations." },
-        { title: "Focal Verification", desc: "Local algorithms immediately verify MTF sharpness scores on test targets." },
-        { title: "Brightness Auto-tuning", desc: "Compensate for shopfloor light decay by adjusting digital sensor gain." },
-        { title: "Offline Storage", desc: "Save calibration reports locally to verify changes before sync." }
+        { title: "QR Quick Target", desc: "Scan the code on the camera bracket to load saved settings, setting up the camera instantly without manual typing." },
+        { title: "Focus Check", desc: "Run a quick check on the screen to confirm the camera is in focus before restarting the line." },
+        { title: "Brightness Auto-Tuning", desc: "The camera automatically adjusts to changing room lights, keeping inspections accurate from morning to night shifts." },
+        { title: "Offline Storage", desc: "The camera saves calibration data internally if the network goes down, and uploads it once connection returns." }
       ]
     },
     reminders: {
       eyebrow: "LENS AUDITS",
       title: "Optical Cleaning Schedules",
-      desc: "Keep vision accuracy optimal by establishing routine lens cleaning, focus verification, and lighting checks.",
+      desc: "Schedule routine cleanings for lenses and lights to prevent the system from missing defects due to dust or smudges.",
       cardTitle: "Calibration Schedule",
       badgeText: "Due Today",
       stats: [
@@ -243,57 +226,57 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
         { value: "3", label: "Pending Check", colorClass: "text-rose-400" }
       ],
       schedule: [
-        { tag: "Overdue", title: "Lens Dust Clean & Focus Check", details: "Line 2 Stamped Casing Camera • Operator-Led", time: "8:00 AM", tagColorClass: "bg-rose-500/20 text-rose-400" },
-        { tag: "Scheduled", title: "Strobe Intensity Check", details: "Packaging Assembly Camera • Specialist-Led", time: "1:00 PM", tagColorClass: "bg-yellow-500/20 text-yellow-400" }
+        { tag: "Overdue", title: "Wipe Dust from Lens and Verify Focus", details: "Line 2 Tooling Inspection Camera • Operator-Led", time: "8:00 AM", tagColorClass: "bg-rose-500/20 text-rose-400" },
+        { tag: "Scheduled", title: "Verify Flash Light Brightness", details: "Line 3 Assembly Camera • Technician-Led", time: "1:00 PM", tagColorClass: "bg-yellow-500/20 text-yellow-400" }
       ],
       features: [
-        { title: "Cycle-Count Schedules", desc: "Trigger verification checks after 100,000 components pass inspection." },
-        { title: "Calibration Logs", desc: "Trace calibration events alongside quality reports for compliance records." },
-        { title: "Alert Escalations", desc: "Escalate checks if lens clarity drops below confidence thresholds." },
-        { title: "Task Routing", desc: "Assign sensor checks to maintenance technicians on duty automatically." }
+        { title: "Cycle-Count Triggers", desc: "The system alerts you to clean the camera after a set number of products pass, preventing dirty lenses before they cause issues." },
+        { title: "Cleaning Logs", desc: "The system logs the exact time and operator for every lens wipe, providing a clean record for quality audits." },
+        { title: "Early Warning", desc: "Alerts warn you if camera pictures start getting blurry, so you can clean the lens before bad parts escape." },
+        { title: "Auto-Assigned Tasks", desc: "Work orders go directly to the operator on shift, making sure maintenance happens without manual paperwork." }
       ]
     },
     incidents: {
       eyebrow: "EXCEPTION LOG",
       title: "Model Low-Confidence Alarms",
-      desc: "Capture and route parts that score near classification margins to prevent false rejects or undetected defects.",
+      desc: "When the system is unsure if a part is defective, it alerts an operator to make the final decision, keeping production moving.",
       cardTitle: "Model Exception Ticket",
       ticketId: "VIS-2026-901",
-      titleText: "Low-Confidence Scratch Match",
+      titleText: "Uncertain Defect Alert",
       dateText: "Aug 13, 2026 • 11:30 AM",
       priorityBadge: "Medium Priority",
       metrics: [
         { value: "72.4%", label: "Confidence", colorClass: "text-rose-400" },
         { value: "0.15mm", label: "Anomaly Size", colorClass: "text-yellow-400" }
       ],
-      descriptionText: "Plate assembly #P-902 flagged for surface anomaly but classifier scored below 80% threshold. Sent to operator review station.",
+      descriptionText: "The system spotted a possible mark on Part #P-902 but could not decide if it was a real defect, routing the part to the operator station.",
       features: [
-        { title: "Review Handoffs", desc: "Immediately route suspect images to operator tables for verification." },
-        { title: "Reject Logs", desc: "Save rejected images automatically, stamped with line ID and batch code." },
-        { title: "Downtime Triggers", desc: "Auto-trigger downtime checks if defect rates exceed 2% per hour." },
-        { title: "Compliance Capture", desc: "Export flagged images to audit logs to justify material scrap rates." }
+        { title: "Operator Review Handoff", desc: "When a part has a borderline mark, the system sends the image to the operator's monitor so they can approve or reject it." },
+        { title: "Reject Logs", desc: "The system saves photos of every rejected part along with the time and batch code, making it easy to trace quality issues." },
+        { title: "Early Warning on Spikes", desc: "If multiple parts fail in a row, the system alerts the team immediately so you can fix the equipment before making more scrap." },
+        { title: "Scrap Evidence Export", desc: "You can download pictures of failed parts to show your team or suppliers exactly why a batch was rejected." }
       ]
     },
     rca: {
       eyebrow: "DEFECT ANALYTICS",
       title: "Visual Anomaly Pareto Analysis",
-      desc: "Connect vision system defect logs with tool wear metrics to identify the roots of raw material deviations.",
+      desc: "When defects rise, the system links the failures to the specific machine, tooling, or incoming material batch that caused them.",
       cardTitle: "Visual RCA File",
       ticketId: "RCA-VIS-082",
       stats: [
         { value: "32", label: "Flagged Defects", colorClass: "text-rose-400" },
-        { value: "Die 4", label: "Linked Tool", colorClass: "text-primary" },
+        { value: "Line 4", label: "Linked Equipment", colorClass: "text-primary" },
         { value: "85%", label: "Correlation", colorClass: "text-sky-400" }
       ],
       whys: [
-        "Why did scratches peak? → Metal dust on stamping die #4.",
-        "Why was dust present? → Scraper blade vacuum nozzle clogged."
+        "Why did defect counts increase? → Dirt built up on the active tooling.",
+        "Why did dirt build up? → The tool cleaning nozzle was clogged."
       ],
       features: [
-        { title: "Batch Correlation", desc: "Match defect occurrences with steel coil batches and tool schedules." },
-        { title: "5 Whys Templates", desc: "Guide quality engineers through structured analyses of recurring defects." },
-        { title: "Preventative Action", desc: "Trigger die cleaning actions automatically when surface defects spike." },
-        { title: "Audit Verification", desc: "Verify that die adjustments immediately reduced surface defect density." }
+        { title: "Batch & Equipment Correlation", desc: "The system automatically matches quality drops to the running equipment or raw material batch, rather than just blaming the shift." },
+        { title: "Guided 5 Whys", desc: "Quality leads can trace problems step-by-step using actual photos and timestamps, helping find the true cause of a failure quickly." },
+        { title: "Automatic Maintenance Triggers", desc: "If defect rates go up, the system automatically sends a work order to maintenance before the next shift starts." },
+        { title: "Post-Fix Verification", desc: "Once repairs are done, the camera checks the next parts to confirm the issue is fixed, so you can restart full production safely." }
       ]
     },
     types: {
@@ -301,10 +284,10 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
       title: "Tailored Models for Shopfloor Checks",
       desc: "Run different optimized architectures depending on your inspection surface and speed requirements.",
       items: [
-        { title: "Surface Scratches & Dents", desc: "High-contrast convolutional networks to spot light-deflection deviations." },
-        { title: "Assembly Part Presence", desc: "Verify component completeness, fastener counts, and cable routing." },
-        { title: "Barcode & Character OCR", desc: "Read stamped serial serials, batch codes, and expiration timestamps." },
-        { title: "Dimension Tolerances", desc: "Calculate edge gaps, diameter metrics, and angles down to micron scales." }
+        { title: "Surface Scratches & Dents", desc: "High-contrast CNNs tuned to catch light-deflection anomalies a rules-based threshold check would miss." },
+        { title: "Assembly Completeness", desc: "Confirms fastener counts, cable routing, and component presence in one pass — no separate manual checklist." },
+        { title: "Barcode, Serial & Date-Code OCR", desc: "Reads stamped serials, lot codes, and expiry dates at line speed and flags mismatches instantly." },
+        { title: "Dimensional Tolerance Checks", desc: "Non-contact measurement of edge gaps, diameters, and angles down to micron-level tolerances." }
       ]
     },
     modules: {
@@ -312,10 +295,10 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
       title: "Connected Vision Architecture",
       desc: "Connect camera inferences directly with your plant controls, material flow, and engineering databases.",
       items: [
-        { title: "PLC Controllers", desc: "Low-latency digital control handshakes to trigger mechanical reject gates." },
-        { title: "Asset Registry", desc: "Log camera calibration states and model revisions against physical assets." },
-        { title: "Continuous Improvement", desc: "Route image exception logs directly into active root-cause tickets." },
-        { title: "Supplier Scorecards", desc: "Auto-export defective batch photos to suppliers for material claims." }
+        { title: "PLC Reject-Gate Control", desc: "Low-latency handshake with your existing PLC triggers the mechanical reject gate the moment a part fails — no added cycle-time lag." },
+        { title: "Camera & Model Asset Registry", desc: "Every camera's calibration state and every model's version history logs against the physical asset it's mounted on." },
+        { title: "Root-Cause Ticket Routing", desc: "Exception logs feed straight into your continuous-improvement or RCA tickets — no manual copy-paste from a report." },
+        { title: "Supplier Defect Evidence", desc: "Auto-export defective batch photos to the supplier for material claims — timestamped, no dispute over what shipped." }
       ]
     }
   },
@@ -323,21 +306,21 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
     slug: "statistical-ai",
     workflow: {
       eyebrow: "ANALYTICS LOOP",
-      title: "6-Step Process Anomaly Detection",
-      desc: "Ingest telemetry, normalize signals, detect shifts, isolate variables, and deliver process corrections.",
+      title: "Find Unusual Changes Before They Become Bigger Problems",
+      desc: "Statistical AI learns what normal behavior looks like and highlights results that are noticeably different.",
       steps: [
-        { num: 1, title: "Telemetry Ingestion", subtitle: "Industrial historian pull", desc: "Connect directly to plant historians (OSIsoft PI, Ignition) to stream temperatures, pressures, and flow rates." },
-        { num: 2, title: "Data Cleansing", subtitle: "Noise filtration", desc: "Remove outlier spikes, sensor dropouts, and non-operating state data from analysis batches." },
-        { num: 3, title: "Feature Extraction", subtitle: "Variable transformation", desc: "Calculate rate-of-change, variance, and cumulative sums to highlight hidden parameter deviations." },
-        { num: 4, title: "Model Inference", subtitle: "Anomaly score calculation", desc: "Run multi-variable models (PCA, Autoencoders) to measure parameter deviation from baseline patterns." },
-        { num: 5, title: "Root Cause Isolation", subtitle: "Contribution analysis", desc: "Determine which parameter contributed most to the statistical process drift." },
-        { num: 6, title: "Action Routing", subtitle: "Advisory alert dispatch", desc: "Deliver plain-language recommendations directly to control room consoles and plant engineers." }
+        { num: 1, title: "Understand Normal", subtitle: "Establish baseline", desc: "Analyze stable historical runs to calculate what normal variation looks like." },
+        { num: 2, title: "Monitor Data", subtitle: "Track live readings", desc: "Regularly gather measurements from your sensors, databases, or operational files." },
+        { num: 3, title: "Spot Changes", subtitle: "Identify process drift", desc: "Identify gradual changes or shifts from the established normal pattern." },
+        { num: 4, title: "Highlight the Issue", subtitle: "Alert the team", desc: "Flag parameters that move outside the normal range and notify operators." },
+        { num: 5, title: "Review", subtitle: "Examine findings", desc: "Open plain-language summaries to see which variables changed and why." },
+        { num: 6, title: "Act", subtitle: "Take corrective action", desc: "Apply suggested adjustments to resolve the drift and keep operations stable." }
       ]
     },
     spotlight1: {
       eyebrow: "ANALYTICS DASHBOARD",
-      title: "Multivariate Process Control",
-      desc: "Monitor interactions between hundreds of variables simultaneously, catching process drift hours before alarm thresholds breach.",
+      title: "Monitor Multiple Factors at Once",
+      desc: "Important changes do not always show up in one measurement. Statistical AI can look at several factors together to identify unusual behavior that may otherwise be easy to miss. (Multivariate Process Control)",
       features: [
         { id: "sections", title: "Multivariate Trends", desc: "Plot unified process health indicators calculated from multiple sensors." },
         { id: "types", title: "Model Library", desc: "Deploy linear regression, random forests, and deep anomaly models." },
@@ -351,7 +334,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
         badge: "Active",
         templateLabel: "Analytics Model",
         itemsCount: "48 Signals",
-        title: "MODEL-STAT: Reactor 3 Health Index",
+        title: "MODEL-STAT: Process Unit 3 Health Index",
         metrics: [
           { value: "0.88", label: "Cpk Index", colorClass: "text-emerald-400" },
           { value: "94.2%", label: "Accuracy", colorClass: "text-primary" },
@@ -362,82 +345,66 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
           num: 1,
           title: "Top Anomalous Contributions",
           items: [
-            { label: "Feedstock flow volatility", badge: "High Contrib" },
-            { label: "Cooling jacket backpressure", badge: "Medium Contrib" },
-            { label: "Agitator torque load", badge: "Low Contrib" }
+            { label: "Material feed volatility", badge: "High Contrib" },
+            { label: "Cooling loop backpressure", badge: "Medium Contrib" },
+            { label: "Motor torque load", badge: "Low Contrib" }
           ]
         },
         section2: {
           num: 2,
           title: "Monitored Loops",
           items: [
-            { label: "Reactor core thermal profile", hasPhoto: true },
-            { label: "Primary input flow control", hasPhoto: true }
+            { label: "Core temperature profile", hasPhoto: true },
+            { label: "Primary flow control valve", hasPhoto: true }
           ]
         }
       }
     },
-    aiSpotlight: {
-      eyebrow: "SYNAPSE AI ENGINE",
-      title: "AI Process Advisor",
-      desc: "Query your process history using conversational English. Synapse AI writes SQL queries, trains models, and explains findings in clear engineering language.",
-      prompt: "Explain why reactor batch times spiked last Tuesday and suggest process corrections.",
-      generatedTitle: "Process Insights Generated",
-      sections: [
-        { title: "Anomaly Findings", items: ["A 12% drop in steam input pressure occurred at 04:12 AM.", "Coincided with feedstock temperature drop of 4°C."], bgClass: "bg-purple-500/20", textClass: "text-purple-300" },
-        { title: "Action Recommendations", items: ["Increase feed pre-heater setting to 142°C for low-pressure steam hours.", "Inspect steam line valve #V-12 for sticky actuators."], bgClass: "bg-emerald-500/20", textClass: "text-emerald-300" }
-      ],
-      features: [
-        { title: "Natural Language Queries", desc: "Interact with historical databases without writing complex queries or scripts." },
-        { title: "Root Cause Summaries", desc: "Get plain-language summaries of statistical contributions during drift events." },
-        { title: "Prescriptive Advice", desc: "Receive specific parameter setpoint suggestions based on successful batches." },
-        { title: "Automated Reports", desc: "Compile process capability (Cp, Cpk) reports automatically for management." }
-      ]
-    },
+
     startWorkflow: {
       eyebrow: "MODEL SETUP",
-      title: "Create Analytic Index",
-      desc: "Configure process monitoring baselines by mapping historical variables to stable operating periods.",
+      title: "Create Simple Scores From Your Data",
+      desc: "Combine important measurements into a simple score that makes it easier to compare performance and identify areas that need attention. (Analytic Index)",
       cardTitle: "Analytic Configuration",
       steps: [
-        { step: "1", title: "Select Historian Tags", desc: "REACTOR_3_TEMP_PV, STEAM_FLOW_1" },
-        { step: "2", title: "Define Golden Batch Range", desc: "Batch #B-1089 to #B-1120 (stable runtime)" },
-        { step: "3", title: "Train Anomaly Baseline", desc: "Calculate covariance and limits for Golden states" }
+        { step: "1", title: "Select Process Sensors", desc: "PROCESS_UNIT_3_TEMP, FLOW_RATE_1" },
+        { step: "2", title: "Define Baseline / Golden Run", desc: "Run #R-1089 to #R-1120 (stable runtime)" },
+        { step: "3", title: "Calculate Process Limits", desc: "Calculate normal variation ranges and control limits based on stable runs." }
       ],
       buttonText: "Publish Process Health Index",
       features: [
-        { title: "Tag Autocomplete", desc: "Locate historian variables easily using wildcards and descriptions." },
-        { title: "Golden State Isolation", desc: "Identify stable operating periods automatically based on yield output." },
-        { title: "Dynamic Limits", desc: "Set limits that adjust depending on target product recipe." },
-        { title: "Baseline Validation", desc: "Compare newly trained models against historical downtime events to verify alarm accuracy." }
+        { title: "Sensor Search", desc: "Find temperature, pressure, or flow sensors quickly using clear names and descriptions." },
+        { title: "Find Stable Runs", desc: "Automatically identify past runs with high yield and low variation to use as your benchmark." },
+        { title: "Flexible Limits", desc: "Calculate control limits that automatically adjust based on the product or part you are running." },
+        { title: "Limit Testing", desc: "Verify new control limits against past problem logs to make sure alerts only trigger when they should." }
       ]
     },
     reminders: {
       eyebrow: "MODEL RETRAINING",
-      title: "Analytic Drift Schedules",
-      desc: "Establish schedules to audit process capability limits and retrain models as raw materials change.",
+      title: "Detect When Things Start Changing",
+      desc: "Track how your data changes over time and identify when normal patterns begin to shift. Drift means a gradual change from the normal pattern.",
       cardTitle: "Retraining Schedule",
       badgeText: "Due Today",
       stats: [
-        { value: "42", label: "Active Models", colorClass: "text-white" },
-        { value: "38", label: "Valid", colorClass: "text-emerald-400" },
-        { value: "4", label: "Drift Detected", colorClass: "text-rose-400" }
+        { value: "42", label: "Monitored Parameters", colorClass: "text-white" },
+        { value: "38", label: "Within Limits", colorClass: "text-emerald-400" },
+        { value: "4", label: "Process Drift", colorClass: "text-rose-400" }
       ],
       schedule: [
-        { tag: "Overdue", title: "Reactor 3 Model Retrain", details: "Check limits against winter material profile • Process team", time: "9:00 AM", tagColorClass: "bg-rose-500/20 text-rose-400" },
-        { tag: "Scheduled", title: "Extruder Model Limit Review", details: "Review limits after die replacement • Engineer-Led", time: "3:00 PM", tagColorClass: "bg-yellow-500/20 text-yellow-400" }
+        { tag: "Overdue", title: "Process Unit 3 Limit Update", details: "Check limits against winter material profile • Process team", time: "9:00 AM", tagColorClass: "bg-rose-500/20 text-rose-400" },
+        { tag: "Scheduled", title: "Line 4 Assembly Limit Review", details: "Review limits after tooling replacement • Engineer-Led", time: "3:00 PM", tagColorClass: "bg-yellow-500/20 text-yellow-400" }
       ],
       features: [
-        { title: "Timer-Based Prompts", desc: "Schedule limit reviews quarterly to ensure compliance with standards." },
-        { title: "Concept Drift Audits", desc: "Track average anomaly scores and flag retraining needs automatically." },
-        { title: "Dual-Model Testing", desc: "Compare old and retrained models on live data before deploying." },
-        { title: "Model Audits", desc: "Retain version histories of training sets, parameters, and deploy signatures." }
+        { title: "Automatic Prompts", desc: "Set reminders to review your control chart limits quarterly or after tool changes." },
+        { title: "Variation Trend Audits", desc: "Track long-term process variation trends and flag when control limits need to be recalculated." },
+        { title: "Before-and-After Testing", desc: "Compare old and new control limits on live data to see if the changes reduce false alerts." },
+        { title: "Limit Change History", desc: "Keep a complete, audit-ready history of who changed control limits, when, and why." }
       ]
     },
     incidents: {
       eyebrow: "EXCEPTION RECORD",
-      title: "Statistical Process Limits Breach",
-      desc: "Log instances where multivariate index scores breach control limits, capturing parameters for engineers.",
+      title: "Know When Results Move Outside the Normal Range",
+      desc: "Set an expected range for your process and get notified when results move outside it.",
       cardTitle: "Process Exception Ticket",
       ticketId: "ANA-2026-402",
       titleText: "Multivariate Index Limit Breach",
@@ -447,53 +414,53 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
         { value: "Index: 3.4", label: "Current Level (Max 1.8)", colorClass: "text-rose-400" },
         { value: "0.91", label: "Cpk Value", colorClass: "text-yellow-400" }
       ],
-      descriptionText: "Reactor 3 health index breached control limits for 15 consecutive minutes. Steam input pressure detected as primary variable deviation.",
+      descriptionText: "Process Unit 3 health index breached control limits for 15 consecutive minutes. Fluid flow rate detected as primary variable deviation.",
       features: [
-        { title: "Historian Snapshot", desc: "Capture 60 minutes of raw parameter data leading up to the breach." },
-        { title: "Context Logs", desc: "Auto-record currently active product SKU, batch code, and operator team." },
-        { title: "Incident Routing", desc: "Send summary reports to control room consoles and plant engineers." },
-        { title: "Action Tracking", desc: "Create an active investigation card linked to historian logs." }
+        { title: "Process Snapshot", desc: "Automatically save 60 minutes of sensor readings leading up to the limit breach." },
+        { title: "Production Context", desc: "Record the active product, batch or run number, and shift team at the time of the event." },
+        { title: "Alert Routing", desc: "Send a plain-language summary report directly to supervisors and engineers." },
+        { title: "Action Tracking", desc: "Create an active investigation card linked directly to the process charts." }
       ]
     },
     rca: {
       eyebrow: "CORRELATION TRACE",
       title: "Batch Yield Loss Analysis",
-      desc: "Drill down into process variables to isolate root causes of low batch yield, mapping correlations across tags.",
+      desc: "Compare results across runs or time periods to understand where output or quality is falling and identify patterns behind the loss.",
       cardTitle: "Process RCA File",
       ticketId: "RCA-ANA-402",
       stats: [
         { value: "14%", label: "Yield Drop", colorClass: "text-rose-400" },
-        { value: "Steam Valve", label: "Primary Correlation", colorClass: "text-primary" },
+        { value: "Flow Valve", label: "Primary Correlation", colorClass: "text-primary" },
         { value: "92%", label: "Correlation Index", colorClass: "text-sky-400" }
       ],
       whys: [
-        "Why did yield drop? → Low temperature in third reaction stage.",
-        "Why was temp low? → Steam valve stickiness restricted heating flow rate."
+        "Why did yield or quality drop? → Low temperature in third process stage.",
+        "Why was temp low? → Flow valve stickiness restricted heating flow rate."
       ],
       features: [
-        { title: "Time-Lag Correlation", desc: "Analyze variables that change ahead of output quality drops." },
-        { title: "5 Whys Logging", desc: "Log structural explanations next to process variable trend charts." },
-        { title: "CAPA Integration", desc: "Create valve cleaning work orders in response to correlation findings." },
-        { title: "Solution Archive", desc: "Search past RCA records to resolve similar reactor anomalies." }
+        { title: "Process Correlation", desc: "Analyze how changes in pressure, heat, or speed correlate with output quality drops." },
+        { title: "5 Whys Logging", desc: "Log step-by-step explanations directly next to your process trend charts." },
+        { title: "Corrective Action Integration", desc: "Trigger maintenance work orders directly from the correlation findings." },
+        { title: "Solution Archive", desc: "Search past quality issues to see how similar process problems were resolved." }
       ]
     },
     types: {
       eyebrow: "ANALYTICS SCOPE",
-      title: "Supported Process Modeling Methods",
-      desc: "Choose from multiple statistical techniques depending on parameter counts and data patterns.",
+      title: "Choose the Right Way to Understand Your Data",
+      desc: "Use different analysis methods depending on the type of data and the question you need to answer.",
       items: [
-        { title: "Multivariate Health Indexing", desc: "Combine multiple historian tags into a single indicator of process health." },
-        { title: "Predictive Quality Analytics", desc: "Forecast batch output parameters (e.g. viscosity, purity) using active runtime data." },
-        { title: "Parameter Optimization", desc: "Identify setpoints that optimize throughput and reduce energy costs." },
-        { title: "Virtual Sensor Modeling", desc: "Estimate values that cannot be measured continuously (e.g. catalyst wear) using machine signals." }
+        { title: "Multivariate Health Indexing", desc: "Combine readings from multiple sensors into a single indicator of process health." },
+        { title: "Predictive Quality Analytics", desc: "Forecast final quality values (such as thickness, purity, or strength) using live process readings." },
+        { title: "Process Optimization", desc: "Identify key setpoints that maximize output speed while reducing energy or material waste." },
+        { title: "Virtual Sensor Modeling", desc: "Estimate values that cannot be measured continuously (such as tool wear or internal temperature) using secondary machine signals." }
       ]
     },
     modules: {
       eyebrow: "INTEGRATED FLOW",
-      title: "Connected Operational Analytics",
-      desc: "Bring analytic models into contact with plant workflows, maintenance history, and production logs.",
+      title: "Turn Insights Into Action",
+      desc: "Finding a problem is only the first step. Connect important insights with the people and processes that can review them and take action.",
       items: [
-        { title: "Process Historians", desc: "Maintain real-time connections to OSIsoft PI, Honeywell IP21, and Ignition databases." },
+        { title: "Process Historians", desc: "Maintain real-time connections to standard SQL databases, OPC UA servers, and industrial historians." },
         { title: "CMMS Platforms", desc: "Trigger predictive maintenance work orders based on process drift indices." },
         { title: "Quality Management", desc: "Compare process indexes with lab test results to optimize capability limits." },
         { title: "Operator Consoles", desc: "Send plain-language process advice to HMI displays on the shopfloor." }
@@ -836,7 +803,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
         { title: "Linked Investigations", desc: "Link investigations, batch files, and CAPA logs for full trace." },
         { title: "5 Whys Logging", desc: "Log structural explanations next to process variable trend charts." },
         { title: "CAPA Integration", desc: "Generate tool maintenance tasks directly from root causes." },
-        { title: "Insight Database", desc: "Search past RCA records to resolve similar reactor anomalies." }
+        { title: "Insight Database", desc: "Search past RCA records to resolve similar process anomalies." }
       ]
     },
     types: {
@@ -1047,16 +1014,15 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
     slug: "inspection-management",
     workflow: {
       eyebrow: "Workflow Strategy",
-      title: "Complete 7-Step Inspection Workflow",
+      title: "Complete 6-Step Inspection Workflow",
       desc: "Configure inspections around your plant's workflows. Click through each step to see how paper-based audits are transformed into a streamlined digital pipeline.",
       steps: [
         { num: 1, title: "Digital Checklists", subtitle: "Pass/Fail & Thresholds", desc: "Replace paper forms with powerful digital checklists. Group checklist items by sections like Safety, Mechanical, or Visual checks with custom numeric limit bounds." },
-        { num: 2, title: "Synapse AI Creator", subtitle: "Instant Templates", desc: "Auto-generate compliance checklist templates matching global standards (ISO, OSHA) in seconds, tailored to your equipment model numbers." },
-        { num: 3, title: "Scan QR / NFC Tag", subtitle: "Instant Field Sync", desc: "Frontline inspectors scan a QR code or NFC chip on the machine to instantly open the correct asset history and checklists, eliminating manual searches." },
-        { num: 4, title: "Automated Reminders", subtitle: "Shift Alert Schedules", desc: "Define schedules (daily, weekly, after run). Automatically alert inspectors and escalate overdue tasks to site supervisors." },
-        { num: 5, title: "Incident Reporting", subtitle: "Enforced Media Evidence", desc: "Require photo and video uploads for failed checks. Log anomalies instantly with location coordinates, severity flags, and immediate EHS routing." },
-        { num: 6, title: "Root Cause (RCA)", subtitle: "DMAIC Actions", desc: "Run structured root-cause investigations (5-Whys) directly on failed items, creating trackable corrective actions and preventive plans (CAPA)." },
-        { num: 7, title: "Review & Complete", subtitle: "Audit-Ready Logs", desc: "Digitally sign off reports and export them as clean PDFs. Sync all outcomes directly to your central ERP/CMMS database for regulatory inspections." }
+        { num: 2, title: "Scan QR / NFC Tag", subtitle: "Instant Field Sync", desc: "Frontline inspectors scan a QR code or NFC chip on the machine to instantly open the correct asset history and checklists, eliminating manual searches." },
+        { num: 3, title: "Automated Reminders", subtitle: "Shift Alert Schedules", desc: "Define schedules (daily, weekly, after run). Automatically alert inspectors and escalate overdue tasks to site supervisors." },
+        { num: 4, title: "Incident Reporting", subtitle: "Enforced Media Evidence", desc: "Require photo and video uploads for failed checks. Log anomalies instantly with location coordinates, severity flags, and immediate EHS routing." },
+        { num: 5, title: "Root Cause (RCA)", subtitle: "DMAIC Actions", desc: "Run structured root-cause investigations (5-Whys) directly on failed items, creating trackable corrective actions and preventive plans (CAPA)." },
+        { num: 6, title: "Review & Complete", subtitle: "Audit-Ready Logs", desc: "Digitally sign off reports and export them as clean PDFs. Sync all outcomes directly to your central ERP/CMMS database for regulatory inspections." }
       ]
     },
     spotlight1: {
@@ -1205,7 +1171,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
     types: {
       eyebrow: "Inspection Types",
       title: "Support for All Inspection Needs",
-      desc: "OxMaint supports multiple inspection types to help you maintain compliance, ensure safety, and track asset conditions across your organization.",
+      desc: "Supports multiple inspection types to help you maintain compliance, ensure safety, and track asset conditions across your organization.",
       items: [
         { title: "Pre-Trip Inspections", desc: "DOT-compliant vehicle inspections before every trip." },
         { title: "Safety Audits", desc: "OSHA safety inspections and hazard identification." },
@@ -1216,7 +1182,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
     modules: {
       eyebrow: "INTEGRATED MODULES",
       title: "Inspections Connected to Every Module",
-      desc: "OxMaint's inspection management integrates seamlessly with all maintenance modules for complete operational visibility.",
+      desc: "Inspection data connects directly with your work orders, assets, and maintenance modules for complete operational visibility.",
       items: [
         { title: "Work Orders", desc: "Auto-generate from failures" },
         { title: "Assets", desc: "Link to equipment history" },
@@ -1225,12 +1191,176 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
       ]
     }
   },
+  "mobile-ai-inspection": {
+    slug: "mobile-ai-inspection",
+    workflow: {
+      eyebrow: "Process Flow",
+      title: "Complete 7-Step Inspection Workflow",
+      desc: "Here is how a paper check turns into a quick, guided digital inspection from start to finish.",
+      steps: [
+        { num: 1, title: "Select what to inspect", subtitle: "Choose asset or location", desc: "Choose the item or site from a list in the app, or simply scan its barcode or QR tag to open the correct checklist." },
+        { num: 2, title: "Start the inspection", subtitle: "Open the checklist", desc: "Open the digital inspection checklist on your phone or tablet to begin the process, with automatic tracking of time and location." },
+        { num: 3, title: "Follow the guided checks", subtitle: "Step-by-step guidance", desc: "Read the clear questions and instructions. Compare what you see with standard reference pictures so you know exactly what to look for." },
+        { num: 4, title: "Capture photos & readings", subtitle: "Snap and record", desc: "Take photos of the equipment or scan dials and gauges using the phone's camera. The AI helps read and log the values automatically." },
+        { num: 5, title: "Record issues", subtitle: "Flag failures", desc: "If something fails a check, mark it immediately. Add notes, describe the problem, and flag its severity directly in the checklist." },
+        { num: 6, title: "Review the results", subtitle: "Verify checklist details", desc: "Go over all the steps, photos, and readings. Add a digital signature to sign off and confirm the inspection is complete." },
+        { num: 7, title: "Final report & action", subtitle: "Share and resolve", desc: "The app instantly generates a report. Failed items are automatically sent to supervisors so repairs can be scheduled and tracked." }
+      ]
+    },
+    spotlight1: {
+      eyebrow: "FEATURE SPOTLIGHT",
+      title: "Replace Paper Checklists with Digital Inspections",
+      desc: "Create digital checklists for different types of inspections and complete them directly from your phone or tablet.",
+      features: [
+        { id: "sections", title: "Logical Sections", desc: "Organize checks into groups like Safety, Visual, or Mechanical." },
+        { id: "types", title: "Different Answer Types", desc: "Record pass/fail answers, enter numbers, write notes, or choose options." },
+        { id: "critical", title: "Critical Alerts", desc: "Flag important checks that trigger immediate alerts when they fail." },
+        { id: "photo", title: "Photo Proof", desc: "Require photos for specific checks so you have visual evidence." },
+        { id: "signature", title: "Sign-off", desc: "Capture digital signatures directly on the screen for accountability." },
+        { id: "scoring", title: "Overall Scores", desc: "Calculate a pass or fail score automatically based on the results." }
+      ],
+      buttonText: "Create Your First Checklist",
+      card: {
+        badge: "Active",
+        templateLabel: "Checklist",
+        itemsCount: "12 Checks",
+        title: "CHK-101: Generator Maintenance & Safety Check",
+        metrics: [
+          { value: "12", label: "Checks", colorClass: "text-white" },
+          { value: "5", label: "Critical", colorClass: "text-rose-400", highlightId: "critical" },
+          { value: "12", label: "Mandatory", colorClass: "text-emerald-400" },
+          { value: "2", label: "Photos Required", colorClass: "text-sky-400", highlightId: "photo" }
+        ],
+        section1: {
+          num: 1,
+          title: "Safety Controls",
+          items: [
+            { label: "Emergency stop works", badge: "Critical" },
+            { label: "Safety guards in place", badge: "Critical" }
+          ]
+        },
+        section2: {
+          num: 2,
+          title: "Physical Condition",
+          items: [
+            { label: "Leaks (oil or fuel)", hasPhoto: true },
+            { label: "Belt tension and wear", hasPhoto: true }
+          ]
+        }
+      }
+    },
+    startWorkflow: {
+      eyebrow: "Easy Workflow",
+      title: "Start New Inspection",
+      desc: "Initiate inspections in seconds with our streamlined workflow. Select your asset, choose a checklist, configure environmental conditions, and start inspecting—all from your mobile device or desktop.",
+      cardTitle: "Start New Inspection",
+      steps: [
+        { step: "1", title: "Select Asset", desc: "Generator #GEN-001" },
+        { step: "2", title: "Choose Checklist", desc: "Generator Maintenance Checklist" },
+        { step: "3", title: "Set Location", desc: "Main Site - Block B" }
+      ],
+      buttonText: "Begin Inspection",
+      features: [
+        { title: "Asset Selection", desc: "Search and select from your asset database with QR code scanning." },
+        { title: "Checklist Templates", desc: "Choose from saved templates or create a new checklist on the fly." },
+        { title: "Location Tracking", desc: "Auto-capture GPS location or select from predefined locations." },
+        { title: "Environmental Data", desc: "Record temperature, humidity, weather conditions during inspection." }
+      ]
+    },
+    reminders: {
+      eyebrow: "NEVER MISS AGAIN",
+      title: "Automated Reminders",
+      desc: "Set it and forget it. Our smart reminder system ensures your team never misses a scheduled inspection. Configure daily, weekly, monthly, or custom recurrence patterns with automatic notifications.",
+      cardTitle: "Inspection Schedule",
+      badgeText: "This Week",
+      stats: [
+        { value: "24", label: "Total", colorClass: "text-white" },
+        { value: "18", label: "Active", colorClass: "text-emerald-400" },
+        { value: "5", label: "Due", colorClass: "text-rose-400" }
+      ],
+      schedule: [
+        { tag: "Today", title: "Pre-Trip Inspection", details: "Truck #T-042 • John Smith", time: "9:00 AM", tagColorClass: "bg-rose-500/20 text-rose-400" },
+        { tag: "Tomorrow", title: "Safety Audit", details: "Warehouse A • Sarah Johnson", time: "10:00 AM", tagColorClass: "bg-yellow-500/20 text-yellow-400" }
+      ],
+      features: [
+        { title: "Flexible Scheduling", desc: "Daily, weekly, monthly, quarterly, or custom recurrence patterns." },
+        { title: "Multi-Channel Alerts", desc: "Push notifications, email alerts, and in-app reminders." },
+        { title: "Escalation Rules", desc: "Notify supervisors if inspections are overdue or missed." },
+        { title: "Calendar Integration", desc: "Sync with Google Calendar, Outlook, and other calendars." }
+      ]
+    },
+    incidents: {
+      eyebrow: "Safety First",
+      title: "Incident Reporting & Tracking",
+      desc: "Document safety incidents comprehensively with severity ratings, cost tracking, root cause analysis, and corrective actions. Ensure OSHA compliance and create a safer workplace.",
+      cardTitle: "Incident Report",
+      ticketId: "INC-2024-089",
+      titleText: "Hydraulic Line Failure",
+      dateText: "Dec 23, 2025 • 2:45 PM",
+      priorityBadge: "High Priority",
+      metrics: [
+        { value: "$5,000", label: "Estimated Cost", colorClass: "text-red-400" },
+        { value: "4 hrs", label: "Downtime", colorClass: "text-yellow-400" }
+      ],
+      descriptionText: "Hydraulic hose burst on Excavator #EX-042 during operation. Immediate shutdown performed. No injuries reported.",
+      features: [
+        { title: "Severity Ratings", desc: "Classify incidents as Low, Medium, High, or Critical severity." },
+        { title: "Cost Tracking", desc: "Record estimated and actual costs associated with incidents." },
+        { title: "Downtime Recording", desc: "Track equipment downtime caused by safety incidents." },
+        { title: "Corrective Actions", desc: "Create and track corrective action plans with due dates." }
+      ]
+    },
+    rca: {
+      eyebrow: "Deep Insights",
+      title: "Root Cause Analysis (RCA)",
+      desc: "Go beyond symptoms to find the real cause of failures. Link inspections, work orders, and incidents together to identify patterns and implement effective corrective actions that prevent recurrence.",
+      cardTitle: "Root Cause Analysis",
+      ticketId: "RCA-2024-015",
+      stats: [
+        { value: "3", label: "Inspections", colorClass: "text-emerald-400" },
+        { value: "2", label: "Work Orders", colorClass: "text-primary" },
+        { value: "1", label: "Incidents", colorClass: "text-rose-400" }
+      ],
+      whys: [
+        "Why did the hose fail? → wear",
+        "Why wasn't it detected? → checklist missing check"
+      ],
+      features: [
+        { title: "Link Related Items", desc: "Connect inspections, work orders, and incidents for full picture." },
+        { title: "5 Whys Analysis", desc: "Built-in methodology to drill down to root causes." },
+        { title: "Corrective Actions", desc: "Create action plans with assignees and due dates." },
+        { title: "Trend Analysis", desc: "Identify recurring issues and failure patterns." }
+      ]
+    },
+    types: {
+      eyebrow: "Inspection Scope",
+      title: "Support for All Inspection Needs",
+      desc: "Whether you are checking heavy machines, site safety, or facility conditions, the platform adapts to any type of inspection.",
+      items: [
+        { title: "Machines & Equipment", desc: "Check pumps, motors, generators, and production lines to prevent unexpected breakdowns." },
+        { title: "Facilities & Sites", desc: "Inspect building safety, fire exits, lighting, and general site conditions regularly." },
+        { title: "Vehicles & Fleets", desc: "Run pre-trip checks for trucks, forklifts, or company cars to ensure they are safe to operate." },
+        { title: "Safety & Compliance Checks", desc: "Perform safety walks, check PPE usage, and log environmental compliance records easily." }
+      ]
+    },
+    modules: {
+      eyebrow: "INTEGRATIONS",
+      title: "Connect Inspection Results With the Rest of Your Business",
+      desc: "Inspection results can be connected with the systems and teams already involved in your business, helping you move from finding a problem to taking action.",
+      items: [
+        { title: "Repair & Maintenance Jobs", desc: "Create repair requests automatically whenever an inspection check fails." },
+        { title: "Equipment & Asset History", desc: "Keep a complete history of inspections and repairs tied to each machine or site." },
+        { title: "Scheduling & Calendar", desc: "Plan inspections based on shift timings, calendar dates, or machine run hours." },
+        { title: "Reports & Analytics", desc: "View dashboards of inspection results, common failures, and repair times." }
+      ]
+    }
+  },
   "continuous-improvement": {
     slug: "continuous-improvement",
     workflow: {
       eyebrow: "IMPROVEMENT LOOP",
       title: "6-Step Kaizen Execution Pipeline",
-      desc: "Identify bottlenecks, submit Kaizen tickets, evaluate potential, run experiments, capture impact metrics, and standardize process layouts.",
+      desc: "Spot a problem, submit an idea ticket, score its potential, run trials, measure the results, and update standard procedures.",
       steps: [
         { num: 1, title: "Opportunity Capture", subtitle: "Submit Kaizen ideas", desc: "Enable line teams to submit improvement cards on plant floor terminals." },
         { num: 2, title: "Triage & Score", subtitle: "Assess complexity & impact", desc: "Score submissions based on cost savings, safety boosts, and runtime gains." },
@@ -1243,14 +1373,14 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
     spotlight1: {
       eyebrow: "KAIZEN BOARD",
       title: "Interactive Kaizen Board",
-      desc: "Manage kaizens and improvement ideas from initial submission through verification on a visual pipeline board.",
+      desc: "Manage shop-floor improvement ideas from initial submission through team verification on a visual pipeline board.",
       features: [
         { id: "sections", title: "Idea Capture", desc: "Log Kaizen submissions from mobile or plant floor terminals." },
         { id: "types", title: "Category Tags", desc: "Track improvements by safety, quality, throughput, cost, and maintenance." },
         { id: "critical", title: "Escalation Warnings", desc: "Ensure actions are completed before deadlines by routing alerts." },
         { id: "photo", title: "Impact Metrics", desc: "Track verified cost savings and cycle time reductions." },
         { id: "signature", title: "Approval Gateways", desc: "Enforce digital signature approvals from EHS and plant managers." },
-        { id: "scoring", title: "Kaizen Scoring", desc: "Evaluate submissions using weighted complexity and impact matrices." }
+        { id: "scoring", title: "Kaizen Scoring", desc: "Rate ideas based on how much they will save or improve operations versus how hard they are to implement." }
       ],
       buttonText: "Submit Kaizen Idea",
       card: {
@@ -1286,7 +1416,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
     aiSpotlight: {
       eyebrow: "SYNAPSE AI ENGINE",
       title: "AI Kaizen Advisor",
-      desc: "Suggest improvement ideas by analyzing your downtime records, scrap volumes, and process capability logs automatically.",
+      desc: "Get automated suggestions for shop-floor improvements by analyzing machine downtime logs, waste data, and quality checks.",
       prompt: "Analyze downtime records on Line 4 and suggest continuous improvement actions.",
       generatedTitle: "Kaizen Pipeline Drafted",
       sections: [
@@ -1343,7 +1473,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
     incidents: {
       eyebrow: "IMPROVEMENT BLOCKS",
       title: "Kaizen Action Delays",
-      desc: "Log project roadblocks and delays, alerting management to stalled improvements.",
+      desc: "Track project roadblocks and delays, alerting supervisors when tasks are stuck so they can help resolve them.",
       cardTitle: "ROADBLOCK TICKET",
       ticketId: "KZN-BLOCK-04",
       titleText: "Feeder Guide Project Blocked",
@@ -1364,7 +1494,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
     rca: {
       eyebrow: "IMPROVEMENT ANALYSIS",
       title: " Kaizen Benefit Investigations",
-      desc: "Audit projects that failed to deliver projected savings, identifying causes of deviation.",
+      desc: "Review completed projects that did not meet their expected goals, finding the root causes so future projects succeed.",
       cardTitle: "Kaizen RCA File",
       ticketId: "RCA-KZN-04",
       stats: [
@@ -1389,7 +1519,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
       desc: "Manage multiple types of continuous improvement initiatives in a single pipeline.",
       items: [
         { title: "5S Workplace Organization", desc: "Track sorting, straightening, shining, standardizing, and sustaining projects." },
-        { title: "Kaizen Events (Blitzes)", desc: "Manage short, focused improvement sprints with dedicated team goals." },
+        { title: "Kaizen Events (Blitzes)", desc: "Manage short, high-focus teamwork sessions aimed at solving a specific shop-floor problem in a few days." },
         { title: "Six Sigma DMAIC Projects", desc: "Structure complex, data-driven projects through define, measure, analyze, improve, and control phases." },
         { title: "Just-In-Time (JIT) Initiatives", desc: "Optimize material delivery, reduce buffer stock, and eliminate process waste." }
       ]
@@ -1511,7 +1641,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
         { value: "6", label: "Overdue", colorClass: "text-rose-400" }
       ],
       schedule: [
-        { tag: "Today", title: "Reactor Lubrication Service", details: "Reactor 3 Agitator • Tech-Led • Monthly check", time: "10:00 AM", tagColorClass: "bg-rose-500/20 text-rose-400" },
+        { tag: "Today", title: "Gearbox Lubrication Service", details: "Line 3 Conveyor Drive • Tech-Led • Monthly check", time: "10:00 AM", tagColorClass: "bg-rose-500/20 text-rose-400" },
         { tag: "Tomorrow", title: "Conveyor Belt Tension Check", details: "Packaging line 2 • Weekly check", time: "1:00 PM", tagColorClass: "bg-yellow-500/20 text-yellow-400" }
       ],
       features: [
@@ -1534,7 +1664,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
         { value: "$2,800", label: "Estimated Cost", colorClass: "text-rose-400" },
         { value: "2.5 hrs", label: "Downtime Duration", colorClass: "text-yellow-400" }
       ],
-      descriptionText: "Seal blowout on reactor hydraulic pump #P-04 caused oil leak. Pressure dropped instantly, halting reactor feed loops.",
+      descriptionText: "Seal blowout on hydraulic pump #P-04 caused oil leak. Pressure dropped instantly, halting the production line.",
       features: [
         { title: "Immediate Dispatch", desc: "Send SMS alerts to on-duty mechanics immediately." },
         { title: "Breakdown Logging", desc: "Record fault codes, downtime duration, and reasons." },
@@ -1561,7 +1691,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
         { title: "Fault Correlations", desc: "Analyze historical vibration and temperature trends leading up to failures." },
         { title: "5 Whys Logging", desc: "Log structural explanations next to asset histories." },
         { title: "CAPA Workflows", desc: "Generate laser alignment tasks to prevent recurring failures." },
-        { title: "Reliability Archives", desc: "Search past RCA records to resolve similar reactor anomalies." }
+        { title: "Reliability Archives", desc: "Search past RCA records to resolve similar equipment anomalies." }
       ]
     },
     types: {
@@ -1649,10 +1779,10 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
       eyebrow: "SYNAPSE AI ENGINE",
       title: "AI Experiment Designer",
       desc: "Generate optimized trial matrices and parameter ranges based on past database searches and historical yield logs.",
-      prompt: "Design a fractional factorial experiment to optimize Reactor 3 batch purity.",
+      prompt: "Design a fractional factorial experiment to optimize casing surface finish.",
       generatedTitle: "Experiment Designed",
       sections: [
-        { title: "Proposed Design", items: ["3-Factor, 2-Level Fractional design (8 trials).", "Factors: Temperature, Feedrate, Impeller Speed."], bgClass: "bg-purple-500/20", textClass: "text-purple-300" },
+        { title: "Proposed Design", items: ["3-Factor, 2-Level Full Factorial design (8 trials).", "Factors: Temperature, Feedrate, Impeller Speed."], bgClass: "bg-purple-500/20", textClass: "text-purple-300" },
         { title: "Safety Warning", items: ["Limit temperature to 165°C to prevent pressure spikes.", "Verify cooling flow rates are at baseline targets."], bgClass: "bg-emerald-500/20", textClass: "text-emerald-300" }
       ],
       features: [
@@ -1693,7 +1823,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
       ],
       schedule: [
         { tag: "Today", title: "Extruder Temp Trial Run", details: "Line 4 Extruder • Run #5-8 • Operator check", time: "1:00 PM", tagColorClass: "bg-rose-500/20 text-rose-400" },
-        { tag: "Tomorrow", title: "Reactor Impeller Test", details: "Reactor 3 • Run #1-4 • Technician check", time: "9:00 AM", tagColorClass: "bg-yellow-500/20 text-yellow-400" }
+        { tag: "Tomorrow", title: "Mixer Impeller Test", details: "Line 3 Mixer • Run #1-4 • Technician check", time: "9:00 AM", tagColorClass: "bg-yellow-500/20 text-yellow-400" }
       ],
       features: [
         { title: "Schedule Alerts", desc: "Notify team members when trial schedules are reached." },
@@ -1742,7 +1872,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
         { title: "Fault Correlations", desc: "Analyze historical sensor readings to identify drifts." },
         { title: "5 Whys Logging", desc: "Log structural explanations next to trial records." },
         { title: "CAPA Workflows", desc: "Generate gauge calibration tasks directly from root causes." },
-        { title: "Insight Archive", desc: "Search past RCA records to resolve similar reactor anomalies." }
+        { title: "Insight Archive", desc: "Search past RCA records to resolve similar process anomalies." }
       ]
     },
     types: {
@@ -1923,7 +2053,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
         { title: "Downtime Trace", desc: "Link OEE losses to specific downtime events automatically." },
         { title: "5 Whys Logging", desc: "Log structural explanations next to dashboard timeline charts." },
         { title: "CAPA Workflows", desc: "Generate spacer adjustment tasks directly from root causes." },
-        { title: "Insight Archive", desc: "Search past RCA records to resolve similar reactor anomalies." }
+        { title: "Insight Archive", desc: "Search past RCA records to resolve similar process anomalies." }
       ]
     },
     types: {

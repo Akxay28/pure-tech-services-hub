@@ -34,7 +34,10 @@ export function TechnologyExpertiseSection({
 }: Props) {
   const [activeTab, setActiveTab] = useState(tabs[0]?.label ?? "");
 
-  const activeCards = tabs.find((t) => t.label === activeTab)?.cards ?? [];
+  const currentTabExists = tabs.some((t) => t.label === activeTab);
+  const resolvedActiveTab = currentTabExists ? activeTab : (tabs[0]?.label ?? "");
+
+  const activeCards = tabs.find((t) => t.label === resolvedActiveTab)?.cards ?? [];
 
   return (
     <section className="px-5 lg:px-8 py-20 bg-surface-muted/40 border-y border-border overflow-hidden">
@@ -67,12 +70,12 @@ export function TechnologyExpertiseSection({
               key={tab.label}
               onClick={() => setActiveTab(tab.label)}
               className={`rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300 border ${
-                activeTab === tab.label
+                resolvedActiveTab === tab.label
                   ? "text-white border-transparent"
                   : "border-border bg-surface hover:bg-secondary"
               }`}
               style={
-                activeTab === tab.label
+                resolvedActiveTab === tab.label
                   ? { background: brandIconGradient(accentAt(tabIndex)) }
                   : {}
               }

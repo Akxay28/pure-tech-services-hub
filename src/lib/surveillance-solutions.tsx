@@ -3,6 +3,8 @@ import { ShieldCheck, Activity, Users, Eye, Flame, type LucideIcon } from "lucid
 import type { SubServicePageProps } from "@/components/site/SubServicePage";
 import { BRAND } from "@/lib/brand-colors";
 
+import { IntrusionDetectionExtraSection, WeaponDetectionExtraSection, FireSmokeDetectionExtraSection, UnauthorizedAccessExtraSection, PerimeterMonitoringExtraSection } from "@/components/site/IndustrialExtraSections";
+
 export const surveillanceTechExpertise = [
   {
     label: "AI & Inference",
@@ -152,8 +154,9 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     ],
     tech: ["YOLOv8", "RTSP Streams", "Zone Masking", "NVIDIA Edge", "SMS/WhatsApp Alerts"],
     techExpertise: surveillanceTechExpertise,
-    extraSection: SecuritySection,
-    extraSectionImage: "/homeCaseStudy/surveillance-intrusion.png",
+    extraSection: IntrusionDetectionExtraSection,
+    techSubheading: "We combine edge video feeds, deep learning models, and automated response pipelines to make this solution practical for real security operations.",
+    extraSectionImage: "/homeCaseStudy/surveillance-intrusion.jpg",
     faqs: [
       { q: "Does this require special cameras?", a: "No. It works with standard IP cameras supporting RTSP/ONVIF." },
       { q: "How are false alarms handled?", a: "The AI filters out small animals, wind-blown vegetation, and shadow shifts." },
@@ -198,7 +201,8 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     ],
     tech: ["Object Detection", "CUDA", "Low-latency streaming", "Emergency Alert System (EAS) Integration"],
     techExpertise: surveillanceTechExpertise,
-    extraSection: SecuritySection,
+    extraSection: WeaponDetectionExtraSection,
+    techSubheading: "We combine edge video feeds, deep learning models, and automated response pipelines to make this solution practical for real security operations.",
     extraSectionImage: "/homeCaseStudy/surveillance-weapon.png",
     faqs: [
       { q: "Can it detect concealed weapons?", a: "No, this is visual-based AI. It detects weapons once they are brandished or visible on camera." },
@@ -244,8 +248,8 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     ],
     tech: ["Flame Detection ML", "Smoke Detection models", "Relay Controllers", "ONVIF Streams"],
     techExpertise: surveillanceTechExpertise,
-    extraSection: SafetySection,
-    extraSectionImage: "/homeCaseStudy/surveillance-fire.png",
+    extraSection: FireSmokeDetectionExtraSection,
+    extraSectionImage: "/homeCaseStudy/surveillance-fire-analytics.jpg",
     faqs: [
       { q: "Will steam or dust trigger false alarms?", a: "No. The model is trained on heat movement and visual textures to filter out steam, dust, and vehicle exhaust." },
       { q: "Does it replace standard fire alarms?", a: "No. It serves as an early visual warning system, supplementing your primary fire alarm compliance hardware." },
@@ -290,8 +294,8 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     ],
     tech: ["Tailgating Detection", "Access Control API", "ONVIF cameras", "Edge AI"],
     techExpertise: surveillanceTechExpertise,
-    extraSection: SecuritySection,
-    extraSectionImage: "/homeCaseStudy/surveillance-access.png",
+    extraSection: UnauthorizedAccessExtraSection,
+    extraSectionImage: "/homeCaseStudy/surveillance-badge-swipe.jpg",
     faqs: [
       { q: "Can it run on-premises?", a: "Yes. All access control data stays local for maximum security." },
       { q: "Does it support facial recognition?", a: "Optionally, yes, or it can operate strictly on person counting and tailgating shapes to maintain privacy." },
@@ -336,7 +340,7 @@ export const surveillanceSolutions: Record<string, SubServicePageProps & { title
     ],
     tech: ["PTZ Auto-Tracking", "Thermal Camera Analytics", "Boundary tripwires"],
     techExpertise: surveillanceTechExpertise,
-    extraSection: SecuritySection,
+    extraSection: PerimeterMonitoringExtraSection,
     extraSectionImage: "/homeCaseStudy/surveillance-perimeter.png",
     faqs: [
       { q: "Does it work in complete darkness?", a: "Yes, when integrated with infrared or thermal cameras." },

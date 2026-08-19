@@ -351,7 +351,7 @@ export function CaseStudyCard({
         e.currentTarget.style.setProperty("--x", `${e.clientX - rect.left}px`);
         e.currentTarget.style.setProperty("--y", `${e.clientY - rect.top}px`);
       }}
-      style={{ "--x": "50%", "--y": "50%" } as React.CSSProperties}
+      style={{ "--x": "50%", "--y": "50%", "--card-accent": accent } as React.CSSProperties}
     >
       {/* Static glow */}
       <div

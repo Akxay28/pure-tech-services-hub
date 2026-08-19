@@ -6,6 +6,7 @@ import { industrialSlugs, industrialSolutions } from "@/lib/industrial-solutions
 import { surveillanceSlugs, surveillanceSolutions } from "@/lib/surveillance-solutions";
 import { getCaseStudiesForService } from "@/lib/case-studies-by-service";
 import { GenericIndustrialExtraSection } from "@/components/site/IndustrialExtraSections";
+import { InProcessQualitySpcPage } from "@/components/site/InProcessQualitySpcPage";
 
 const allSolutionSlugs = new Set([...solutionSlugSet, ...industrialSlugs, ...surveillanceSlugs]);
 
@@ -70,6 +71,10 @@ function SolutionRoute() {
   const { slug } = Route.useLoaderData();
   if (!allSolutionSlugs.has(slug)) throw notFound();
   
+  if (slug === "in-process-quality-spc") {
+    return <InProcessQualitySpcPage />;
+  }
+
   const isIndustrial = industrialSlugs.includes(slug);
   const isSurveillance = surveillanceSlugs.includes(slug);
   

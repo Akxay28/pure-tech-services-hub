@@ -34,10 +34,13 @@ export const Route = createFileRoute("/solutions/")({
   component: SolutionsIndex,
 });
 
-const solutionCards = solutionSlugs.map((slug) => ({
-  slug,
-  ...subServices[slug],
-}));
+const solutionCards = solutionSlugs.map((slug) => {
+  const service = (subServices as any)[slug] || (industrialSolutions as any)[slug];
+  return {
+    slug,
+    ...service,
+  };
+});
 
 const industrialCards = industrialSlugs.map((slug) => ({
   slug,
