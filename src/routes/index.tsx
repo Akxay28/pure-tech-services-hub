@@ -379,11 +379,11 @@ function Home() {
         </div>
       </section>
 
-      {/* Why Pure */}
+      {/* Why Pure Technology */}
       <section className="px-5 lg:px-8 py-20">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            eyebrow="Why teams pick Pure"
+            eyebrow="Why teams pick Pure Technology"
             title={
               <>
                 A Delivery Model Built For Enterprise Trust,{" "}

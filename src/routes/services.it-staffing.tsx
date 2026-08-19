@@ -33,7 +33,7 @@ function ItStaffing() {
           <span className="text-gradient-brand">vetted the way you'd vet them.</span>
         </>
       }
-      lede="We're not a CV-spray agency. Pure runs a 4-stage technical screening modelled on FAANG-style hiring, so every engineer we send you is one your own bar-raiser would have hired."
+      lede="We're not a CV-spray agency. Pure Technology runs a 4-stage technical screening modelled on FAANG-style hiring, so every engineer we send you is one your own bar-raiser would have hired."
       accent="var(--brand-orange)"
       heroStats={[
         { value: "180+", label: "Active engineers on bench" },
@@ -45,7 +45,7 @@ function ItStaffing() {
         heading:
           "Staffing done by engineers, not by recruiters reading off a keyword list.",
         paragraphs: [
-          "We started Pure because we were tired of the staffing experience on both sides — clients wading through 40 CVs to find one usable engineer, and good engineers being shopped around like resumes in a marketplace.",
+          "We started Pure Technology because we were tired of the staffing experience on both sides — clients wading through 40 CVs to find one usable engineer, and good engineers being shopped around like resumes in a marketplace.",
           "Our model is different. Every engineer on our bench has cleared a structured technical bar: a system-design interview, a coding session, a domain deep-dive, and a values conversation. The same panel of senior engineers who would interview them at a top product company.",
           "When you brief us, we don't blast your role to a thousand candidates. We send you a shortlist of 2–4 humans we genuinely believe are right — with notes from our interviewers, references, and a clear view on availability.",
         ],
@@ -134,7 +134,7 @@ function ItStaffing() {
       testimonials={[
         {
           quote:
-            "We've worked with five staffing partners over the years. Pure is the only one whose shortlist we don't have to second-guess.",
+            "We've worked with five staffing partners over the years. Pure Technology is the only one whose shortlist we don't have to second-guess.",
           name: "Meera Subramaniam",
           role: "Director of Engineering",
           company: "Northwind SaaS",
@@ -142,7 +142,7 @@ function ItStaffing() {
         },
         {
           quote:
-            "Finding senior embedded engineers in India is brutal. Pure delivered a calibrated panel of six humans inside three months.",
+            "Finding senior embedded engineers in India is brutal. Pure Technology delivered a calibrated panel of six humans inside three months.",
           name: "Arjun Deshmukh",
           role: "CTO",
           company: "Helix Robotics",
@@ -151,7 +151,7 @@ function ItStaffing() {
         },
         {
           quote:
-            "The engineer Pure placed with us became our tech lead in eleven months. That's the bar of talent they're working with.",
+            "The engineer Pure Technology placed with us became our tech lead in eleven months. That's the bar of talent they're working with.",
           name: "Priya Ramesh",
           role: "VP Engineering",
           company: "FinEdge Capital",
@@ -161,7 +161,7 @@ function ItStaffing() {
       ]}
       faqs={[
         {
-          q: "How is Pure different from a traditional staffing agency?",
+          q: "How is Pure Technology different from a traditional staffing agency?",
           a: "Three things: (1) every candidate is interviewed by a senior engineer on our side before they reach you, (2) we send 2–4 shortlisted humans, not 40 CVs, and (3) we offer a 30-day replacement guarantee on every placement.",
         },
         {

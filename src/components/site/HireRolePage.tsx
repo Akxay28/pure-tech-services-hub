@@ -123,7 +123,7 @@ export function HireRolePage(p: HireRolePageProps) {
         <div className="mx-auto max-w-7xl">
           <SectionHeader
             eyebrow="Fit"
-            title={`When teams hire ${roleLower} through Pure.`}
+            title={`When teams hire ${roleLower} through Pure Technology.`}
           />
           <ul className="mt-10 grid sm:grid-cols-2 gap-3">
             {p.whoFor.map((w, i) => (
@@ -202,7 +202,7 @@ export function HireRolePage(p: HireRolePageProps) {
         </div>
       </section>
 
-      {/* Why Pure */}
+      {/* Why Pure Technology */}
       <section className="px-5 lg:px-8 py-20 bg-surface-muted/60 border-y border-border">
         <div className="mx-auto max-w-7xl">
           <SectionHeader

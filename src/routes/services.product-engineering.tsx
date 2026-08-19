@@ -46,7 +46,7 @@ function ProductEngineering() {
           "Product engineering as a single accountable squad — not five vendors stitched with status meetings.",
         paragraphs: [
           "Most product engineering 'partners' specialise in one slice — design, or frontend, or backend — and leave you to integrate the rest. The cost shows up in the seams: missed scope, finger-pointing, and a roadmap that quietly slips by months.",
-          "Pure's product squads are built differently. A single squad covers product design, web, mobile, backend, DevOps, and QA — led by a senior tech lead who is accountable end-to-end. We don't hand you off across functions.",
+          "Pure Technology's product squads are built differently. A single squad covers product design, web, mobile, backend, DevOps, and QA — led by a senior tech lead who is accountable end-to-end. We don't hand you off across functions.",
           "We work in 2-week cycles with a demo every Friday and a written changelog. By the end of any month, you've seen the work twice, and you've shipped something to real users at least once.",
         ],
       }}

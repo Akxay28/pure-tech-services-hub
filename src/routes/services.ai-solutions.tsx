@@ -134,7 +134,7 @@ function AiSolutions() {
       testimonials={[
         {
           quote:
-            "Pure was the only partner who started by asking us how we'd measure success — not by showing slides of someone else's chatbot.",
+            "Pure Technology was the only partner who started by asking us how we'd measure success — not by showing slides of someone else's chatbot.",
           name: "Vikram Subramanian",
           role: "Chief Digital Officer",
           company: "Top-5 Indian Bank",
@@ -142,7 +142,7 @@ function AiSolutions() {
         },
         {
           quote:
-            "We had three vendors attempt the medical summarisation problem. Pure was the only team that took the safety constraints seriously from week one.",
+            "We had three vendors attempt the medical summarisation problem. Pure Technology was the only team that took the safety constraints seriously from week one.",
           name: "Dr. Anika Rao",
           role: "VP Clinical Products",
           company: "Lumenpath Health",

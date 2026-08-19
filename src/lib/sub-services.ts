@@ -67,6 +67,8 @@ export const subServices: Record<string, Entry> = {
       { title: "Operate & transfer", body: "We run, govern, and report. When you're ready, the whole org transfers to your books." },
     ],
     tech: ["Hyderabad", "Bengaluru", "Pune", "Chennai", "Gurugram", "SEZ", "STPI", "GIFT City"],
+    techHeading: "Locations & Zones We Support.",
+    techSubheading: "We help you evaluate, select, and set up your GCC in India's leading technology hubs and special economic zones.",
     faqs: [
       { q: "Can we start with just 10 engineers?", a: "Yes — we have a 'micro-GCC' model that starts at 10 and scales without re-architecting the entity." },
       { q: "Do we own the IP from day one?", a: "Always. Every contract, codebase, and contributor agreement assigns IP directly to your parent entity." },

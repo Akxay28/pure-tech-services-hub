@@ -234,9 +234,17 @@ export function MobileAiGuidedWorkflow() {
 
           {/* Right: Camera Anomaly Detection View Mock */}
           <div className="lg:col-span-6">
-            <div className="rounded-3xl border border-border bg-black/90 p-4 shadow-2xl relative aspect-[4/3] flex flex-col justify-between overflow-hidden">
+            <div className="rounded-3xl border border-border bg-slate-950 p-4 shadow-2xl relative aspect-[4/3] flex flex-col justify-between overflow-hidden">
+              {/* Indian factory mobile inspection feed background */}
+              <img 
+                src="/homeCaseStudy/indian-mobile-inspection.jpg" 
+                alt="Indian Mobile Field Inspection Feed" 
+                className="absolute inset-0 w-full h-full object-cover opacity-75"
+              />
+              <div className="absolute inset-0 bg-slate-950/20 z-0" />
+
               {/* Camera Header Overlay */}
-              <div className="flex justify-between items-center text-white text-[10px] z-10 bg-black/40 p-2 rounded-xl">
+              <div className="flex justify-between items-center text-white text-[10px] z-10 bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                 <div className="flex items-center gap-2">
                   <span className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
                   <span className="font-mono">CAM_SOURCE: LENS_01</span>
@@ -245,7 +253,7 @@ export function MobileAiGuidedWorkflow() {
               </div>
 
               {/* Anomaly Bounding Box Visual */}
-              <div className="absolute inset-0 grid place-items-center">
+              <div className="absolute inset-0 grid place-items-center z-10">
                 <div className="border-2 border-red-500 rounded-xl p-8 relative animate-pulse" style={{ width: "160px", height: "120px" }}>
                   <span className="absolute -top-6 left-0 bg-red-500 text-white font-mono text-[9px] px-1.5 py-0.5 rounded font-bold">
                     ANOMALY: Surface Crack (92%)
@@ -258,7 +266,7 @@ export function MobileAiGuidedWorkflow() {
               </div>
 
               {/* Camera Footer Overlay */}
-              <div className="flex justify-between items-center text-muted-foreground text-opacity-90 text-[10px] z-10 bg-black/40 p-2 rounded-xl">
+              <div className="flex justify-between items-center text-muted-foreground text-opacity-90 text-[10px] z-10 bg-black/50 p-2 rounded-xl backdrop-blur-sm">
                 <span>ZOOM: 1.0X</span>
                 <span>ISO: 400</span>
                 <span>EV: 0.0</span>

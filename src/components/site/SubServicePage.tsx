@@ -298,7 +298,11 @@ export function SubServicePage(p: SubServicePageProps) {
       ) : p.tech && p.tech.length > 0 ? (
         <section className="px-5 lg:px-8 py-16">
           <div className="mx-auto max-w-7xl">
-            <SectionHeader eyebrow="Stack" title="Tools we reach for first." />
+            <SectionHeader 
+              eyebrow={p.techHeading ? "Locations" : "Stack"} 
+              title={p.techHeading || "Tools we reach for first."} 
+              description={p.techSubheading}
+            />
             <div className="mt-8 flex flex-wrap gap-2.5">
               {p.tech.map((t) => (
                 <span key={t} className="rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium" style={{ color: p.accent }}>

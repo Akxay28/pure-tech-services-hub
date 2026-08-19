@@ -384,7 +384,7 @@ const configs: RoleConfig[] = [
       {
         metric: "12",
         label: "GenAI products in prod",
-        context: "Shipped by Pure squads and placed engineers in the last 24 months.",
+        context: "Shipped by Pure Technology squads and placed engineers in the last 24 months.",
       },
       {
         metric: "3×",
@@ -1519,7 +1519,7 @@ const roleConfigs: RoleConfig[] = [
       {
         metric: "4.6★",
         label: "Play Store avg.",
-        context: "Consumer apps staffed by Pure engineers.",
+        context: "Consumer apps staffed by Pure Technology engineers.",
       },
       { metric: "30%", label: "APK size reduction", context: "After modularisation pass." },
       {
