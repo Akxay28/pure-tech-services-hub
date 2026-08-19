@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Bot, TrendingUp, Cloud, ShieldCheck, Activity } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const SLIDE_DURATION = 7500; // milliseconds
@@ -453,6 +453,33 @@ export function HeroCarousel() {
   );
 }
 
+function FloatingBadge({
+  icon,
+  eyebrow,
+  title,
+  className,
+}: {
+  icon: React.ReactNode;
+  eyebrow: string;
+  title: string;
+  className: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "absolute z-20 rounded-2xl border border-white/45 bg-white/50 backdrop-blur-xl px-4 py-3 flex items-center gap-3 pointer-events-none",
+        className,
+      )}
+    >
+      {icon}
+      <div className="flex flex-col">
+        <span className="text-[9px] uppercase tracking-wider text-slate-500 font-bold leading-none">{eyebrow}</span>
+        <span className="mt-1 text-xs font-bold text-slate-800 leading-none">{title}</span>
+      </div>
+    </div>
+  );
+}
+
 function TabletVideoShowcase({
   src,
   topRightCard,
@@ -466,36 +493,71 @@ function TabletVideoShowcase({
 }) {
   return (
     <div className="absolute inset-0 flex items-center justify-center overflow-visible pb-8 pt-8">
-      <FloatingMetric card={topRightCard} className="right-2 top-24 px-8 py-4" />
-      <FloatingMetric card={leftCard} className="left-0 top-[40%] px-6 py-3.5" />
-      <FloatingMetric card={bottomRightCard} className="bottom-20 right-10 px-6 py-3.5" />
+      <div className="relative w-[600px] -translate-y-2 rotate-[2deg] perspective-1200">
+        <div className="absolute inset-x-8 bottom-[-34px] h-14 rounded-full bg-slate-900/16 blur-2xl animate-shadow-tablet" />
 
-      <div className="relative w-[600px] -translate-y-2 rotate-[2deg]">
-        <div className="absolute inset-x-8 bottom-[-34px] h-14 rounded-full bg-slate-900/16 blur-2xl" />
+        <div className="animate-float-device-tablet relative">
+          <FloatingMetric card={topRightCard} className="right-[-5%] top-[5%] px-8 py-4 [transform:translateZ(40px)]" />
+          <FloatingMetric card={leftCard} className="left-[-10%] top-[35%] px-6 py-3.5 [transform:translateZ(60px)]" />
+          <FloatingMetric card={bottomRightCard} className="bottom-[5%] right-[-8%] px-6 py-3.5 [transform:translateZ(50px)]" />
 
-        <div className="relative rounded-[2.4rem] border border-white/60 bg-gradient-to-br from-zinc-100 via-zinc-400 to-zinc-800 p-[9px] shadow-[0_34px_88px_rgba(15,23,42,0.3)] ring-1 ring-black/10">
-          <div className="rounded-[1.95rem] bg-gradient-to-br from-zinc-950 via-zinc-900 to-black p-4">
-            <div className="relative aspect-video overflow-hidden rounded-[1.35rem] bg-black">
-              <video
-                src={src}
-                aria-label="Pure Technology showcase video playing on tablet"
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="h-full w-full object-cover object-center saturate-125 contrast-110"
-              />
-              <div className="pointer-events-none absolute bottom-[1.1rem] right-[1rem] z-10 flex h-11 w-24 items-center justify-center rounded-xl bg-white/92 px-2.5 shadow-[0_10px_22px_rgba(2,6,23,0.3)] ring-1 ring-white/75 backdrop-blur-sm">
-                <img
-                  src="/logos/pure-logo-black-text-transparent.png"
-                  alt=""
-                  aria-hidden="true"
-                  className="h-7 w-full object-contain drop-shadow-[0_2px_5px_rgba(0,0,0,0.16)]"
-                />
+          {/* Enterprise badges around the tablet */}
+          <FloatingBadge
+            icon={
+              <div className="p-1.5 rounded-lg bg-orange-500/10 text-orange-600">
+                <TrendingUp className="h-4 w-4" />
               </div>
-              <div className="pointer-events-none absolute left-1/2 top-2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-black/80 ring-1 ring-white/25" />
-              <div className="pointer-events-none absolute inset-0 rounded-[1.35rem] ring-1 ring-white/15" />
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.18),transparent_28%,transparent_66%,rgba(255,255,255,0.08))]" />
+            }
+            eyebrow="Analytics Insight"
+            title="Efficiency +24.8%"
+            className="left-[-5%] top-[10%] [transform:translateZ(70px)]"
+          />
+          <FloatingBadge
+            icon={
+              <div className="p-1.5 rounded-lg bg-indigo-500/10 text-indigo-600">
+                <Activity className="h-4 w-4" />
+              </div>
+            }
+            eyebrow="Workflow Automation"
+            title="Active (42 Jobs Run)"
+            className="right-[-5%] top-[45%] [transform:translateZ(30px)]"
+          />
+          <FloatingBadge
+            icon={
+              <div className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </div>
+            }
+            eyebrow="AI Agent Status"
+            title="Executing Task..."
+            className="left-[-5%] bottom-[12%] [transform:translateZ(45px)]"
+          />
+
+          <div className="relative rounded-[2.4rem] border border-white/60 bg-gradient-to-br from-zinc-100 via-zinc-400 to-zinc-800 p-[9px] shadow-[0_34px_88px_rgba(15,23,42,0.3)] ring-1 ring-black/10">
+            <div className="rounded-[1.95rem] bg-gradient-to-br from-zinc-950 via-zinc-900 to-black p-4">
+              <div className="relative aspect-video overflow-hidden rounded-[1.35rem] bg-black">
+                <video
+                  src={src}
+                  aria-label="Pure Technology showcase video playing on tablet"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="h-full w-full object-cover object-center saturate-125 contrast-110"
+                />
+                <div className="pointer-events-none absolute bottom-[1.1rem] right-[1rem] z-10 flex h-11 w-24 items-center justify-center rounded-xl bg-white/92 px-2.5 shadow-[0_10px_22px_rgba(2,6,23,0.32)] ring-1 ring-white/75 backdrop-blur-sm">
+                  <img
+                    src="/logos/pure-logo-black-text-transparent.png"
+                    alt=""
+                    aria-hidden="true"
+                    className="h-7 w-full object-contain drop-shadow-[0_2px_5px_rgba(0,0,0,0.16)]"
+                  />
+                </div>
+                <div className="pointer-events-none absolute left-1/2 top-2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-black/80 ring-1 ring-white/25" />
+                <div className="pointer-events-none absolute inset-0 rounded-[1.35rem] ring-1 ring-white/15" />
+                <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(120deg,rgba(255,255,255,0.18),transparent_28%,transparent_66%,rgba(255,255,255,0.08))]" />
+              </div>
             </div>
           </div>
         </div>
@@ -503,6 +565,9 @@ function TabletVideoShowcase({
     </div>
   );
 }
+
+
+
 
 function HeroVideoShowcase({
   src,
@@ -517,13 +582,47 @@ function HeroVideoShowcase({
 }) {
   return (
     <div className="absolute inset-0 flex items-center justify-center overflow-visible pb-2 pt-8">
-      <FloatingMetric card={topRightCard} className="right-0 top-20 px-9 py-4" />
-      <FloatingMetric card={leftCard} className="left-0 top-[36%] px-6 py-3.5" />
-      <FloatingMetric card={bottomRightCard} className="bottom-24 right-6 px-6 py-3.5" />
-      <div className="relative w-[620px] -translate-y-6 rotate-[-2deg]">
-        <div className="absolute inset-x-10 bottom-[-58px] h-20 rounded-full bg-slate-900/14 blur-2xl" />
+      <div className="relative w-[620px] -translate-y-6 rotate-[-2deg] perspective-1200">
+        <div className="absolute inset-x-10 bottom-[-58px] h-20 rounded-full bg-slate-900/14 blur-2xl animate-shadow-monitor" />
 
-        <div className="relative rounded-[1.65rem] border border-white/55 bg-gradient-to-br from-zinc-200 via-zinc-400 to-zinc-700 p-[8px] shadow-[0_32px_90px_rgba(15,23,42,0.3)] ring-1 ring-black/10">
+        <div className="animate-float-device-monitor relative">
+          <FloatingMetric card={topRightCard} className="right-[-5%] top-[5%] px-9 py-4 [transform:translateZ(45px)]" />
+          <FloatingMetric card={leftCard} className="left-[-8%] top-[30%] px-6 py-3.5 [transform:translateZ(65px)]" />
+          <FloatingMetric card={bottomRightCard} className="bottom-[10%] right-[-5%] px-6 py-3.5 [transform:translateZ(55px)]" />
+
+          {/* Enterprise badges around the monitor */}
+          <FloatingBadge
+            icon={
+              <div className="relative flex h-2.5 w-2.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+              </div>
+            }
+            eyebrow="AI Agent Status"
+            title="Executing Task..."
+            className="left-[-10%] top-[8%] [transform:translateZ(75px)]"
+          />
+          <FloatingBadge
+            icon={
+              <div className="p-1.5 rounded-lg bg-blue-500/10 text-blue-600">
+                <Cloud className="h-4 w-4" />
+              </div>
+            }
+            eyebrow="Cloud Infrastructure"
+            title="99.99% Uptime"
+            className="right-[-5%] top-[35%] [transform:translateZ(35px)]"
+          />
+          <FloatingBadge
+            icon={
+              <div className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-600">
+                <ShieldCheck className="h-4 w-4" />
+              </div>
+            }
+            eyebrow="Security Compliance"
+            title="SOC 2 Type II Verified"
+            className="left-[-5%] bottom-[12%] [transform:translateZ(50px)]"
+          />
+          <div className="relative rounded-[1.65rem] border border-white/55 bg-gradient-to-br from-zinc-200 via-zinc-400 to-zinc-700 p-[8px] shadow-[0_32px_90px_rgba(15,23,42,0.3)] ring-1 ring-black/10">
           <div className="rounded-[1.3rem] bg-gradient-to-br from-zinc-950 via-zinc-900 to-black p-3">
             <div className="relative aspect-video overflow-hidden rounded-[0.9rem] bg-black">
               <video
@@ -552,6 +651,7 @@ function HeroVideoShowcase({
 
         <div className="relative mx-auto h-16 w-24 bg-gradient-to-b from-zinc-600 via-zinc-500 to-zinc-300 shadow-[0_18px_34px_rgba(15,23,42,0.18)]" />
         <div className="relative mx-auto h-4 w-60 rounded-[999px] bg-gradient-to-r from-zinc-300 via-zinc-100 to-zinc-500 shadow-[0_16px_36px_rgba(15,23,42,0.2)]" />
+        </div>
       </div>
     </div>
   );
@@ -561,7 +661,7 @@ function FloatingMetric({ card, className }: { card: StatCard; className: string
   return (
     <div
       className={cn(
-        "absolute z-10 rounded-3xl border border-white/45 bg-white/50 shadow-[0_18px_42px_rgba(15,23,42,0.1)] backdrop-blur-xl",
+        "absolute z-10 rounded-3xl border border-white/45 bg-white/50 backdrop-blur-xl",
         className,
       )}
     >
