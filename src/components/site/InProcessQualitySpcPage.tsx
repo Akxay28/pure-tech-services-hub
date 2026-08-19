@@ -1187,8 +1187,8 @@ export function SpcChartBoard() {
               <div key={idx} className="flex gap-2">
                 <Check className="h-4 w-4 text-primary mt-1 shrink-0" />
                 <div>
-                  <h4 className="font-display font-semibold text-xs">{item.title}</h4>
-                  <p className="text-[10px] text-muted-foreground mt-0.5">{item.desc}</p>
+                  <h4 className="font-display font-semibold text-sm">{item.title}</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{item.desc}</p>
                 </div>
               </div>
             ))}
@@ -1228,7 +1228,7 @@ export function SpcChartBoard() {
             <div className="flex justify-between items-center mb-6">
               <div>
                 <h3 className="font-display font-bold text-base leading-tight">{current.title}</h3>
-                <p className="text-[10px] text-muted-foreground mt-0.5">{current.desc}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{current.desc}</p>
               </div>
               <div className="text-right">
                 <div className={`text-xs font-bold px-2.5 py-0.5 rounded border ${
@@ -1279,11 +1279,11 @@ export function SpcChartBoard() {
 
             {/* Action Alert Banner */}
             {current.violation !== "None" && (
-              <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 flex items-start gap-2.5 text-[10px] text-amber-800 dark:text-amber-300">
+              <div className="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 flex items-start gap-2.5 text-xs text-amber-800 dark:text-amber-300">
                 <AlertTriangle className="h-4 w-4 text-amber-500 shrink-0 mt-0.5" />
                 <div>
                   <h6 className="font-bold">Alarm Triggered</h6>
-                  <p className="text-muted-foreground text-[9px] mt-0.5">{current.violation}</p>
+                  <p className="text-muted-foreground text-xs leading-relaxed mt-0.5">{current.violation}</p>
                 </div>
               </div>
             )}
@@ -1312,14 +1312,14 @@ export function SpcOcapContainment() {
             <div className="flex justify-between items-center">
               <div>
                 <h6 className="text-xs font-bold">Nelson Rule 2 Alarm (Line 3)</h6>
-                <small className="text-muted-foreground text-[9px]">CTQ Parameter: Outer Diameter</small>
+                <small className="text-muted-foreground text-xs leading-relaxed">CTQ Parameter: Outer Diameter</small>
               </div>
               <span className="text-[10px] font-bold px-2.5 py-1 bg-emerald-500 text-white rounded font-medium">RECOVERED</span>
             </div>
 
             {/* Step list */}
-            <div className="space-y-2.5 text-[10px]">
-              <div className="font-bold uppercase tracking-wider text-muted-foreground">Standard Recovery Protocol</div>
+            <div className="space-y-2.5 text-xs leading-relaxed">
+              <div className="font-bold uppercase tracking-wider text-muted-foreground text-[10px]">Standard Recovery Protocol</div>
               {[
                 { step: "Step 1", desc: "Check spindle coolant flow rate and verify temperature", status: "Completed - OK", color: "text-emerald-500" },
                 { step: "Step 2", desc: "Verify spindle speed and apply -0.015mm offset adjustment", status: "Adjusted - Checked", color: "text-emerald-500" },
@@ -1335,7 +1335,7 @@ export function SpcOcapContainment() {
               ))}
             </div>
 
-            <div className="border-t border-border pt-4 flex justify-between items-center text-[10px]">
+            <div className="border-t border-border pt-4 flex justify-between items-center text-xs">
               <div className="flex items-center gap-2">
                 <span className="h-5 w-5 rounded-full bg-slate-100 border border-slate-300 grid place-items-center text-[8px] font-bold">QA</span>
                 <span className="text-muted-foreground">E-Signature: R. Davis (Quality Lead)</span>
@@ -1368,8 +1368,8 @@ export function SpcOcapContainment() {
               <div key={idx} className="flex gap-2">
                 <Check className="h-4 w-4 text-rose-500 mt-1 shrink-0" />
                 <div>
-                  <h4 className="font-display font-semibold text-xs">{item.title}</h4>
-                  <p className="text-[10px] text-muted-foreground mt-0.5">{item.desc}</p>
+                  <h4 className="font-display font-semibold text-sm">{item.title}</h4>
+                  <p className="text-xs text-muted-foreground leading-relaxed mt-0.5">{item.desc}</p>
                 </div>
               </div>
             ))}
