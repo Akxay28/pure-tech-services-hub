@@ -1463,8 +1463,8 @@ export function ConnectedModules() {
             { title: "Documents", desc: "Attach manuals & templates" }
           ].map((item, idx) => (
             <div key={idx} className="bg-surface border border-border p-4 rounded-xl text-center hover:scale-[1.02] hover:shadow-soft transition-all">
-              <h4 className="font-display font-semibold text-xs mb-1">{item.title}</h4>
-              <p className="text-[9px] text-muted-foreground">{item.desc}</p>
+              <h4 className="font-display font-semibold text-sm mb-1">{item.title}</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -2583,7 +2583,7 @@ export function GenericFeatureSpotlight1({ slug }: { slug: string }) {
                     isHighlighted ? (m.bgClass || "bg-primary/20 border-primary scale-105") : "bg-surface-muted/60 border-border/50"
                   }`}>
                     <div className={`text-base font-bold ${m.colorClass === "text-white" ? "text-foreground" : m.colorClass}`}>{m.value}</div>
-                    <div className="text-[8px] text-muted-foreground uppercase tracking-wider font-semibold">{m.label}</div>
+                    <div className="text-[10px] text-muted-foreground uppercase tracking-wider font-semibold">{m.label}</div>
                   </div>
                 );
               })}
@@ -2876,7 +2876,7 @@ export function GenericReminders({ slug }: { slug: string }) {
               {rem.stats.map((s, idx) => (
                 <div key={idx} className="bg-surface-muted/60 p-2 rounded-xl text-center">
                   <div className={`text-base font-bold ${s.colorClass === "text-white" ? "text-foreground" : s.colorClass}`}>{s.value}</div>
-                  <div className="text-[8px] text-muted-foreground font-semibold uppercase">{s.label}</div>
+                  <div className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -3016,7 +3016,7 @@ export function GenericRCA({ slug }: { slug: string }) {
               {rca.stats.map((s, idx) => (
                 <div key={idx} className="bg-surface-muted/60 p-2 rounded-xl">
                   <div className={`text-xs font-bold ${s.colorClass === "text-white" ? "text-foreground" : s.colorClass}`}>{s.value}</div>
-                  <div className="text-[8px] text-muted-foreground">{s.label}</div>
+                  <div className="text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -3117,8 +3117,8 @@ export function GenericConnectedModules({ slug }: { slug: string }) {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {mods.items.map((item, idx) => (
             <div key={idx} className="bg-surface border border-border p-4 rounded-xl text-center hover:scale-[1.02] hover:shadow-soft transition-all">
-              <h4 className="font-display font-semibold text-xs mb-1">{item.title}</h4>
-              <p className="text-[9px] text-muted-foreground">{item.desc}</p>
+              <h4 className="font-display font-semibold text-sm mb-1">{item.title}</h4>
+              <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -3608,14 +3608,14 @@ export function VisionConnectedEcosystem() {
             <div key={idx} className="bg-surface border border-border p-6 rounded-2xl hover:shadow-soft transition-all duration-300 flex flex-col justify-between">
               <div className="space-y-4">
                 <h4 className="font-display font-bold text-sm text-foreground">{m.name}</h4>
-                <p className="text-[11px] text-muted-foreground leading-relaxed">
+                <p className="text-xs text-muted-foreground leading-relaxed">
                   {m.desc}
                 </p>
               </div>
 
               <div className="mt-6 pt-4 border-t border-border/50 flex flex-wrap gap-1.5">
                 {m.tags.map((tag) => (
-                  <span key={tag} className="text-[8px] font-semibold px-2 py-0.5 bg-primary/5 text-primary border border-primary/10 rounded">
+                  <span key={tag} className="text-[10px] font-semibold px-2 py-0.5 bg-primary/5 text-primary border border-primary/10 rounded">
                     {tag}
                   </span>
                 ))}
