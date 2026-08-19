@@ -45,9 +45,9 @@ function ItStaffing() {
         heading:
           "Staffing done by engineers, not by recruiters reading off a keyword list.",
         paragraphs: [
-          "We started Pure Technology because we were tired of the staffing experience on both sides — clients wading through 40 CVs to find one usable engineer, and good engineers being shopped around like resumes in a marketplace.",
+          "We started Pure Technology because we were tired of the staffing experience on both sides clients wading through 40 CVs to find one usable engineer, and good engineers being shopped around like resumes in a marketplace.",
           "Our model is different. Every engineer on our bench has cleared a structured technical bar: a system-design interview, a coding session, a domain deep-dive, and a values conversation. The same panel of senior engineers who would interview them at a top product company.",
-          "When you brief us, we don't blast your role to a thousand candidates. We send you a shortlist of 2–4 humans we genuinely believe are right — with notes from our interviewers, references, and a clear view on availability.",
+          "When you brief us, we don't blast your role to a thousand candidates. We send you a shortlist of 2–4 humans we genuinely believe are right with notes from our interviewers, references, and a clear view on availability.",
         ],
       }}
       capabilities={[
