@@ -2582,7 +2582,7 @@ export function GenericFeatureSpotlight1({ slug }: { slug: string }) {
                   <div key={idx} className={`rounded-xl p-2 border transition-all duration-300 ${
                     isHighlighted ? (m.bgClass || "bg-primary/20 border-primary scale-105") : "bg-surface-muted/60 border-border/50"
                   }`}>
-                    <div className={`text-base font-bold ${m.colorClass}`}>{m.value}</div>
+                    <div className={`text-base font-bold ${m.colorClass === "text-white" ? "text-foreground" : m.colorClass}`}>{m.value}</div>
                     <div className="text-[8px] text-muted-foreground uppercase tracking-wider font-semibold">{m.label}</div>
                   </div>
                 );
@@ -2875,7 +2875,7 @@ export function GenericReminders({ slug }: { slug: string }) {
             <div className="grid grid-cols-3 gap-2">
               {rem.stats.map((s, idx) => (
                 <div key={idx} className="bg-surface-muted/60 p-2 rounded-xl text-center">
-                  <div className={`text-base font-bold ${s.colorClass}`}>{s.value}</div>
+                  <div className={`text-base font-bold ${s.colorClass === "text-white" ? "text-foreground" : s.colorClass}`}>{s.value}</div>
                   <div className="text-[8px] text-muted-foreground font-semibold uppercase">{s.label}</div>
                 </div>
               ))}
@@ -2978,7 +2978,7 @@ export function GenericIncidents({ slug }: { slug: string }) {
             <div className="grid grid-cols-2 gap-3">
               {inc.metrics.map((m, idx) => (
                 <div key={idx} className="bg-surface-muted/60 p-3 rounded-xl text-center">
-                  <h5 className={`text-sm font-bold ${m.colorClass}`}>{m.value}</h5>
+                  <h5 className={`text-sm font-bold ${m.colorClass === "text-white" ? "text-foreground" : m.colorClass}`}>{m.value}</h5>
                   <small className="text-[9px] text-muted-foreground">{m.label}</small>
                 </div>
               ))}
@@ -3015,7 +3015,7 @@ export function GenericRCA({ slug }: { slug: string }) {
             <div className="grid grid-cols-3 gap-2 text-center">
               {rca.stats.map((s, idx) => (
                 <div key={idx} className="bg-surface-muted/60 p-2 rounded-xl">
-                  <div className={`text-xs font-bold ${s.colorClass}`}>{s.value}</div>
+                  <div className={`text-xs font-bold ${s.colorClass === "text-white" ? "text-foreground" : s.colorClass}`}>{s.value}</div>
                   <div className="text-[8px] text-muted-foreground">{s.label}</div>
                 </div>
               ))}
@@ -3343,7 +3343,7 @@ export function VisionQualityDashboard() {
     <section className="px-5 lg:px-8 py-20 bg-surface-muted/30 border-b border-border">
       <div className="mx-auto max-w-7xl grid lg:grid-cols-12 gap-12 items-stretch">
         {/* Left Column: KPI Cards */}
-        <div className="lg:col-span-5 flex flex-col justify-between space-y-6">
+        <div className="lg:col-span-5 flex flex-col justify-start space-y-8">
           <div className="space-y-4">
             <span className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">QUALITY PERFORMANCE</span>
             <h2 className="text-3xl lg:text-4xl font-display font-bold leading-tight">Smart Quality Dashboard</h2>
