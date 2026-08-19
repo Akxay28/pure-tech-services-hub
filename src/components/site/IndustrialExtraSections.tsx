@@ -3271,20 +3271,25 @@ export function VisionDigitalCenter() {
 
             {/* Frame View */}
             <div className="bg-slate-950 border border-border/50 rounded-2xl overflow-hidden mb-6 aspect-video relative flex items-center justify-center">
-              {/* Fallback pattern representing conveyor parts */}
-              <div className="absolute inset-0 bg-[radial-gradient(#2e3135_1px,transparent_1px)] [background-size:16px_16px] opacity-25" />
+              {/* Indian factory camera feed background */}
+              <img 
+                src="/homeCaseStudy/indian-factory-inspection.jpg" 
+                alt="Indian Factory Conveyor Inspection Feed" 
+                className="absolute inset-0 w-full h-full object-cover opacity-80"
+              />
+              <div className="absolute inset-0 bg-slate-950/15" />
               
-              <div className="absolute top-3 left-3 text-[10px] font-mono text-white bg-black/60 px-2 py-0.5 rounded backdrop-blur">
+              <div className="absolute top-3 left-3 text-[10px] font-mono text-white bg-black/60 px-2 py-0.5 rounded backdrop-blur z-20">
                 FEED: 240 ppm // 8ms inference
               </div>
-              <div className="absolute top-3 right-3 text-[10px] font-mono text-emerald-400 bg-black/60 px-2 py-0.5 rounded backdrop-blur flex items-center gap-1.5 border border-emerald-500/20">
+              <div className="absolute top-3 right-3 text-[10px] font-mono text-emerald-400 bg-black/60 px-2 py-0.5 rounded backdrop-blur flex items-center gap-1.5 border border-emerald-500/20 z-20">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 STROBE ACTIVE
               </div>
 
               {/* Bounding box simulation */}
               {inspectState === "OK" && (
-                <div className="absolute border-2 border-emerald-500 rounded p-6 flex flex-col items-center justify-center bg-emerald-500/10 backdrop-blur-[1px] pointer-events-none select-none">
+                <div className="absolute border-2 border-emerald-500 rounded-xl flex flex-col items-center justify-center bg-emerald-500/10 backdrop-blur-[0.5px] pointer-events-none select-none z-10 w-44 h-44 sm:w-52 sm:h-52 top-[32%] left-[20%] animate-fade-up">
                   <span className="text-emerald-400 font-bold text-xs uppercase tracking-widest bg-black/85 px-3 py-1 rounded border border-emerald-500/30">
                     PASS // OK
                   </span>
@@ -3295,7 +3300,7 @@ export function VisionDigitalCenter() {
               )}
 
               {inspectState === "NG" && (
-                <div className="absolute border-2 border-rose-500 rounded p-6 flex flex-col items-center justify-center bg-rose-500/10 backdrop-blur-[1px] pointer-events-none select-none animate-pulse">
+                <div className="absolute border-2 border-rose-500 rounded-xl flex flex-col items-center justify-center bg-rose-500/10 backdrop-blur-[0.5px] pointer-events-none select-none z-10 w-44 h-44 sm:w-52 sm:h-52 top-[32%] left-[20%] animate-pulse">
                   <span className="text-rose-400 font-bold text-xs uppercase tracking-widest bg-black/85 px-3 py-1 rounded border border-rose-500/30">
                     FAIL // REJECTED
                   </span>
@@ -3306,11 +3311,11 @@ export function VisionDigitalCenter() {
               )}
 
               {inspectState === "IDLE" && (
-                <div className="flex flex-col items-center text-center max-w-xs px-6">
-                  <span className="h-12 w-12 rounded-full bg-primary/10 text-primary flex items-center justify-center mb-4">
-                    <Activity className="h-5 w-5 animate-pulse" />
+                <div className="flex flex-col items-center text-center max-w-xs px-6 py-4 bg-black/60 backdrop-blur-sm rounded-2xl border border-white/10 relative z-10">
+                  <span className="h-10 w-10 rounded-full bg-primary/20 text-primary flex items-center justify-center mb-3 border border-primary/30">
+                    <Activity className="h-4 w-4 animate-pulse" />
                   </span>
-                  <p className="text-xs text-muted-foreground font-medium leading-relaxed">
+                  <p className="text-xs text-slate-300 font-medium leading-relaxed">
                     Trigger simulated inspection to observe real-time classification overlays.
                   </p>
                 </div>
