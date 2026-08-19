@@ -69,15 +69,16 @@ const accentColors = [
 
 function TestimonialCarousel({ testimonials }: { testimonials: any[] }) {
   const [active, setActive] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
   const total = testimonials.length;
 
   useEffect(() => {
-    if (total === 0) return;
+    if (total === 0 || isPaused) return;
     const timer = setInterval(() => {
       setActive((prev) => (prev + 1) % total);
     }, 5000);
     return () => clearInterval(timer);
-  }, [total]);
+  }, [total, isPaused]);
 
   const prev = () => setActive((a) => (a - 1 + total) % total);
   const next = () => setActive((a) => (a + 1) % total);
@@ -87,7 +88,13 @@ function TestimonialCarousel({ testimonials }: { testimonials: any[] }) {
   const visible = [0, 1, 2].map((offset) => testimonials[(active + offset) % total]);
 
   return (
-    <div className="mt-12">
+    <div 
+      className="mt-12"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onTouchStart={() => setIsPaused(true)}
+      onTouchEnd={() => setIsPaused(false)}
+    >
       <div className="grid lg:grid-cols-3 gap-5">
         {visible.map((t, i) => (
           <Testimonial
