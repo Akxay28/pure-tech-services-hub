@@ -73,7 +73,7 @@ const galleryImages: GalleryImage[] = [
     category: "Leadership",
   },
   {
-    src: "/team/Shirish Vispute.jpg",
+    src: "https://res.cloudinary.com/judys6ws/image/upload/v1787206336/Shirish_Vispute_l0uewi.jpg",
     alt: "Shirish Vispute - Pure Technology leadership",
     title: "Shirish Vispute",
     category: "Leadership",

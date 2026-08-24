@@ -8,7 +8,7 @@ const CONTACT_EMAIL = "contact@puretechnology.in";
 const CALENDLY_URL = "https://calendly.com/puretechcx/introduction";
 const CONTACT_NUMBERS = [
   {
-    label: "For HR & Carrers",
+    label: "For HR & Careers",
     number: "+91 73875 81577",
     href: "tel:+917387581577",
     color: "var(--brand-purple)",

@@ -142,7 +142,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
     slug: "ai-visual-inspection",
     workflow: {
       eyebrow: "DEPLOYMENT FLOW",
-      title: "6-Step Computer Vision Integration",
+      title: "6-Step AI Vision Integration",
       desc: "Implement edge visual models directly onto your live production lines without interrupting cycle times.",
       steps: [
         { num: 1, title: "Image Capture", subtitle: "High-speed camera sync", desc: "Position smart cameras and configure automated strobes to capture crisp frames of products at line speeds." },
@@ -154,7 +154,7 @@ export const industrialExtraContentData: Record<string, IndustrialPageExtraConte
       ]
     },
     spotlight1: {
-      eyebrow: "COMPUTER VISION",
+      eyebrow: "AI VISION",
       title: "Real-time Surface Defect Detection",
       desc: "Deploy neural networks trained specifically for sub-millimeter material deformations under dynamic light conditions.",
       features: [
@@ -2086,11 +2086,11 @@ export function getIndustrialExtraContent(slug: string): IndustrialPageExtraCont
   if (industrialExtraContentData[slug]) {
     return industrialExtraContentData[slug];
   }
-  
+
   // Clean fallback mapping derived from inspection-management structure
   const fallback = { ...industrialExtraContentData["inspection-management"] };
   fallback.slug = slug;
-  
+
   // Format based on slug terms
   const titleName = slug.split("-").map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
   fallback.spotlight1 = {
@@ -2098,6 +2098,6 @@ export function getIndustrialExtraContent(slug: string): IndustrialPageExtraCont
     title: `${titleName} Digital Center`,
     desc: `Replace paper forms and disconnected records with a digital hub for ${titleName.toLowerCase()} processes.`
   };
-  
+
   return fallback;
 }

@@ -2251,7 +2251,7 @@ export function IndustrialImageGridSection({ slug }: { slug: string }) {
     cards: { title: string; desc: string; imp: string }[];
   }> = {
     "ai-visual-inspection": {
-      title: "Computer Vision Defect Detection AI",
+      title: "AI Vision Defect Detection ",
       lede: "Deploy edge-inference cameras to inspect products at line-speed, identifying visible deviations with absolute consistency.",
       imageSrc: "/homeCaseStudy/industrial-visual-inspection.png",
       accent: "bg-blue-500/10 text-blue-400 border-blue-500/30",
@@ -3195,7 +3195,7 @@ export function VisionDigitalCenter() {
   const [recentCount, setRecentCount] = useState({ ok: 4280, ng: 34 });
   const [defectType, setDefectType] = useState<string | null>(null);
 
-  const simulateInspect = (isOk: boolean) => {
+  const simulateInspect = useCallback((isOk: boolean) => {
     setInspectState(isOk ? "OK" : "NG");
     setDefectType(isOk ? null : "Surface Dent Detected");
     setRecentCount(prev => ({
@@ -3207,7 +3207,24 @@ export function VisionDigitalCenter() {
     setTimeout(() => {
       setInspectState("IDLE");
     }, 2000);
-  };
+  }, []);
+
+  const inspectStateRef = useRef(inspectState);
+  useEffect(() => {
+    inspectStateRef.current = inspectState;
+  }, [inspectState]);
+
+  useEffect(() => {
+    let nextIsOk = true;
+    const interval = setInterval(() => {
+      if (inspectStateRef.current === "IDLE") {
+        simulateInspect(nextIsOk);
+        nextIsOk = !nextIsOk;
+      }
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [simulateInspect]);
 
   return (
     <section className="px-5 lg:px-8 py-20 bg-surface border-y border-border">
@@ -3558,7 +3575,6 @@ export function VisionDeploymentArchitecture() {
   const steps = [
     { title: "Industrial Camera", desc: "Global shutter high-speed GigE cameras capture products inline." },
     { title: "Edge IPC Computer", desc: "Local industrial PC runs YOLO model inference at 8ms latency." },
-    { title: "PLC Reject Link", desc: "PLC diverter gate receives signals to sort out NG parts." },
     { title: "Local Cache App", desc: "Maintains inspection queues locally if plant networks disconnect." },
     { title: "Central Server", desc: "Aggregates quality statistics, images, and model configs." },
     { title: "Web Dashboard", desc: "NOC screens provide live quality metrics, trends, and reports." }
@@ -3575,7 +3591,7 @@ export function VisionDeploymentArchitecture() {
           </p>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-6 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {steps.map((s, idx) => (
             <div 
               key={idx} 
