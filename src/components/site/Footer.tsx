@@ -13,7 +13,7 @@ const SOCIAL_LINKS = [
 ] as const;
 
 const CONTACT_NUMBERS = [
-  { label: "For HR & ", number: "+91 73875 81577", href: "tel:+917387581577" },
+  { label: "For HR & Careers", number: "+91 73875 81577", href: "tel:+917387581577" },
   { label: "For Support", number: "+91 83298 49726", href: "tel:+918329849726" },
   { label: "For AI Project", number: "+91 99701 11283", href: "tel:+919970111283" },
   { label: "For Hire Resource", number: "+91 73854 55380", href: "tel:+7385455380" },
